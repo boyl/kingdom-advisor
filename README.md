@@ -8,11 +8,31 @@
 
 单机已由用户验收。联机功能保持可用，但双端同步与其他主题／DLC 的完整矩阵尚未验证。不能将其视为已验证支持。其他 Mod 可能改变费用或钱袋规则。
 
-## 安装
+## 前置依赖与安装
 
-从菜单保存退出游戏，将 BepInEx 文件夹复制到游戏目录。已有配置会保留。更新时只替换 BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll，日常直接启动游戏。
+需要 **BepInEx 6 · Unity IL2CPP · Windows x64**；本 Mod 已测试版本为 **6.0.0-be.738**。Mod 包不包含 BepInEx，需要先安装。不要选择 Mono、x86 或 BepInEx 5。
 
-卸载时保存退出，移除上述 DLL。配置可按需保留。
+### 1. 安装 BepInEx
+
+1. 打开 [BepInEx 官方构建下载页](https://builds.bepinex.dev/projects/bepinex_be)，找到 **#738**，下载 `BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.738+af0cba7.zip`。
+2. 在 Steam 中右键游戏 → 管理 → 浏览本地文件，找到 `KingdomTwoCrowns.exe` 所在目录。
+3. 将 BepInEx 压缩包的**全部内容**解压到该目录，包含根目录文件与 `BepInEx` 文件夹，不要额外套一层文件夹。
+4. 启动游戏一次，等待首次初始化完成后正常退出。首次启动可能较慢，会生成 `BepInEx/config` 等文件。
+
+已安装上述适用版本的玩家可以跳过此步骤。[BepInEx 官方安装指南](https://docs.bepinex.dev/master/articles/user_guide/installation/unity_il2cpp.html)。
+
+### 2. 安装王国顾问
+
+1. 从 [0.6.0 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.0) 下载 **`KingdomAdvisor-0.6.0.zip`**，不要下载源码包。
+2. 确保游戏已退出。解压 Mod，将其中的 `BepInEx` 文件夹合并到游戏目录。
+3. 核对插件路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。
+4. 正常启动游戏，Mod 自动加载。**F6** 打开设置，**F7** 打开图鉴；手柄默认短按**左摇杆 L3** 打开界面，无需独立启动器。
+
+### 更新与卸载
+
+更新：保存退出游戏，覆盖上述 DLL，保留已有配置。
+
+卸载：保存退出游戏，删除 `BepInEx/plugins/KingdomAdvisor` 文件夹。配置文件可按需保留，不需要卸载其他 Mod 使用的 BepInEx。
 
 ## 功能与默认值
 

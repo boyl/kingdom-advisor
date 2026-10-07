@@ -21,11 +21,29 @@ Gameplay assists default to off, speed to 1x. Disabling unlimited capacity resto
 
 ## Requirements and installation
 
-Verified runtime: Windows x64, Kingdom Two Crowns 2.4.2, Unity 6000.0.66f2, IL2CPP, BepInEx 6.0.0-be.738. Install the appropriate BepInEx IL2CPP version separately; this package includes no game assemblies or BepInEx runtime.
+Requires **BepInEx 6 · Unity IL2CPP · Windows x64**. This mod was tested with **6.0.0-be.738** and Kingdom Two Crowns **2.4.2** on Windows x64. BepInEx is not bundled and must be installed separately. Do not select Mono, x86, or BepInEx 5.
 
-Save and quit from the game menu. Copy the ZIP's BepInEx folder into the game directory. For updates, replace BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll; existing settings are preserved. Launch the game normally afterward.
+### 1. Install BepInEx
 
-To uninstall, save and quit, then remove that DLL. Configuration remains at BepInEx/config/local.kingdom.advisor.cfg.
+1. Open the [official BepInEx builds page](https://builds.bepinex.dev/projects/bepinex_be), find **#738**, and download `BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.738+af0cba7.zip`.
+2. In Steam, right-click the game → Manage → Browse local files. Locate the directory containing `KingdomTwoCrowns.exe`.
+3. Extract **all contents** of the BepInEx archive into this directory, including its root files and `BepInEx` folder. Do not add an extra enclosing folder.
+4. Launch the game once, wait for initialization to finish, then exit normally. The first launch may take longer and generates folders such as `BepInEx/config`.
+
+Skip this step if the appropriate BepInEx version is already installed. See the [official installation guide](https://docs.bepinex.dev/master/articles/user_guide/installation/unity_il2cpp.html).
+
+### 2. Install Kingdom Advisor
+
+1. Download **`KingdomAdvisor-0.6.0.zip`** from the [0.6.0 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.0), rather than the source archive.
+2. With the game closed, extract the mod and merge its `BepInEx` folder into the game directory.
+3. Check that the plugin is at `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`.
+4. Launch the game normally. The mod loads automatically: **F6** opens settings, **F7** opens the catalog, and a short press of **left stick (L3)** opens the controller interface. No separate launcher is needed.
+
+### Update and uninstall
+
+To update, save and quit, replace the DLL above, and keep your configuration.
+
+To uninstall, save and quit, then delete `BepInEx/plugins/KingdomAdvisor`. Configuration may be retained; do not remove BepInEx if other mods still use it.
 
 ## Controls
 
