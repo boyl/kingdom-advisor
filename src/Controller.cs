@@ -105,7 +105,7 @@ namespace KingdomAdvisor
             File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","input-actions.tsv"),lines);
             discovered=true;Plugin.Instance.Log.LogInfo("Rewired actions: "+string.Join(", ",lines));
         }
-        public Entry[] FilteredEntries()=>Catalog.Entries.Where(e=>(Category=="全部"||e.Category==Category)&&(string.IsNullOrWhiteSpace(Search)||(e.Name+e.Description+e.Key).IndexOf(Search,StringComparison.OrdinalIgnoreCase)>=0)).ToArray();
+        public Entry[] FilteredEntries()=>Catalog.Entries.Where(e=>(Category=="全部"||e.Category==Category)&&(string.IsNullOrWhiteSpace(Search)||(e.Name+e.Description+e.Key+Localization.Translate(e.Name+" "+e.Description,true)).IndexOf(Search,StringComparison.OrdinalIgnoreCase)>=0)).ToArray();
         public MapPoint[] FilteredPoints(Snapshot state,PlayerInfo player)=>state.Points.Where(p=>PointVisible(p)&&(Category=="全部"||p.Category==Category)&&(settings.FullMap.Value||state.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2))).OrderBy(p=>Math.Abs(p.X-player.X)).ToArray();
         public void FlipPage(int direction,Snapshot s)
         {
@@ -147,9 +147,10 @@ namespace KingdomAdvisor
             case OptionId.PadCursor:return settings.PadCursor;case OptionId.InfiniteBag:return settings.InfiniteBag;case OptionId.Teleport:return settings.Teleport;case OptionId.InfiniteStamina:return settings.InfiniteStamina;default:return null;}
         }
         public int OptionValue(OptionId id)
-        {if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
+        {if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
         public void SetOption(OptionId id,int value)
         {
+            if(id==OptionId.Language){settings.UiLanguage.Value=value;Localization.English=Localization.IsEnglish(value,global::Language.current?global::Language.current.languageCode:null,Application.systemLanguage.ToString());DetailPage=0;return;}
             if(id==OptionId.PadOpen){settings.PadOpenButton.Value=value;return;}
             if(id==OptionId.PadSpeed){settings.PadSpeed.Value=new[]{300f,700f,1000f,1400f}[value];return;}
             if(id==OptionId.Font){settings.FontSize.Value=14+value*2;return;}

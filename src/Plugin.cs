@@ -16,7 +16,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.5.8";
+        public const string Version="0.6.0";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -30,13 +30,14 @@ namespace KingdomAdvisor
     internal sealed class Settings
     {
         public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
-        public ConfigEntry<int> FontSize;
+        public ConfigEntry<int> FontSize,UiLanguage;
         public ConfigEntry<string> Layout;
         public ConfigEntry<bool> Teleport,InfiniteBag,InfiniteStamina,Icons,Journal,DefenseAlerts,StaffAlerts,MountInfo,MapBuildings,MapCamps,MapEnemies,MapMounts,MapSpecial;
         public ConfigEntry<float> GameSpeed,PadSpeed;public ConfigEntry<bool> PadCursor;public ConfigEntry<int> PadOpenButton;
         public ConfigEntry<int> ResourceAmount;
         public Settings(ConfigFile config)
         {
+            UiLanguage=config.Bind("界面","语言",0,new ConfigDescription("0 自动跟随游戏语言；中文使用简体中文，其他语言回退英文。1 简体中文，2 English。",new AcceptableValueList<int>(0,1,2)));
             Enabled=config.Bind("界面","启用",true,"游戏启动后自动显示。F4 切换。");
             Map=config.Bind("界面","地图",true,"默认顶部透明小地图；名称和数量常驻，状态聚焦显示，敌人图标下显示数量。");
             MapTransparent=config.Bind("地图","透明背景",true,"开启使用透明背景，关闭显示面板背景。");
@@ -94,7 +95,7 @@ namespace KingdomAdvisor
         private float captureAt=-1;
         private bool captured;
         private bool captureUnavailable;
-        private int previewStage;
+        private int previewStage,previewLanguage=-1,previewFont=-1;
         private float previewAt=-1;
         public void Awake()
         {
@@ -107,6 +108,8 @@ namespace KingdomAdvisor
             if(faulted)return;
             try
             {
+                var language=global::Language.current;
+                Localization.English=Localization.IsEnglish(previewLanguage<0?Plugin.Instance.Settings.UiLanguage.Value:previewLanguage,language?language.languageCode:null,Application.systemLanguage.ToString());
                 var now=Time.unscaledTime;
                 if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;}
                 if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
@@ -125,20 +128,19 @@ namespace KingdomAdvisor
                     if(previewAt<0)previewAt=now+2;
                     if(now>=previewAt)
                     {
-                        switch(previewStage){
-                            case 0:Controller.Toggle(2,reader.State);break;
-                            case 1:Capture("settings.png");break;
-                            case 2:Controller.Close();Controller.Toggle(0,reader.State);break;
-                            case 3:Capture("catalog.png");break;
-                                                        case 4:Controller.Close();Controller.Toggle(5,reader.State);break;
-                            case 5:Capture("resources.png");break;
-                            case 6:Controller.Close();Controller.Toggle(4,reader.State);break;
-                            case 7:Capture("journal.png");break;
-                            case 8:Controller.Close();Controller.Toggle(2,reader.State);Controller.Section=4;break;
-                            case 9:Capture("assist-settings.png");break;
-                            case 10:Controller.Close();Controller.Tab=0;Plugin.Instance.Settings.PreviewCapture.Value=false;break;
+                        if(previewFont<0)previewFont=Plugin.Instance.Settings.FontSize.Value;
+                        int variant=previewStage/32,scenario=(previewStage%32)/2;
+                        if(variant>=4){previewLanguage=-1;Plugin.Instance.Settings.FontSize.Value=previewFont;Controller.Close();Controller.Tab=0;Controller.Section=0;Plugin.Instance.Settings.PreviewCapture.Value=false;}
+                        else if(previewStage%2==0){
+                            previewLanguage=variant<2?2:1;Plugin.Instance.Settings.FontSize.Value=variant%2==0?18:28;
+                            Controller.Close();Controller.SettingsDropdown=false;Controller.ResourceDropdown=false;Controller.Focus=0;Controller.Selected=0;Controller.DetailPage=0;
+                            if(scenario<8){Controller.Toggle(2,reader.State);Controller.Section=scenario<6?scenario:scenario==6?1:2;if(scenario==6)Controller.Focus=10;if(scenario==7){Controller.Focus=4;Controller.Choice=7;Controller.SettingsDropdown=true;}}
+                            else if(scenario<10){Controller.Toggle(0,reader.State);if(scenario==9)Controller.Selected=24;}
+                            else if(scenario<13)Controller.Toggle(scenario==10?1:scenario==11?3:4,reader.State);
+                            else if(scenario<15){Controller.Toggle(5,reader.State);if(scenario==14){Controller.Focus=5;Controller.Choice=2;Controller.ResourceDropdown=true;}}
                         }
-                        previewStage++;previewAt=previewStage>10?float.PositiveInfinity:now+1;
+                        else Capture((variant<2?"english":"chinese")+"-font"+(variant%2==0?18:28)+"-"+new[]{"settings-map","settings-advisor","settings-catalog","settings-resource","settings-time","settings-pad","settings-advisor-last","settings-font-dropdown","catalog-first","catalog-later","locations","map","journal","resources","resources-dropdown","gameplay"}[scenario]+".png");
+                        previewStage++;previewAt=previewStage>128?float.PositiveInfinity:now+1;
                     }
                 }
                 failures=0;
@@ -180,7 +182,7 @@ namespace KingdomAdvisor
         private void WriteEvidence()
         {
             var s=reader.State;
-            var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
+            var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
             foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
             lines.Add("enemiesAvailable="+s.EnemiesAvailable+" enemies="+s.Enemies.Count+" camps="+s.Camps);
             foreach(var enemy in s.Enemies.Take(12))lines.Add("enemy="+enemy.Id+" kind="+enemy.Kind+" x="+enemy.X.ToString("F2"));
