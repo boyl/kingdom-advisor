@@ -1,0 +1,346 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Diagnostics;
+using BepInEx;
+using BepInEx.Configuration;
+using BepInEx.Logging;
+using BepInEx.Unity.IL2CPP;
+using HarmonyLib;
+using UnityEngine;
+using Il2CppInterop.Runtime.Injection;
+
+namespace KingdomAdvisor
+{
+    [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
+    public sealed class Plugin : BasePlugin
+    {
+        public const string Version="0.5.8";
+        internal static Plugin Instance;
+        internal Settings Settings;
+        public override void Load()
+        {
+            Instance=this;Settings=new Settings(Config);
+            AddComponent<AdvisorBehaviour>();
+            new Harmony("local.kingdom.advisor").PatchAll(typeof(Plugin).Assembly);
+            Log.LogInfo("Kingdom Advisor "+Version+" loaded; automatic in-game overlay; gameplay rule writes=0.");
+        }
+    }
+    internal sealed class Settings
+    {
+        public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
+        public ConfigEntry<int> FontSize;
+        public ConfigEntry<string> Layout;
+        public ConfigEntry<bool> Teleport,InfiniteBag,InfiniteStamina,Icons,Journal,DefenseAlerts,StaffAlerts,MountInfo,MapBuildings,MapCamps,MapEnemies,MapMounts,MapSpecial;
+        public ConfigEntry<float> GameSpeed,PadSpeed;public ConfigEntry<bool> PadCursor;public ConfigEntry<int> PadOpenButton;
+        public ConfigEntry<int> ResourceAmount;
+        public Settings(ConfigFile config)
+        {
+            Enabled=config.Bind("界面","启用",true,"游戏启动后自动显示。F4 切换。");
+            Map=config.Bind("界面","地图",true,"默认顶部透明小地图；名称和数量常驻，状态聚焦显示，敌人图标下显示数量。");
+            MapTransparent=config.Bind("地图","透明背景",true,"开启使用透明背景，关闭显示面板背景。");
+            AdvisorTransparent=config.Bind("界面样式","顾问透明",true,"透明文字或面板背景。");
+            PlayerTransparent=config.Bind("界面样式","附近详情透明",true,"透明文字或面板背景。");
+            AlertTransparent=config.Bind("界面样式","提醒透明",true,"透明文字或面板背景。");
+            InterfaceTransparent=config.Bind("界面样式","主界面透明",false,"图鉴、设置与资源等主界面使用透明背景。");
+            MapAtTop=config.Bind("地图","默认置顶",true,"开启默认放在顶部，关闭默认放在底部；F6 切换时仅复位地图的拖动位置。");
+            ShowKingdomAdvisor=config.Bind("界面","显示王国顾问",true,"显示左下王国顾问整张概况卡片。");
+            ShowPlayerPanel=config.Bind("界面","显示Player详情",false,"显示右侧 Player／附近交互物详情卡片；关闭后仍可在图鉴查看用途。");
+            Status=config.Bind("界面","王国概况",true,"显示人口、科技与时间。");
+            Details=config.Bind("界面","对象详情",true,"显示升级目标与使用建议。");
+            Alerts=config.Bind("界面","情境提醒",true,"仅在风险条件成立时显示提醒。");
+            FullMap=config.Bind("地图","全情报",true,"显示当前已加载岛屿的所有兴趣点；不会伪造其他岛屿信息。");
+            Trees=config.Bind("地图","显示树木",false,"普通树木默认隐藏，避免地图拥挤。");
+            FontSize=config.Bind("界面","字号",18,"字号范围 14–28。");
+            Layout=config.Bind("布局","卡片位置","","按玩家分别保存拖动后的相对坐标；可在设置中复位。");
+            PreviewCapture=config.Bind("Diagnostics","PreviewCapture",false,"开发验收：首次进入游戏后短暂展示设置和图鉴并截图，随后关闭。不写入存档。");
+            Teleport=config.Bind("操作便利","地图传送",false,"普通地图短按查看，长按 0.8 秒传送。单机与联机均可使用。");
+            InfiniteBag=config.Bind("资源辅助","无限钱袋容量",false,"解除容量限制，并使用数字钱袋代替会溢出的物理钱袋。不自动增加金币。关闭后恢复原生钱袋、原容量及拾取溢出行为。单机与联机均可使用。");
+            InfiniteStamina=config.Bind("操作便利","无限耐力",false,"使用原生无限耐力标志，关闭恢复原值。单机与联机均可使用。");
+            GameSpeed=config.Bind("操作便利","游戏速度",1f,new ConfigDescription("0 暂停、1 正常、2／4 加速；单机与联机均可使用。",new AcceptableValueList<float>(0,1,2,4)));
+            PadCursor=config.Bind("手柄","常驻光标",true,"右摇杆移动常驻光标；左摇杆控制角色。");
+            PadSpeed=config.Bind("手柄","光标速度",700f,new ConfigDescription("光标每秒移动像素，按屏幕高度缩放。",new AcceptableValueRange<float>(200,1800)));
+            PadOpenButton=config.Bind("手柄","呼出按键",0,new ConfigDescription("标准手柄模板：0 左摇杆按压、1 右摇杆按压、2 Back／Select。短按面板，长按0.8秒切换HUD显隐。",new AcceptableValueList<int>(0,1,2)));
+            ResourceAmount=config.Bind("资源辅助","添加数量",10,new ConfigDescription("单次手动添加数量。",new AcceptableValueRange<int>(1,10000)));
+            Icons=config.Bind("图鉴","显示图标",true,"图鉴列表和详情显示统一像素图标。");
+            Journal=config.Bind("图鉴","岛屿记录",true,"记录当前存档各岛已见情报；离岛后明确标记为上次记录。");
+            DefenseAlerts=config.Bind("提醒","防线风险",true,"最外城墙受损、失守或敌群接近时提醒。");
+            StaffAlerts=config.Bind("提醒","人员缺口",true,"显示施工缺工匠及招募工具缺口。");
+            MountInfo=config.Bind("提醒","坐骑状态",true,"显示耐力、饱食与能力冷却状态。");
+            MapBuildings=config.Bind("地图筛选","建筑",true,"显示建筑及工具。");
+            MapCamps=config.Bind("地图筛选","营地与人口",true,"显示人口地点。");
+            MapEnemies=config.Bind("地图筛选","敌人",true,"显示敌群图标与数量。");
+            MapMounts=config.Bind("地图筛选","坐骑",true,"显示坐骑地点。");
+            MapSpecial=config.Bind("地图筛选","特殊地点",true,"显示科技、探索、航行和其他特殊地点。");
+        }
+    }
+    public sealed class AdvisorBehaviour : MonoBehaviour
+    {
+        public AdvisorBehaviour(IntPtr pointer):base(pointer){}
+        internal static AdvisorBehaviour Active;
+        internal AdvisorController Controller;
+        internal GameActions Actions;
+        internal IslandJournal Journal;
+        internal bool InputAvailable=>!faulted;
+        private GameReader reader;
+        private AdvisorView view;
+        private float nextFast,nextSlow,nextEvidence,nextJournal;
+        private int failures;
+        private bool faulted;
+        private string lastError="";
+        private readonly Stopwatch stopwatch=new Stopwatch();
+        private double maxReadMs;
+        private float captureAt=-1;
+        private bool captured;
+        private bool captureUnavailable;
+        private int previewStage;
+        private float previewAt=-1;
+        public void Awake()
+        {
+            Active=this;reader=new GameReader();Controller=new AdvisorController(Plugin.Instance.Settings);
+            Actions=new GameActions(Plugin.Instance.Settings);Journal=new IslandJournal();Controller.Actions=Actions;Controller.Journal=Journal;
+            view=new AdvisorView(Plugin.Instance.Settings,Controller); nextEvidence=0;
+        }
+        public void Update()
+        {
+            if(faulted)return;
+            try
+            {
+                var now=Time.unscaledTime;
+                if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;}
+                if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
+                Controller.Update(reader.State);
+                try{Actions.Apply(reader.State);}catch(Exception ex){Plugin.Instance.Log.LogError("Assist update failed: "+ex);Actions.Notify("操作辅助出错，已关闭");Plugin.Instance.Settings.InfiniteBag.Value=false;Plugin.Instance.Settings.InfiniteStamina.Value=false;Plugin.Instance.Settings.GameSpeed.Value=1;Actions.Restore();}
+                if(Plugin.Instance.Settings.Journal.Value&&now>=nextJournal){Journal.Observe(reader.State);nextJournal=now+1;}
+                if(now>=nextEvidence){WriteEvidence();nextEvidence=now+10;}
+                if(reader.State.Playing&&!captured&&reader.State.Players.Count>0)
+                {
+                    if(captureAt<0)captureAt=now+1;
+                    if(now>=captureAt){Capture("first-gameplay.png");captured=true;}
+                }
+                if(Input.GetKeyDown(KeyCode.F9))Capture("manual-"+DateTime.Now.ToString("yyyyMMdd-HHmmss")+".png");
+                if(captured&&Plugin.Instance.Settings.PreviewCapture.Value&&reader.State.Playing)
+                {
+                    if(previewAt<0)previewAt=now+2;
+                    if(now>=previewAt)
+                    {
+                        switch(previewStage){
+                            case 0:Controller.Toggle(2,reader.State);break;
+                            case 1:Capture("settings.png");break;
+                            case 2:Controller.Close();Controller.Toggle(0,reader.State);break;
+                            case 3:Capture("catalog.png");break;
+                                                        case 4:Controller.Close();Controller.Toggle(5,reader.State);break;
+                            case 5:Capture("resources.png");break;
+                            case 6:Controller.Close();Controller.Toggle(4,reader.State);break;
+                            case 7:Capture("journal.png");break;
+                            case 8:Controller.Close();Controller.Toggle(2,reader.State);Controller.Section=4;break;
+                            case 9:Capture("assist-settings.png");break;
+                            case 10:Controller.Close();Controller.Tab=0;Plugin.Instance.Settings.PreviewCapture.Value=false;break;
+                        }
+                        previewStage++;previewAt=previewStage>10?float.PositiveInfinity:now+1;
+                    }
+                }
+                failures=0;
+            }
+            catch(Exception ex)
+            {
+                Plugin.Instance.Log.LogError("Read failure: "+ex);
+                if(++failures>=3){faulted=true;lastError=ex.ToString();Controller.Close();WriteEvidence();Plugin.Instance.Log.LogError("Overlay stopped after 3 consecutive failures. Gameplay left unchanged.");}
+            }
+        }
+        public void OnGUI()
+        {
+            if(faulted){GUI.Label(new Rect(20,20,650,30),"Kingdom Advisor stopped: see BepInEx/LogOutput.log");return;}
+            try{if(view!=null)view.Draw(reader.State);}
+            catch(Exception ex){faulted=true;lastError=ex.ToString();Controller?.Close();Plugin.Instance.Log.LogError("Rendering stopped: "+ex);WriteEvidence();}
+        }
+        public void OnDestroy(){Controller?.Close();Controller?.RestorePadMappings();Actions?.Restore();Journal?.Flush();if(Active==this)Active=null;}
+        private void Capture(string filename)
+        {
+            if(captureUnavailable)return;
+            Texture2D texture=null;
+            try
+            {
+                var folder=Path.Combine(Paths.ConfigPath,"KingdomAdvisor");Directory.CreateDirectory(folder);
+                texture=ScreenCapture.CaptureScreenshotAsTexture();
+                if(!texture)throw new InvalidOperationException("Screenshot texture unavailable");
+                var native=ImageConversion.EncodeToPNG(texture);
+                var bytes=new byte[native.Length];for(int i=0;i<bytes.Length;i++)bytes[i]=native[i];
+                File.WriteAllBytes(Path.Combine(folder,filename),bytes);
+                Plugin.Instance.Log.LogInfo("Screenshot saved: "+filename);
+            }
+            catch(Exception ex)
+            {
+                captureUnavailable=true;
+                Plugin.Instance.Log.LogWarning("Diagnostic screenshot channel disabled; HUD remains active: "+ex);
+            }
+            finally {if(texture)UnityEngine.Object.Destroy(texture);}
+        }
+        private void WriteEvidence()
+        {
+            var s=reader.State;
+            var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
+            foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
+            lines.Add("enemiesAvailable="+s.EnemiesAvailable+" enemies="+s.Enemies.Count+" camps="+s.Camps);
+            foreach(var enemy in s.Enemies.Take(12))lines.Add("enemy="+enemy.Id+" kind="+enemy.Kind+" x="+enemy.X.ToString("F2"));
+            Directory.CreateDirectory(Path.Combine(Paths.ConfigPath,"KingdomAdvisor"));
+            File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","runtime.txt"),lines);
+        }
+    }
+    // 只在本 Mod 的详情面板拥有该玩家焦点时阻断其玩法输入。
+    [HarmonyPatch(typeof(Player),"IControllable_ReceiveInput")]
+    internal static class OverlayInputPatch
+    {
+
+
+        private static bool Prefix(Player __instance,Rewired.Player __0)
+        {
+            var active=AdvisorBehaviour.Active;
+            var controller=active?.Controller;
+            if(controller==null||!active.InputAvailable)return true;
+            controller.RecordInput(__instance.playerId,__0);
+            bool allowed=!controller.Blocks(__instance.playerId)&&!controller.ChordHeld(__instance.playerId);
+
+            return allowed;
+        }
+    }
+    internal sealed class GameReader
+    {
+        public Snapshot State=new Snapshot();
+        private int lastIsland=-1,lastSeed=int.MinValue;
+        internal readonly Dictionary<int,System.Tuple<float,float>> Explored=new Dictionary<int,System.Tuple<float,float>>();
+        private Managers GetManagers()=>Managers._Inst;
+        public void ReadWorld()
+        {
+            var m=GetManagers();
+            if(!m||!m.game||!m.kingdom){State=new Snapshot();lastIsland=-1;return;}
+            var game=m.game;
+            bool playable=game.state==Game.State.Playing||game.state==Game.State.NetworkClientPlaying;
+            var s=new Snapshot{Playing=playable,State=game.state.ToString(),Island=game.currentLand+1,Online=NetworkBigBoss.IsOnline};
+            if(!playable){State=s;return;}
+            if(Level.isGenerating){State=s;State.Playing=false;return;}
+            if(lastIsland!=s.Island||(m.level&&lastSeed!=m.level.cachedCurrentLevelSeed))
+            {Explored.Clear();lastIsland=s.Island;lastSeed=m.level?m.level.cachedCurrentLevelSeed:0;}
+            var k=m.kingdom;
+            var campaign=CampaignSaveData.current;if(campaign!=null)s.CampaignKey=campaign.realStartDateTime+"-"+campaign.biomeIndex;
+            var currencies=CurrencyManager.AllCurrencyTypes;if(currencies!=null)for(int ci=0;ci<currencies.Length;ci++)if(ResourceRules.Supported((int)currencies[ci]))s.ResourceTypes.Add((int)currencies[ci]);
+            s.Workers=k.Workers?.Count??0;s.Archers=k.ArcherCount;s.Knights=k.KnightCount;
+            s.Farmers=k.Farmers?.Count??0;s.Beggars=k.Beggars?.Count??0;
+            s.Stone=k.StoneBuildingUnlocked;s.Iron=k.IronBuildingUnlocked;
+            if(m.director){s.Day=m.director.TotalDaysInReign;s.Season=m.director.CurrentSeason.ToString();s.Phase=m.director.IsDaytime?"白昼":"夜晚";}
+            if(m.world&&World.GroundCollider){var b=World.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
+            else if(m.level&&m.level.GroundCollider){var b=m.level.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
+            var all=m.payables?.AllPayables;
+            if(all!=null)
+            {
+                for(int i=0;i<all.Length;i++)
+                {
+                    var p=all[i];if(!p||!p.gameObject.activeInHierarchy)continue;
+                    var entry=Catalog.Resolve(p.gameObject.name);var x=p.transform.position.x;
+                    s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
+                    if(!s.Counts.ContainsKey(entry.Key))s.Counts[entry.Key]=0;s.Counts[entry.Key]++;
+                    if(entry.Category=="环境"&&!Plugin.Instance.Settings.Trees.Value)continue;
+                    if(entry.Key=="unknown"&&Catalog.Clean(p.name).StartsWith("Player ",StringComparison.OrdinalIgnoreCase))continue;
+                    var point=new MapPoint{Key=entry.Key,Name=entry.Key=="unknown"?Catalog.Clean(p.name):entry.Name,Category=entry.Category,X=x,Cost=p.Price};
+                    if(k.playerOne&&k.playerOne.hasLocalAuthority)point.PlayerStates[k.playerOne.playerId]=ReadTarget(p,k.playerOne);
+                    if(Managers.IsP2Playing&&k.playerTwo&&k.playerTwo.hasLocalAuthority)point.PlayerStates[k.playerTwo.playerId]=ReadTarget(p,k.playerTwo);
+                    s.Points.Add(point);
+                }
+            }
+            var camps=k.BeggarCamps;
+            if(camps!=null)
+            {
+                var iterator=camps.GetEnumerator();
+                while(iterator.MoveNext())
+                {
+                    var camp=iterator.Current;if(!camp||!camp.gameObject.activeInHierarchy)continue;
+                    s.Camps++;float cx=camp.transform.position.x;
+                    var point=s.Points.FirstOrDefault(p=>p.Name.Contains("营地")&&Math.Abs(p.X-cx)<1);
+                    if(point==null){point=new MapPoint{Key="beggarcamp",Name="难民营",Category="人口",X=cx};s.Points.Add(point);}
+                    point.CampPeople=0;var beggars=camp._beggars;
+                    if(beggars!=null)for(int i=0;i<beggars.Count;i++)if(beggars[i]&&beggars[i].gameObject.activeInHierarchy)point.CampPeople++;
+                }
+            }
+            s.Points.Sort((a,b)=>a.X.CompareTo(b.X));
+            State=s;
+        }
+        public void ReadEnemies()
+        {
+            State.Enemies.Clear();State.EnemiesAvailable=false;if(!State.Playing)return;
+            var m=GetManagers();if(!m||!m.enemies)return;
+            var enemies=m.enemies.AllEnemies;if(enemies==null)return;
+            var enemyArray=new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppReferenceArray<Enemy>(enemies.Count);
+            enemies.CopyTo(enemyArray,0);
+            for(int ei=0;ei<enemyArray.Length;ei++)
+            {
+                var enemy=enemyArray[ei];if(!enemy||!enemy.gameObject.activeInHierarchy||enemy.IsDespawning)continue;
+                if(enemy.damageable&&enemy.damageable.hitPoints<=0)continue;
+                string kind;
+                switch(enemy.Type)
+                {
+                    case EnemyType.TrollWeak:case EnemyType.TrollMedium:case EnemyType.ToughTroll:kind="贪婪怪";break;
+                    case EnemyType.Ogre:kind="巨人";break;
+                    case EnemyType.Squid:kind="飞行怪";break;
+                    case EnemyType.Stealer:kind="夺冠者";break;
+                    case EnemyType.Archer:kind="敌弓手";break;
+                    case EnemyType.Knight:kind="敌骑士";break;
+                    case EnemyType.Crusher:kind="碾压者";break;
+                    default:kind=enemy.Type.ToString();break;
+                }
+                State.Enemies.Add(new EnemyPoint{Id=enemy.GetInstanceID(),Kind=kind,X=enemy.transform.position.x});
+            }
+            State.EnemiesAvailable=true;
+        }
+        public void ReadPlayers()
+        {
+            State.Players.Clear();State.ExploredRanges.Clear();if(!State.Playing)return;
+            var m=GetManagers();if(!m||!m.kingdom)return;
+            var k=m.kingdom;ReadPlayer(k.playerOne,m.game._mainCameraComponent);
+            if(Managers.IsP2Playing)ReadPlayer(k.playerTwo,m.game._secondCameraComponent);
+            foreach(var range in Explored.Values)State.ExploredRanges.Add(range);
+        }
+        private void ReadPlayer(Player p,Camera cam)
+        {
+            if(!p||!p.gameObject.activeInHierarchy)return;
+            var info=new PlayerInfo{Id=p.playerId,Local=p.hasLocalAuthority,X=p.transform.position.x,Coins=p.coins,Gems=p.gems,Capacity=p.wallet?p.wallet.TotalCapacity:0};
+            if(p.wallet)foreach(var currency in State.ResourceTypes)info.Resources[currency]=p.wallet.GetCurrency((CurrencyType)currency);
+            if(p.wallet){info.BagTotal=p.wallet.TotalCurrency;info.BagCapacity=AdvisorBehaviour.Active.Actions.NormalCapacity(p.playerId);}
+            if(cam){var rect=cam.rect;info.ViewX=rect.x;info.ViewY=rect.y;info.ViewW=rect.width;info.ViewH=rect.height;}
+            if(!info.Local){info.ViewX=0;info.ViewY=0;info.ViewW=1;info.ViewH=1;}
+            var steed=p.steed;
+            if(steed){info.Mount=Catalog.Clean(steed.name);info.Stamina=steed.Stamina;info.Fed=steed.WellFedTimer;info.MountState=steed.IsTired?"疲劳":steed.WellFedTimer>0?"饱食":"正常";info.Ability=p.IsManualAttackActivable?"攻击可用":p.IsSpitActivable?"特殊能力可用":"";}
+            if(steed&&steed.steedAbilities!=null){var abilities=steed.steedAbilities;for(int ai=0;ai<abilities.Length;ai++){var ability=abilities[ai];if(ability&&!ability.IsAutomaticAbility)info.Ability+=(info.Ability.Length>0?" · ":"")+(ability.IsAbilityReady?"能力就绪":"能力冷却中");}}
+            var target=p.selectedPayable;
+            if(!target&&info.Local)
+            {
+                float dist=7;var all=Managers._Inst.payables?.AllPayables;
+                if(all!=null)for(int i=0;i<all.Length;i++){var candidate=all[i];if(!candidate||!candidate.gameObject.activeInHierarchy)continue;float d=Math.Abs(candidate.transform.position.x-info.X);if(d<dist){dist=d;target=candidate;}}
+            }
+            if(target)info.Target=ReadTarget(target,p);
+            if(Explored.TryGetValue(info.Id,out var range))Explored[info.Id]=System.Tuple.Create(Math.Min(range.Item1,info.X-15),Math.Max(range.Item2,info.X+15));
+            else Explored[info.Id]=System.Tuple.Create(info.X-15,info.X+15);
+            State.Players.Add(info);
+        }
+        private TargetInfo ReadTarget(Payable payable,Player player)
+        {
+            var raw=payable.gameObject.name;var entry=Catalog.Resolve(raw);
+            var t=new TargetInfo{Raw=raw,Name=entry.Name,Description=entry.Description,Advice=entry.Advice,Category=entry.Category,Cost=payable.Price,Currency=Catalog.Currency(payable.Currency.ToString()),X=payable.transform.position.x};
+            LockIndicator.LockReason reason;
+            t.Locked=payable.IsLocked(player,out reason);t.Lock=Catalog.Lock(reason.ToString());
+            var upgrade=payable.TryCast<PayableUpgrade>();
+            if(upgrade&&upgrade.nextPrefab)t.Next=Catalog.Clean(upgrade.nextPrefab.name);
+            var wall=payable.GetComponent<Wall>();
+            if(wall){t.Level=wall.level;t.Details="驻防：弓箭手 "+wall.archerCount+" · 长枪兵 "+wall.pikemanCount;var damage=wall._damageable;if(damage){t.Health=damage.hitPoints;t.HealthMax=damage.initialHitPoints;t.Details+="\n耐久 "+damage.hitPoints+" / 初始 "+damage.initialHitPoints;}}
+            var tower=payable.GetComponent<Tower>();if(tower)t.Level=tower.level;
+            var farm=payable.GetComponent<Farmhouse>();if(farm)t.Level=farm.level;
+            var castle=payable.GetComponent<Castle>();if(castle)t.Level=(int)castle.level+1;
+            if(farm){t.Details="农田地块 "+(farm.farmlands?.Count??0)+" / "+farm.maxFarmlands;if(farm.isStable)t.Details+="\n马厩坐骑 "+(farm.stabledSteeds?.Count??0)+" / "+farm.maxNumSteeds;}
+            var shop=payable.TryCast<PayableShop>();if(shop){int stocked=0;var items=shop._items;if(items!=null)for(int i=0;i<items.Length;i++)if(items[i]&&items[i].gameObject.activeInHierarchy)stocked++;t.Stock=stocked;t.StockMax=shop.maxItems;t.Details="工具库存 "+stocked+" / "+shop.maxItems;}
+            var building=payable.GetComponent<WorkableBuilding>();
+            if(building&&building.UnderConstruction){t.UnderConstruction=true;var construction=building._constructionBuilding;if(construction&&construction._buildPoints>0){t.Construction=Math.Clamp(construction._currentBuildPoints/construction._buildPoints*100,0,100);t.Details+="\n施工进度 "+t.Construction.ToString("F0")+"%";}}
+            if(State.Counts.TryGetValue(entry.Key,out var count)&&entry.Key!="unknown")t.Details+=(t.Details.Length>0?"\n":"")+"本岛同类交互点："+count;
+            return t;
+        }
+    }
+}

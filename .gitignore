@@ -1,0 +1,4 @@
+.install-backups/
+verification/
+releases/
+*.log

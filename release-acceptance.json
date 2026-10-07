@@ -1,0 +1,32 @@
+{
+  "version": "0.5.8",
+  "dllHash": "844E412ADD2EB731B4C1A382D93C445AF5224A44329757230A7974B4C83773E2",
+  "sourceHashes": {
+    "src\\PadInput.cs": "CD2A2E586E31CB7382AFA7F31E78DB464FA9C715A1D3DD471575972DC00320C3",
+    "src\\MapPresentation.cs": "58FDE746A9181C9421E49D72AD3AB006F91947AACD009333331211200EC5F3C1",
+    "src\\View.cs": "1C82B023C692BB8DB59F1EDF434F6684C6EB7EA8E802196E6A0A7DE5F2CCC509",
+    "src\\Plugin.cs": "D43D7551DFD78ED46557D8FF36CDD08FFA0B94E0750C691F3CA7BA2895CBA397",
+    "src\\MenuState.cs": "581B232206EA75596AE30E97B619CC7E964527AEDA70B1EB885DC5DB4CC0760A",
+    "src\\Model.cs": "9B065219FADC92735C7F84D78778098E454D68B678BBC36406F828134EF664DB",
+    "src\\GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
+    "src\\AssistModel.cs": "DB04209CD76E3484B84211EF66815ECBC36118E9D9598AF5CB5B63FAFA48E75A",
+    "src\\Controller.cs": "FE093F349CD4322F5A72F222AFBD0C0AA657F27D96A777604619B02EA91ABC7C",
+    "src\\IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E"
+  },
+  "manual": {
+    "controllerIsolation": "passed",
+    "settingsPagination": "passed",
+    "catalogPagination": "passed",
+    "deviceSwitch": "passed",
+    "resourceBehaviour": "passed",
+    "mapEnemyRefresh": "passed",
+    "mapInitialLoad": "passed",
+    "playerCoinRows": "passed",
+    "padHudVisibility": "passed"
+  },
+  "baseline": "0.5.8 用户最终验收通过，2026-10-07",
+  "channels": [
+    "GitHub",
+    "Nexus Mods"
+  ]
+}
