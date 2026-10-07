@@ -51,4 +51,4 @@ The island journal and diagnostics are stored in BepInEx/config/KingdomAdvisor/.
 
 Source: https://github.com/boyl/kingdom-advisor
 
-This 0.6.0 package is prepared for the user to publish. It has not been uploaded as a new GitHub or Nexus Mods release.
+Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor/releases). Nexus Mods uploads are handled by the author.

@@ -56,4 +56,4 @@
 
 0.5.8 已获用户最终验收。0.6.0 增加语言解析、显示文案覆盖检查和双语言实景布局验证；源码、已安装DLL与上传包绑定校验。联机保持开放，双端及全部DLC尚未验证。
 
-0.6.0 由用户自行发布，目前未上传新的 GitHub／Nexus Mods Release。源码：https://github.com/boyl/kingdom-advisor。
+下载与更新：[GitHub Releases](https://github.com/boyl/kingdom-advisor/releases)。Nexus Mods 上传由用户操作。
