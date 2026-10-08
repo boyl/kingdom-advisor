@@ -15,10 +15,10 @@
     "src/View.cs": "7302EEA4479B8C9168B832B76E9651B88C7D7948650A20BB33DA243D38CF4BD1"
   },
   "manual": {
-    "nearbyArrivalDeparture": "unverified",
-    "maximumAndConvertedBuildings": "unverified",
-    "lateIslandRunningMap": "unverified",
-    "bilingualAdvisorAlignment": "unverified"
+    "nearbyArrivalDeparture": "passed",
+    "maximumAndConvertedBuildings": "passed",
+    "lateIslandRunningMap": "passed",
+    "bilingualAdvisorAlignment": "passed"
   },
   "runtime": {
     "population": "passed-current-save-98",
@@ -28,5 +28,6 @@
   "channels": [
     "GitHub",
     "Nexus Mods"
-  ]
+  ],
+  "userAcceptance": "用户确认四项最终验收并授权正式发布；2026-10-08。"
 }

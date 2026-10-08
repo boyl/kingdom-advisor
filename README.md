@@ -23,7 +23,7 @@
 
 ### 2. 安装王国顾问
 
-1. 从 [0.6.0 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.0) 下载 **`KingdomAdvisor-0.6.0.zip`**，不要下载源码包。
+1. 从 [0.6.1 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.1) 下载 **`KingdomAdvisor-0.6.1.zip`**，不要下载源码包。
 2. 确保游戏已退出。解压 Mod，将其中的 `BepInEx` 文件夹合并到游戏目录。
 3. 核对插件路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。
 4. 正常启动游戏，Mod 自动加载。**F6** 打开设置，**F7** 打开图鉴；手柄默认短按**左摇杆 L3** 打开界面，无需独立启动器。
@@ -78,4 +78,4 @@
 
 下载与更新：[GitHub Releases](https://github.com/boyl/kingdom-advisor/releases)。Nexus Mods 上传由用户操作。
 
-0.6.1 当前为待最终验收候选，新增建筑详情与人口统计的验收记录见 [验收文档](docs/acceptance/building-details-audit.md)。上面的0.6.0下载链接仍指向稳定版。
+0.6.1 已获用户最终验收，建筑详情与人口统计的验证证据见 [验收文档](docs/acceptance/building-details-audit.md)。

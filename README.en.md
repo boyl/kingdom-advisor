@@ -34,7 +34,7 @@ Skip this step if the appropriate BepInEx version is already installed. See the 
 
 ### 2. Install Kingdom Advisor
 
-1. Download **`KingdomAdvisor-0.6.0.zip`** from the [0.6.0 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.0), rather than the source archive.
+1. Download **`KingdomAdvisor-0.6.1.zip`** from the [0.6.1 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.1), rather than the source archive.
 2. With the game closed, extract the mod and merge its `BepInEx` folder into the game directory.
 3. Check that the plugin is at `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`.
 4. Launch the game normally. The mod loads automatically: **F6** opens settings, **F7** opens the catalog, and a short press of **left stick (L3)** opens the controller interface. No separate launcher is needed.
@@ -71,4 +71,4 @@ Source: https://github.com/boyl/kingdom-advisor
 
 Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor/releases). Nexus Mods uploads are handled by the author.
 
-0.6.1 is a candidate pending final acceptance. The download link above still points to stable 0.6.0. See [acceptance records](docs/acceptance/building-details-audit.md).
+0.6.1 passed final user acceptance. See [acceptance records](docs/acceptance/building-details-audit.md).

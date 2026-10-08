@@ -6,9 +6,9 @@
 - 补齐 Keep、左右炸弹旗与船只残骸的名称映射。
 - 固定地图标签优先级及聚合锚点，减少跑动时重新排布。
 
-本轮已通过自动测试、二进制审计和当前存档98角色实机计数核对。后期岛屿跑动、到达/离开建筑、中英文新布局尚待最终视觉验收；不沿用0.6.0人工passed状态。
+本轮已通过自动测试、二进制审计和当前存档98角色实机计数核对。后期岛屿跑动、到达/离开建筑、满级改造建筑及中英文新布局已获用户最终验收；联机及全部DLC矩阵未重新验证。
 
-Fixes duplicate fisher/pikeman counts, improves nearby building detection and descriptions, aligns the detail card with the advisor, and stabilizes map grouping and label priorities. Current-save population verification passed for 98 characters. Final movement, proximity and bilingual layout acceptance is pending; this candidate is not yet a stable release.
+Fixes duplicate fisher/pikeman counts, improves nearby building detection and descriptions, aligns the detail card with the advisor, and stabilizes map grouping and label priorities. Current-save population verification passed for 98 characters. Final movement, proximity and bilingual layout checks passed user acceptance. Multiplayer and the full DLC matrix were not retested.
 # 0.6.0 更新说明 / Release notes
 
 增加完整中英双语界面：图鉴、名称、说明、锁定原因、地图状态、顾问、设置、资源操作和手柄提示。
