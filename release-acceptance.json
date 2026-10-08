@@ -1,33 +1,31 @@
 {
-  "version": "0.6.1",
-  "dllHash": "3DDC7CAA9547182BE7D7F15FEDC6A8608108D642F1E463D635848056F2207658",
+  "version": "0.6.2",
+  "dllHash": "89344507133303DD01810748748B72BC875187451C8E53D4E7861708A8C8E52D",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/Controller.cs": "461D8ADDDD0973233F83FFE4D539C5843AE1D511C258A71CDCB457D212DB8D2C",
     "src/GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
-    "src/Localization.cs": "E0B438C0A26D932524FB101FD78DB161F1ED6AD6FDC202E7CE10131930BD30AB",
+    "src/Localization.cs": "5DD9B8E45E3B95AEB85791B322A8B7D3420B3D5E847B4E62A19115AAB19A80E4",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "581B232206EA75596AE30E97B619CC7E964527AEDA70B1EB885DC5DB4CC0760A",
-    "src/Model.cs": "EDCEA48C830E9F22D89FF02AE6C52AAFB204FA01E721DD9F729A1062092D8C1F",
+    "src/Model.cs": "B13B0640F9DB010F08A46A1CCAFF92A63C994928A7EA4DE53E0CCD435B71D2AF",
     "src/PadInput.cs": "CD2A2E586E31CB7382AFA7F31E78DB464FA9C715A1D3DD471575972DC00320C3",
-    "src/Plugin.cs": "20AA4FD7D422A84861897C54061EA85EEAC9382B255161204EB0C15979BAACB1",
+    "src/Plugin.cs": "0A0B1DE6CE180E20530801759DE2AE1225A385C2843E59589697B53A14BDE84D",
     "src/View.cs": "7302EEA4479B8C9168B832B76E9651B88C7D7948650A20BB33DA243D38CF4BD1"
   },
   "manual": {
-    "nearbyArrivalDeparture": "passed",
-    "maximumAndConvertedBuildings": "passed",
-    "lateIslandRunningMap": "passed",
-    "bilingualAdvisorAlignment": "passed"
+    "releaseAuthorization": "passed",
+    "nativeCrownLossReviewed": "passed"
   },
   "runtime": {
-    "population": "passed-current-save-98",
-    "evidence": "docs/acceptance/evidence/island1-population-verification.json"
+    "population": "passed-current-save-62",
+    "evidence": "docs/acceptance/evidence/v0.6.2-runtime.txt"
   },
-  "baseline": "0.6.0为历史已发布基线，其人工通过状态不继承为0.6.1验证。",
+  "baseline": "0.6.1已验收基线；本轮仅分类与说明更新，原传送及界面逻辑保持不变。",
   "channels": [
     "GitHub",
     "Nexus Mods"
   ],
-  "userAcceptance": "用户确认四项最终验收并授权正式发布；2026-10-08。"
+  "userAcceptance": "用户确认失冠镜头行为正常，明确授权发布；修正后炸弹画面未单独留证。2026-10-08。"
 }

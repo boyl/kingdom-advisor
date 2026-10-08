@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.1";
+        public const string Version="0.6.2";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -233,7 +233,7 @@ namespace KingdomAdvisor
             if(all!=null)foreach(var p in all)
             {
                 if(!p||!p.gameObject.activeInHierarchy)continue;
-                var e=Catalog.Resolve(p.name);
+                var e=Catalog.ResolveNative(p.name,p.GetIl2CppType().Name);
                 yield return "payable\t"+p.name+"\t"+p.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+p.transform.position.x;
             }
             var kingdom=Managers._Inst?.kingdom;
@@ -285,7 +285,7 @@ namespace KingdomAdvisor
                 for(int i=0;i<all.Length;i++)
                 {
                     var p=all[i];if(!p||!p.gameObject.activeInHierarchy)continue;
-                    var entry=Catalog.Resolve(p.gameObject.name);var x=p.transform.position.x;
+                    var entry=Catalog.ResolveNative(p.gameObject.name,p.GetIl2CppType().Name);var x=p.transform.position.x;
                     s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
                     if(!s.Counts.ContainsKey(entry.Key))s.Counts[entry.Key]=0;s.Counts[entry.Key]++;
                     if(entry.Category=="环境"&&!Plugin.Instance.Settings.Trees.Value)continue;
@@ -409,7 +409,7 @@ namespace KingdomAdvisor
         private TargetInfo ReadBuildingTarget(GameObject obj,Player player)
         {
             var payable=NativeComponent<Payable>(obj);
-                        var raw=obj.name;var entry=Catalog.Resolve(raw);
+                        var raw=obj.name;var entry=payable?Catalog.ResolveNative(raw,payable.GetIl2CppType().Name):Catalog.Resolve(raw);
             if(NativeChild<Ballista>(obj))entry=Catalog.Entries.First(e=>e.Key=="ballista");
             else if(NativeChild<Baker>(obj))entry=Catalog.Entries.First(e=>e.Key=="baker");
             var t=new TargetInfo{Raw=raw,Name=entry.Name,Description=entry.Description,Advice=entry.Advice,Category=entry.Category,Cost=payable?payable.Price:-1,Currency=payable?Catalog.Currency(payable.Currency.ToString()):"",X=obj.transform.position.x};

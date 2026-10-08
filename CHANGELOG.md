@@ -1,3 +1,12 @@
+# 0.6.2 更新说明 / Release notes
+
+- 补齐购买后生成的炸弹名称与作用，中英文均可显示。
+- 32种明确原生对象类型按实际身份识别，减少模型名称变化导致的遗漏。
+- 发布门禁检查当前场景未知交互物；保留原有传送及失冠后的游戏行为。
+
+自动分类、本地化与回归检查通过；当前岛屿62名角色计数核对通过。用户授权发布。炸弹修正经过真实对象清单与分类测试验证，修正后的炸弹画面未单独留证；全部主题、DLC及联机矩阵未重新验证。
+
+Adds bilingual descriptions for spawned bombs, classifies 32 native object types, and blocks release when the checked scene contains unknown interactables. Teleport and native crown-loss behavior remain unchanged. Automated checks and current-scene population verification passed; the full DLC and multiplayer matrix was not retested.
 # 0.6.1 更新说明 / Release notes
 
 - 修正渔夫重复计入长枪兵；补充人口分类，并增加逐角色核对。

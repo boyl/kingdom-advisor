@@ -1,0 +1,35 @@
+version=0.6.2
+utc=2026-10-08T11:15:30.3301489Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+playing=True
+online=False
+island=1
+day=1
+points=63
+worldReadMaxMs=40.420
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=2
+gameplayRuleWrites=4
+teleports=0
+resourceAdds=0
+error=
+player=0 local=True coins=32 target=Castle7(Clone) rect=0,0,1,1 original=1000 capacity=2147483647 total=33 gems=0 numeric=True
+population=工匠 20
+population=弓手 6
+population=骑士 1
+population=农民 15
+population=游民 0
+population=长枪兵 56
+population=待业平民 2
+populationTotal=100
+enemiesAvailable=True enemies=0 camps=0

@@ -1,0 +1,40 @@
+version=0.6.2
+utc=2026-10-08T10:57:42.7031704Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+playing=True
+online=False
+island=4
+day=16
+points=229
+worldReadMaxMs=48.322
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=2
+gameplayRuleWrites=155
+teleports=0
+resourceAdds=0
+error=
+player=0 local=True coins=1 target=none rect=0,0,1,1 original=1000 capacity=2147483647 total=1 gems=0 numeric=True
+population=工匠 6
+population=弓手 7
+population=骑士 0
+population=农民 0
+population=游民 49
+population=隐士 1
+populationTotal=62
+enemiesAvailable=True enemies=6 camps=2
+enemy=-55154 kind=Boss x=108.67
+enemy=-55318 kind=BossWithStealer x=108.67
+enemy=-58208 kind=Boss x=108.67
+enemy=-58434 kind=Boss x=108.67
+enemy=-59590 kind=Boss x=108.67
+enemy=-60946 kind=Boss x=108.67

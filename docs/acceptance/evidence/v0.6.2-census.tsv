@@ -1,0 +1,310 @@
+kind	raw	nativeType	category	entry	x
+payable	oakTree(Clone)	PayableTree	环境	tree	-221.49219
+payable	Tree(Clone)	PayableTree	环境	tree	-220.3445
+payable	Tree(Clone)	PayableTree	环境	tree	-219.15842
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	-218.43
+payable	oakTree(Clone)	PayableTree	环境	tree	-218.33037
+payable	birchTree(Clone)	PayableTree	环境	tree	-216.93169
+payable	Tree(Clone)	PayableTree	环境	tree	-216.22803
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	-216
+payable	birchTree(Clone)	PayableTree	环境	tree	-215.31693
+payable	oakTree(Clone)	PayableTree	环境	tree	-214.78073
+payable	Tree(Clone)	PayableTree	环境	tree	-214
+payable	oakTree(Clone)	PayableTree	环境	tree	-212.87541
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-212.59
+payable	oakTree(Clone)	PayableTree	环境	tree	-211.53633
+payable	Tree(Clone)	PayableTree	环境	tree	-210.71313
+payable	birchTree(Clone)	PayableTree	环境	tree	-209.9054
+payable	oakTree(Clone)	PayableTree	环境	tree	-208.77612
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	-208.40999
+payable	Tree(Clone)	PayableTree	环境	tree	-207.2797
+payable	oakTree(Clone)	PayableTree	环境	tree	-206.40169
+payable	oakTree(Clone)	PayableTree	环境	tree	-205.5109
+payable	birchTree(Clone)	PayableTree	环境	tree	-198.35248
+payable	oakTree(Clone)	PayableTree	环境	tree	-197.25977
+payable	birchTree(Clone)	PayableTree	环境	tree	-196.60239
+payable	oakTree(Clone)	PayableTree	环境	tree	-196
+payable	birchTree(Clone)	PayableTree	环境	tree	-195.46286
+payable	birchTree(Clone)	PayableTree	环境	tree	-194.57202
+payable	oakTree(Clone)	PayableTree	环境	tree	-193.97638
+payable	Tree(Clone)	PayableTree	环境	tree	-193.22162
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	-191.70999
+payable	oakTree(Clone)	PayableTree	环境	tree	-191.4375
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	-190
+payable	birchTree(Clone)	PayableTree	环境	tree	-188.40625
+payable	birchTree(Clone)	PayableTree	环境	tree	-186.8523
+payable	oakTree(Clone)	PayableTree	环境	tree	-185.40225
+payable	birchTree(Clone)	PayableTree	环境	tree	-184
+payable	Tree(Clone)	PayableTree	环境	tree	-182.84251
+payable	oakTree(Clone)	PayableTree	环境	tree	-181.72737
+payable	Tree(Clone)	PayableTree	环境	tree	-174.43556
+payable	birchTree(Clone)	PayableTree	环境	tree	-173.9037
+payable	oakTree(Clone)	PayableTree	环境	tree	-173.36757
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	-173.34
+payable	oakTree(Clone)	PayableTree	环境	tree	-172
+payable	birchTree(Clone)	PayableTree	环境	tree	-171.16412
+payable	birchTree(Clone)	PayableTree	环境	tree	-169.66417
+payable	Egg(Clone)	SteedSpawn	坐骑	steed	-161.65625
+payable	Tree(Clone)	PayableTree	环境	tree	-154.1551
+payable	birchTree(Clone)	PayableTree	环境	tree	-153.51445
+payable	birchTree(Clone)	PayableTree	环境	tree	-152.49902
+payable	birchTree(Clone)	PayableTree	环境	tree	-152
+payable	birchTree(Clone)	PayableTree	环境	tree	-151.25897
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-150.8
+payable	Tree(Clone)	PayableTree	环境	tree	-150.59929
+payable	birchTree(Clone)	PayableTree	环境	tree	-149.93645
+payable	Wall1(Clone)	PayableUpgrade	防御	wall	-142.45
+payable	Tree(Clone)	PayableTree	环境	tree	-138.53197
+payable	birchTree(Clone)	PayableTree	环境	tree	-137.62086
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	-138
+payable	birchTree(Clone)	PayableTree	环境	tree	-136.71364
+payable	oakTree(Clone)	PayableTree	环境	tree	-136
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-135.76999
+payable	oakTree(Clone)	PayableTree	环境	tree	-135.20966
+payable	Tree(Clone)	PayableTree	环境	tree	-134.26071
+payable	birchTree(Clone)	PayableTree	环境	tree	-133.15912
+payable	Tree(Clone)	PayableTree	环境	tree	-126.068565
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-125.75
+payable	oakTree(Clone)	PayableTree	环境	tree	-125.14551
+payable	birchTree(Clone)	PayableTree	环境	tree	-124
+payable	oakTree(Clone)	PayableTree	环境	tree	-122.5593
+payable	Tree(Clone)	PayableTree	环境	tree	-121.70369
+payable	Tree(Clone)	PayableTree	环境	tree	-114.293144
+payable	birchTree(Clone)	PayableTree	环境	tree	-113.721596
+payable	Tree(Clone)	PayableTree	环境	tree	-112.78715
+payable	Tree(Clone)	PayableTree	环境	tree	-112
+payable	oakTree(Clone)	PayableTree	环境	tree	-110.78415
+payable	birchTree(Clone)	PayableTree	环境	tree	-110.013794
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-109.049995
+payable	birchTree(Clone)	PayableTree	环境	tree	-94.69672
+payable	birchTree(Clone)	PayableTree	环境	tree	-93.26601
+payable	Tree(Clone)	PayableTree	环境	tree	-92.72508
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-92.35
+payable	Tree(Clone)	PayableTree	环境	tree	-92
+payable	birchTree(Clone)	PayableTree	环境	tree	-90.50237
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	-90
+payable	birchTree(Clone)	PayableTree	环境	tree	-89.1994
+payable	SummonBell	BoatSummoningBell	航行	bell	-84.96905
+payable	BoatSailPosition Stone(Clone)	BoatSailPosition	航行	boat	-81.84375
+payable	BoatSailPosition Stone(Clone)	PayableUpgrade	航行	boat	-81.84375
+payable	GemBankChest	PayableGemChest	探索	chest	-77.97375
+payable	GemGuard	PayableGemGuard	经济	gemguard	-76.69375
+payable	Wharf(Clone)	Wharf	航行	wharf	-74
+payable	birchTree(Clone)	PayableTree	环境	tree	-70.47264
+payable	oakTree(Clone)	PayableTree	环境	tree	-69.9125
+payable	oakTree(Clone)	PayableTree	环境	tree	-68.801735
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	-68.13
+payable	birchTree(Clone)	PayableTree	环境	tree	-67.99828
+payable	birchTree(Clone)	PayableTree	环境	tree	-66.9794
+payable	birchTree(Clone)	PayableTree	环境	tree	-66
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	-66
+payable	Tree(Clone)	PayableTree	环境	tree	-65.28352
+payable	Tree(Clone)	PayableTree	环境	tree	-63.87206
+payable	Tree(Clone)	PayableTree	环境	tree	-62
+payable	oakTree(Clone)	PayableTree	环境	tree	-55
+payable	oakTree(Clone)	PayableTree	环境	tree	-53.407604
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-52.27
+payable	oakTree(Clone)	PayableTree	环境	tree	-52
+payable	birchTree(Clone)	PayableTree	环境	tree	-50.806282
+payable	oakTree(Clone)	PayableTree	环境	tree	-50
+payable	oakTree(Clone)	PayableTree	环境	tree	-43
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	-42.25
+payable	Tower Baker(Clone)	PayableShop	人口	baker	-41.41
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-40
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	-35.57
+payable	Hermit House Knight(Clone)	Cabin	特殊	cabin	-30.875
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	-17
+payable	Tower Baker(Clone)	PayableShop	人口	baker	-15.5
+payable	Border(Clone)	PayableBorder	建设	border	-9.5
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	-8.75
+payable	Tower Baker(Clone)	PayableShop	人口	baker	-7.25
+payable	ShopHammer(Clone)	PayableShop	工具	hammer	-4.5
+payable	BombBannerLeft	PayableBombLeft	军队	bombpurchase	-2.84375
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-1.90625
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-1.375
+payable	Castle7(Clone)	PayableUpgrade	建设	castle	0
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	1.375
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	1.90625
+payable	BombBannerRight	PayableBombRight	军队	bombpurchase	2.875
+payable	Hermit Baker(Clone)	Hermit	特殊	hermit	3.0544815
+payable	ShopBow(Clone)	PayableShop	工具	bow	4.5
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	7.25
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	8.75
+payable	Border(Clone)	PayableBorder	建设	border	9.5
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	15.5
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	17
+payable	Horse Regular(Clone)	Steed	坐骑	horse	22.563595
+payable	Warhorse P1(Clone)	Steed	坐骑	horse	22.666838
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	25.55
+payable	Horse Regular P2(Clone)	Steed	坐骑	horse	25.719246
+payable	Tower Baker(Clone)	PayableShop	人口	baker	28.05
+payable	Wall2 Wreck(Clone)	PayableUpgrade	防御	wall	32.23
+payable	Citizen_House(Clone)	CitizenHousePayable	人口	citizenhouse	34
+payable	Horse Stamina(Clone)	Steed	坐骑	horse	45.04428
+payable	Tower6(Clone)	PayableUpgrade	防御	tower	49.76
+payable	Wall5 Wreck(Clone)	PayableUpgrade	防御	wall	52.27
+payable	Bearcave(Clone)	SteedSpawn	坐骑	steed	65.375
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	77.32
+payable	Tree(Clone)	PayableTree	环境	tree	78.077126
+payable	birchTree(Clone)	PayableTree	环境	tree	78.88375
+payable	birchTree(Clone)	PayableTree	环境	tree	80.5625
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	82
+payable	birchTree(Clone)	PayableTree	环境	tree	83.59375
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	84.829994
+payable	Tree(Clone)	PayableTree	环境	tree	85.43624
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	85.67
+payable	oakTree(Clone)	PayableTree	环境	tree	86.9078
+payable	birchTree(Clone)	PayableTree	环境	tree	88
+payable	birchTree(Clone)	PayableTree	环境	tree	88.82517
+payable	oakTree(Clone)	PayableTree	环境	tree	90.024284
+payable	birchTree(Clone)	PayableTree	环境	tree	90.56868
+payable	TeleporterRift(Clone)	PayableUpgrade	探索	teleporter	94
+payable	oakTree(Clone)	PayableTree	环境	tree	97.43501
+payable	oakTree(Clone)	PayableTree	环境	tree	98.91637
+payable	Tree(Clone)	PayableTree	环境	tree	100
+payable	Tree(Clone)	PayableTree	环境	tree	101.20843
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	101.53
+payable	Tree(Clone)	PayableTree	环境	tree	102.32884
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	102.369995
+payable	birchTree(Clone)	PayableTree	环境	tree	102.969635
+payable	Stag(Clone)	Steed	坐骑	steed	112.94598
+payable	Player 1	PayablePlayer	未分类	unknown	112.94598
+payable	oakTree(Clone)	PayableTree	环境	tree	117.32415
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	117.399994
+payable	birchTree(Clone)	PayableTree	环境	tree	118.515076
+payable	Tree(Clone)	PayableTree	环境	tree	119.0527
+payable	Tree(Clone)	PayableTree	环境	tree	120
+payable	oakTree(Clone)	PayableTree	环境	tree	121.45677
+payable	Tree(Clone)	PayableTree	环境	tree	122.36505
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	124.079994
+payable	oakTree(Clone)	PayableTree	环境	tree	124.5625
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	126
+payable	birchTree(Clone)	PayableTree	环境	tree	127.59375
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	128.25
+payable	Tree(Clone)	PayableTree	环境	tree	130.15752
+payable	oakTree(Clone)	PayableTree	环境	tree	131.38074
+payable	birchTree(Clone)	PayableTree	环境	tree	132
+payable	birchTree(Clone)	PayableTree	环境	tree	133.402
+payable	birchTree(Clone)	PayableTree	环境	tree	134.31247
+payable	TeleporterRift(Clone)	PayableUpgrade	探索	teleporter	138
+payable	birchTree(Clone)	PayableTree	环境	tree	141.06418
+payable	oakTree(Clone)	PayableTree	环境	tree	141.63232
+payable	oakTree(Clone)	PayableTree	环境	tree	142.92204
+payable	Tree(Clone)	PayableTree	环境	tree	144
+payable	Tree(Clone)	PayableTree	环境	tree	144.88574
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	144.95
+payable	birchTree(Clone)	PayableTree	环境	tree	145.77573
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	160
+payable	Tree(Clone)	PayableTree	环境	tree	161.25829
+payable	Tree(Clone)	PayableTree	环境	tree	162.57484
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	163.31999
+payable	Tree(Clone)	PayableTree	环境	tree	164
+payable	Tree(Clone)	PayableTree	环境	tree	164.83183
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	165.83
+payable	birchTree(Clone)	PayableTree	环境	tree	166.26459
+payable	Tree(Clone)	PayableTree	环境	tree	168.5625
+payable	birchTree(Clone)	PayableTree	环境	tree	171.59375
+payable	Tower0(Clone)	PayableUpgrade	防御	tower	173.34
+payable	oakTree(Clone)	PayableTree	环境	tree	174.54091
+payable	oakTree(Clone)	PayableTree	环境	tree	176
+payable	TeleporterRift(Clone)	PayableUpgrade	探索	teleporter	182
+payable	Tree(Clone)	PayableTree	环境	tree	185.25243
+payable	birchTree(Clone)	PayableTree	环境	tree	186.62907
+payable	oakTree(Clone)	PayableTree	环境	tree	187.4258
+payable	birchTree(Clone)	PayableTree	环境	tree	188
+payable	Tree(Clone)	PayableTree	环境	tree	189.12917
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	189.20999
+payable	birchTree(Clone)	PayableTree	环境	tree	189.79205
+payable	Tree(Clone)	PayableTree	环境	tree	190.5588
+payable	birchTree(Clone)	PayableTree	环境	tree	205.2016
+payable	birchTree(Clone)	PayableTree	环境	tree	206.1236
+payable	oakTree(Clone)	PayableTree	环境	tree	206.96747
+payable	Wall0(Clone)	PayableUpgrade	防御	wall	207.58
+payable	birchTree(Clone)	PayableTree	环境	tree	208
+payable	Tree(Clone)	PayableTree	环境	tree	209.01138
+payable	oakTree(Clone)	PayableTree	环境	tree	209.7761
+payable	birchTree(Clone)	PayableTree	环境	tree	210.42964
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	210
+payable	TeleporterRift(Clone)	PayableUpgrade	探索	teleporter	221.53125
+payable	Lighthouse_undeveloped(Clone)	PayableUpgrade	航行	lighthouse	223.25
+character	Archer P15 [16]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	50.01
+character	Archer P16 [17]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	50.385
+character	Beggar [5]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	1.1539214
+character	Beggar (1) [2]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-57.85123
+character	Beggar P21 [68]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-44.774876
+character	Beggar P11 [5E]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-56.371532
+character	Beggar P34 [75]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.420506
+character	Beggar P29 [70]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-44.446495
+character	Beggar P30 [71]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.00684
+character	Beggar P32 [73]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.37956
+character	Beggar P31 [72]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.691444
+character	Archer P8 [7C]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	49.47875
+character	Archer P10 [7E]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	49.10375
+character	Beggar P38 [79]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-49.344494
+character	Worker P6 [A2]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-2.3193586
+character	Beggar P22 [69]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-47.783646
+character	Beggar P5 [58]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-47.208443
+character	Beggar [4]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-0.47998887
+character	Worker P10 [A6]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	2.8681083
+character	Beggar P26 [6D]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.564785
+character	Beggar P4 [57]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-44.25848
+character	Beggar P1 [54]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.83178
+character	Beggar P18 [65]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.079742
+character	Beggar P25 [6C]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-46.496548
+character	Worker P12 [A8]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-2.2256544
+character	Beggar P44 [B8]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-49.055344
+character	Beggar P15 [62]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-43.57995
+character	Beggar [1]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.054375
+character	Beggar P19 [66]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-44.783073
+character	Beggar P17 [64]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-42.787125
+character	Beggar P23 [6A]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.05748
+character	Beggar P27 [6E]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-47.14641
+character	Beggar P24 [6B]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-44.945454
+character	Archer P9 [7D]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	-7.035375
+character	Beggar P16 [63]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-47.541367
+character	Beggar P10 [5D]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-42.86377
+character	Beggar P7 [5A]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.754856
+character	Beggar P9 [5C]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-43.775448
+character	Worker P2 [80]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	3.0824656
+character	Beggar P2 [55]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-42.59553
+character	Worker P14 [AA]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-1.1899977
+character	Worker P8 [A4]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	1.9073135
+character	Beggar P6 [59]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.906654
+character	Beggar P46 [BA]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-46.69852
+character	Beggar P12 [5F]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.930695
+character	Beggar P3 [56]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.977192
+character	Beggar (1) [0]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-43.22246
+character	Beggar P13 [60]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-46.851513
+character	Beggar P14 [61]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-44.719814
+character	Beggar P20 [67]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.40958
+character	Beggar P47 [BB]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.49468
+character	Beggar P48 [BC]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.46459
+character	Archer P11 [12]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	6.8200927
+character	Beggar P8 [5B]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.882744
+character	Beggar P45 [B9]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.05395
+character	Archer P6 [D]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	6.8525715
+character	Beggar P49 [BD]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-47.476303
+character	Beggar P33 [74]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-43.504166
+character	Beggar P35 [76]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-48.97047
+character	Beggar P39 [7A]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.930256
+character	Beggar P36 [77]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.322605
+character	Beggar P37 [78]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=True berserker=False stable=False	-45.461
+building	Tower Baker(Clone)	WorkableBuilding	人口	baker	-41.41
+building	Tower Baker(Clone)	WorkableBuilding	人口	baker	-15.5
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-40
+building	Tower Baker(Clone)	WorkableBuilding	人口	baker	-7.25
+building	Tower Knight(Clone)	WorkableBuilding	防御	tower	7.25
+building	Tower6(Clone)	WorkableBuilding	防御	tower	49.76
+building	FarmhouseStable(Clone)	WorkableBuilding	经济	farmhouse	46
+building	Citizen_House(Clone)	WorkableBuilding	人口	citizenhouse	34
+building	ShopBow(Clone)	WorkableBuilding	工具	bow	4.5
+building	Tower Baker(Clone)	WorkableBuilding	人口	baker	28.05
+building	FarmhouseStable(Clone)	WorkableBuilding	经济	farmhouse	22
+building	ShopHammer(Clone)	WorkableBuilding	工具	hammer	-4.5
+building	Mine(Clone)	WorkableBuilding	科技	mine	-130
+building	Tower Knight(Clone)	WorkableBuilding	防御	tower	15.5
+building	Keep	WorkableBuilding	建设	castle	0
+building	Tower Baker(Clone)	Baker	人口	baker	-41.41
+building	Tower Baker(Clone)	Baker	人口	baker	-15.5
+building	Tower Baker(Clone)	Baker	人口	baker	-7.25
+building	Tower Baker(Clone)	Baker	人口	baker	28.05

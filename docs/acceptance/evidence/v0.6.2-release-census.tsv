@@ -1,0 +1,237 @@
+kind	raw	nativeType	category	entry	x
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-232
+payable	Border(Clone)	PayableBorder	建设	border	-228.01999
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-227.26999
+payable	Barrel	PayableWorkshopBarrel	防御	barrel	-226.56998
+payable	Workshop(Clone)	PayableWorkshop	工具	workshop	-225.06998
+payable	ShopPike(Clone)	PayableSidedShop	工具	pike	-222.16989
+payable	Hermit House Ballista(Clone)	Cabin	特殊	cabin	-216.875
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-186
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-180.51
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-172.15999
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-165.48
+payable	Statue Archer(Clone)	Statue	特殊	statue	-160
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-146
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-143.76999
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-137.09
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-117.049995
+payable	SummonBell	BoatSummoningBell	航行	bell	-112.7503
+payable	BoatSailPosition Stone(Clone)	BoatSailPosition	航行	boat	-109.625
+payable	BoatSailPosition Stone(Clone)	PayableUpgrade	航行	boat	-109.625
+payable	GemBankChest	PayableGemChest	探索	chest	-105.755
+payable	GemGuard	PayableGemGuard	经济	gemguard	-104.475
+payable	Wreck(Clone)	PayableUpgrade	航行	boat	-101.5625
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-95.34
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-94
+payable	Citizen_House(Clone)	CitizenHousePayable	人口	citizenhouse	-90
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-66.95
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-60.27
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-50.25
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-47
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-43.57
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-25
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	-16.75
+payable	ShopHammer(Clone)	PayableShop	工具	hammer	-12.5
+payable	BombBannerLeft	PayableBombLeft	军队	bombpurchase	-10.84375
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-9.90625
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-9.375
+payable	Player 1	PayablePlayer	未分类	unknown	-8
+payable	Castle7(Clone)	PayableUpgrade	建设	castle	-8
+payable	Horse Regular(Clone)	Steed	坐骑	horse	-8
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-6.625
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-6.09375
+payable	BombBannerRight	PayableBombRight	军队	bombpurchase	-5.125
+payable	ShopBow(Clone)	PayableShop	工具	bow	-3.5
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	0.75
+payable	ShopScythe(Clone)	PayableShop	工具	scythe	3.25
+payable	Tower6(Clone)	PayableUpgrade	防御	tower	7.5
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	9
+payable	Forge(Clone)	PayableShop	工具	forge	11.5
+payable	Citizen_House(Clone)	CitizenHousePayable	人口	citizenhouse	18
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	50.949997
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	52
+payable	Citizen_House(Clone)	CitizenHousePayable	人口	citizenhouse	70
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	86
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	89.36
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	97.71
+payable	MountAreaGriffin(Clone)	SteedSpawn	坐骑	steed	102
+payable	ShopPike(Clone)	PayableSidedShop	工具	pike	105.46629
+payable	Workshop(Clone)	PayableWorkshop	工具	workshop	108.309944
+payable	Barrel	PayableWorkshopBarrel	防御	barrel	109.809944
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	112
+payable	Wall5(Clone)	PayableUpgrade	防御	wall	114.409996
+payable	Border(Clone)	PayableBorder	建设	border	115.159996
+payable	Teleporter(Clone)	PayableTeleporter	探索	teleporter	129.53125
+payable	Lighthouse_Stone(Clone)	PayableUpgrade	航行	lighthouse	131.25
+character	Pikeman P1 [6C]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-86.879715
+character	Pikeman P5 [73]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-125.04187
+character	Pikeman P4 [72]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-231.2571
+character	Pikeman P8 [82]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-214.39806
+character	Pikeman P9 [83]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-226.53357
+character	Pikeman P7 [81]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-177.07262
+character	Pikeman P41 [120]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-237.00932
+character	Pikeman P14 [A1]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-232.40802
+character	Pikeman P13 [A0]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-230.867
+character	Farmer P16 [A2]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	-85.25163
+character	Pikeman P40 [11E]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-229.45169
+character	Worker P15 [FE]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-234.155
+character	Farmer P23 [11F]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	60.750935
+character	Pikeman P21 [BB]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-214.69768
+character	Pikeman P20 [B6]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-234.48418
+character	Pikeman P18 [AD]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-172.60849
+character	Pikeman P16 [A9]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-240.61108
+character	Pikeman P15 [A8]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-190.3321
+character	Pikeman P17 [AC]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-177.66557
+character	Farmer P21 [E5]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	23.438627
+character	Pikeman P23 [E0]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-233.65004
+character	Pikeman P25 [E4]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-207.44904
+character	Worker P20 [DE]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	106.827415
+character	Farmer P19 [E2]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	56.544674
+character	Pikeman P24 [E1]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-207.84128
+character	Farmer P16 [DA]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	-87.34957
+character	Pikeman P27 [EF]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-240.08862
+character	Pikeman P26 [EE]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-227.30844
+character	Pikeman P22 [CE]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-235.05074
+character	Pikeman P32 [10D]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-175.0484
+character	Farmer P20 [112]	Character	peasant=True	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	38.786385
+character	Pikeman P36 [111]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-236.23647
+character	Pikeman P38 [118]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-213.39424
+character	Pikeman P39 [119]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-169.96626
+character	Pikeman P37 [114]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-239.68806
+character	Pikeman P35 [110]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-53.542965
+character	Pikeman P33 [10E]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	108.483055
+character	Pikeman P34 [10F]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	55.817673
+character	Pikeman P31 [10C]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	51.90832
+character	Pikeman P2 [6D]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	24.45408
+character	Pikeman P30 [10B]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	119.26085
+character	Pikeman P19 [B5]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	-22.586735
+character	Pikeman P6 [80]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	18.690176
+character	Pikeman P3 [6E]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	121.323296
+character	Farmer P16 [105]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	21.446253
+character	Pikeman P29 [FB]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	60.096107
+character	Pikeman P26 [F8]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	122.82971
+character	Pikeman P27 [F9]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	122.50301
+character	Pikeman P28 [FA]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	122.464485
+character	Pikeman P11 [9E]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	116.00181
+character	Farmer P20 [121]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	-89.44772
+character	Pikeman P42 [12F]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	115.369965
+character	Worker P20 [137]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	61.431473
+character	Pikeman P46 [13B]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	33.158867
+character	Pikeman P44 [135]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	113.5305
+character	Pikeman P45 [136]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	123.60679
+character	Pikeman P43 [134]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	110.012375
+character	Worker P17 [CC]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-183.68398
+character	Pikeman P54 [16D]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	110.966125
+character	Worker P28 [170]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	71.38102
+character	Pikeman P55 [172]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	116.99614
+character	Farmer P20 [15E]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	-91.44786
+character	Pikeman P52 [16B]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	121.39721
+character	Pikeman P53 [16C]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	122.641396
+character	Pikeman P51 [16A]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	118.78388
+character	Worker P26 [166]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-183.73618
+character	Pikeman P50 [15D]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	17.741453
+character	Pikeman P49 [15C]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	50.12105
+character	Pikeman P48 [15B]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	50.106384
+character	Pikeman P47 [15A]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	117.49013
+character	Worker P24 [164]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	60.415985
+character	Worker P23 [163]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-183.57669
+character	Farmer P19 [156]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	58.65318
+character	Farmer P17 [154]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	25.64526
+character	Worker P10 [142]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	70.26506
+character	Worker P12 [144]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-182.95412
+character	Farmer P16 [152]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	62.849575
+character	Worker P13 [145]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	61.344162
+character	Worker P21 [153]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-184.60269
+character	Worker P11 [143]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	70.622215
+character	Farmer P15 [150]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	27.63375
+character	Farmer P14 [14F]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	54.441757
+character	Worker P15 [147]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-184.86229
+character	Archer P5 [14E]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	118.075325
+character	Worker P14 [146]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	116.284996
+character	Worker P19 [14D]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-183.15302
+character	Worker P17 [149]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	60.01351
+character	Archer P4 [14C]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	117.7729
+character	Worker P18 [14A]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	-183.60883
+character	Archer P12 [181]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	117.505775
+character	Archer P10 [17F]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	-230.96667
+character	Pikeman P56 [194]	Character	peasant=False	fisher=True ninja=False pike=True worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	117.872284
+character	Worker P20 [184]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	73.89662
+character	Knight P1 [18A]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=True beggar=False berserker=False stable=False	118.6573
+character	Archer P20 [191]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	108.355255
+character	Archer P19 [190]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=True farmer=False knight=False beggar=False berserker=False stable=False	-231.79616
+character	Farmer P15 [192]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	64.951515
+character	Worker P22 [186]	Character	peasant=False	fisher=False ninja=False pike=False worker=True archer=False farmer=False knight=False beggar=False berserker=False stable=False	107.70361
+character	Farmer P14 [18F]	Character	peasant=False	fisher=False ninja=False pike=False worker=False archer=False farmer=True knight=False beggar=False berserker=False stable=False	84.05943
+character	Peasant P19 [178]	Character	peasant=True	fisher=False ninja=False pike=False worker=False archer=False farmer=False knight=False beggar=False berserker=False stable=False	101.94996
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-227.26999
+building	ShopPike(Clone)	WorkableBuilding	工具	pike	-222.16989
+building	Workshop(Clone)	WorkableBuilding	工具	workshop	-225.06998
+building	Catapult(Clone)	WorkableBuilding	防御	catapult	108.42236
+building	Workshop(Clone)	WorkableBuilding	工具	workshop	108.309944
+building	ShopPike(Clone)	WorkableBuilding	工具	pike	105.46629
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-23.5
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-180.51
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-172.15999
+building	Wall5(Clone)	WorkableBuilding	防御	wall	114.409996
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-117.049995
+building	Wall5(Clone)	WorkableBuilding	防御	wall	0.75
+building	Wall5(Clone)	WorkableBuilding	防御	wall	9
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-94
+building	Forge(Clone)	WorkableBuilding	工具	forge	11.5
+building	Wall5(Clone)	WorkableBuilding	防御	wall	50.949997
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-66.95
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-60.27
+building	Wall5(Clone)	WorkableBuilding	防御	wall	97.71
+building	Wall5(Clone)	WorkableBuilding	防御	wall	89.36
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-25
+building	Tower6(Clone)	WorkableBuilding	防御	tower	7.5
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-16.75
+building	Citizen_House(Clone)	WorkableBuilding	人口	citizenhouse	-90
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-43.57
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-50.25
+building	Wall5(Clone)	WorkableBuilding	防御	wall	-95.34
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-15.25
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	55.12
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-0.75
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-77.799995
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-49.41
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-234.78
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-147.94
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	38.42
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-174.65999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	88.52
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	116.909996
+building	Lighthouse_Stone(Clone)	WorkableBuilding	航行	lighthouse	131.25
+building	Teleporter(Clone)	WorkableBuilding	探索	teleporter	129.53125
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-146
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-188.01999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-97.84
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-134.57999
+building	ShopScythe(Clone)	WorkableBuilding	工具	scythe	3.25
+building	FarmhouseStable(Clone)	WorkableBuilding	经济	farmhouse	29.6875
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	86
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-232
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	112
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-47
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	52
+building	Citizen_House(Clone)	WorkableBuilding	人口	citizenhouse	18
+building	Citizen_House(Clone)	WorkableBuilding	人口	citizenhouse	70
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-186
+building	ShopBow(Clone)	WorkableBuilding	工具	bow	-3.5
+building	ShopHammer(Clone)	WorkableBuilding	工具	hammer	-12.5
+building	Keep	WorkableBuilding	建设	castle	-8
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-23.5
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-15.25
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	55.12
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-0.75
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-77.799995
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-49.41
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-234.78
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-147.94
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	38.42
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-174.65999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	88.52
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	116.909996
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-188.01999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-97.84
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-134.57999

@@ -1,4 +1,4 @@
-# 王国顾问 Kingdom Advisor 0.6.1
+# 王国顾问 Kingdom Advisor 0.6.2
 
 《王国：两位君主》游戏内辅助 Mod，由 BepInEx 自动加载。
 
@@ -23,7 +23,7 @@
 
 ### 2. 安装王国顾问
 
-1. 从 [0.6.1 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.1) 下载 **`KingdomAdvisor-0.6.1.zip`**，不要下载源码包。
+1. 从 [0.6.2 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.2) 下载 **`KingdomAdvisor-0.6.2.zip`**，不要下载源码包。
 2. 确保游戏已退出。解压 Mod，将其中的 `BepInEx` 文件夹合并到游戏目录。
 3. 核对插件路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。
 4. 正常启动游戏，Mod 自动加载。**F6** 打开设置，**F7** 打开图鉴；手柄默认短按**左摇杆 L3** 打开界面，无需独立启动器。
@@ -78,4 +78,4 @@
 
 下载与更新：[GitHub Releases](https://github.com/boyl/kingdom-advisor/releases)。Nexus Mods 上传由用户操作。
 
-0.6.1 已获用户最终验收，建筑详情与人口统计的验证证据见 [验收文档](docs/acceptance/building-details-audit.md)。
+0.6.2 已获用户最终验收，建筑详情与人口统计的验证证据见 [验收文档](docs/acceptance/building-details-audit.md)。

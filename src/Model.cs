@@ -14,6 +14,7 @@ namespace KingdomAdvisor
     public static class Catalog
     {
         public static readonly Entry[] Entries = {
+            new Entry("bomb","炸弹","由工匠推动并由部队护送，用于炸毁悬崖洞穴。","准备护送人员和金币；进入洞穴后的引爆与撤离以游戏交互提示为准。","军队"),
             new Entry("bombpurchase","炸弹出征旗","购买炸弹并组织部队护送，用于进攻悬崖洞穴。","出征前准备工匠、军队和金币，确认护送路线安全。","军队"),
             new Entry("wall","城墙","阻挡敌人，保护城内人员。","升级会进入施工阶段；危险时段先确认防线仍能承受攻击。","防御"),
             new Entry("tower","塔楼","提供驻守位置，协助防守附近区域。","不同等级与特殊改造用途不同；升级目标以当前对象为准。","防御"),
@@ -76,6 +77,7 @@ namespace KingdomAdvisor
         {
             var name=(raw??"").ToLowerInvariant().Replace("_","").Replace(" ","");
             if(name.StartsWith("bombbanner")||name.StartsWith("payablebombleft")||name.StartsWith("payablebombright")||name.StartsWith("payablebombpurchase"))return Entries.First(e=>e.Key=="bombpurchase");
+            if(name=="bomb"||name=="bomb(clone)")return Entries.First(e=>e.Key=="bomb");
             if(name.StartsWith("bombableportal"))return Entries.First(e=>e.Key=="cave");
             if(name=="wreck"||name=="wreck(clone)")return Entries.First(e=>e.Key=="boat");
             if(name=="keep"||name=="keep(clone)"||Regex.IsMatch(name,@"^keep[0-9]+(\(clone\))?$"))return Entries.First(e=>e.Key=="castle");
@@ -92,9 +94,26 @@ namespace KingdomAdvisor
             // 先匹配具体设施，避免 Tower Baker、Teleporter 等被宽泛名称抢先命中。
             string[] specific={"baker","ballista","teleporter","beggarcamp","farmhouse","catapult","lighthouse","shipyard","workshop","hephaestus","persephone","artemis","trojan"};
             foreach(var key in specific) if(name.Contains(key)) return Entries.First(e=>e.Key==key);
-            foreach(var e in Entries) if(e.Key!="hel"&&name.Contains(e.Key))return e;
+            foreach(var e in Entries) if(e.Key!="hel"&&e.Key!="bomb"&&name.Contains(e.Key))return e;
             if(name.StartsWith("hel"))return Entries.First(e=>e.Key=="hel");
             return new Entry("unknown",Clean(raw),"该对象尚未收录专属说明；费用和条件来自当前游戏。","请以运行时提示为准。","未分类");
+        }
+        public static Entry ResolveNative(string raw,string nativeType)
+        {
+            var named=Resolve(raw);
+            string key=nativeType switch{
+                "Bomb"=>"bomb","PayableBombPurchase" or "PayableBombLeft" or "PayableBombRight"=>"bombpurchase",
+                "BoatSailPosition" or "PayableBoat"=>"boat","BoatSummoningBell"=>"bell",
+                "Cabin"=>"cabin","CitizenHousePayable"=>"citizenhouse","Hermit"=>"hermit","Merchant"=>"merchant",
+                "PayableBush"=>"berry","PayableForge"=>"forge","PayableGemChest"=>"chest","PayableGemGuard"=>"gemguard",
+                "PayableShield"=>"shield","PayableTeleporter"=>"teleporter","PayableTree"=>"tree",
+                "PayableWorkshop"=>"workshop","PayableWorkshopBarrel"=>"barrel",
+                "Steed" or "SteedSpawn"=>"steed","Wharf"=>"wharf","Statue" or "TimedStatue" or "TimeStatue"=>"statue",
+                "Castle"=>"castle","Wall"=>"wall","Tower"=>"tower","Farmhouse"=>"farmhouse","Ballista"=>"ballista","Baker"=>"baker",
+                _=>null};
+            if(key==null)return named;
+            if(key=="steed"&&named.Category=="坐骑")return named;
+            return Entries.First(e=>e.Key==key);
         }
         public static string Lock(string reason)
         {

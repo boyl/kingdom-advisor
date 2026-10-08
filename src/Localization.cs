@@ -10,7 +10,10 @@ namespace KingdomAdvisor
         public static bool English {get;set;}=true;
         private static readonly Dictionary<string,string> translations=new Dictionary<string,string>(StringComparer.Ordinal)
         {
-            { "王国顾问", "Kingdom Advisor" },
+                        { "王国顾问", "Kingdom Advisor" },
+            { "炸弹", "Bomb" },
+            { "由工匠推动并由部队护送，用于炸毁悬崖洞穴。", "Pushed by builders and escorted by troops to destroy the cliff cave." },
+            { "准备护送人员和金币；进入洞穴后的引爆与撤离以游戏交互提示为准。", "Prepare an escort and coins; follow the game's prompts for detonation and escape inside the cave." },
             { "炸弹出征旗", "Bomb expedition banner" },
             { "购买炸弹并组织部队护送，用于进攻悬崖洞穴。", "Purchase a bomb and assemble its escort to attack the cliff cave." },
             { "出征前准备工匠、军队和金币，确认护送路线安全。", "Prepare builders, troops and coins, and ensure the escort route is safe." },
