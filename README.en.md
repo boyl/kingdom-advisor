@@ -1,4 +1,4 @@
-# Kingdom Advisor 0.6.0
+# Kingdom Advisor 0.6.1
 
 An in-game information HUD and optional convenience mod for Kingdom Two Crowns. Loaded automatically by BepInEx; no separate launcher.
 
@@ -70,3 +70,5 @@ The island journal and diagnostics are stored in BepInEx/config/KingdomAdvisor/.
 Source: https://github.com/boyl/kingdom-advisor
 
 Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor/releases). Nexus Mods uploads are handled by the author.
+
+0.6.1 is a candidate pending final acceptance. The download link above still points to stable 0.6.0. See [acceptance records](docs/acceptance/building-details-audit.md).

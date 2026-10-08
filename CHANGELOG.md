@@ -1,3 +1,14 @@
+# 0.6.1 更新说明 / Release notes
+
+- 修正渔夫重复计入长枪兵；补充人口分类，并增加逐角色核对。
+- 附近建筑详情默认开启，放在顾问旁；统一文字、图标列与行距，保留简短作用说明并取消分页。
+- 排除玩家本人和当前坐骑，收紧建筑详情距离；补充满级、弩炮及面包改造设施读取。
+- 补齐 Keep、左右炸弹旗与船只残骸的名称映射。
+- 固定地图标签优先级及聚合锚点，减少跑动时重新排布。
+
+本轮已通过自动测试、二进制审计和当前存档98角色实机计数核对。后期岛屿跑动、到达/离开建筑、中英文新布局尚待最终视觉验收；不沿用0.6.0人工passed状态。
+
+Fixes duplicate fisher/pikeman counts, improves nearby building detection and descriptions, aligns the detail card with the advisor, and stabilizes map grouping and label priorities. Current-save population verification passed for 98 characters. Final movement, proximity and bilingual layout acceptance is pending; this candidate is not yet a stable release.
 # 0.6.0 更新说明 / Release notes
 
 增加完整中英双语界面：图鉴、名称、说明、锁定原因、地图状态、顾问、设置、资源操作和手柄提示。

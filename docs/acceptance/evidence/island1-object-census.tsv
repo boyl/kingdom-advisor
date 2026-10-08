@@ -1,0 +1,223 @@
+kind	raw	nativeType	category	entry	x
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-232
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-227.26999
+payable	Hermit House Ballista(Clone)	Cabin	特殊	cabin	-216.875
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-186
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-180.51
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-172.15999
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-165.48
+payable	Statue Archer(Clone)	Statue	特殊	statue	-160
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-146
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-143.76999
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-137.09
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-117.049995
+payable	SummonBell	BoatSummoningBell	航行	bell	-112.7503
+payable	BoatSailPosition Stone(Clone)	BoatSailPosition	航行	boat	-109.625
+payable	BoatSailPosition Stone(Clone)	PayableUpgrade	航行	boat	-109.625
+payable	GemBankChest	PayableGemChest	经济	gembank	-105.755
+payable	GemGuard	PayableGemGuard	经济	gemguard	-104.475
+payable	Wreck(Clone)	PayableUpgrade	未分类	unknown	-101.5625
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-95.34
+payable	birchTree(Clone)	PayableTree	环境	tree	-93.60563
+payable	Farmhouse0(Clone)	PayableUpgrade	经济	farmhouse	-94
+payable	birchTree(Clone)	PayableTree	环境	tree	-87
+payable	Border(Clone)	PayableBorder	建设	border	-67.7
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-66.95
+payable	ShopPike(Clone)	PayableSidedShop	工具	pike	-64.7
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-60.27
+payable	Barrel	PayableWorkshopBarrel	防御	barrel	-59.449997
+payable	Workshop(Clone)	PayableWorkshop	工具	workshop	-57.949997
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-50.25
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	-47
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-43.57
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-25
+payable	Tower4(Clone)	PayableUpgrade	防御	tower	-23.5
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	-16.75
+payable	ShopHammer(Clone)	PayableShop	工具	hammer	-12.5
+payable	BombBannerLeft	PayableBombLeft	军队	bombpurchase	-10.84375
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-9.90625
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-9.375
+payable	Castle7(Clone)	PayableUpgrade	建设	castle	-8
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-6.625
+payable	CastleShieldShop(Clone)	PayableShield	工具	shield	-6.09375
+payable	Player 1	PayablePlayer	未分类	unknown	-5.866231
+payable	Horse Regular(Clone)	Steed	坐骑	horse	-5.866231
+payable	BombBannerRight	PayableBombRight	军队	bombpurchase	-5.125
+payable	ShopBow(Clone)	PayableShop	工具	bow	-3.5
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	0.75
+payable	ShopScythe(Clone)	PayableShop	工具	scythe	3.25
+payable	Tower4(Clone)	PayableUpgrade	防御	tower	7.5
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	9
+payable	Citizen_House(Clone)	CitizenHousePayable	人口	citizenhouse	18
+payable	Workshop(Clone)	PayableWorkshop	工具	workshop	45.699997
+payable	Barrel	PayableWorkshopBarrel	防御	barrel	47.199997
+payable	ShopPike(Clone)	PayableSidedShop	工具	pike	48.699997
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	50.949997
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	52
+payable	Border(Clone)	PayableBorder	建设	border	51.699997
+payable	Citizen_House(Clone)	CitizenHousePayable	人口	citizenhouse	70
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	86
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	89.36
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	97.71
+payable	MountAreaGriffin(Clone)	SteedSpawn	坐骑	steed	102
+payable	Farmhouse2(Clone)	PayableUpgrade	经济	farmhouse	112
+payable	Wall4(Clone)	PayableUpgrade	防御	wall	114.409996
+payable	Teleporter(Clone)	PayableTeleporter	探索	teleporter	129.53125
+payable	Lighthouse_Stone(Clone)	PayableUpgrade	航行	lighthouse	131.25
+character	Pikeman P1 [6C]	Character	peasant=False	fisher=True ninja=False	-50.185074
+character	Pikeman P5 [73]	Character	peasant=False	fisher=True ninja=False	-72.02719
+character	Pikeman P4 [72]	Character	peasant=False	fisher=True ninja=False	-23.360952
+character	Pikeman P8 [82]	Character	peasant=False	fisher=True ninja=False	-64.68739
+character	Pikeman P9 [83]	Character	peasant=False	fisher=True ninja=False	-71.444664
+character	Pikeman P7 [81]	Character	peasant=False	fisher=True ninja=False	-40.972702
+character	Farmer P17 [AA]	Character	peasant=False	fisher=False ninja=False	60.745354
+character	Pikeman P41 [120]	Character	peasant=False	fisher=True ninja=False	-74.41959
+character	Pikeman P14 [A1]	Character	peasant=False	fisher=True ninja=False	-75.8022
+character	Pikeman P13 [A0]	Character	peasant=False	fisher=True ninja=False	-15.715711
+character	Farmer P16 [A2]	Character	peasant=False	fisher=False ninja=False	58.64671
+character	Farmer P12 [8C]	Character	peasant=True	fisher=False ninja=False	40.13885
+character	Pikeman P40 [11E]	Character	peasant=False	fisher=True ninja=False	-78.16406
+character	Worker P15 [FE]	Character	peasant=False	fisher=False ninja=False	116.284996
+character	Worker P13 [FC]	Character	peasant=False	fisher=False ninja=False	-147.315
+character	Farmer P23 [11F]	Character	peasant=False	fisher=False ninja=False	56.54392
+character	Pikeman P21 [BB]	Character	peasant=False	fisher=True ninja=False	-67.62672
+character	Pikeman P20 [B6]	Character	peasant=False	fisher=True ninja=False	-67.363754
+character	Pikeman P18 [AD]	Character	peasant=False	fisher=True ninja=False	-68.551834
+character	Pikeman P16 [A9]	Character	peasant=False	fisher=True ninja=False	-82.72935
+character	Pikeman P15 [A8]	Character	peasant=False	fisher=True ninja=False	-65.23729
+character	Pikeman P17 [AC]	Character	peasant=False	fisher=True ninja=False	-16.310404
+character	Farmer P21 [E5]	Character	peasant=False	fisher=False ninja=False	64.94521
+character	Pikeman P23 [E0]	Character	peasant=False	fisher=True ninja=False	-67.63211
+character	Worker P15 [A5]	Character	peasant=True	fisher=False ninja=False	-33.256054
+character	Worker P19 [DD]	Character	peasant=False	fisher=False ninja=False	37.795
+character	Pikeman P25 [E4]	Character	peasant=False	fisher=True ninja=False	-22.755642
+character	Worker P20 [DE]	Character	peasant=False	fisher=False ninja=False	-97.215
+character	Farmer P19 [E2]	Character	peasant=False	fisher=False ninja=False	23.546257
+character	Pikeman P24 [E1]	Character	peasant=False	fisher=True ninja=False	-22.549034
+character	Farmer P16 [DA]	Character	peasant=False	fisher=False ninja=False	27.73909
+character	Farmer P13 [D7]	Character	peasant=False	fisher=False ninja=False	25.63655
+character	Farmer P15 [D9]	Character	peasant=True	fisher=False ninja=False	-11.218401
+character	Farmer P18 [DC]	Character	peasant=False	fisher=False ninja=False	110.053566
+character	Farmer P14 [D8]	Character	peasant=True	fisher=False ninja=False	-3.8173027
+character	Farmer P11 [D5]	Character	peasant=True	fisher=False ninja=False	46.55993
+character	Farmer P23 [EB]	Character	peasant=True	fisher=False ninja=False	-50.51721
+character	Pikeman P27 [EF]	Character	peasant=False	fisher=True ninja=False	-66.343285
+character	Pikeman P26 [EE]	Character	peasant=False	fisher=True ninja=False	-23.05507
+character	Pikeman P22 [CE]	Character	peasant=False	fisher=True ninja=False	-79.69358
+character	Pikeman P32 [10D]	Character	peasant=False	fisher=True ninja=False	-59.772522
+character	Farmer P20 [112]	Character	peasant=False	fisher=False ninja=False	84.0487
+character	Pikeman P36 [111]	Character	peasant=False	fisher=True ninja=False	-72.339066
+character	Pikeman P38 [118]	Character	peasant=False	fisher=True ninja=False	-44.63241
+character	Pikeman P39 [119]	Character	peasant=False	fisher=True ninja=False	-53.40633
+character	Pikeman P37 [114]	Character	peasant=False	fisher=True ninja=False	-74.86793
+character	Farmer P21 [11A]	Character	peasant=True	fisher=False ninja=False	-32.038616
+character	Pikeman P35 [110]	Character	peasant=False	fisher=True ninja=False	-44.467484
+character	Pikeman P33 [10E]	Character	peasant=False	fisher=True ninja=False	-66.87928
+character	Pikeman P34 [10F]	Character	peasant=False	fisher=True ninja=False	-64.176346
+character	Pikeman P31 [10C]	Character	peasant=False	fisher=True ninja=False	-15.405846
+character	Pikeman P2 [6D]	Character	peasant=False	fisher=True ninja=False	-64.05668
+character	Pikeman P30 [10B]	Character	peasant=False	fisher=True ninja=False	-69.37955
+character	Pikeman P19 [B5]	Character	peasant=False	fisher=True ninja=False	-60.44815
+character	Pikeman P6 [80]	Character	peasant=False	fisher=True ninja=False	-79.94224
+character	Pikeman P3 [6E]	Character	peasant=False	fisher=True ninja=False	-71.67595
+character	Farmer P19 [108]	Character	peasant=False	fisher=False ninja=False	81.95228
+character	Farmer P18 [107]	Character	peasant=True	fisher=False ninja=False	18.25427
+character	Farmer P17 [106]	Character	peasant=True	fisher=False ninja=False	2.8639262
+character	Worker P19 [102]	Character	peasant=False	fisher=False ninja=False	54.495
+character	Farmer P16 [105]	Character	peasant=False	fisher=False ninja=False	54.44695
+character	Worker P16 [FF]	Character	peasant=True	fisher=False ninja=False	-52.455803
+character	Pikeman P29 [FB]	Character	peasant=False	fisher=True ninja=False	-69.32408
+character	Pikeman P26 [F8]	Character	peasant=False	fisher=True ninja=False	-16.012438
+character	Pikeman P27 [F9]	Character	peasant=False	fisher=True ninja=False	-24.257553
+character	Pikeman P28 [FA]	Character	peasant=False	fisher=True ninja=False	-23.661436
+character	Pikeman P11 [9E]	Character	peasant=False	fisher=True ninja=False	-68.14888
+character	Archer P13 [10A]	Character	peasant=False	fisher=False ninja=False	-78.31651
+character	Worker P14 [7A]	Character	peasant=True	fisher=False ninja=False	36.320004
+character	Worker P14 [FD]	Character	peasant=True	fisher=False ninja=False	-0.97193515
+character	Farmer P20 [121]	Character	peasant=False	fisher=False ninja=False	21.439165
+character	Farmer P21 [122]	Character	peasant=True	fisher=False ninja=False	-15.417939
+character	Worker P18 [123]	Character	peasant=True	fisher=False ninja=False	-33.62893
+character	Farmer P22 [124]	Character	peasant=True	fisher=False ninja=False	-27.06277
+character	Farmer P23 [125]	Character	peasant=True	fisher=False ninja=False	-51.948277
+character	Worker P11 [5F]	Character	peasant=True	fisher=False ninja=False	-26.145151
+character	Squire P1 [12C]	Character	peasant=True	fisher=False ninja=False	22.02566
+character	Pikeman P42 [12F]	Character	peasant=False	fisher=True ninja=False	-73.11646
+character	Archer P8 [20]	Character	peasant=False	fisher=False ninja=False	72.674576
+character	Worker P21 [138]	Character	peasant=False	fisher=False ninja=False	87.895
+character	Worker P20 [137]	Character	peasant=False	fisher=False ninja=False	-133.95499
+character	Worker P22 [13A]	Character	peasant=True	fisher=False ninja=False	-35.72633
+character	Worker P23 [13C]	Character	peasant=True	fisher=False ninja=False	32.52844
+character	Pikeman P46 [13B]	Character	peasant=False	fisher=True ninja=False	-67.39692
+character	Pikeman P44 [135]	Character	peasant=False	fisher=True ninja=False	-15.118954
+character	Pikeman P45 [136]	Character	peasant=False	fisher=True ninja=False	-49.16401
+character	Pikeman P43 [134]	Character	peasant=False	fisher=True ninja=False	-70.42393
+character	Farmer P27 [139]	Character	peasant=True	fisher=False ninja=False	-56.8432
+character	Farmer P26 [133]	Character	peasant=True	fisher=False ninja=False	-41.028873
+character	Farmer P25 [132]	Character	peasant=False	fisher=False ninja=False	62.851746
+character	Farmer P24 [131]	Character	peasant=True	fisher=False ninja=False	-13.456666
+character	Beggar P6 [12B]	Character	peasant=False	fisher=False ninja=False	-92.452866
+character	Worker P16 [A6]	Character	peasant=True	fisher=False ninja=False	11.3909025
+character	Worker P19 [126]	Character	peasant=True	fisher=False ninja=False	15.564322
+character	Worker P11 [C4]	Character	peasant=False	fisher=False ninja=False	-77.174995
+character	Worker P4 [33]	Character	peasant=True	fisher=False ninja=False	-42.911736
+character	Worker P17 [CC]	Character	peasant=False	fisher=False ninja=False	-48.785
+character	Beggar P2 [13D]	Character	peasant=False	fisher=False ninja=False	-89.84353
+building	ShopPike(Clone)	WorkableBuilding	工具	pike	48.699997
+building	Workshop(Clone)	WorkableBuilding	工具	workshop	45.699997
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-15.25
+building	ShopPike(Clone)	WorkableBuilding	工具	pike	-64.7
+building	Workshop(Clone)	WorkableBuilding	工具	workshop	-57.949997
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	55.12
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-0.75
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-77.799995
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-49.41
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-234.78
+building	Wall4(Clone)	WorkableBuilding	防御	wall	50.949997
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-147.94
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	38.42
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-174.65999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	88.52
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	116.909996
+building	Lighthouse_Stone(Clone)	WorkableBuilding	航行	lighthouse	131.25
+building	Wall4(Clone)	WorkableBuilding	防御	wall	-60.27
+building	Wall4(Clone)	WorkableBuilding	防御	wall	-25
+building	Teleporter(Clone)	WorkableBuilding	探索	teleporter	129.53125
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-146
+building	Tower4(Clone)	WorkableBuilding	防御	tower	-23.5
+building	Wall4(Clone)	WorkableBuilding	防御	wall	-66.95
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-188.01999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-97.84
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-134.57999
+building	ShopScythe(Clone)	WorkableBuilding	工具	scythe	3.25
+building	FarmhouseStable(Clone)	WorkableBuilding	经济	farmhouse	29.6875
+building	Wall4(Clone)	WorkableBuilding	防御	wall	-50.25
+building	Wall4(Clone)	WorkableBuilding	防御	wall	-16.75
+building	Wall4(Clone)	WorkableBuilding	防御	wall	9
+building	Wall4(Clone)	WorkableBuilding	防御	wall	-43.57
+building	Wall4(Clone)	WorkableBuilding	防御	wall	0.75
+building	Tower4(Clone)	WorkableBuilding	防御	tower	7.5
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	86
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-232
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	112
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-47
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	52
+building	Citizen_House(Clone)	WorkableBuilding	人口	citizenhouse	18
+building	Citizen_House(Clone)	WorkableBuilding	人口	citizenhouse	70
+building	Farmhouse2(Clone)	WorkableBuilding	经济	farmhouse	-186
+building	ShopBow(Clone)	WorkableBuilding	工具	bow	-3.5
+building	ShopHammer(Clone)	WorkableBuilding	工具	hammer	-12.5
+building	Keep	WorkableBuilding	建设	castle	-8
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-15.25
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	55.12
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-0.75
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-77.799995
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-49.41
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-234.78
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-147.94
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	38.42
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-174.65999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	88.52
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	116.909996
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-188.01999
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-97.84
+building	Tower Ballista(Clone)	WorkableBuilding	防御	ballista	-134.57999

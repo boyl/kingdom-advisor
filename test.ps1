@@ -2,6 +2,14 @@
 $ErrorActionPreference='Stop'
 Add-Type -TypeDefinition ([IO.File]::ReadAllText((Join-Path $PSScriptRoot 'src/Model.cs')))
 $cases=@{
+ 'Keep(Clone)'='castle'
+ 'Keep'='castle'
+ 'Wreck(Clone)'='boat'
+ 'BombBannerLeft'='bombpurchase'
+ 'BombBannerRight(Clone)'='bombpurchase'
+ 'PayableBombLeft'='bombpurchase'
+ 'PayableBombRight'='bombpurchase'
+ 'BombablePortal(Clone)'='cave'
  'TeleporterRift(Clone)'='teleporter'
  'Portal(Clone)'='portal'
  'Tower Baker(Clone)'='baker'

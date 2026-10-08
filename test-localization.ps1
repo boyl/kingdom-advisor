@@ -25,3 +25,11 @@ foreach($name in @('Model.cs','View.cs','AssistModel.cs','MapPresentation.cs','I
 }
 if($missing.Count){$missing | Sort-Object;throw "存在 $($missing.Count) 条未完成英文翻译"}
 '通过：中文变体、英文及其他语言回退、手动覆盖、动态数字、原生名称、全部显示文案覆盖。'
+Add-Type -Path (Join-Path $PSScriptRoot 'src/Model.cs')
+foreach($entry in [KingdomAdvisor.Catalog]::Entries){
+ foreach($value in @($entry.Name,$entry.Description,$entry.Advice,$entry.Category)){
+  if([string]::IsNullOrWhiteSpace($value)){throw ('图鉴内容缺失: '+$entry.Key)}
+  if([KingdomAdvisor.Localization]::Translate($value,$true) -match '[\u4e00-\u9fff]'){throw ('图鉴翻译缺失: '+$entry.Key)}
+ }
+}
+'通过：全部图鉴条目名称、作用、建议及分类的内容和英文覆盖。'

@@ -1,0 +1,35 @@
+version=0.6.1
+utc=2026-10-08T04:38:18.2784010Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+playing=True
+online=False
+island=1
+day=13
+points=65
+worldReadMaxMs=42.943
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=2
+gameplayRuleWrites=3
+teleports=0
+resourceAdds=0
+error=
+player=0 local=True coins=452 target=CastleShieldShop(Clone) rect=0,0,1,1 original=1000 capacity=2147483647 total=453 gems=0 numeric=True
+population=工匠 9
+population=弓手 2
+population=骑士 0
+population=农民 13
+population=游民 2
+population=长枪兵 46
+population=待业平民 26
+populationTotal=98
+enemiesAvailable=True enemies=0 camps=1

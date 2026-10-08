@@ -11,6 +11,13 @@ namespace KingdomAdvisor
         private static readonly Dictionary<string,string> translations=new Dictionary<string,string>(StringComparer.Ordinal)
         {
             { "王国顾问", "Kingdom Advisor" },
+            { "炸弹出征旗", "Bomb expedition banner" },
+            { "购买炸弹并组织部队护送，用于进攻悬崖洞穴。", "Purchase a bomb and assemble its escort to attack the cliff cave." },
+            { "出征前准备工匠、军队和金币，确认护送路线安全。", "Prepare builders, troops and coins, and ensure the escort route is safe." },
+            { "军队", "Army" },
+            { "当前无升级交互", "No upgrade interaction available" },
+            { "附近建筑详情", "Nearby building details" },
+            { "狂战士", "Berserkers" }, { "待业平民", "Unassigned citizens" }, { "忍者", "Ninjas" }, { "渔夫", "Fishers" }, { "马厩管理员", "Stable keepers" },
             { "图鉴", "Catalog" },
             { "兴趣点", "Locations" },
             { "设置", "Settings" },

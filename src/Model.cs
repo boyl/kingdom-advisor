@@ -14,6 +14,7 @@ namespace KingdomAdvisor
     public static class Catalog
     {
         public static readonly Entry[] Entries = {
+            new Entry("bombpurchase","炸弹出征旗","购买炸弹并组织部队护送，用于进攻悬崖洞穴。","出征前准备工匠、军队和金币，确认护送路线安全。","军队"),
             new Entry("wall","城墙","阻挡敌人，保护城内人员。","升级会进入施工阶段；危险时段先确认防线仍能承受攻击。","防御"),
             new Entry("tower","塔楼","提供驻守位置，协助防守附近区域。","不同等级与特殊改造用途不同；升级目标以当前对象为准。","防御"),
             new Entry("castle","城堡／营地中心","提升王国建设阶段，解锁对应设施。","科技解锁与城堡等级是不同前置条件。","建设"),
@@ -74,6 +75,10 @@ namespace KingdomAdvisor
         public static Entry Resolve(string raw)
         {
             var name=(raw??"").ToLowerInvariant().Replace("_","").Replace(" ","");
+            if(name.StartsWith("bombbanner")||name.StartsWith("payablebombleft")||name.StartsWith("payablebombright")||name.StartsWith("payablebombpurchase"))return Entries.First(e=>e.Key=="bombpurchase");
+            if(name.StartsWith("bombableportal"))return Entries.First(e=>e.Key=="cave");
+            if(name=="wreck"||name=="wreck(clone)")return Entries.First(e=>e.Key=="boat");
+            if(name=="keep"||name=="keep(clone)"||Regex.IsMatch(name,@"^keep[0-9]+(\(clone\))?$"))return Entries.First(e=>e.Key=="castle");
             if(name.Contains("hermithouse"))return Entries.First(e=>e.Key=="cabin");
             if(name.Contains("hermit"))return Entries.First(e=>e.Key=="hermit");
             if(name.Contains("castleshieldshop"))return Entries.First(e=>e.Key=="shield");
@@ -121,6 +126,11 @@ namespace KingdomAdvisor
         public static string Currency(string raw)
         {switch(raw){case "Coins":return "金币";case "Gems":return "宝石";case "Crown":return "王冠";case "Skulls":return "骷髅";case "Shades":return "幽魂";case "Merchandise":return "货物";case "Candle":return "蜡烛";case "Egg":return "蛋";default:return raw;}}
     }
+    public static class TargetProximity
+    {
+        public const float Radius=1.5f;
+        public static bool Contains(float playerX,float targetX)=>Math.Abs(playerX-targetX)<=Radius;
+    }
     public sealed class TargetInfo
     {
         public string Raw="",Name="",Description="",Advice="",Category="",Currency="",Lock="",Next="",Details="";
@@ -158,9 +168,28 @@ namespace KingdomAdvisor
             return result.OrderBy(g=>g.X).ToList();
         }
     }
+    public static class PopulationRole
+    {
+        public static string Supplemental(bool ninja,bool pikeman,bool fisher,bool stable,bool peasant)
+        {if(ninja)return "ninja";if(pikeman)return "";if(fisher)return "fisher";if(stable)return "stable";return peasant?"peasant":"";}
+    }
+    public static class PopulationPresentation
+    {
+        public static List<System.Tuple<string,string>> Rows(Snapshot s)
+        {
+            var rows=new List<System.Tuple<string,string>>();
+            void Add(string icon,string name,int count,bool always=false){if(always||count>0)rows.Add(System.Tuple.Create(icon,name+" "+count));}
+            Add("hammer","工匠",s.Workers,true);Add("bow","弓手",s.Archers,true);Add("shield","骑士",s.Knights,true);
+            Add("wheat","农民",s.Farmers,true);Add("person","游民",s.Beggars,true);
+            Add("spear","长枪兵",s.Pikemen);Add("axe","狂战士",s.Berserkers);Add("person","待业平民",s.Peasants);
+            Add("ninja","忍者",s.Ninjas);Add("fish","渔夫",s.Fishers);Add("horse","马厩管理员",s.StableKeepers);Add("person","隐士",s.Hermits);
+            return rows;
+        }
+    }
     public sealed class Snapshot
     {
         public bool Playing,Online; public int Island,Day,Workers,Archers,Knights,Farmers,Beggars;
+        public int Pikemen,Berserkers,Peasants,Ninjas,Fishers,StableKeepers,Hermits;
         public bool Stone,Iron;public string Season="",Phase="",State="";
         public float Left=-1,Right=1;
         public int Camps;public bool EnemiesAvailable;

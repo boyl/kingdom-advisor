@@ -1,0 +1,44 @@
+version=0.6.1
+utc=2026-10-08T04:33:12.2464249Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+playing=True
+online=False
+island=1
+day=11
+points=65
+worldReadMaxMs=39.663
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=2
+gameplayRuleWrites=3
+teleports=0
+resourceAdds=0
+error=
+player=0 local=True coins=416 target=CastleShieldShop(Clone) rect=0,0,1,1 original=1000 capacity=2147483647 total=417 gems=0 numeric=True
+population=工匠 9
+population=弓手 2
+population=骑士 0
+population=农民 13
+population=游民 2
+population=长枪兵 46
+population=待业平民 26
+population=渔夫 46
+enemiesAvailable=True enemies=9 camps=1
+enemy=-50608 kind=贪婪怪 x=-165.00
+enemy=-50684 kind=贪婪怪 x=-173.17
+enemy=-66904 kind=贪婪怪 x=-172.36
+enemy=-66828 kind=贪婪怪 x=-173.61
+enemy=-50456 kind=贪婪怪 x=-172.95
+enemy=-50532 kind=贪婪怪 x=-171.25
+enemy=-50760 kind=贪婪怪 x=-178.07
+enemy=-68870 kind=贪婪怪 x=-173.31
+enemy=-68946 kind=贪婪怪 x=-179.54

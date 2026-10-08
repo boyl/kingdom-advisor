@@ -137,15 +137,16 @@ namespace KingdomAdvisor
             Info("coin","金币 "+player.Coins);
             Info("gem","宝石 "+player.Gems);
             Info("bag",settings.InfiniteBag.Value?"无限容量 · 数字钱袋":"资源合计 "+player.BagTotal+" · 原生钱袋");
-            if(settings.Status.Value){Info("hammer","工匠 "+s.Workers);Info("bow","弓手 "+s.Archers);Info("shield","骑士 "+s.Knights);Info("wheat","农民 "+s.Farmers);Info("person","游民 "+s.Beggars);Info("tower","建设科技 · "+(s.Iron?"高阶已解锁":s.Stone?"中阶已解锁":"基础")+(s.Online?" · 联机":""));}
+            if(settings.Status.Value){rows.AddRange(PopulationPresentation.Rows(s));Info("tower","建设科技 · "+(s.Iron?"高阶已解锁":s.Stone?"中阶已解锁":"基础")+(s.Online?" · 联机":""));}
             if(settings.MountInfo.Value&&player.Mount.Length>0&&viewport.height>=640){Info("horse","坐骑 "+player.Mount+" · "+player.MountState);Info("stamina","耐力 "+player.Stamina.ToString("F1")+(player.Fed>0?" · 饱食 "+player.Fed.ToString("F0")+" 秒":""));if(player.Ability.Length>0)Info("stamina",player.Ability);}
             float headingH=title.CalcHeight(new GUIContent(Localization.Text(heading)),width-32);
             float dayH=small.CalcHeight(new GUIContent(Localization.Text(day)),width-32);
             float statusH=rows.Sum(r=>small.CalcHeight(new GUIContent(Localization.Text(r.Item2)),width-60)+5);
             float cardH=16+headingH+6+dayH+18+statusH+16;
             y=Math.Max(18,viewport.height-cardH-66);
+            var advisorRect=new Rect(pad,y,width,cardH);
             if(settings.ShowKingdomAdvisor.Value){
-            var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);Card(statusRect,settings.AdvisorTransparent.Value);
+            var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);advisorRect=statusRect;Card(statusRect,settings.AdvisorTransparent.Value);
             float cy=statusRect.y+16;cy+=Row(statusRect.x+16,cy,width-32,heading+"  ⇄",title)+2;
             cy+=Row(statusRect.x+16,cy,width-32,day,small)+10;
             Fill(new Rect(statusRect.x+16,cy-5,width-32,1),border);
@@ -161,29 +162,29 @@ namespace KingdomAdvisor
                 var mapRect=Place("p"+player.Id+".map",new Rect(mapX,mapY,mapW,mapH),viewport,mapW-130);DrawMap(mapRect,s,player,settings.MapTransparent.Value,true);
             }
             else if(Button(new Rect(mapX,mapY,mapW,40),"开启小地图"))settings.Map.Value=true;
-            float objectX=stacked?pad:viewport.width-pad-width;
+            float objectX=advisorRect.xMax+12;
             float objectY=18;
             float objectRoom=settings.MapAtTop.Value?viewport.height-mapH-100:mapY-30;
             if(settings.ShowPlayerPanel.Value&&objectRoom>line*3)
             {
                 var t=player.Target;
                 string objectTitle=t==null?"附近交互":t.Name+(t.Level>=0?" · 等级 "+t.Level:"");
-                string body=t==null?"靠近建筑、工具或坐骑，查看用途与升级条件。":t.Description+"\n\n费用  "+t.Cost+" "+t.Currency+"\n"+(t.Locked?"暂不可用  ":"可交互  ")+t.Lock;
-                if(t!=null&&t.Details.Length>0)body+="\n"+t.Details;
-                if(t!=null&&settings.Details.Value){if(t.Next.Length>0)body+="\n\n升级目标  "+t.Next;body+="\n\n"+t.Advice;}
-                string key=t?.Raw??"none";
-                if(!hudTargets.TryGetValue(player.Id,out var last)||last!=key){hudTargets[player.Id]=key;hudPages[player.Id]=0;}
+                string body=t==null?"靠近建筑、工具或坐骑，查看用途与升级条件。":t.Description+"\n\n"+(t.Cost>=0?"费用  "+t.Cost+" "+t.Currency+"\n"+(t.Locked?"暂不可用  ":"可交互  ")+t.Lock:"当前无升级交互");
+                if(t!=null&&t.Details.Length>0)body+="\n"+string.Join("\n",t.Details.Split('\n').Where(l=>!l.StartsWith("本岛同类交互点")));
+                if(t!=null&&settings.Details.Value&&t.Next.Length>0)body+="\n升级目标  "+t.Next;
                 float headH=title.CalcHeight(new GUIContent(Localization.Text(objectTitle)),width-32);
-                float maxBody=Math.Max(line,Math.Min(320,objectRoom)-headH-88);
-                var pages=SplitPages(body,width-32,maxBody);
-                int page=hudPages[player.Id]%pages.Length;
-                float bodyH=text.CalcHeight(new GUIContent(Localization.Text(pages[page])),width-32);
-                float objectH=headH+bodyH+42+(pages.Length>1?42:0);
-                objectY=settings.MapAtTop.Value?Math.Max(mapH+30,viewport.height-objectH-66):Math.Max(18,mapY-objectH-12);
+                var detailRows=body.Split('\n');
+                float bodyH=detailRows.Sum(value=>small.CalcHeight(new GUIContent(Localization.Text(value)),width-60)+1);
+                float objectH=headH+bodyH+42;
+                objectY=advisorRect.y;
+                if(objectX+width>viewport.width-18){objectX=advisorRect.x;objectY=Math.Max(18,advisorRect.y-objectH-12);}
                 var objectRect=Place("p"+player.Id+".object",new Rect(objectX,objectY,width,objectH),viewport);Card(objectRect,settings.PlayerTransparent.Value);
                 float by=objectRect.y+16+Row(objectRect.x+16,objectRect.y+16,width-32,objectTitle+"  ⇄",title)+10;
-                Label(new Rect(objectRect.x+16,by,width-32,0),pages[page],text);
-                if(pages.Length>1&&Button(new Rect(objectRect.x+16,objectRect.y+objectH-46,width-32,34),"详情 "+(page+1)+" / "+pages.Length+"   下一页 →"))hudPages[player.Id]++;
+                foreach(var value in detailRows)
+                {
+                    if(value.Length>0)HudIcon(objectRect.x+24,by+3,value.StartsWith("费用")?"coin":value.StartsWith("耐久")?"shield":"tower");
+                    by+=Row(objectRect.x+44,by,width-60,value,small)+1;
+                }
             }
             if(settings.Alerts.Value)
             {
@@ -231,7 +232,7 @@ namespace KingdomAdvisor
             Fill(new Rect(x0,axisY,width,2),border);
             var points=s.Points.Where(p=>controller.PointVisible(p)&&p.X>=left&&p.X<=right&&(settings.FullMap.Value||s.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2)))
                 .GroupBy(p=>p.Name+"|"+Math.Round(p.X)).Select(g=>g.First()).OrderBy(p=>p.X).ToArray();
-            var pointGroups=points.GroupBy(p=>p.Name+"|"+(int)((p.X-left)/length*width/24)).ToArray();
+            var pointGroups=points.GroupBy(p=>p.Name+"|"+MapGrouping.Cell(p.X,extent.Item1,length*24/width)).ToArray();
             var counts=pointGroups.Select(g=>g.Count()).ToArray();
             points=pointGroups.Select(g=>g.First()).ToArray();
             var requests=new System.Collections.Generic.List<MapLabelRequest>();
@@ -241,7 +242,7 @@ namespace KingdomAdvisor
                 var point=points[i];labels[i]=MapText.Label(point,player.Id,counts[i],pointGroups[i].Sum(p=>Math.Max(0,p.CampPeople)));
                 float measured=small.CalcSize(new GUIContent(Localization.Text(labels[i]))).x;
                 requests.Add(new MapLabelRequest{Index=i,Anchor=(point.X-left)/length*width,Width=measured+4,
-                    Priority=pointGroups[i].Any(p=>p==focused)?1000:Math.Abs(point.X-player.X)<35?200:point.CampPeople>=0||point.Name.Contains("城堡")?100:0});
+                    Priority=MapGrouping.Priority(point)});
             }
             var placements=MapLabelLayout.Arrange(requests,width,4);
             string tip=focused!=null?PointSummary(focused,player):"";
@@ -334,6 +335,10 @@ namespace KingdomAdvisor
                 "gem"=>new[]{"01110","11111","11111","01110","00100"},
                 "hammer"=>new[]{"11110","11110","00100","00100","00100"},
                 "bow"=>new[]{"01100","01010","01001","01010","01100"},
+                "spear"=>new[]{"00100","01110","00100","00100","00100"},
+                "axe"=>new[]{"01111","11111","00100","00100","00100"},
+                "ninja"=>new[]{"01110","10101","11111","00100","01010"},
+                "fish"=>new[]{"00000","01010","11111","01110","00000"},
                 "shield"=>new[]{"11111","10101","10101","01110","00100"},
                 "wheat"=>new[]{"10101","01110","10101","01110","00100"},
                 "person"=>new[]{"01110","01110","00100","11111","01010"},

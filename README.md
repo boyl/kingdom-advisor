@@ -1,4 +1,4 @@
-# 王国顾问 Kingdom Advisor 0.6.0
+# 王国顾问 Kingdom Advisor 0.6.1
 
 《王国：两位君主》游戏内辅助 Mod，由 BepInEx 自动加载。
 
@@ -77,3 +77,5 @@
 0.5.8 已获用户最终验收。0.6.0 增加语言解析、显示文案覆盖检查和双语言实景布局验证；源码、已安装DLL与上传包绑定校验。联机保持开放，双端及全部DLC尚未验证。
 
 下载与更新：[GitHub Releases](https://github.com/boyl/kingdom-advisor/releases)。Nexus Mods 上传由用户操作。
+
+0.6.1 当前为待最终验收候选，新增建筑详情与人口统计的验收记录见 [验收文档](docs/acceptance/building-details-audit.md)。上面的0.6.0下载链接仍指向稳定版。

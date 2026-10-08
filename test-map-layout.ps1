@@ -47,3 +47,11 @@ foreach($positions in @(@(-500,500),@(-1,1),@(-150,100,130))){$extent=$stable.Up
 $stable.Reset()
 if($null -ne $stable.Update([float[]]@(0,50),-200,200,5)){throw '换岛必须重新等待数据稳定'}
 '通过：加载范围变化、稳定等待、刷新坐标冻结与换岛复位。'
+$wall=[KingdomAdvisor.MapPoint]::new();$wall.Name='城墙';$wall.X=51
+if([KingdomAdvisor.MapGrouping]::Cell($wall.X,0,24) -ne 2){throw '固定格归属错误'}
+if([KingdomAdvisor.MapGrouping]::Cell(47.99,0,24) -ne 1 -or [KingdomAdvisor.MapGrouping]::Cell(48,0,24) -ne 2){throw '聚合边界错误'}
+if([KingdomAdvisor.MapGrouping]::Cell(-1,0,24) -ne -1){throw '负坐标聚合应使用floor'}
+if([KingdomAdvisor.MapGrouping]::Priority($wall) -ne 0){throw '普通建筑优先级错误'}
+$wall.CampPeople=2
+if([KingdomAdvisor.MapGrouping]::Priority($wall) -ne 100){throw '招募地点优先级错误'}
+'通过：固定岛屿聚合边界、静态优先级与负坐标。'

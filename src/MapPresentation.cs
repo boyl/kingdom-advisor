@@ -47,6 +47,12 @@ namespace KingdomAdvisor
             frozen=MapExtent.Fit(points,groundLeft,groundRight);return frozen;
         }
     }
+    public static class MapGrouping
+    {
+        // Absolute island coordinates keep group identity independent of a moving viewport.
+        public static int Cell(float x,float islandLeft,float unitsPerCell)=>(int)Math.Floor((x-islandLeft)/unitsPerCell);
+        public static int Priority(MapPoint p)=>p.CampPeople>=0||p.Name.Contains("城堡")?100:0;
+    }
     public static class MapExtent
     {
         public static System.Tuple<float,float> Fit(IEnumerable<float> positions,float groundLeft,float groundRight)
