@@ -23,11 +23,66 @@
 
 ### 2. 安装王国顾问
 
-1. 从 [0.6.5 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.5) 下载 **`KingdomAdvisor-0.6.5.zip`**，不要下载源码包。
+1. 从 [0.6.6 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6) 下载 **`KingdomAdvisor-0.6.6.zip`**，不要下载源码包。
 2. 确保游戏已退出。解压 Mod，将其中的 `BepInEx` 文件夹合并到游戏目录。
 3. 核对插件路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。
 4. 正常启动游戏，Mod 自动加载。**F6** 打开设置，**F7** 打开图鉴；手柄默认短按**左摇杆 L3** 打开界面，无需独立启动器。
 
+### 放到哪里：以游戏 EXE 所在文件夹为准
+
+在 Steam 中右键《Kingdom Two Crowns》→ **管理 → 浏览本地文件**。打开后，能直接看到 `KingdomTwoCrowns.exe` 的文件夹就是游戏根目录。Steam 库可以在任何盘，不需要与下面的示例盘符相同。
+
+示例根目录：`D:\SteamLibrary\steamapps\common\Kingdom Two Crowns\`
+
+**放置示意：Mod 压缩包内的 `BepInEx` → 游戏根目录内的 `BepInEx`（合并文件夹）。** 已有其他 Mod 时保留它们，只覆盖王国顾问自己的 DLL。
+
+压缩包内结构：
+
+```text
+KingdomAdvisor-0.6.6.zip
+├─ BepInEx\
+│  └─ plugins\
+│     └─ KingdomAdvisor\
+│        └─ KingdomAdvisor.dll     ← 需要放入游戏的插件
+├─ README.md                      ← 中文安装说明
+├─ README.en.md                   ← English guide
+└─ CHANGELOG.md                   ← 更新说明
+```
+
+安装 BepInEx、放入王国顾问并首次运行后，目录应当是：
+
+```text
+Kingdom Two Crowns\                ← 游戏根目录
+├─ KingdomTwoCrowns.exe            ← 以这个文件定位
+├─ KingdomTwoCrowns_Data\
+├─ winhttp.dll                     ← BepInEx 安装包带来的根目录文件
+├─ doorstop_config.ini             ← BepInEx 安装包带来的根目录文件
+├─ dotnet\                        ← BepInEx IL2CPP 安装包内容
+└─ BepInEx\
+   ├─ core\                       ← BepInEx 本体
+   ├─ plugins\
+   │  ├─ KingdomAdvisor\
+   │  │  └─ KingdomAdvisor.dll     ← 王国顾问必须位于此处
+   │  └─ 其他Mod…                  ← 保留已有插件
+   └─ config\                     ← 首次运行后自动生成
+      ├─ local.kingdom.advisor.cfg ← 顾问配置，更新时保留
+      └─ KingdomAdvisor\          ← 岛屿记录及诊断文件
+```
+
+以上只列出定位所需文件；BepInEx 压缩包内其他文件也应完整解压，不能只复制树中列出的几项。`config` 和顾问记录目录首次运行后生成，不需要自行建立或从别人那里复制。
+
+**正确路径：** `游戏根目录\BepInEx\plugins\KingdomAdvisor\KingdomAdvisor.dll`
+
+常见放错位置（这些路径不会按本说明加载）：
+
+```text
+游戏根目录\KingdomAdvisor-0.6.6\BepInEx\…   × 多套了一层解压文件夹
+游戏根目录\BepInEx\BepInEx\plugins\…      × 重复嵌套 BepInEx
+游戏根目录\KingdomTwoCrowns_Data\…         × 放进了游戏资源目录
+游戏根目录\KingdomAdvisor.dll              × DLL 放在根目录
+```
+
+安装后进入游戏按 **F7** 打开图鉴、**F6** 打开设置即可确认。若没有出现界面，先核对上述 DLL 的完整路径和 BepInEx 版本；`BepInEx\LogOutput.log` 可用于查看加载错误。
 ### 更新与卸载
 
 更新：保存退出游戏，覆盖上述 DLL，保留已有配置。

@@ -39,6 +39,61 @@ Skip this step if the appropriate BepInEx version is already installed. See the 
 3. Check that the plugin is at `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`.
 4. Launch the game normally. The mod loads automatically: **F6** opens settings, **F7** opens the catalog, and a short press of **left stick (L3)** opens the controller interface. No separate launcher is needed.
 
+### Where to put the files
+
+In Steam, right-click **Kingdom Two Crowns → Manage → Browse local files**. The folder that directly contains `KingdomTwoCrowns.exe` is the game root. Your Steam library can be on any drive.
+
+Example root: `D:\SteamLibrary\steamapps\common\Kingdom Two Crowns\`
+
+**Placement: merge the archive's `BepInEx` folder into the game's existing `BepInEx` folder.** Keep other mods; replace only Kingdom Advisor's DLL when updating.
+
+Inside the mod archive:
+
+```text
+KingdomAdvisor-0.6.6.zip
+├─ BepInEx\
+│  └─ plugins\
+│     └─ KingdomAdvisor\
+│        └─ KingdomAdvisor.dll     ← The plugin to copy into the game
+├─ README.md                      ← Chinese guide
+├─ README.en.md                   ← English guide
+└─ CHANGELOG.md                   ← Release notes
+```
+
+After installing BepInEx, copying the mod, and launching once:
+
+```text
+Kingdom Two Crowns\                ← Game root
+├─ KingdomTwoCrowns.exe            ← Use this file to locate the root
+├─ KingdomTwoCrowns_Data\
+├─ winhttp.dll                     ← Root file from the BepInEx archive
+├─ doorstop_config.ini             ← Root file from the BepInEx archive
+├─ dotnet\                        ← From the BepInEx IL2CPP archive
+└─ BepInEx\
+   ├─ core\                       ← BepInEx runtime
+   ├─ plugins\
+   │  ├─ KingdomAdvisor\
+   │  │  └─ KingdomAdvisor.dll     ← Required plugin location
+   │  └─ OtherMods…                ← Keep existing plugins
+   └─ config\                     ← Generated after the first launch
+      ├─ local.kingdom.advisor.cfg ← Keep this configuration when updating
+      └─ KingdomAdvisor\          ← Journal and diagnostic files
+```
+
+This tree shows only the files needed to explain placement. Extract all other files supplied in the BepInEx archive as well. The configuration and journal folders are generated automatically; do not copy another player's configuration.
+
+**Correct path:** `Game root\BepInEx\plugins\KingdomAdvisor\KingdomAdvisor.dll`
+
+Incorrect placements:
+
+```text
+Game root\KingdomAdvisor-0.6.6\BepInEx\…   × Extra enclosing folder
+Game root\BepInEx\BepInEx\plugins\…      × Nested BepInEx folder
+Game root\KingdomTwoCrowns_Data\…         × Game data folder
+Game root\KingdomAdvisor.dll              × DLL directly in the root
+```
+
+Launch the game and press **F7** for the catalog or **F6** for settings. If neither appears, check the complete DLL path and BepInEx version first. Look in `BepInEx\LogOutput.log` for loading errors.
 ### Update and uninstall
 
 To update, save and quit, replace the DLL above, and keep your configuration.
