@@ -61,3 +61,10 @@ Translated text is measured before layout and pagination. English settings allow
 Preserves the verified 0.5.8 input isolation, HUD toggle, map coordinates and gameplay behavior, including existing configuration keys.
 
 修正中英文关闭按钮、快捷入口和翻页按钮裁切；设置页按说明实测高度预留空间，大字号下拉菜单支持两列。诊断模式覆盖中英两种语言、18/28字号、全部设置分类和主要页面。
+
+## 0.7.0-preview.19
+
+- 加入呆猫爆桶与呆狗冲锋、原生输入映射、0.5秒冷却与独立联机元数据通道。
+- 修正运行时像素资源保留、换乘后输入锁、狗冲锋停止；蜥蜴派生能力定向阻断。
+- 去掉坐骑弹出提示，HUD仅保留技能名称。
+- 作为独立预览文件发布，已验证范围和未完成实机项见坐骑验收记录。

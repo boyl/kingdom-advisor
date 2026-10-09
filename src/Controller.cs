@@ -15,6 +15,8 @@ namespace KingdomAdvisor
         public string Device="键鼠";
         public Snapshot CurrentSnapshot=>current;
         public GameActions Actions;public IslandJournal Journal;private Snapshot current=new Snapshot();
+        public CompanionMounts Mounts;
+        public Rewired.Player NativeInputFor(int owner)=>routedInputs.TryGetValue(owner,out var input)?input:Rewired.ReInput.players.GetPlayer(owner);
         public int Section,Choice,ResourcePlayer,ResourceType,ClearMode;public bool SettingsDropdown,ResourceDropdown,ResourceEditing,MapFocus;
         public string ResourceText="10";
         public readonly MapHold Hold=new MapHold();private MapPoint pressedPoint;private string mouseTarget="";
@@ -162,9 +164,10 @@ namespace KingdomAdvisor
             case OptionId.PadCursor:return settings.PadCursor;case OptionId.InfiniteBag:return settings.InfiniteBag;case OptionId.Teleport:return settings.Teleport;case OptionId.InfiniteStamina:return settings.InfiniteStamina;default:return null;}
         }
         public int OptionValue(OptionId id)
-        {if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
+        {if(id==OptionId.CompanionMount)return Mounts.Selection(Owner);if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
         public void SetOption(OptionId id,int value)
         {
+            if(id==OptionId.CompanionMount){Mounts.Select(current,Owner,value);return;}
             if(id==OptionId.Language){settings.UiLanguage.Value=value;Localization.English=Localization.IsEnglish(value,global::Language.current?global::Language.current.languageCode:null,Application.systemLanguage.ToString());DetailPage=0;return;}
             if(id==OptionId.PadOpen){settings.PadOpenButton.Value=value;return;}
             if(id==OptionId.PadSpeed){settings.PadSpeed.Value=new[]{300f,700f,1000f,1400f}[value];return;}
@@ -195,6 +198,7 @@ namespace KingdomAdvisor
         {if(p.Category=="坐骑")return settings.MapMounts.Value;if(p.Category=="人口")return settings.MapCamps.Value;if(p.Category=="建设"||p.Category=="防御"||p.Category=="经济"||p.Category=="工具"||p.Category=="环境")return settings.MapBuildings.Value;return settings.MapSpecial.Value;}
         public void Activate()
         {
+            if(Tab==2 && OptionGroups.Items[Section][Focus].Id==OptionId.CompanionSkill){int owner=Owner;Close();Mounts.Cast(current,owner);return;}
             if(Tab==5){if(Focus==6){Actions.ClearResources(current,ResourcePlayer,ClearTypes());return;}if(ResourceDropdown){SelectResourceChoice(Choice);return;}if(Focus==0||Focus==1||Focus==3||Focus==5){Choice=ResourceChoiceIndex();ResourceDropdown=true;return;}if(Focus==4)AddResources();else if(Focus==2){if(Device=="手柄")ResourceAdjust(1);else{ResourceEditing=!ResourceEditing;ResourceText=settings.ResourceAmount.Value.ToString();}}return;}
             if(Tab==2){var item=OptionGroups.Items[Section][Focus];if(item.Id==OptionId.Resources){Toggle(5,current,Owner);return;}if(item.Id==OptionId.ResetLayout){settings.Layout.Value="";return;}if(SettingsDropdown){SetOption(item.Id,Choice);SettingsDropdown=false;}else{Choice=OptionValue(item.Id);SettingsDropdown=true;}return;}
             if(Tab==0){var entries=FilteredEntries();if(entries.Length>0)ShowCatalogLocations(entries[Math.Clamp(Selected,0,entries.Length-1)]);return;}

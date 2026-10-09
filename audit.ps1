@@ -26,6 +26,7 @@ function Inspect-Type($Type) {
         if(!$method.HasBody){continue}
         foreach($instruction in $method.Body.Instructions){
             $operand=$instruction.Operand
+            if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.FullName -eq 'Steamworks.SteamMatchmaking' -and $operand.Name -eq 'SetLobbyMemberData' -and ($Type.FullName -ne 'KingdomAdvisor.CompanionMountNetwork' -or $method.Name -ne 'Publish')){throw "坐骑同步元数据写入越界：$operand"}
             if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.FullName -eq 'Rewired.ActionElementMap' -and $operand.Name.StartsWith('set_')){
                 if($operand.Name -ne 'set_enabled' -or $Type.FullName -ne 'KingdomAdvisor.AdvisorController' -or $method.Name -notin @('ReservePointerAxes','RestorePadMappings')){throw "手柄映射写入越界：$method : $operand"}
             }
@@ -34,11 +35,21 @@ function Inspect-Type($Type) {
             if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.Scope.Name -eq 'Assembly-CSharp'){
                 [void]$calls.Add($operand.FullName)
                                 if($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$')){
-                    if($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin $approvedWrites){throw "超出动作边界或未审查的游戏调用：$operand"}
+                    $companionAllowed=$Type.FullName -eq 'KingdomAdvisor.CompanionMounts' -and $operand.FullName -in @(
+                        'System.Void Steed::set_walkSpeed(System.Single)',
+                        'System.Void Steed::set_runSpeed(System.Single)',
+                        'System.Void SteedAbility::Deactivate()',
+                        'System.Void Mover::SetSpeed(System.Single,System.Int32)',
+                        'Side Mover::GetDirection()',
+                        'System.Boolean Enemy::IsActiveThreat(Enemy)',
+                        'System.Void Damageable::SendHP()',
+                        'System.Void Damageable::ReceiveDamage(System.Int32,UnityEngine.GameObject,DamageSource)')
+                    if(!$companionAllowed -and ($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin $approvedWrites)){throw "超出动作边界或未审查的游戏调用：$operand"}
                 }
             }
             if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.FullName -in @('UnityEngine.Rigidbody2D','UnityEngine.Transform','UnityEngine.Time') -and $operand.Name.StartsWith('set_')){
-                if($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin @('System.Void UnityEngine.Time::set_timeScale(System.Single)','System.Void UnityEngine.Rigidbody2D::set_position(UnityEngine.Vector2)','System.Void UnityEngine.Rigidbody2D::set_linearVelocity(UnityEngine.Vector2)','System.Void UnityEngine.Transform::set_position(UnityEngine.Vector3)')){throw "超出动作边界的坐标写入：$operand"}
+                $companionVisual=$Type.FullName -eq 'KingdomAdvisor.CompanionMounts' -and $operand.FullName -in @('System.Void UnityEngine.Transform::set_position(UnityEngine.Vector3)','System.Void UnityEngine.Transform::set_localPosition(UnityEngine.Vector3)','System.Void UnityEngine.Transform::set_localScale(UnityEngine.Vector3)')
+                if(!$companionVisual -and ($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin @('System.Void UnityEngine.Time::set_timeScale(System.Single)','System.Void UnityEngine.Rigidbody2D::set_position(UnityEngine.Vector2)','System.Void UnityEngine.Rigidbody2D::set_linearVelocity(UnityEngine.Vector2)','System.Void UnityEngine.Transform::set_position(UnityEngine.Vector3)'))){throw "超出动作边界的坐标写入：$operand"}
             }
             if($instruction.OpCode.Code -in @([Mono.Cecil.Cil.Code]::Stfld,[Mono.Cecil.Cil.Code]::Stsfld) -and $operand -is [Mono.Cecil.FieldReference] -and $operand.DeclaringType.Scope.Name -eq 'Assembly-CSharp'){throw "直接写入游戏字段：$operand"}
         }
@@ -46,4 +57,4 @@ function Inspect-Type($Type) {
     foreach($nested in $Type.NestedTypes){Inspect-Type $nested}
 }
 foreach($type in $assembly.MainModule.Types){Inspect-Type $type}
-"游戏 API 二进制审计通过：$($calls.Count) 个唯一调用，属性读取与已审查动作；玩法写入仅限 GameActions。"
+"游戏 API 二进制审计通过：$($calls.Count) 个唯一调用；玩法写入仅限 GameActions 与逐项允许的 CompanionMounts。"

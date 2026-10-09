@@ -91,7 +91,8 @@ namespace KingdomAdvisor
             if(selected)Fill(new Rect(rect.x,rect.y,3,rect.height),gold);
             int originalSize=button.fontSize;
             while(button.fontSize>14&&button.CalcHeight(new GUIContent(label),rect.width)>rect.height)button.fontSize--;
-            bool clicked=GUI.Button(rect,label,button)||controller.PointerButton(rect,guiPlayer,guiOrigin);button.fontSize=originalSize;return clicked;
+            // 下拉菜单打开时，背景行已禁用；手柄指针也必须遵循同一状态。
+            bool clicked=GUI.enabled&&(GUI.Button(rect,label,button)||controller.PointerButton(rect,guiPlayer,guiOrigin));button.fontSize=originalSize;return clicked;
         }
         private float Label(Rect area,string content,GUIStyle style)
         {content=Localization.Text(content);float h=style.CalcHeight(new GUIContent(content),area.width);var color=style.normal.textColor;style.normal.textColor=new Color(0,0,0,.85f);GUI.Label(new Rect(area.x+1,area.y+1,area.width,h),content,style);style.normal.textColor=color;GUI.Label(new Rect(area.x,area.y,area.width,h),content,style);return h;}
@@ -390,9 +391,10 @@ namespace KingdomAdvisor
         {
             float rail=Localization.English?210:180,rowH=Math.Max(42,text.lineHeight*2+8);
             bool priorEnabled=GUI.enabled;if(controller.SettingsDropdown)GUI.enabled=false;
-            for(int i=0;i<OptionGroups.Names.Length;i++)if(Button(new Rect(14,top+i*(rowH+6),rail-14,rowH),(controller.Section==i?"● ":"")+OptionGroups.Names[i])){controller.Section=i;controller.Focus=0;controller.SettingsDropdown=false;}
+            float railRow=Math.Min(rowH,Math.Max(text.lineHeight+8,(bottom-top)/OptionGroups.Names.Length-6));
+            for(int i=0;i<OptionGroups.Names.Length;i++)if(Button(new Rect(14,top+i*(railRow+6),rail-14,railRow),(controller.Section==i?"● ":"")+OptionGroups.Names[i])){controller.Section=i;controller.Focus=0;controller.SettingsDropdown=false;}
             var items=OptionGroups.Items[controller.Section];float x=rail+14,rw=w-x-14;
-            string note="即时保存 · 玩法辅助默认关闭 · 单机与联机均开放";float noteH=small.CalcHeight(new GUIContent(Localization.Text(note)),rw),py=bottom-noteH-rowH-12;
+            string note=controller.Section==6?"本局临时换乘 · 支持主机安装或双方安装 · 原生坐骑技能键或发动技能":"即时保存 · 玩法辅助默认关闭 · 单机与联机均开放";float noteH=small.CalcHeight(new GUIContent(Localization.Text(note)),rw),py=bottom-noteH-rowH-12;
             int visible=Math.Max(1,(int)((py-top-8)/(rowH+5))),page=controller.Focus/visible,start=page*visible;controller.VisibleRows=visible;
             for(int i=start;i<Math.Min(start+visible,items.Length);i++){
                 var item=items[i];int value=Math.Clamp(controller.OptionValue(item.Id),0,item.Choices.Length-1);

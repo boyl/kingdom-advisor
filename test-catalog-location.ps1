@@ -2,7 +2,7 @@
 $ErrorActionPreference='Stop'
 Add-Type -Path @((Join-Path $PSScriptRoot 'src/Model.cs'),(Join-Path $PSScriptRoot 'src/CatalogPresentation.cs'),(Join-Path $PSScriptRoot 'src/Localization.cs'))
 $entries=[KingdomAdvisor.Catalog]::Entries
-if($entries.Count -ne 104){throw '图鉴范围变化，必须更新全表验收。'}
+if($entries.Count -ne 106){throw '图鉴范围变化，必须更新全表验收。'}
 $patterns=@{}
 foreach($entry in $entries){
  $kind=[KingdomAdvisor.CatalogIcons]::Kind($entry)
@@ -21,7 +21,7 @@ foreach($key in $expected.Keys){$entry=$entries|Where-Object Key -eq $key;if([Ki
 $future=[KingdomAdvisor.Entry]::new('future','未来条目','','','防御')
 if([KingdomAdvisor.CatalogIcons]::Kind($future) -ne 'question'){throw '未知身份不得装成已知对象'}
 if(([KingdomAdvisor.CatalogIcons]::Pattern('question') -join '').Replace('0','').Length -lt 5){throw '未知图标不可见'}
-'通过：104条全量图标覆盖、图案互异、尺寸、身份语义与未知身份回退。'
+'通过：106条全量图标覆盖、图案互异、尺寸、身份语义与未知身份回退。'
 $a=[KingdomAdvisor.MapPoint]::new();$a.Key='wall';$a.Name='城墙';$a.X=10
 $b=[KingdomAdvisor.MapPoint]::new();$b.Key='wall';$b.Name='城墙';$b.X=30
 if([KingdomAdvisor.LocationPresentation]::Find(@($a,$b),$b) -ne 1){throw '同名地点链接串位'}
