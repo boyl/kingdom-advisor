@@ -1,4 +1,4 @@
-# Kingdom Advisor 0.6.5
+# Kingdom Advisor 0.6.6
 
 An in-game information HUD and optional convenience mod for Kingdom Two Crowns. Loaded automatically by BepInEx; no separate launcher.
 
@@ -34,7 +34,7 @@ Skip this step if the appropriate BepInEx version is already installed. See the 
 
 ### 2. Install Kingdom Advisor
 
-1. Download **`KingdomAdvisor-0.6.5.zip`** from the [0.6.5 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.5), rather than the source archive.
+1. Download **`KingdomAdvisor-0.6.6.zip`** from the [0.6.6 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6), rather than the source archive.
 2. With the game closed, extract the mod and merge its `BepInEx` folder into the game directory.
 3. Check that the plugin is at `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`.
 4. Launch the game normally. The mod loads automatically: **F6** opens settings, **F7** opens the catalog, and a short press of **left stick (L3)** opens the controller interface. No separate launcher is needed.
@@ -71,4 +71,8 @@ Source: https://github.com/boyl/kingdom-advisor
 
 Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor/releases). Nexus Mods updates use the official upload API.
 
-0.6.5 passed final user acceptance. See [acceptance records](docs/acceptance/building-details-audit.md).
+0.6.6 passed final user acceptance. See [acceptance records](docs/acceptance/building-details-audit.md).
+
+## Catalog and locations
+
+All 104 entries have explicit identity-based pixel icons: object on the left, purpose or trait on the right. Complete patterns differ between entries. Find matching island locations from the catalog; locations show direction, distance, purpose and current interaction state, with links to the catalog and map. Separate buildings keep separate locations. The ridden mount is excluded from purchase locations. Map focus does not teleport.

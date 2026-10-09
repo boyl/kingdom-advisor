@@ -76,6 +76,7 @@ namespace KingdomAdvisor
                         continue;
                     }
                     if(Owner!=local.Id)continue;
+                    if(Tab==1&&pad.x.justPressed){Device="手柄";var points=FilteredPoints(s,local);if(points.Length>0)ShowPointCatalog(points[Math.Clamp(Selected,0,points.Length-1)]);continue;}
                     if(data.Back){Device="手柄";if(ResourceDropdown)ResourceDropdown=false;else if(SettingsDropdown)SettingsDropdown=false;else if(ResourceEditing)ResourceEditing=false;else if(SearchEditing){SearchEditing=false;PadRegion=2;}else if(PadRegion==3){PadRegion=0;}else Close();continue;}
                     if(pad.rightBumper.justPressed||pad.leftBumper.justPressed){Device="手柄";ChangeTab(pad.rightBumper.justPressed?1:-1);continue;}
                     int page=triggerRepeat.Step(pad.rightTrigger.value>.5f?1:pad.leftTrigger.value>.5f?-1:0,Time.unscaledTime);

@@ -11,6 +11,7 @@ namespace KingdomAdvisor
     internal sealed partial class AdvisorController
     {
         public bool Open;public int Tab,Focus,Selected,Owner,DetailPage;public string Search="",Category="全部";
+        public string PointCatalogKey="";
         public string Device="键鼠";
         public Snapshot CurrentSnapshot=>current;
         public GameActions Actions;public IslandJournal Journal;private Snapshot current=new Snapshot();
@@ -22,7 +23,19 @@ namespace KingdomAdvisor
         public void BeginMapDraw(int id){mouseTarget="";ClearPadHit(id);}
         public void MapHit(MapPoint point,int owner){mouseTarget=PointKey(point);if(Event.current.type==EventType.MouseDown&&Event.current.button==0){Device="键鼠";pressedPoint=point;mousePress=true;Hold.Begin(mouseTarget,owner,Time.unscaledTime,settings.Teleport.Value);Event.current.Use();}}
         public void Inspect(MapPoint point,int owner)
-        {if(!Open||Tab!=3)Toggle(3,current,owner);Category="全部";var p=current.Players.FirstOrDefault(p=>p.Id==owner);if(p!=null){var items=FilteredPoints(current,p);int found=Array.FindIndex(items,x=>x.Name==point.Name&&Math.Abs(x.X-point.X)<1);if(found>=0)Selected=found;}}
+        {if(!Open||Tab!=3)Toggle(3,current,owner);Category="全部";PointCatalogKey="";Hold.Cancel();var p=current.Players.FirstOrDefault(p=>p.Id==owner);if(p!=null){var items=FilteredPoints(current,p);int found=LocationPresentation.Find(items,point);if(found>=0)Selected=found;}}
+        public void ShowPointCatalog(MapPoint point)
+        {
+            var entry=LocationPresentation.Entry(point);if(entry==null){Actions.Notify("该地点尚无对应图鉴条目。");return;}
+            if(!Open||Tab!=0)Toggle(0,current,Owner);PointCatalogKey="";Category="全部";Search="";DetailPage=0;Selected=Array.FindIndex(FilteredEntries(),e=>e.Key==entry.Key);
+        }
+        public void ShowCatalogLocations(Entry entry)
+        {
+            var player=current.Players.FirstOrDefault(p=>p.Id==Owner);if(player==null)return;
+            Category="全部";PointCatalogKey=entry.Key;
+            if(FilteredPoints(current,player).Length==0){PointCatalogKey="";Actions.Notify("本岛可见范围内没有对应地点。");return;}
+            if(!Open||Tab!=1)Toggle(1,current,Owner);Selected=0;DetailPage=0;
+        }
         private void StepMapHold(string target,bool held)
         {var point=pressedPoint;int owner=Hold.Owner;var action=Hold.Step(target,held,Time.unscaledTime,current.Playing&&(!Hold.CanTeleport||settings.Teleport.Value));if(action==GestureResult.Teleport)Actions.Teleport(current,owner,point);else if(action==GestureResult.Inspect)Inspect(point,owner);}
         public readonly string[] Categories={"全部","建设","防御","经济","人口","工具","航行","科技","探索","特殊","坐骑","环境","未分类"};
@@ -44,7 +57,7 @@ namespace KingdomAdvisor
         public bool ChordHeld(int player)=>false;
         public AdvisorController(Settings config){settings=config;}
         public bool Blocks(int id)=>((Open||MapFocus)&&Owner==id)||(Hold.Active&&Hold.Owner==id)||releaseGuard.Contains(id)||PadBlocks(id);
-        public void Close(){if(Open||MapFocus)releaseGuard.Add(Owner);Open=MapFocus=false;Hold.Cancel();SettingsDropdown=ResourceDropdown=ResourceEditing=false;Focus=0;Search="";SearchFocused=false;SearchEditing=false;PadRegion=0;verticalRepeat.Reset();horizontalRepeat.Reset();}
+        public void Close(){PointCatalogKey="";if(Open||MapFocus)releaseGuard.Add(Owner);Open=MapFocus=false;Hold.Cancel();SettingsDropdown=ResourceDropdown=ResourceEditing=false;Focus=0;Search="";SearchFocused=false;SearchEditing=false;PadRegion=0;verticalRepeat.Reset();horizontalRepeat.Reset();}
         public void Toggle(int tab,Snapshot state,int? player=null)
         {
             if(Open&&Tab==tab){Close();return;}
@@ -85,6 +98,8 @@ namespace KingdomAdvisor
             }
             if(!SearchFocused)
             {
+                if((Tab==0||Tab==1)&&(Input.GetKeyDown(KeyCode.PageDown)||Input.GetKeyDown(KeyCode.PageUp)))DetailPage=Math.Max(0,DetailPage+(Input.GetKeyDown(KeyCode.PageDown)?1:-1));
+                if(Tab==1&&Input.GetKeyDown(KeyCode.C)){var player=state.Players.FirstOrDefault(p=>p.Id==Owner);if(player!=null){var points=FilteredPoints(state,player);if(points.Length>0)ShowPointCatalog(points[Math.Clamp(Selected,0,points.Length-1)]);}return;}
                 if(Input.GetKeyDown(KeyCode.UpArrow)){Navigate(-1,state);Device="键鼠";}
                 if(Input.GetKeyDown(KeyCode.DownArrow)){Navigate(1,state);Device="键鼠";}
                 if(Input.GetKeyDown(KeyCode.LeftArrow)){Horizontal(-1);Device="键鼠";}
@@ -93,7 +108,7 @@ namespace KingdomAdvisor
                 if(Tab==3&&Device=="键鼠")UpdatePanelMapHold(Input.GetKey(KeyCode.Return),Input.GetKeyDown(KeyCode.Return));
             }
         }
-        public void ChangeTab(int direction){ClearPadHit(Owner);Tab=(Tab+direction+6)%6;Focus=0;Selected=0;DetailPage=0;PadRegion=0;SettingsDropdown=ResourceDropdown=ResourceEditing=false;Hold.Cancel();SearchEditing=false;SearchFocused=false;verticalRepeat.Reset();horizontalRepeat.Reset();}
+        public void ChangeTab(int direction){PointCatalogKey="";ClearPadHit(Owner);Tab=(Tab+direction+6)%6;Focus=0;Selected=0;DetailPage=0;PadRegion=0;SettingsDropdown=ResourceDropdown=ResourceEditing=false;Hold.Cancel();SearchEditing=false;SearchFocused=false;verticalRepeat.Reset();horizontalRepeat.Reset();}
         public void SearchKey(int index)
         {string key=SearchKeys[index];if(key=="删除"){if(Search.Length>0)Search=Search.Substring(0,Search.Length-1);}else if(key=="清空")Search="";else if(key=="完成"){SearchEditing=false;PadRegion=0;}else if(Search.Length<256)Search+=key;Selected=0;}
         private void DiscoverActions()
@@ -106,7 +121,7 @@ namespace KingdomAdvisor
             discovered=true;Plugin.Instance.Log.LogInfo("Rewired actions: "+string.Join(", ",lines));
         }
         public Entry[] FilteredEntries()=>Catalog.Entries.Where(e=>(Category=="全部"||e.Category==Category)&&(string.IsNullOrWhiteSpace(Search)||(e.Name+e.Description+e.Key+Localization.Translate(e.Name+" "+e.Description,true)).IndexOf(Search,StringComparison.OrdinalIgnoreCase)>=0)).ToArray();
-        public MapPoint[] FilteredPoints(Snapshot state,PlayerInfo player)=>state.Points.Where(p=>PointVisible(p)&&(Category=="全部"||p.Category==Category)&&(settings.FullMap.Value||state.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2))).OrderBy(p=>Math.Abs(p.X-player.X)).ToArray();
+        public MapPoint[] FilteredPoints(Snapshot state,PlayerInfo player)=>state.Points.Where(p=>PointVisible(p)&&(PointCatalogKey.Length==0||p.Key==PointCatalogKey)&&(Category=="全部"||p.Category==Category)&&(settings.FullMap.Value||state.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2))).OrderBy(p=>Math.Abs(p.X-player.X)).ToArray();
         public void FlipPage(int direction,Snapshot s)
         {
             if(Tab==2){SettingsDropdown=false;int rows=Math.Max(1,VisibleRows),count=OptionGroups.Items[Section].Length;Focus=MenuPaging.Flip(Focus,rows,count,direction);return;}
@@ -182,7 +197,8 @@ namespace KingdomAdvisor
         {
             if(Tab==5){if(Focus==6){Actions.ClearResources(current,ResourcePlayer,ClearTypes());return;}if(ResourceDropdown){SelectResourceChoice(Choice);return;}if(Focus==0||Focus==1||Focus==3||Focus==5){Choice=ResourceChoiceIndex();ResourceDropdown=true;return;}if(Focus==4)AddResources();else if(Focus==2){if(Device=="手柄")ResourceAdjust(1);else{ResourceEditing=!ResourceEditing;ResourceText=settings.ResourceAmount.Value.ToString();}}return;}
             if(Tab==2){var item=OptionGroups.Items[Section][Focus];if(item.Id==OptionId.Resources){Toggle(5,current,Owner);return;}if(item.Id==OptionId.ResetLayout){settings.Layout.Value="";return;}if(SettingsDropdown){SetOption(item.Id,Choice);SettingsDropdown=false;}else{Choice=OptionValue(item.Id);SettingsDropdown=true;}return;}
-            if(Tab==0){DetailPage++;return;}
+            if(Tab==0){var entries=FilteredEntries();if(entries.Length>0)ShowCatalogLocations(entries[Math.Clamp(Selected,0,entries.Length-1)]);return;}
+            if(Tab==1){var player=current.Players.FirstOrDefault(p=>p.Id==Owner);if(player!=null){var points=FilteredPoints(current,player);if(points.Length>0)Inspect(points[Math.Clamp(Selected,0,points.Length-1)],Owner);}return;}
             if(Tab==3){MapNearby=!MapNearby;return;}
         }
     }

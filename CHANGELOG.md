@@ -1,3 +1,9 @@
+# 0.6.6 更新说明 / Release notes
+
+全部104条图鉴按身份明确映射主体＋用途／特征像素图标，完整图案互异；兴趣点改为地点，补充方向、距离、作用与原生交互状态，以及图鉴、地点和地图之间的联动。排除玩家及当前骑乘坐骑的冗余地点。中英文同步。
+
+Adds explicit identity-based icons for all 104 catalog entries, with distinct object/purpose combinations and catalog/location/map links. Locations include direction, distance, purpose and native interaction state. Excludes monarchs and ridden mounts from redundant locations. Chinese and English included.
+
 # 0.6.5 更新说明 / Release notes
 
 补齐城墙、箭塔、农舍等设施的隐士特殊改造说明。读取游戏实际passengerUpgrades，显示改造用途及乘员条件；普通升级与改造目标共用组件识别，已建号角墙优先依据原生标记识别。中文与英文同步处理。保留已有配置和存档，无新增依赖。

@@ -10,7 +10,7 @@ namespace KingdomAdvisor
         private readonly Settings settings;private readonly AdvisorController controller;
         private GUIStyle text,title,small,button,fillStyle;
         private Font font;private int lastSize;private bool stylesReady;
-        private string lastCatalogKey="";
+        private string lastCatalogKey="",lastLocationKey="";
         private readonly StableMapExtent stableExtent=new StableMapExtent();private int extentIsland=-1;
         private LayoutPositions positions;
         private string savedPositions,dragKey="";
@@ -80,11 +80,11 @@ namespace KingdomAdvisor
             Fill(rect,border);Fill(new Rect(rect.x+1,rect.y+1,rect.width-2,rect.height-2),background);
             Fill(new Rect(rect.x+16,rect.y,Math.Min(48,rect.width-32),2),gold);
         }
-        private bool Button(Rect rect,string label,bool transparent=false)
+        private bool Button(Rect rect,string label,bool transparent=false,bool selectedOverride=false)
         {
             label=Localization.Text(label);
             if(Event.current.type==EventType.MouseDown&&rect.Contains(Event.current.mousePosition))controller.Device="键鼠";
-            bool selected=label.StartsWith("▶")||label.StartsWith("●");
+            bool selected=selectedOverride||label.StartsWith("▶")||label.StartsWith("●");
             bool hover=(controller.Device!="手柄"||controller.PadPointerHover(guiPlayer))&&rect.Contains(PointerPosition);
 
             if(!transparent&&(!settings.InterfaceTransparent.Value||selected||hover))Fill(rect,selected?new Color(.22f,.24f,.20f,.98f):hover?new Color(.16f,.22f,.25f,.98f):new Color(.095f,.13f,.16f,.96f));
@@ -365,9 +365,11 @@ namespace KingdomAdvisor
             float pw=Math.Min(1040,viewport.width-40),ph=Math.Min(720,viewport.height-40);var panel=new Rect(Mathf.Round((viewport.width-pw)/2),Mathf.Round((viewport.height-ph)/2),pw,ph);
             if(!settings.InterfaceTransparent.Value)Fill(viewport,new Color(0,0,0,.38f));Card(panel,settings.InterfaceTransparent.Value);guiOrigin+=new Vector2(panel.x,panel.y);GUI.BeginGroup(panel);
             float w=panel.width,h=panel.height,line=Math.Max(24,text.lineHeight+7);
-            var tabs=new[]{"图鉴","兴趣点","设置","地图","岛屿记录","资源"};for(int i=0;i<tabs.Length;i++){var rect=new Rect(12+i*(w-115)/tabs.Length,10,(w-131)/tabs.Length,line+6);if(Button(rect,(controller.Tab==i?"● ":"")+tabs[i])){controller.ChangeTab(i-controller.Tab);}}
+            var tabs=new[]{"图鉴","地点","设置","地图","岛屿记录","资源"};for(int i=0;i<tabs.Length;i++){var rect=new Rect(12+i*(w-115)/tabs.Length,10,(w-131)/tabs.Length,line+6);if(Button(rect,(controller.Tab==i?"● ":"")+tabs[i])){controller.ChangeTab(i-controller.Tab);}}
             if(Button(new Rect(w-91,10,79,line+6),Localization.English?"Close":"关闭"))controller.Close();
             string help=controller.Device=="手柄"?controller.PadOpenLabel+" 短按面板／长按显隐 · LB/RB 页签 · LT/RT "+(controller.PadRegion==3&&controller.DetailPages>1?"详情":"列表")+"翻页 · 方向选择 · 确认／返回":"上下选择 · 左右分类 · Enter 选择 · Tab 切页 · Esc 关闭";
+            if(controller.Tab==1)help=controller.Device=="手柄"?"确认定位地图 · X 查看图鉴 · LT/RT 列表翻页 · B 返回":"Enter 定位地图 · C 查看图鉴 · PgUp/PgDn 详情 · Esc 关闭";
+            if(controller.Tab==0)help+=controller.Device=="手柄"?" · 确认查看本岛地点":" · Enter 查看本岛地点 · PgUp/PgDn 详情";
             float helpH=small.CalcHeight(new GUIContent(Localization.Text(help)),w-28),helpY=h-helpH-14;
             float top=line+42,bottom=helpY-14;
             if(controller.Tab==2)DrawSettings(w,top,bottom);
@@ -456,18 +458,22 @@ namespace KingdomAdvisor
             controller.Selected=Math.Clamp(controller.Selected,0,entries.Length-1);
             float listW=w*.38f;int visible=Math.Max(1,(int)((bottom-top-line-10)/(line+5)));int page=controller.Selected/visible;int start=page*visible;
             controller.VisibleRows=visible;
-            for(int i=start;i<Math.Min(start+visible,entries.Length);i++){var rect=new Rect(14,top+(i-start)*(line+5),listW-20,line+2);if(Button(rect,(controller.Selected==i?"▶ ":"")+(settings.Icons.Value?"      ":"")+entries[i].Name))controller.Selected=i;if(settings.Icons.Value)Landmark(rect.x+25,rect.y+8,entries[i].Category,MarkerColor(entries[i].Category));}
+            for(int i=start;i<Math.Min(start+visible,entries.Length);i++){var rect=new Rect(14,top+(i-start)*(line+5),listW-20,line+2);if(Button(rect,(settings.Icons.Value?"         ":"")+entries[i].Name,selectedOverride:controller.Selected==i))controller.Selected=i;if(settings.Icons.Value)CatalogIcon(rect.x+15,rect.y+8,entries[i]);}
             Pagination(14,bottom-line-4,listW-20,line,page,Math.Max(1,(entries.Length+visible-1)/visible),visible,entries.Length);
             var selected=entries[controller.Selected];float dx=listW+8,dw=w-dx-14,y=top;
             if(lastCatalogKey!=selected.Key){lastCatalogKey=selected.Key;controller.DetailPage=0;}
-            y+=Row(dx,y,dw,(controller.Device=="手柄"&&controller.PadRegion==3?"▶ ":"")+selected.Name,title);y+=Row(dx,y,dw,"类别："+selected.Category,small);
+            if(settings.Icons.Value)CatalogIcon(dx,y+4,selected);
+            y+=Row(dx+(settings.Icons.Value?42:0),y,dw-(settings.Icons.Value?42:0),(controller.Device=="手柄"&&controller.PadRegion==3?"▶ ":"")+selected.Name,title);y+=Row(dx,y,dw,"类别："+selected.Category,small);
             string body=selected.Description+"\n\n建议："+selected.Advice;
             if(state.Counts.TryGetValue(selected.Key,out var count))body+="\n\n本岛同类交互点："+count;
             body+="\n\n费用、等级和锁定原因请靠近对象查看。不同主题以当前游戏数据为准。";
-            var pages=SplitPages(body,dw,Math.Max(line,bottom-y-line-10));
+            var linked=state.Points.Any(p=>p.Key==selected.Key);
+            var pages=SplitPages(body,dw,Math.Max(line,bottom-y-line*2-20));
             controller.DetailPages=pages.Length;controller.DetailPage%=pages.Length;
             Label(new Rect(dx,y,dw,0),pages[controller.DetailPage],text);
-            if(pages.Length>1&&Button(new Rect(dx,bottom-line,dw,line),"详情 "+(controller.DetailPage+1)+" / "+pages.Length+" · 下一页"))controller.DetailPage++;
+            if(pages.Length>1&&Button(new Rect(dx,bottom-line*2-8,dw,line),"详情 "+(controller.DetailPage+1)+" / "+pages.Length+" · 下一页"))controller.DetailPage++;
+            if(linked){if(Button(new Rect(dx,bottom-line,dw,line),"查看本岛地点"))controller.ShowCatalogLocations(selected);}
+            else Label(new Rect(dx,bottom-line,dw,line),"本岛可见范围内没有对应地点。",small);
         }
         private void Pagination(float x,float y,float width,float height,int page,int count,int perPage,int total)
         {if(Button(new Rect(x,y,width*.28f,height),"←"))controller.Selected=Math.Max(0,(page-1)*perPage);Label(new Rect(x+width*.30f,y,width*.36f,height),(page+1)+" / "+count,small);if(Button(new Rect(x+width*.70f,y,width*.30f,height),"→"))controller.Selected=Math.Min(total-1,(page+1)*perPage);}
@@ -475,12 +481,28 @@ namespace KingdomAdvisor
         {
             float line=Math.Max(36,text.lineHeight+10);var points=controller.FilteredPoints(state,player);
             int ci=Array.IndexOf(controller.Categories,controller.Category);
-            if(Button(new Rect(14,top,w-28,line),"筛选："+controller.Category)){controller.Category=controller.Categories[(ci+1)%controller.Categories.Length];controller.Selected=0;}
+            if(Button(new Rect(14,top,w-28,line),controller.PointCatalogKey.Length>0?"清除图鉴筛选":"筛选："+controller.Category)){if(controller.PointCatalogKey.Length>0)controller.PointCatalogKey="";else controller.Category=controller.Categories[(ci+1)%controller.Categories.Length];controller.Selected=0;}
             top+=line+8;if(points.Length==0){Label(new Rect(14,top,w-28,0),"当前筛选没有兴趣点。",text);return;}
-            controller.Selected=Math.Clamp(controller.Selected,0,points.Length-1);int visible=Math.Max(1,(int)((bottom-top-line-10)/(line+5)));int page=controller.Selected/visible,start=page*visible;
+            float listW=w*.42f,rowH=Math.Max(48,text.lineHeight*2+8);
+            controller.Selected=Math.Clamp(controller.Selected,0,points.Length-1);int visible=Math.Max(1,(int)((bottom-top-line-10)/(rowH+5)));int page=controller.Selected/visible,start=page*visible;
             controller.VisibleRows=visible;
-            for(int i=start;i<Math.Min(start+visible,points.Length);i++){var p=points[i];var rect=new Rect(14,top+(i-start)*(line+5),w-28,line+2);if(Button(rect,(controller.Selected==i?"▶ ":"")+p.Name+" · "+p.Category))controller.Selected=i;}
-            Pagination(14,bottom-line-4,w-28,line,page,Math.Max(1,(points.Length+visible-1)/visible),visible,points.Length);
+            for(int i=start;i<Math.Min(start+visible,points.Length);i++){var p=points[i];var rect=new Rect(14,top+(i-start)*(rowH+5),listW-22,rowH);if(Button(rect,(controller.Selected==i?"▶ ":"")+p.Name+"\n"+LocationPresentation.Distance(p,player.X)))controller.Selected=i;}
+            Pagination(14,bottom-line-4,listW-22,line,page,Math.Max(1,(points.Length+visible-1)/visible),visible,points.Length);
+            var selected=points[controller.Selected];float dx=listW+8,dw=w-dx-14,y=top;
+            var key=LocationPresentation.Identity(selected);if(lastLocationKey!=key){lastLocationKey=key;controller.DetailPage=0;}
+            y+=Row(dx,y,dw,selected.Name,title);y+=Row(dx,y,dw,"类别："+selected.Category,small);
+            var pages=SplitPages(LocationPresentation.Detail(selected,player),dw,Math.Max(line,bottom-y-line*3-20));
+            controller.DetailPages=pages.Length;controller.DetailPage%=pages.Length;
+            Label(new Rect(dx,y,dw,0),pages[controller.DetailPage],text);
+            if(pages.Length>1&&Button(new Rect(dx,bottom-line*3-16,dw,line),"详情 "+(controller.DetailPage+1)+" / "+pages.Length+" · 下一页"))controller.DetailPage++;
+            if(Button(new Rect(dx,bottom-line*2-8,dw,line),"在地图查看"))controller.Inspect(selected,player.Id);
+            if(LocationPresentation.Entry(selected)!=null&&Button(new Rect(dx,bottom-line,dw,line),"查看图鉴"))controller.ShowPointCatalog(selected);
+            else if(LocationPresentation.Entry(selected)==null)Label(new Rect(dx,bottom-line,dw,line),"该地点尚无对应图鉴条目。",small);
+        }
+        private void CatalogIcon(float x,float y,Entry entry)
+        {
+            var pattern=CatalogIcons.Pattern(CatalogIcons.Kind(entry));var color=MarkerColor(entry.Category);
+            for(int row=0;row<pattern.Length;row++)for(int col=0;col<pattern[row].Length;col++)if(pattern[row][col]=='1')Fill(new Rect(x+col*3,y+row*3,3,3),color);
         }
         private static string On(bool value)=>value?"开启":"关闭";
         private void DrawPointer(Vector2 position)

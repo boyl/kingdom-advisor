@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.5";
+        public const string Version="0.6.6";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -131,17 +131,38 @@ namespace KingdomAdvisor
                     {
                         if(previewFont<0)previewFont=Plugin.Instance.Settings.FontSize.Value;
                         int variant=previewStage/32,scenario=(previewStage%32)/2;
-                        if(variant>=4){previewLanguage=-1;Plugin.Instance.Settings.FontSize.Value=previewFont;Controller.Close();Controller.Tab=0;Controller.Section=0;Plugin.Instance.Settings.PreviewCapture.Value=false;}
+                        if(previewStage>=232){previewLanguage=-1;Plugin.Instance.Settings.FontSize.Value=previewFont;Controller.Close();Controller.Tab=0;Controller.Section=0;Plugin.Instance.Settings.PreviewCapture.Value=false;}
+                        else if(previewStage>=128)
+                        {
+                            int auditVariant=(previewStage-128)/26,page=((previewStage-128)%26)/2;
+                            previewLanguage=auditVariant<2?2:1;Plugin.Instance.Settings.FontSize.Value=auditVariant%2==0?18:28;
+                            if(previewStage%2==0){Controller.Close();Controller.Toggle(0,reader.State);Controller.Category="全部";Controller.Selected=page*Math.Max(1,Controller.VisibleRows);Controller.DetailPage=0;}
+                            else if(page*Math.Max(1,Controller.VisibleRows)<Catalog.Entries.Length)Capture((auditVariant<2?"english":"chinese")+"-font"+(auditVariant%2==0?18:28)+"-catalog-page"+(page+1).ToString("D2")+".png");
+                        }
                         else if(previewStage%2==0){
                             previewLanguage=variant<2?2:1;Plugin.Instance.Settings.FontSize.Value=variant%2==0?18:28;
                             Controller.Close();Controller.SettingsDropdown=false;Controller.ResourceDropdown=false;Controller.Focus=0;Controller.Selected=0;Controller.DetailPage=0;
                             if(scenario<8){Controller.Toggle(2,reader.State);Controller.Section=scenario<6?scenario:scenario==6?1:2;if(scenario==6)Controller.Focus=10;if(scenario==7){Controller.Focus=4;Controller.Choice=7;Controller.SettingsDropdown=true;}}
-                            else if(scenario<10){Controller.Toggle(0,reader.State);if(scenario==9)Controller.Selected=24;}
-                            else if(scenario<13)Controller.Toggle(scenario==10?1:scenario==11?3:4,reader.State);
+                            else if(scenario<10){Controller.Toggle(0,reader.State);if(scenario==9)Controller.Selected=12;}
+                            else if(scenario==10)
+                            {
+                                Controller.Toggle(0,reader.State);
+                                var point=reader.State.Points.FirstOrDefault(p=>LocationPresentation.Entry(p)!=null&&Controller.PointVisible(p));
+                                if(point!=null){Controller.ShowCatalogLocations(LocationPresentation.Entry(point));Plugin.Instance.Log.LogInfo("Preview catalog-to-locations: tab="+Controller.Tab+" key="+Controller.PointCatalogKey);}
+                                else Plugin.Instance.Log.LogInfo("Preview catalog-to-locations: skipped, no visible known location");
+                            }
+                            else if(scenario==11)
+                            {
+                                Controller.Toggle(1,reader.State);
+                                var player=reader.State.Players.FirstOrDefault(p=>p.Id==Controller.Owner);
+                                var points=player==null?Array.Empty<MapPoint>():Controller.FilteredPoints(reader.State,player);
+                                if(points.Length>0){var point=points[0];Controller.Inspect(point,Controller.Owner);var mapped=Controller.FilteredPoints(reader.State,player);if(LocationPresentation.Find(mapped,point)!=Controller.Selected)throw new InvalidOperationException("Preview map link selected a different location");Plugin.Instance.Log.LogInfo("Preview locations-to-map: matched="+LocationPresentation.Identity(point));}
+                            }
+                            else if(scenario==12)Controller.Toggle(4,reader.State);
                             else if(scenario<15){Controller.Toggle(5,reader.State);if(scenario==14){Controller.Focus=5;Controller.Choice=2;Controller.ResourceDropdown=true;}}
                         }
                         else Capture((variant<2?"english":"chinese")+"-font"+(variant%2==0?18:28)+"-"+new[]{"settings-map","settings-advisor","settings-catalog","settings-resource","settings-time","settings-pad","settings-advisor-last","settings-font-dropdown","catalog-first","catalog-later","locations","map","journal","resources","resources-dropdown","gameplay"}[scenario]+".png");
-                        previewStage++;previewAt=previewStage>128?float.PositiveInfinity:now+1;
+                        previewStage++;previewAt=previewStage>232?float.PositiveInfinity:now+1;
                     }
                 }
                 failures=0;
@@ -323,6 +344,10 @@ namespace KingdomAdvisor
                 for(int i=0;i<all.Length;i++)
                 {
                     var p=all[i];if(!p||!p.gameObject.activeInHierarchy)continue;
+                    // Monarch and ridden mount already have player markers.
+                    if(NativeParent<Player>(p))continue;
+                    var ridden=NativeParent<Steed>(p);
+                    if(ridden&&((k.playerOne&&k.playerOne.steed&&ridden==k.playerOne.steed)||(k.playerTwo&&k.playerTwo.steed&&ridden==k.playerTwo.steed)))continue;
                     var entry=ResolvePayable(p);var x=p.transform.position.x;
                     s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
                     if(!s.Counts.ContainsKey(entry.Key))s.Counts[entry.Key]=0;s.Counts[entry.Key]++;
