@@ -13,6 +13,19 @@ namespace KingdomAdvisor
     }
     public static class Catalog
     {
+        public static Entry ResolveWall(string raw,bool hasHorn)
+            =>hasHorn?Entries.First(e=>e.Key=="hornwall"):Resolve(raw);
+        public static string WallConversion(string prefab)
+        {
+            var e=Resolve(prefab);
+            return e.Key=="hornwall"?"特殊改造  "+e.Name+"："+e.Description+" 需要带上号角隐士。":"";
+        }
+        public static string Conversion(Entry target,string passengerTag)
+        {
+            string kind=target.Key switch{"hornwall"=>"Horn","ballista"=>"Ballista","baker"=>"Baker","knighttower"=>"Knight","stable"=>"Horse","firetower"=>"Fire",_=>null};
+            string requirement=kind==null?"乘员条件："+(passengerTag??""):"需要带上"+ResolveHermit("",kind,false).Name+"。";
+            return "特殊改造  "+target.Name+"："+target.Description+" "+requirement;
+        }
         public static readonly Entry[] Entries = {
             new Entry("hermitfire","火焰隐士","将满足条件的弓箭塔改造成火焰塔。","改造后需要操作工匠。","特殊"),
             new Entry("hermitknight","军队招募隐士","将满足条件的弓箭塔改造成额外军队招募塔。","增加招募入口，不会直接增加人口或自动晋升。","特殊"),

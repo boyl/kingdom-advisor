@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.4";
+        public const string Version="0.6.5";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -228,6 +228,8 @@ namespace KingdomAdvisor
         private static T NativeComponent<T>(Component obj) where T:Component=>NativeComponent<T>(obj.gameObject);
         private static Entry ResolvePayable(Payable payable)
         {
+            var horn=payable.TryCast<PayableHorn>();if(horn)return Catalog.ResolveWall(payable.name,true);
+            var wall=NativeComponent<Wall>(payable.gameObject);if(wall&&wall.isHornUpgrade)return Catalog.ResolveWall(payable.name,true);
             var statue=payable.TryCast<Statue>();
             if(statue)return Catalog.ResolveStatue(payable.name,payable.GetIl2CppType().Name,statue.deity.ToString());
             var cabin=payable.TryCast<Cabin>();if(cabin)return Catalog.ResolveHermit(cabin.name,cabin.hermitType.ToString(),true);
@@ -238,6 +240,17 @@ namespace KingdomAdvisor
             var shop=payable.TryCast<PayableShop>();
             if(shop){var sided=payable.TryCast<PayableSidedShop>();return Catalog.ResolveShop(shop.name,sided?sided.SidedShopType.ToString():"",shop.itemPrefab?shop.itemPrefab.GetIl2CppType().Name:"");}
             return Catalog.ResolveNative(payable.name,payable.GetIl2CppType().Name);
+        }
+        private static Entry ResolveBuilding(GameObject obj)
+        {
+            var payable=NativeComponent<Payable>(obj);
+            var entry=payable?ResolvePayable(payable):Catalog.Resolve(obj.name);
+            var wall=NativeComponent<Wall>(obj);if(wall&&wall.isHornUpgrade)return Catalog.ResolveWall(obj.name,true);
+            var farm=NativeComponent<Farmhouse>(obj);if(farm&&farm.isStable)return Catalog.Entries.First(e=>e.Key=="stable");
+            if(NativeChild<Ballista>(obj))return Catalog.Entries.First(e=>e.Key=="ballista");
+            if(NativeChild<Baker>(obj))return Catalog.Entries.First(e=>e.Key=="baker");
+            if(NativeChild<FireTower>(obj))return Catalog.Entries.First(e=>e.Key=="firetower");
+            return entry;
         }
         private static string PayableIdentity(Payable p)
         {
@@ -434,7 +447,7 @@ namespace KingdomAdvisor
         private TargetInfo ReadBuildingTarget(GameObject obj,Player player)
         {
             var payable=NativeComponent<Payable>(obj);
-                        var raw=obj.name;var entry=payable?ResolvePayable(payable):Catalog.Resolve(raw);
+                        var raw=obj.name;var entry=ResolveBuilding(obj);
             var stableFarm=NativeComponent<Farmhouse>(obj);if(stableFarm&&stableFarm.isStable)entry=Catalog.Entries.First(e=>e.Key=="stable");
             if(NativeChild<Ballista>(obj))entry=Catalog.Entries.First(e=>e.Key=="ballista");
             else if(NativeChild<Baker>(obj))entry=Catalog.Entries.First(e=>e.Key=="baker");
@@ -442,9 +455,18 @@ namespace KingdomAdvisor
             var t=new TargetInfo{Raw=raw,Name=entry.Name,Description=entry.Description,Advice=entry.Advice,Category=entry.Category,Cost=payable?payable.Price:-1,Currency=payable?Catalog.Currency(payable.Currency.ToString()):"",X=obj.transform.position.x};
             if(payable){LockIndicator.LockReason reason;t.Locked=payable.IsLocked(player,out reason);t.Lock=Catalog.Lock(reason.ToString());}
             var upgrade=payable?payable.TryCast<PayableUpgrade>():null;
-            if(upgrade&&upgrade.nextPrefab){var next=upgrade.nextPrefab;var nextPayable=NativeComponent<Payable>(next);var nextEntry=nextPayable?ResolvePayable(nextPayable):Catalog.Resolve(next.name);var nextFarm=NativeComponent<Farmhouse>(next);if(nextFarm&&nextFarm.isStable)nextEntry=Catalog.Entries.First(e=>e.Key=="stable");t.Next=nextEntry.Name+"："+nextEntry.Description;}
+            if(upgrade&&upgrade.nextPrefab){var nextEntry=ResolveBuilding(upgrade.nextPrefab);t.Next=nextEntry.Name+"："+nextEntry.Description;}
             var wall=NativeComponent<Wall>(obj);
             if(wall){t.Level=wall.level;t.Details="驻防：弓箭手 "+wall.archerCount+" · 长枪兵 "+wall.pikemanCount;var damage=wall._damageable;if(damage){t.Health=damage.hitPoints;t.HealthMax=damage.initialHitPoints;t.Details+="\n耐久 "+damage.hitPoints+" / 初始 "+damage.initialHitPoints;}}
+            if(upgrade&&upgrade.passengerUpgrades!=null)
+                foreach(var option in upgrade.passengerUpgrades)
+                {
+                    if(option==null||!option.prefab)continue;
+                    var targetEntry=ResolveBuilding(option.prefab);
+                    if(wall&&wall.isHornUpgrade&&targetEntry.Key=="hornwall")continue;
+                    var conversion=Catalog.Conversion(targetEntry,option.tag);
+                    if(conversion.Length>0)t.Details+="\n"+conversion;
+                }
             var tower=NativeComponent<Tower>(obj);if(tower)t.Level=tower.level;
             var farm=NativeComponent<Farmhouse>(obj);if(farm)t.Level=farm.level;
             var castle=NativeComponent<Castle>(obj);if(castle)t.Level=(int)castle.level+1;

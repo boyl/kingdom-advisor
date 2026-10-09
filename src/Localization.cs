@@ -10,6 +10,10 @@ namespace KingdomAdvisor
         public static bool English {get;set;}=true;
         private static readonly Dictionary<string,string> translations=new Dictionary<string,string>(StringComparer.Ordinal)
         {
+            { "特殊改造", "Special conversion" },
+            { "乘员条件", "Passenger requirement" },
+            { "需要带上", "Requires passenger: " },
+            { "需要带上号角隐士。", "Requires the horn hermit as a passenger." },
             { "巨蛇／奥林匹斯终局", "Serpent / Olympus finale" },
             { "奥林匹斯任务中的巨蛇会制造贪婪怪威胁，并在终局阻挡通往奥林匹斯的道路。", "The serpent creates Greed threats during Olympus quests and blocks the path to Olympus in the finale." },
             { "终局需完成木马部件并集结人员；不能套用普通悬崖炸弹流程。", "Complete the Trojan horse parts and assemble its crew for the finale; ordinary cliff bomb rules do not apply." },

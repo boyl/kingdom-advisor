@@ -1,36 +1,33 @@
 {
-  "version": "0.6.4",
-  "dllHash": "3F6A5844C3B14D95042C67B5DF7A7F54979D281D391C135935BF43429B51A32B",
+  "version": "0.6.5",
+  "userAcceptance": "2026-10-09用户在知悉覆盖范围后授权发布",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/Controller.cs": "461D8ADDDD0973233F83FFE4D539C5843AE1D511C258A71CDCB457D212DB8D2C",
     "src/GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
-    "src/Localization.cs": "1079CF576068A8E406095DDA4BAF080AF26A2335385F04F6D1A9FB009EF1F6DE",
+    "src/Localization.cs": "A8A40789746FA99699785BA99B815560BA27EBC55A05D79CAACB5F84FD0E6EF8",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "581B232206EA75596AE30E97B619CC7E964527AEDA70B1EB885DC5DB4CC0760A",
-    "src/Model.cs": "34CE84437F564945E356CB39AC4ED7FAA461067EEA94E34204526ADACB2F2CE1",
+    "src/Model.cs": "89871E2903C5177B1F12385972C79C037DB46D7F89E555EE1FA6EF631E5F3AB4",
     "src/PadInput.cs": "CD2A2E586E31CB7382AFA7F31E78DB464FA9C715A1D3DD471575972DC00320C3",
-    "src/Plugin.cs": "C667D586CA726A2DB2A4C1B767651ECF07DBA40272552FD984B6C0BF50BF154F",
+    "src/Plugin.cs": "4227E46FA4252D8987066EAA4D0036AA5F2753C4EFBC1D00FCD6E145D8F019FE",
     "src/View.cs": "7302EEA4479B8C9168B832B76E9651B88C7D7948650A20BB33DA243D38CF4BD1"
   },
-  "manual": {
-    "releaseAuthorization": "passed",
-    "bilingualVisuals": "passed",
-    "currentSceneIdentity": "passed"
-  },
-  "runtime": {
-    "evidence": "docs/acceptance/evidence/0.6.4-content/runtime.txt",
-    "population": "current-scene-70-verified"
-  },
-  "unverified": [
-    "原截图雕像与锻造现场",
-    "非零侍从招募",
-    "跨DLC全部能力",
-    "联机完整矩阵"
-  ],
   "channels": [
+    "GitHub",
     "Nexus Mods"
   ],
-  "userAcceptance": "2026-10-09：用户在已告知实机覆盖边界后明确要求发布并通过Nexus API更新。此授权不代替未完成的实机验收。"
+  "runtime": {
+    "evidence": "本机work/0.6.5-runtime/runtime.txt",
+    "status": "Playing-faulted-False"
+  },
+  "unverified": [
+    "六类改造逐项实机操作与视觉",
+    "全部DLC与联机矩阵"
+  ],
+  "dllHash": "389873EF65B3EDA9B682DC180AECBC50450AB832C33020F52E55A918BE096054",
+  "manual": {
+    "releaseAuthorization": "passed"
+  }
 }

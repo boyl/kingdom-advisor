@@ -1,3 +1,13 @@
+# 0.6.5 更新说明 / Release notes
+
+补齐城墙、箭塔、农舍等设施的隐士特殊改造说明。读取游戏实际passengerUpgrades，显示改造用途及乘员条件；普通升级与改造目标共用组件识别，已建号角墙优先依据原生标记识别。中文与英文同步处理。保留已有配置和存档，无新增依赖。
+
+15项自动检查通过，149项游戏API审计通过。已安装0.6.5启动并进入Playing，faulted=False。六类改造尚未逐项实机操作及视觉验收，全部DLC和联机矩阵未完整验证。
+
+Adds hermit conversion descriptions for walls, towers, and farms from actual passenger upgrade options. Shows their purpose and passenger requirements, uses component identities for upgrade targets, and recognizes existing horn walls through native markers. Chinese and English included; existing settings and saves are preserved, with no new dependencies.
+
+15 automated checks and 149 game API calls audited. Version 0.6.5 loaded and entered gameplay without an advisor fault. All six conversion types have not been individually operated or visually verified; the full DLC and multiplayer matrix remains unverified.
+
 # 0.6.4 更新说明 / Release notes
 
 修正具体交互对象被通用名称覆盖的问题：雕像、锻造商品、隐士与升级结果优先采用游戏原生身份。侍从与骑士分别统计，盾旗招募、剑升级与普通盾牌装备分别说明。
