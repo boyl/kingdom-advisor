@@ -1,3 +1,17 @@
+# 0.6.4 更新说明 / Release notes
+
+修正具体交互对象被通用名称覆盖的问题：雕像、锻造商品、隐士与升级结果优先采用游戏原生身份。侍从与骑士分别统计，盾旗招募、剑升级与普通盾牌装备分别说明。
+
+熊洞现显示熊的解锁与能力说明。图鉴扩展至104条，29类坐骑覆盖当前游戏39个有效坐骑身份，补齐6类特殊任务对象。新增内容均提供中文及英文，保留未知身份的明确提示。更新保留已有配置与存档，不增加必需依赖。
+
+14项自动检查通过；已安装0.6.4的熊洞与图鉴完成中英文、字体18/28实机检查。其它DLC能力、原截图雕像/锻造现场及非零侍从招募尚未逐项实机验收，联机完整矩阵仍未验证。
+
+Fixes generic descriptions overriding native identities for statues, forge items, hermits, and upgrade results. Squires and knights are counted separately; squad recruitment, promotion equipment, and ordinary shields have distinct descriptions.
+
+Bear caves now describe the bear unlock and abilities. The catalog contains 104 entries, including 29 mount types covering 39 native mount identities and 6 additional special quest objects. Chinese and English text are included. Existing settings and saves are preserved; no new dependencies are required.
+
+14 automated checks passed. Bear-cave and catalog screens were checked in-game in both languages at font sizes 18 and 28. Other DLC abilities, the original statue/forge scenes, nonzero squire recruitment, and the full multiplayer matrix remain unverified.
+
 # 0.6.2 更新说明 / Release notes
 
 - 补齐购买后生成的炸弹名称与作用，中英文均可显示。

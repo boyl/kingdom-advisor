@@ -1,31 +1,36 @@
 {
-  "version": "0.6.2",
-  "dllHash": "89344507133303DD01810748748B72BC875187451C8E53D4E7861708A8C8E52D",
+  "version": "0.6.4",
+  "dllHash": "3F6A5844C3B14D95042C67B5DF7A7F54979D281D391C135935BF43429B51A32B",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/Controller.cs": "461D8ADDDD0973233F83FFE4D539C5843AE1D511C258A71CDCB457D212DB8D2C",
     "src/GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
-    "src/Localization.cs": "5DD9B8E45E3B95AEB85791B322A8B7D3420B3D5E847B4E62A19115AAB19A80E4",
+    "src/Localization.cs": "1079CF576068A8E406095DDA4BAF080AF26A2335385F04F6D1A9FB009EF1F6DE",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "581B232206EA75596AE30E97B619CC7E964527AEDA70B1EB885DC5DB4CC0760A",
-    "src/Model.cs": "B13B0640F9DB010F08A46A1CCAFF92A63C994928A7EA4DE53E0CCD435B71D2AF",
+    "src/Model.cs": "34CE84437F564945E356CB39AC4ED7FAA461067EEA94E34204526ADACB2F2CE1",
     "src/PadInput.cs": "CD2A2E586E31CB7382AFA7F31E78DB464FA9C715A1D3DD471575972DC00320C3",
-    "src/Plugin.cs": "0A0B1DE6CE180E20530801759DE2AE1225A385C2843E59589697B53A14BDE84D",
+    "src/Plugin.cs": "C667D586CA726A2DB2A4C1B767651ECF07DBA40272552FD984B6C0BF50BF154F",
     "src/View.cs": "7302EEA4479B8C9168B832B76E9651B88C7D7948650A20BB33DA243D38CF4BD1"
   },
   "manual": {
     "releaseAuthorization": "passed",
-    "nativeCrownLossReviewed": "passed"
+    "bilingualVisuals": "passed",
+    "currentSceneIdentity": "passed"
   },
   "runtime": {
-    "population": "passed-current-save-62",
-    "evidence": "docs/acceptance/evidence/v0.6.2-runtime.txt"
+    "evidence": "docs/acceptance/evidence/0.6.4-content/runtime.txt",
+    "population": "current-scene-70-verified"
   },
-  "baseline": "0.6.1已验收基线；本轮仅分类与说明更新，原传送及界面逻辑保持不变。",
+  "unverified": [
+    "原截图雕像与锻造现场",
+    "非零侍从招募",
+    "跨DLC全部能力",
+    "联机完整矩阵"
+  ],
   "channels": [
-    "GitHub",
     "Nexus Mods"
   ],
-  "userAcceptance": "用户确认失冠镜头行为正常，明确授权发布；修正后炸弹画面未单独留证。2026-10-08。"
+  "userAcceptance": "2026-10-09：用户在已告知实机覆盖边界后明确要求发布并通过Nexus API更新。此授权不代替未完成的实机验收。"
 }

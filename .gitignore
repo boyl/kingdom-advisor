@@ -2,3 +2,6 @@
 verification/
 releases/
 *.log
+
+docs/acceptance/evidence/0.6.3-content/
+docs/acceptance/evidence/0.6.4-content/

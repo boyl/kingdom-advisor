@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.2";
+        public const string Version="0.6.4";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -184,9 +184,9 @@ namespace KingdomAdvisor
         {
             var s=reader.State;
             var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"overlayOpen="+(Controller?.Open??false),"mapFocus="+(Controller?.MapFocus??false),"holdActive="+(Controller?.Hold.Active??false),"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
-            foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
+            foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" targetName="+(p.Target?.Name??"none")+" description="+(p.Target?.Description??"")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
             foreach(var row in PopulationPresentation.Rows(s))lines.Add("population="+row.Item2);
-            lines.Add("populationTotal="+(s.Workers+s.Archers+s.Knights+s.Farmers+s.Beggars+s.Pikemen+s.Berserkers+s.Peasants+s.Ninjas+s.Fishers+s.StableKeepers));
+            lines.Add("populationTotal="+(s.Workers+s.Archers+s.Squires+s.Knights+s.UnclassifiedLeaders+s.Farmers+s.Beggars+s.Pikemen+s.Berserkers+s.Peasants+s.Ninjas+s.Fishers+s.StableKeepers));
             lines.Add("enemiesAvailable="+s.EnemiesAvailable+" enemies="+s.Enemies.Count+" camps="+s.Camps);
             foreach(var enemy in s.Enemies.Take(12))lines.Add("enemy="+enemy.Id+" kind="+enemy.Kind+" x="+enemy.X.ToString("F2"));
             Directory.CreateDirectory(Path.Combine(Paths.ConfigPath,"KingdomAdvisor"));
@@ -226,24 +226,47 @@ namespace KingdomAdvisor
         {foreach(var c in UnityEngine.Object.FindObjectsOfType(Il2CppType.Of<T>())){var typed=c.TryCast<T>();if(typed)yield return typed;}}
         private static bool ActiveComponent<T>(Component obj) where T:Behaviour {var c=NativeComponent<T>(obj);return c&&c.isActiveAndEnabled;}
         private static T NativeComponent<T>(Component obj) where T:Component=>NativeComponent<T>(obj.gameObject);
+        private static Entry ResolvePayable(Payable payable)
+        {
+            var statue=payable.TryCast<Statue>();
+            if(statue)return Catalog.ResolveStatue(payable.name,payable.GetIl2CppType().Name,statue.deity.ToString());
+            var cabin=payable.TryCast<Cabin>();if(cabin)return Catalog.ResolveHermit(cabin.name,cabin.hermitType.ToString(),true);
+            var hermit=payable.TryCast<Hermit>();if(hermit)return Catalog.ResolveHermit(hermit.name,hermit.Type.ToString(),false);
+            var steed=payable.TryCast<Steed>();if(steed)return Catalog.ResolveSteed(steed.name,steed.steedType.ToString());
+            var spawn=payable.TryCast<SteedSpawn>();
+            if(spawn&&spawn.steeds!=null)return Catalog.ResolveSteedSpawn(spawn.name,spawn.steeds.Where(s=>s).Select(s=>s.steedType.ToString()));
+            var shop=payable.TryCast<PayableShop>();
+            if(shop){var sided=payable.TryCast<PayableSidedShop>();return Catalog.ResolveShop(shop.name,sided?sided.SidedShopType.ToString():"",shop.itemPrefab?shop.itemPrefab.GetIl2CppType().Name:"");}
+            return Catalog.ResolveNative(payable.name,payable.GetIl2CppType().Name);
+        }
+        private static string PayableIdentity(Payable p)
+        {
+            var statue=p.TryCast<Statue>();if(statue)return "deity="+statue.deity+" status="+statue.deityStatus;
+            var shop=p.TryCast<PayableShop>();if(shop)return "item="+(shop.itemPrefab?shop.itemPrefab.name:"none")+" itemType="+(shop.itemPrefab?shop.itemPrefab.GetIl2CppType().Name:"none");
+            var cabin=p.TryCast<Cabin>();if(cabin)return "hermit="+cabin.hermitType;
+            var hermit=p.TryCast<Hermit>();if(hermit)return "hermit="+hermit.Type;
+            var steed=p.TryCast<Steed>();if(steed)return "steed="+steed.steedType;
+            var spawn=p.TryCast<SteedSpawn>();if(spawn&&spawn.steeds!=null)return "steeds="+string.Join(",",spawn.steeds.Where(s=>s).Select(s=>s.steedType.ToString()));
+            return "";
+        }
         public IEnumerable<string> Census()
         {
-            yield return "kind\traw\tnativeType\tcategory\tentry\tx";
+            yield return "kind\traw\tnativeType\tcategory\tentry\tx\tidentity\tdescription";
             var all=Managers._Inst?.payables?.AllPayables;
             if(all!=null)foreach(var p in all)
             {
                 if(!p||!p.gameObject.activeInHierarchy)continue;
-                var e=Catalog.ResolveNative(p.name,p.GetIl2CppType().Name);
-                yield return "payable\t"+p.name+"\t"+p.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+p.transform.position.x;
+                var e=ResolvePayable(p);
+                yield return "payable\t"+p.name+"\t"+p.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+p.transform.position.x+"\t"+PayableIdentity(p)+"\t"+e.Description;
             }
             var kingdom=Managers._Inst?.kingdom;
             if(kingdom&&kingdom._characters!=null)foreach(var c in kingdom._characters)
             {
                 if(!c||!c.gameObject.activeInHierarchy)continue;
-                var peasant=NativeComponent<Peasant>(c);var fisher=NativeComponent<Fisher>(c);var ninja=NativeComponent<Ninja>(c);var pike=NativeComponent<Pikeman>(c);
-                yield return "character\t"+c.name+"\t"+c.GetIl2CppType().Name+"\tpeasant="+(peasant&&peasant.isActiveAndEnabled)+"\tfisher="+(fisher&&fisher.isActiveAndEnabled)+" ninja="+(ninja&&ninja.isActiveAndEnabled)+" pike="+(pike&&pike.isActiveAndEnabled)+" worker="+ActiveComponent<Worker>(c)+" archer="+ActiveComponent<Archer>(c)+" farmer="+ActiveComponent<Farmer>(c)+" knight="+ActiveComponent<Knight>(c)+" beggar="+ActiveComponent<Beggar>(c)+" berserker="+ActiveComponent<Berserker>(c)+" stable="+ActiveComponent<StableKeeper>(c)+"\t"+c.transform.position.x;
+                var leader=NativeComponent<Knight>(c);var peasant=NativeComponent<Peasant>(c);var fisher=NativeComponent<Fisher>(c);var ninja=NativeComponent<Ninja>(c);var pike=NativeComponent<Pikeman>(c);
+                yield return "character\t"+c.name+"\t"+c.GetIl2CppType().Name+"\tpeasant="+(peasant&&peasant.isActiveAndEnabled)+"\tfisher="+(fisher&&fisher.isActiveAndEnabled)+" ninja="+(ninja&&ninja.isActiveAndEnabled)+" pike="+(pike&&pike.isActiveAndEnabled)+" worker="+ActiveComponent<Worker>(c)+" archer="+ActiveComponent<Archer>(c)+" farmer="+ActiveComponent<Farmer>(c)+" knight="+ActiveComponent<Knight>(c)+" beggar="+ActiveComponent<Beggar>(c)+" berserker="+ActiveComponent<Berserker>(c)+" stable="+ActiveComponent<StableKeeper>(c)+"\t"+c.transform.position.x+"\t"+(leader&&leader.isActiveAndEnabled?"needsArmor="+leader.NeedsArmor+" rank="+leader.rank:"")+"\t";
             }
-            foreach(var c in detailBuildings)if(c&&c.gameObject.activeInHierarchy){var e=Catalog.Resolve(c.name);yield return "building\t"+c.name+"\t"+c.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+c.transform.position.x;}
+            foreach(var c in detailBuildings)if(c&&c.gameObject.activeInHierarchy){var e=Catalog.Resolve(c.name);yield return "building\t"+c.name+"\t"+c.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+c.transform.position.x+"\t\t"+e.Description;}
         }
         private static T NativeComponent<T>(GameObject obj) where T:Component
         {var c=obj.GetComponent(Il2CppType.Of<T>());return c?c.TryCast<T>():null;}
@@ -261,7 +284,9 @@ namespace KingdomAdvisor
             var k=m.kingdom;
             var campaign=CampaignSaveData.current;if(campaign!=null)s.CampaignKey=campaign.realStartDateTime+"-"+campaign.biomeIndex;
             var currencies=CurrencyManager.AllCurrencyTypes;if(currencies!=null)for(int ci=0;ci<currencies.Length;ci++)if(ResourceRules.Supported((int)currencies[ci]))s.ResourceTypes.Add((int)currencies[ci]);
-            s.Workers=k.Workers?.Count??0;s.Archers=k.ArcherCount;s.Knights=k.KnightCount;
+            s.Workers=k.Workers?.Count??0;s.Archers=k.ArcherCount;
+            if(k._knights!=null)foreach(var leader in k._knights){if(!leader||!leader.isActiveAndEnabled)continue;if(LeaderRole.Classify(leader.NeedsArmor)=="squire")s.Squires++;else s.Knights++;}
+            s.UnclassifiedLeaders=Math.Max(0,k.KnightCount-s.Squires-s.Knights);
             s.Farmers=k.Farmers?.Count??0;s.Beggars=k.Beggars?.Count??0;
             s.Pikemen=0;s.Berserkers=0;
             if(k._pikemen!=null)foreach(var unit in k._pikemen)if(unit&&unit.isActiveAndEnabled)s.Pikemen++;
@@ -285,7 +310,7 @@ namespace KingdomAdvisor
                 for(int i=0;i<all.Length;i++)
                 {
                     var p=all[i];if(!p||!p.gameObject.activeInHierarchy)continue;
-                    var entry=Catalog.ResolveNative(p.gameObject.name,p.GetIl2CppType().Name);var x=p.transform.position.x;
+                    var entry=ResolvePayable(p);var x=p.transform.position.x;
                     s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
                     if(!s.Counts.ContainsKey(entry.Key))s.Counts[entry.Key]=0;s.Counts[entry.Key]++;
                     if(entry.Category=="环境"&&!Plugin.Instance.Settings.Trees.Value)continue;
@@ -409,22 +434,27 @@ namespace KingdomAdvisor
         private TargetInfo ReadBuildingTarget(GameObject obj,Player player)
         {
             var payable=NativeComponent<Payable>(obj);
-                        var raw=obj.name;var entry=payable?Catalog.ResolveNative(raw,payable.GetIl2CppType().Name):Catalog.Resolve(raw);
+                        var raw=obj.name;var entry=payable?ResolvePayable(payable):Catalog.Resolve(raw);
+            var stableFarm=NativeComponent<Farmhouse>(obj);if(stableFarm&&stableFarm.isStable)entry=Catalog.Entries.First(e=>e.Key=="stable");
             if(NativeChild<Ballista>(obj))entry=Catalog.Entries.First(e=>e.Key=="ballista");
             else if(NativeChild<Baker>(obj))entry=Catalog.Entries.First(e=>e.Key=="baker");
+            else if(NativeChild<FireTower>(obj))entry=Catalog.Entries.First(e=>e.Key=="firetower");
             var t=new TargetInfo{Raw=raw,Name=entry.Name,Description=entry.Description,Advice=entry.Advice,Category=entry.Category,Cost=payable?payable.Price:-1,Currency=payable?Catalog.Currency(payable.Currency.ToString()):"",X=obj.transform.position.x};
             if(payable){LockIndicator.LockReason reason;t.Locked=payable.IsLocked(player,out reason);t.Lock=Catalog.Lock(reason.ToString());}
             var upgrade=payable?payable.TryCast<PayableUpgrade>():null;
-            if(upgrade&&upgrade.nextPrefab)t.Next=Catalog.Clean(upgrade.nextPrefab.name);
+            if(upgrade&&upgrade.nextPrefab){var next=upgrade.nextPrefab;var nextPayable=NativeComponent<Payable>(next);var nextEntry=nextPayable?ResolvePayable(nextPayable):Catalog.Resolve(next.name);var nextFarm=NativeComponent<Farmhouse>(next);if(nextFarm&&nextFarm.isStable)nextEntry=Catalog.Entries.First(e=>e.Key=="stable");t.Next=nextEntry.Name+"："+nextEntry.Description;}
             var wall=NativeComponent<Wall>(obj);
             if(wall){t.Level=wall.level;t.Details="驻防：弓箭手 "+wall.archerCount+" · 长枪兵 "+wall.pikemanCount;var damage=wall._damageable;if(damage){t.Health=damage.hitPoints;t.HealthMax=damage.initialHitPoints;t.Details+="\n耐久 "+damage.hitPoints+" / 初始 "+damage.initialHitPoints;}}
             var tower=NativeComponent<Tower>(obj);if(tower)t.Level=tower.level;
             var farm=NativeComponent<Farmhouse>(obj);if(farm)t.Level=farm.level;
             var castle=NativeComponent<Castle>(obj);if(castle)t.Level=(int)castle.level+1;
-            if(farm){t.Details="农田地块 "+(farm.farmlands?.Count??0)+" / "+farm.maxFarmlands;if(farm.isStable)t.Details+="\n马厩坐骑 "+(farm.stabledSteeds?.Count??0)+" / "+farm.maxNumSteeds;}
-            var shop=payable?payable.TryCast<PayableShop>():null;if(shop){int stocked=0;var items=shop._items;if(items!=null)for(int i=0;i<items.Length;i++)if(items[i]&&items[i].gameObject.activeInHierarchy)stocked++;t.Stock=stocked;t.StockMax=shop.maxItems;t.Details="工具库存 "+stocked+" / "+shop.maxItems;}
+            if(farm){t.Details=farm.isStable?"马厩坐骑 "+(farm.stabledSteeds?.Count??0)+" / "+farm.maxNumSteeds:"农田地块 "+(farm.farmlands?.Count??0)+" · 基础容量 "+farm.maxFarmlands;}
+            var shop=payable?payable.TryCast<PayableShop>():null;if(shop){int stocked=0;var items=shop._items;if(items!=null)for(int i=0;i<items.Length;i++)if(items[i]&&items[i].gameObject.activeInHierarchy&&!items[i].pickedUp)stocked++;t.Stock=stocked;t.StockMax=shop.maxItems;t.Details="工具库存 "+stocked+" / "+shop.maxItems;}
             var building=NativeComponent<WorkableBuilding>(obj);
             if(building&&building.UnderConstruction){t.UnderConstruction=true;var construction=building._constructionBuilding;if(construction&&construction._buildPoints>0){t.Construction=Math.Clamp(construction._currentBuildPoints/construction._buildPoints*100,0,100);t.Details+="\n施工进度 "+t.Construction.ToString("F0")+"%";}}
+            var statue=payable?payable.TryCast<Statue>():null;
+            if(statue){t.Details+=(t.Details.Length>0?"\n":"")+"雕像状态："+(statue.deityStatus==Statue.DeityStatus.Activated?"已激活":statue.deityStatus==Statue.DeityStatus.GemLocked?"待解锁":"待激活");var timed=payable.TryCast<TimedStatue>();if(timed)t.Details+="\n剩余天数 "+timed._daysLeft;}
+            var timeStatue=payable?payable.TryCast<TimeStatue>():null;if(timeStatue)t.Details+="\n剩余天数 "+timeStatue._daysRemaining;
             if(State.Counts.TryGetValue(entry.Key,out var count)&&entry.Key!="unknown")t.Details+=(t.Details.Length>0?"\n":"")+"本岛同类交互点："+count;
             return t;
         }

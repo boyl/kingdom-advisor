@@ -20,8 +20,10 @@ $options=[Microsoft.CodeAnalysis.CSharp.CSharpCompilationOptions]::new([Microsof
 $compilation=[Microsoft.CodeAnalysis.CSharp.CSharpCompilation]::Create('KingdomAdvisor',$trees,$refs,$options)
 $out=Join-Path $PSScriptRoot 'package/BepInEx/plugins/KingdomAdvisor'
 New-Item -ItemType Directory -Force $out | Out-Null
-$stream=[IO.File]::Create((Join-Path $out 'KingdomAdvisor.dll'))
+$candidate=Join-Path $out ('KingdomAdvisor-build-'+[guid]::NewGuid().ToString('N')+'.tmp')
+$stream=[IO.File]::Create($candidate)
 try{$result=$compilation.Emit($stream)}finally{$stream.Dispose()}
 $result.Diagnostics | Where-Object Severity -in @('Error','Warning') | ForEach-Object ToString
-if(!$result.Success){throw '编译失败'}
+if(!$result.Success){Remove-Item -LiteralPath $candidate;throw '编译失败，旧包保留'}
+Move-Item -LiteralPath $candidate -Destination (Join-Path $out 'KingdomAdvisor.dll') -Force
 Get-FileHash (Join-Path $out 'KingdomAdvisor.dll') -Algorithm SHA256
