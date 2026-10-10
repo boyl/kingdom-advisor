@@ -19,6 +19,7 @@
 |现有导航|短长按、分页、布局不回归|test-input-layout.ps1 通过|
 |构建/二进制|候选可编译，无新增游戏玩法写入|通过，游戏 API 150 个唯一调用|
 |实机|鼠标关闭、F6/F7、F4、Esc 后立即移动，无需追加 Esc|待验收|
+|F7 实机状态|明确操作打开和关闭，关闭后保护为零|通过；移动结果不标通过|
 |手柄实机|按住防穿透、释放恢复、键鼠与手柄切换|待验收|
 
 test-input-release.ps1 在基线运行时因缺失新状态类型失败；实现后通过。自动状态测试不能替代游戏实测。
@@ -28,3 +29,5 @@ test-input-release.ps1 在基线运行时因缺失新状态类型失败；实现
 用户正常退出后已安装候选，安装 DLL 与构建输出 SHA256 一致：`00C003C137E53D6997D270B3F09967FF7B26B63D3E12828E8E5DDA8A08F86EB1`。运行日志确认加载 0.6.7-preview.1，无新增 Error。诊断新增 releaseGuardCount；现场曾观察 overlayOpen=False、releaseGuardCount=0，但输入工具报告检测到用户输入，无法把状态变化归因到明确测试操作，因此不标记交互通过。
 
 原 0.6.6 DLL 与配置备份：`C:/Users/lw/Documents/Codex/2026-10-09/wan/work/input-fix-runtime-20261010-093655/`。未改动用户配置或存档。窗口再次最小化，等待用户恢复到前台并停止输入后继续实机验收。
+
+用户恢复窗口后，F7 打开/关闭与 F9 原生截图成功；runtime 对应 overlayOpen=True/False，关闭后 releaseGuardCount=0。游戏窗口截图通道多次超时，无法取得可用于坐标点击的窗口截图，未盲点鼠标关闭按钮。尝试方向键和 D 后，截图不足以可靠证明位移，随后输入工具再次返回检测到用户输入；移动和鼠标关闭仍保留待验收。原生截图保存在本轮 outputs/input-fix-before-move.png 与 input-fix-after-move.png，不能将其作为移动通过证据。候选已安装，未公开发布。
