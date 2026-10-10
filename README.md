@@ -17,6 +17,16 @@ Nexus 当前使用 0.6.7-r2 手动安装包（不含脚本、不需要 PowerShel
 
 整合包是基于官方 BepInEx 6.0.0-be.788 的修订包，**并非未修改的官方包**。仅替换 `LibCpp2IL.dll` 与 `Cpp2IL.Core.dll`，包含对应源码、补丁脚本和许可证。纯官方 #738、#788 的首次生成错误已在本机复现；不要将整合包内的修复误认为官方原版已解决。[检测记录](docs/acceptance/bepinex-738-compatibility.md)。
 
+### 安装 PowerShell 7（GitHub 一键安装版需要）
+
+Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。Nexus 手动包不需要此步骤。
+
+1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-10-10 核对的稳定版。
+2. 备用入口：[PowerShell 官方发布页](https://github.com/PowerShell/PowerShell/releases/latest) · [微软 Windows 安装指南](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows)。在官方 Assets 中选择稳定版 `PowerShell-7.x.x-win-x64.msi`；本 Mod 适用 Windows x64，不要选 ARM64、x86、Preview 或 Source code。
+3. 双击下载的 MSI，按安装向导完成安装，保留默认安装位置及“Add PowerShell to Path”选项。安装 PS7 不会替换系统 PS5.1。
+4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
+5. 如果仍提示缺少 PS7，确认开始菜单有“PowerShell 7”，或检查 `C:\Program Files\PowerShell\7\pwsh.exe`；本入口会查找 PATH 和默认安装位置。仍有问题请附错误提示。
+
 ### 一键安装
 
 1. 正常退出游戏，解压所选 ZIP 到一个普通文件夹。

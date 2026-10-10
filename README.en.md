@@ -17,6 +17,16 @@ Choose one archive, not GitHub's automatically generated Source code archives:
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
+### Install PowerShell 7 for the GitHub one-click installer
+
+Windows 10/11's built-in Windows PowerShell 5.1 cannot run this installer. Windows Terminal does not imply PS7 is installed. Nexus manual packages do not need this step.
+
+1. **Microsoft's official Windows x64 download:** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi), the stable release verified on October 10, 2026.
+2. Alternative: [official release page](https://github.com/PowerShell/PowerShell/releases/latest) and [Microsoft Windows installation guide](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows). Choose a stable `PowerShell-7.x.x-win-x64.msi` asset, not ARM64, x86, Preview or Source code.
+3. Run the MSI and complete the wizard, retaining the default installation directory and “Add PowerShell to Path” option. PS7 installs alongside Windows PowerShell 5.1.
+4. Close the previous missing-PS7 window, return to the extracted mod folder and double-click **INSTALL.cmd** again. Do not double-click install.ps1 or run inside the ZIP.
+5. If PS7 is still missing, check that Start contains “PowerShell 7”, or that `C:\Program Files\PowerShell\7\pwsh.exe` exists. The launcher checks PATH and the default directory. Include the error message when reporting problems.
+
 1. Quit the game and extract the chosen archive to a normal folder.
 2. Install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/latest), which is required by the installer and is not bundled.
 3. Double-click `INSTALL.cmd` and select the folder containing `KingdomTwoCrowns.exe` (Steam → Manage → Browse local files).

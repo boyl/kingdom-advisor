@@ -4,6 +4,16 @@ Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2
 
 Tested on Windows x64, game 2.4.2 / Unity 6000.0.66f2: fresh interop generation, restart, mod loading, catalog and notification removal. Other versions, operating systems, multiplayer and all other-plugin combinations are not fully verified.
 
+### Install PowerShell 7 for the GitHub one-click installer
+
+Windows 10/11's built-in Windows PowerShell 5.1 cannot run this installer. Windows Terminal does not imply PS7 is installed. Nexus manual packages do not need this step.
+
+1. **Microsoft's official Windows x64 download:** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi), the stable release verified on October 10, 2026.
+2. Alternative: [official release page](https://github.com/PowerShell/PowerShell/releases/latest) and [Microsoft Windows installation guide](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows). Choose a stable `PowerShell-7.x.x-win-x64.msi` asset, not ARM64, x86, Preview or Source code.
+3. Run the MSI and complete the wizard, retaining the default installation directory and “Add PowerShell to Path” option. PS7 installs alongside Windows PowerShell 5.1.
+4. Close the previous missing-PS7 window, return to the extracted mod folder and double-click **INSTALL.cmd** again. Do not double-click install.ps1 or run inside the ZIP.
+5. If PS7 is still missing, check that Start contains “PowerShell 7”, or that `C:\Program Files\PowerShell\7\pwsh.exe` exists. The launcher checks PATH and the default directory. Include the error message when reporting problems.
+
 ## One-click installation
 
 1. Save and exit the game. Back up saves separately if desired; the installer never accesses saves.
