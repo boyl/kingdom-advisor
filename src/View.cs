@@ -209,7 +209,6 @@ namespace KingdomAdvisor
                 if(Button(new Rect(footerX,viewport.height-50,optionsW,34),options,true))controller.Toggle(2,s,player.Id);footerX+=optionsW+8;
                 if(Button(new Rect(footerX,viewport.height-50,hideW,34),hide,true)){settings.Enabled.Value=false;controller.Close();}
             }
-            if(controller.Actions.MessageUntil>Time.unscaledTime){float tw=Math.Min(680,viewport.width-36);var toast=new Rect((viewport.width-tw)/2,viewport.height-98,tw,38);Fill(toast,background);Label(new Rect(toast.x+8,toast.y+8,tw-16,0),controller.Actions.Message,small);}
         }
         private void DrawMap(Rect area,Snapshot s,PlayerInfo player,bool transparent=false,bool hud=false)
         {

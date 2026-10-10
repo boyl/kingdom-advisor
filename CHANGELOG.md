@@ -1,3 +1,13 @@
+# 0.6.7-r1 安装包修订 / Distribution revision
+
+移除添加、清空资源等操作结果提示。提供 ModOnly（需已有正常前置）和 Complete（本 Mod＋修复后的 BepInEx #788）两种包，均包含中英文目录示意及安装脚本。插件版本仍为 0.6.7。
+
+Complete 修复游戏 2.4.2 首次生成时 AndroidManager / RawPropertyType 空引用；仅修改两个 Cpp2IL 解析器 DLL，分发源码、补丁脚本和许可证。首次生成、重启及用户验收正常。安装器校验源与目标文件，备份旧核心、运行时和缓存，保留配置、存档及其他插件，并支持失败恢复与手动回滚。PowerShell 7 需单独安装。
+
+Removes action-result notifications. Offers ModOnly for existing working loaders and Complete with the patched BepInEx #788 runtime. Both include bilingual placement diagrams and an installer. The plugin version remains 0.6.7.
+
+Complete addresses the AndroidManager / RawPropertyType error during fresh generation on game 2.4.2. Only two Cpp2IL parser DLLs are modified; sources, patch script and licenses are included. Fresh generation, restart and user acceptance passed. The installer verifies source/target hashes, backs up old runtime/cache files, preserves settings, saves and other plugins, and supports failure recovery and manual rollback. Install PowerShell 7 separately.
+
 # 0.6.7 更新说明 / Release notes
 
 修复关闭顾问面板后键鼠输入可能无法恢复的问题。键鼠关闭不再等待手柄回中；未连接手柄、设备读取失败或松开输入时清除遗留拦截。保留手柄按住关闭时的防误触保护。以正式 0.6.6 为基线，保留配置和存档，无新增依赖；不包含自定义坐骑。

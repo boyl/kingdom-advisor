@@ -1,6 +1,6 @@
 {
   "version": "0.6.7",
-  "userAcceptance": "2026-10-10 用户确认 0.6.7-preview.1 输入恢复正常，并明确要求作为正式版发布；正式版仅修改版本标记与说明",
+  "userAcceptance": "2026-10-10 用户确认新前置和提示移除修正版均正常，并授权正式发布两种安装包",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
@@ -13,7 +13,7 @@
     "src/Model.cs": "89871E2903C5177B1F12385972C79C037DB46D7F89E555EE1FA6EF631E5F3AB4",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
     "src/Plugin.cs": "A701679CAA9C3380F448CB85E9726AE7B491BB6BDA34A974B1B243FAC2CCBADB",
-    "src/View.cs": "3E5D883640AABEE7EE7DFD03E422EA7620155BDFCF8739A7E21AAE137042EAF8"
+    "src/View.cs": "740D5AF7E5B656D4F14F9516D01C6BC5C6C82D790C752AF94E808185A733F211"
   },
   "channels": [
     "GitHub",
@@ -21,15 +21,15 @@
   ],
   "runtime": {
     "status": "Playing-faulted-False",
-    "evidence": "work/release-067/runtime-0.6.7.txt; docs/acceptance/input-release.md"
+    "evidence": "docs/acceptance/bepinex-738-compatibility.md; docs/acceptance/two-installation-bundles.md"
   },
   "unverified": [
     "实体手柄专项与双人联机",
     "全部关闭路径逐项实测",
     "全部 DLC 矩阵",
-    "Cpp2IL RawPropertyType 启动异常未修复"
+    "安装器实际 UAC 交互"
   ],
-  "dllHash": "35B792B099DFCFF5B919E793AF3A5DE851BA9A85A664C6F2EFAC3CF9307E2BCF",
+  "dllHash": "F5BB22DAD8D83CB0D58171CB94E4D8D266F0B89C1F4EA36B5B4B372F1CEDA8B7",
   "manual": {
     "inputRecoveryUserAcceptance": "passed",
     "releaseAuthorization": "passed"

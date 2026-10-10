@@ -1,104 +1,51 @@
-# Kingdom Advisor 0.6.6
+# Kingdom Advisor 0.6.7-r1
 
-An in-game information HUD and optional convenience mod for Kingdom Two Crowns. Loaded automatically by BepInEx; no separate launcher.
+In-game advisor for Kingdom Two Crowns. The plugin version remains 0.6.7; r1 removes action-result notifications and adds two installation choices.
 
-## Languages
+## Download and install
 
-The default Auto mode follows the game's selected language. Chinese variants use Simplified Chinese. English and all other languages use English. If the game language is not available yet, the system language is used; unknown languages fall back to English.
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-You can override the language in F6 → Catalog and journal → Language: Auto, Simplified Chinese, or English. Changes apply immediately. Existing configuration keys and saved journal data are preserved. The catalog accepts Chinese names and English names, descriptions, or internal keywords in either display language.
+Choose one archive, not GitHub's automatically generated Source code archives:
 
-## Features
+| Archive | Contents and intended use | Guide |
+|---|---|---|
+| `KingdomAdvisor-0.6.7-r1-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.7-r1-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
-- Stable island minimap with building names, counts, camps and moving enemy groups. Focus a location for levels, locks, stock, health and construction progress.
-- Draggable kingdom advisor with resource, population, technology and mount icons.
-- Catalog, categorized search, points of interest and island observation journal.
-- Per-panel transparent or panel backgrounds. The minimap and advisor default to transparent; the main interface defaults to a panel.
-- Large high-contrast mouse and controller cursors. The right stick controls the cursor independently of character movement.
-- Optional unlimited purse capacity, manual resource addition and clearing, hold-to-teleport, unlimited stamina and game speed controls.
+The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
-Gameplay assists default to off, speed to 1x. Disabling unlimited capacity restores the game's native purse, pickup and overflow behavior. Resource clearing executes directly without a second confirmation.
+1. Quit the game and extract the chosen archive to a normal folder.
+2. Install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/latest), which is required by the installer and is not bundled.
+3. Double-click `INSTALL.cmd` and select the folder containing `KingdomTwoCrowns.exe` (Steam → Manage → Browse local files).
+4. The installer backs up, copies and verifies files. Windows may request administrator permission for protected folders. Complete replaces old core/runtime files and moves old generated caches into backup, preserving settings, saves and other plugins.
+5. Launch normally. Initial assembly generation may take several minutes. Press F6 for settings or F7 for the catalog.
 
-## Requirements and installation
-
-Requires **BepInEx 6 · Unity IL2CPP · Windows x64**. This mod was tested with **6.0.0-be.738** and Kingdom Two Crowns **2.4.2** on Windows x64. BepInEx is not bundled and must be installed separately. Do not select Mono, x86, or BepInEx 5.
-
-### 1. Install BepInEx
-
-1. Open the [official BepInEx builds page](https://builds.bepinex.dev/projects/bepinex_be), find **#738**, and download `BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.738+af0cba7.zip`.
-2. In Steam, right-click the game → Manage → Browse local files. Locate the directory containing `KingdomTwoCrowns.exe`.
-3. Extract **all contents** of the BepInEx archive into this directory, including its root files and `BepInEx` folder. Do not add an extra enclosing folder.
-4. Launch the game once, wait for initialization to finish, then exit normally. The first launch may take longer and generates folders such as `BepInEx/config`.
-
-Skip this step if the appropriate BepInEx version is already installed. See the [official installation guide](https://docs.bepinex.dev/master/articles/user_guide/installation/unity_il2cpp.html).
-
-### 2. Install Kingdom Advisor
-
-1. Download **`KingdomAdvisor-0.6.7.zip`** from the [0.6.6 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6), rather than the source archive.
-2. With the game closed, extract the mod and merge its `BepInEx` folder into the game directory.
-3. Check that the plugin is at `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`.
-4. Launch the game normally. The mod loads automatically: **F6** opens settings, **F7** opens the catalog, and a short press of **left stick (L3)** opens the controller interface. No separate launcher is needed.
-
-### Where to put the files
-
-In Steam, right-click **Kingdom Two Crowns → Manage → Browse local files**. The folder that directly contains `KingdomTwoCrowns.exe` is the game root. Your Steam library can be on any drive.
-
-Example root: `D:\SteamLibrary\steamapps\common\Kingdom Two Crowns\`
-
-**Placement: merge the archive's `BepInEx` folder into the game's existing `BepInEx` folder.** Keep other mods; replace only Kingdom Advisor's DLL when updating.
-
-Inside the mod archive:
+For manual ModOnly installation, copy its `payload/BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll` to the location below. Use the installer for Complete to avoid mixing runtime components.
 
 ```text
-KingdomAdvisor-0.6.7.zip
-├─ BepInEx\
-│  └─ plugins\
-│     └─ KingdomAdvisor\
-│        └─ KingdomAdvisor.dll     ← The plugin to copy into the game
-├─ README.md                      ← Chinese guide
-├─ README.en.md                   ← English guide
-└─ CHANGELOG.md                   ← Release notes
+Kingdom Two Crowns/                  ← Game root
+├─ KingdomTwoCrowns.exe
+├─ KingdomTwoCrowns_Data/
+├─ winhttp.dll                      ← Runtime
+├─ doorstop_config.ini              ← Runtime
+├─ dotnet/                          ← Runtime
+├─ .install-backups/                ← Installer backups
+└─ BepInEx/
+   ├─ core/                         ← Runtime
+   ├─ plugins/
+   │  ├─ KingdomAdvisor/
+   │  │  └─ KingdomAdvisor.dll      ← Required plugin location
+   │  └─ OtherPlugins/              ← Preserved
+   ├─ config/                       ← Generated; preserved on upgrade
+   └─ interop/                      ← Generated locally; not distributed
 ```
 
-After installing BepInEx, copying the mod, and launching once:
+Do not copy the payload folder itself or create BepInEx/BepInEx. Both archives include Chinese and English placement diagrams, command-line instructions and rollback instructions.
 
-```text
-Kingdom Two Crowns\                ← Game root
-├─ KingdomTwoCrowns.exe            ← Use this file to locate the root
-├─ KingdomTwoCrowns_Data\
-├─ winhttp.dll                     ← Root file from the BepInEx archive
-├─ doorstop_config.ini             ← Root file from the BepInEx archive
-├─ dotnet\                        ← From the BepInEx IL2CPP archive
-└─ BepInEx\
-   ├─ core\                       ← BepInEx runtime
-   ├─ plugins\
-   │  ├─ KingdomAdvisor\
-   │  │  └─ KingdomAdvisor.dll     ← Required plugin location
-   │  └─ OtherMods…                ← Keep existing plugins
-   └─ config\                     ← Generated after the first launch
-      ├─ local.kingdom.advisor.cfg ← Keep this configuration when updating
-      └─ KingdomAdvisor\          ← Journal and diagnostic files
-```
+## Verified scope
 
-This tree shows only the files needed to explain placement. Extract all other files supplied in the BepInEx archive as well. The configuration and journal folders are generated automatically; do not copy another player's configuration.
-
-**Correct path:** `Game root\BepInEx\plugins\KingdomAdvisor\KingdomAdvisor.dll`
-
-Incorrect placements:
-
-```text
-Game root\KingdomAdvisor-0.6.7\BepInEx\…   × Extra enclosing folder
-Game root\BepInEx\BepInEx\plugins\…      × Nested BepInEx folder
-Game root\KingdomTwoCrowns_Data\…         × Game data folder
-Game root\KingdomAdvisor.dll              × DLL directly in the root
-```
-
-Launch the game and press **F7** for the catalog or **F6** for settings. If neither appears, check the complete DLL path and BepInEx version first. Look in `BepInEx\LogOutput.log` for loading errors.
-### Update and uninstall
-
-To update, save and quit, replace the DLL above, and keep your configuration.
-
-To uninstall, save and quit, then delete `BepInEx/plugins/KingdomAdvisor`. Configuration may be retained; do not remove BepInEx if other mods still use it.
+Windows x64, game 2.4.2, Unity 6000.0.66f2, IL2CPP. Patched #788 passed fresh generation and gameplay after restart; the user accepted it and the notification removal. Isolated installer tests covered installation, hashes, failure recovery and rollback. Live UAC interaction, other game versions, all DLC and multiplayer combinations have not been individually verified. Other plugins are preserved; their runtime compatibility depends on those plugins.
 
 ## Controls
 
@@ -118,7 +65,7 @@ Panels can be dragged with the mouse. Release before the teleport timer complete
 
 ## Compatibility and diagnostics
 
-The 0.6.7 release is based on released 0.6.6. It fixes input release after closing the panel: keyboard/mouse input no longer waits for a gamepad to return to neutral, and release protection clears when the gamepad is released or becomes unavailable. Automated checks, compilation and installation checks passed. The user confirmed normal operation on October 10, 2026; individual close paths and gamepad-specific scenarios have not all been tested in-game. Custom mounts and Cpp2IL loader patches are not included.
+The 0.6.7 release is based on released 0.6.6. It fixes input release after closing the panel: keyboard/mouse input no longer waits for a gamepad to return to neutral, and release protection clears when the gamepad is released or becomes unavailable. Automated checks, compilation and installation checks passed. The user confirmed normal operation on October 10, 2026; individual close paths and gamepad-specific scenarios have not all been tested in-game. Custom mounts are not included. The Complete bundle includes the documented Cpp2IL compatibility patch.
 
 Single-player was accepted by the user in 0.5.8. The bilingual changes in 0.6.0 include language-resolution tests, complete authored-text coverage checks and in-game screenshots in both languages. Multiplayer remains available, but two-client synchronization and the complete campaign/DLC matrix have not been verified. Other mods may alter costs, purse behavior or input mappings.
 
