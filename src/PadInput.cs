@@ -33,6 +33,9 @@ namespace KingdomAdvisor
             }
         }
         private readonly MenuRepeat triggerRepeat=new MenuRepeat();
+        private static bool PadReleaseHeld(PadData data)=>data.Pad!=null&&(data.Pad.a.value||data.Pad.b.value||data.Pad.leftStick.value.sqrMagnitude>=.16f);
+        private void GuardPadRelease(int owner)
+        {var data=GetPad(owner);bool available=!data.Failed&&data.Pad!=null;bool padMode=Device=="手柄";releaseGuard.Arm(owner,padMode,available,padMode&&available&&PadReleaseHeld(data));}
         private PadData GetPad(int id){if(!pads.TryGetValue(id,out var p))pads[id]=p=new PadData{Cursor=new Vector2(Screen.width*.5f,Screen.height*.3f)};return p;}
         public Vector2 PadPointer(int id)=>GetPad(id).Cursor;
         public string PadOpenLabel=>settings.PadOpenButton.Value==1?"按下右摇杆":settings.PadOpenButton.Value==2?"Back／Select":"按下左摇杆";
@@ -46,16 +49,16 @@ namespace KingdomAdvisor
         private void PollPads(Snapshot s)
         {
             foreach(var local in s.Players.Where(p=>p.Local)){
-                var data=GetPad(local.Id);if(data.Failed)continue;if(!settings.PadCursor.Value)data.Pointer=false;
+                var data=GetPad(local.Id);if(data.Failed){releaseGuard.Observe(local.Id,false,false);continue;}if(!settings.PadCursor.Value)data.Pointer=false;
                 var viewport=new Rect(local.ViewX*Screen.width,(1-local.ViewY-local.ViewH)*Screen.height,local.ViewW*Screen.width,local.ViewH*Screen.height);
                 try{
                     if(!routedInputs.TryGetValue(local.Id,out var input))input=ReInput.players.GetPlayer(local.Id);
-                    if(input==null)continue;
+                    if(input==null){releaseGuard.Observe(local.Id,false,false);continue;}
                     var devices=input.controllers.Joysticks;int count=devices.Cast<Il2CppSystem.Collections.Generic.ICollection<Joystick>>().Count;
-                    if(count==0){data.Pad=null;data.DeviceId=-1;continue;}
+                    if(count==0){data.Pad=null;data.DeviceId=-1;releaseGuard.Observe(local.Id,false,false);continue;}
                     var joystick=input.controllers.GetLastActiveController(ControllerType.Joystick)??devices[0];
                                         if(data.DeviceId!=joystick.id){data.HudButton.Reset();data.Cursor=viewport.center;var native=joystick.GetTemplate(GamepadTemplate.typeGuid);data.Pad=native?.TryCast<IGamepadTemplate>();data.DeviceId=joystick.id;Plugin.Instance.Log.LogInfo("Pad binding player="+local.Id+" device="+joystick.name+" id="+joystick.id+" gamepadTemplate="+(data.Pad!=null));}
-                    if(data.Pad==null)continue;
+                    if(data.Pad==null){releaseGuard.Observe(local.Id,false,false);continue;}
                     var pad=data.Pad;ReservePointerAxes(local.Id,input,joystick,pad);data.Submit=pad.a.value;data.Down=pad.a.justPressed;data.Back=pad.b.justPressed;
                     if((pad.leftStick.value-pad.leftStick.valuePrev).sqrMagnitude>.04f||pad.a.justPressed||pad.b.justPressed||pad.leftBumper.justPressed||pad.rightBumper.justPressed)Device="手柄";
                     var rs=pad.rightStick.value;
@@ -67,7 +70,7 @@ namespace KingdomAdvisor
                     if(hudAction==2){Device="手柄";settings.Enabled.Value=!settings.Enabled.Value;Close();data.Hit=null;Plugin.Instance.Log.LogInfo("Pad HUD visibility="+settings.Enabled.Value);continue;}
                     if(hudAction==1){Device="手柄";settings.Enabled.Value=true;if(Open&&Owner==local.Id)Close();else Toggle(Tab,s,local.Id);data.Hit=null;continue;}
                     if(data.HudButton.Active)continue;
-                    if(releaseGuard.Contains(local.Id)&&!data.Submit&&!pad.b.value&&pad.leftStick.value.sqrMagnitude<.16f)releaseGuard.Remove(local.Id);
+                    releaseGuard.Observe(local.Id,true,PadReleaseHeld(data));
                     if(!settings.Enabled.Value){data.Hit=null;continue;}
                     if(!Open){
                         if(data.Pointer&&Device=="手柄"&&data.Hit!=null){pressedPoint=data.Hit;if(data.Down&&!Hold.Active){mousePress=false;Hold.Begin(PointKey(data.Hit),local.Id,Time.unscaledTime,settings.Teleport.Value);}if(Hold.Active&&!mousePress)StepMapHold(PointKey(data.Hit),data.Submit);}
@@ -92,7 +95,7 @@ namespace KingdomAdvisor
                         else {if(Hold.Active&&!mousePress)StepMapHold("",data.Submit);if(data.Down)data.ClickFrame=Time.frameCount;}
                     }else if(Tab==3&&(Device=="手柄"||data.Down)){if(data.Down||Hold.Active)Device="手柄";UpdatePanelMapHold(data.Submit,data.Down);}
                     else if(data.Down){Device="手柄";if(Tab==0&&SearchEditing)SearchKey(SearchCursor);else if((Tab==0||Tab==4)&&PadRegion==0)PadRegion=3;else Activate();}
-                }catch(Exception ex){data.Failed=true;data.Pad=null;Plugin.Instance.Log.LogError("Gamepad template input failed for player "+local.Id+": "+ex);Actions.Notify("手柄输入读取失败，请查看日志");}
+                }catch(Exception ex){data.Failed=true;data.Pad=null;releaseGuard.Observe(local.Id,false,false);Plugin.Instance.Log.LogError("Gamepad template input failed for player "+local.Id+": "+ex);Actions.Notify("手柄输入读取失败，请查看日志");}
             }
         }
     }

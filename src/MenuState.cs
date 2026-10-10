@@ -4,6 +4,17 @@ using System.Globalization;
 
 namespace KingdomAdvisor
 {
+    public sealed class InputReleaseGuard
+    {
+        private readonly HashSet<int> owners=new HashSet<int>();
+        public int Count=>owners.Count;
+        public bool Contains(int owner)=>owners.Contains(owner);
+        public void Arm(int owner,bool padMode,bool available,bool held)
+        {if(padMode&&available&&held)owners.Add(owner);else owners.Remove(owner);}
+        public void Observe(int owner,bool available,bool held)
+        {if(!available||!held)owners.Remove(owner);}
+        public void Clear()=>owners.Clear();
+    }
     // 无引擎依赖的输入时间状态，可单独验证长按、回中和连发。
     public sealed class HudButtonGesture
     {

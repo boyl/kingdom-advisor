@@ -51,13 +51,14 @@ namespace KingdomAdvisor
         private readonly Dictionary<int,Rewired.Player> routedInputs=new Dictionary<int,Rewired.Player>();
         private readonly Dictionary<int,float> chordStarted=new Dictionary<int,float>();
         private readonly HashSet<int> chordLatched=new HashSet<int>();
-        private readonly HashSet<int> releaseGuard=new HashSet<int>();
+        private readonly InputReleaseGuard releaseGuard=new InputReleaseGuard();
+        public int ReleaseGuardCount=>releaseGuard.Count;
         
         public void RecordInput(int player,Rewired.Player input){if(input!=null)routedInputs[player]=input;}
         public bool ChordHeld(int player)=>false;
         public AdvisorController(Settings config){settings=config;}
         public bool Blocks(int id)=>((Open||MapFocus)&&Owner==id)||(Hold.Active&&Hold.Owner==id)||releaseGuard.Contains(id)||PadBlocks(id);
-        public void Close(){PointCatalogKey="";if(Open||MapFocus)releaseGuard.Add(Owner);Open=MapFocus=false;Hold.Cancel();SettingsDropdown=ResourceDropdown=ResourceEditing=false;Focus=0;Search="";SearchFocused=false;SearchEditing=false;PadRegion=0;verticalRepeat.Reset();horizontalRepeat.Reset();}
+        public void Close(){PointCatalogKey="";if(Open||MapFocus)GuardPadRelease(Owner);Open=MapFocus=false;Hold.Cancel();SettingsDropdown=ResourceDropdown=ResourceEditing=false;Focus=0;Search="";SearchFocused=false;SearchEditing=false;PadRegion=0;verticalRepeat.Reset();horizontalRepeat.Reset();}
         public void Toggle(int tab,Snapshot state,int? player=null)
         {
             if(Open&&Tab==tab){Close();return;}
@@ -72,15 +73,15 @@ namespace KingdomAdvisor
             if(!discovered&&Rewired.ReInput.isReady)DiscoverActions();
             if(!state.Playing){ResetHudButtons();RestorePadMappings();Close();Hold.Reset();routedInputs.Clear();chordStarted.Clear();chordLatched.Clear();releaseGuard.Clear();return;}
             PollPads(state);
-            if(Input.GetKeyDown(KeyCode.F4)){settings.Enabled.Value=!settings.Enabled.Value;if(!settings.Enabled.Value)Close();Device="键鼠";}
-            if(Input.GetKeyDown(KeyCode.F6)){settings.Enabled.Value=true;Toggle(2,state);Device="键鼠";}
-            if(Input.GetKeyDown(KeyCode.F7)){settings.Enabled.Value=true;Toggle(0,state);Device="键鼠";}
-            if(Input.mousePosition!=lastMouse||Input.GetMouseButtonDown(0)){lastMouse=Input.mousePosition;if(MapFocus){MapFocus=false;releaseGuard.Add(Owner);Hold.Cancel();}Device="键鼠";PointerUntil=Time.unscaledTime+8;}
+            if(Input.GetKeyDown(KeyCode.F4)){Device="键鼠";settings.Enabled.Value=!settings.Enabled.Value;if(!settings.Enabled.Value)Close();}
+            if(Input.GetKeyDown(KeyCode.F6)){Device="键鼠";settings.Enabled.Value=true;Toggle(2,state);}
+            if(Input.GetKeyDown(KeyCode.F7)){Device="键鼠";settings.Enabled.Value=true;Toggle(0,state);}
+            if(Input.mousePosition!=lastMouse||Input.GetMouseButtonDown(0)){lastMouse=Input.mousePosition;Device="键鼠";if(MapFocus){MapFocus=false;GuardPadRelease(Owner);Hold.Cancel();}PointerUntil=Time.unscaledTime+8;}
             if(mousePress&&Hold.Active){StepMapHold(mouseTarget,Input.GetMouseButton(0));if(!Input.GetMouseButton(0))mousePress=false;}
             if(MapFocus){UpdateMapPad(state);return;}
             if(!Open)return;
             if(!state.Players.Any(p=>p.Local&&p.Id==Owner)){Close();return;}
-            if(Input.GetKeyDown(KeyCode.Escape)){if(ResourceDropdown)ResourceDropdown=false;else if(SettingsDropdown)SettingsDropdown=false;else if(ResourceEditing)ResourceEditing=false;else Close();return;}
+            if(Input.GetKeyDown(KeyCode.Escape)){Device="键鼠";if(ResourceDropdown)ResourceDropdown=false;else if(SettingsDropdown)SettingsDropdown=false;else if(ResourceEditing)ResourceEditing=false;else Close();return;}
             if(Input.GetKeyDown(KeyCode.Tab)){ChangeTab(1);Device="键鼠";}
             if(ResourceEditing&&Tab==5){foreach(char c in Input.inputString){if(c=='\b'){if(ResourceText.Length>0)ResourceText=ResourceText.Substring(0,ResourceText.Length-1);}else if(char.IsDigit(c)&&ResourceText.Length<5)ResourceText+=c;}if(Input.GetKeyDown(KeyCode.Return))CommitAmount();return;}
             if(SearchFocused&&Tab==0)

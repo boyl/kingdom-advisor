@@ -118,6 +118,8 @@ Panels can be dragged with the mouse. Release before the teleport timer complete
 
 ## Compatibility and diagnostics
 
+The 0.6.7-preview.1 candidate is based on released 0.6.6. It fixes input release after closing the panel: keyboard/mouse input no longer waits for a gamepad to return to neutral, and release protection clears when the gamepad is released or becomes unavailable. Automated checks, compilation and installation checks passed; in-game interaction verification is pending. Custom mounts and Cpp2IL loader patches are not included.
+
 Single-player was accepted by the user in 0.5.8. The bilingual changes in 0.6.0 include language-resolution tests, complete authored-text coverage checks and in-game screenshots in both languages. Multiplayer remains available, but two-client synchronization and the complete campaign/DLC matrix have not been verified. Other mods may alter costs, purse behavior or input mappings.
 
 The island journal and diagnostics are stored in BepInEx/config/KingdomAdvisor/. An initial gameplay screenshot is saved; F9 requests an additional screenshot. Automated preview pages are disabled by default.

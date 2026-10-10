@@ -117,6 +117,8 @@ Kingdom Two Crowns\                ← 游戏根目录
 
 ## 配置与诊断
 
+0.6.7-preview.1 修复候选以正式 0.6.6 为基线：修正关闭面板后的输入释放，键鼠无需等待手柄回中，手柄松开或读取失败后解除保护。自动回归、构建和安装验证已通过，交互实测待完成；不包含自定义坐骑或 Cpp2IL 加载器修补。
+
 配置：BepInEx/config/local.kingdom.advisor.cfg。岛屿记录和诊断：BepInEx/config/KingdomAdvisor/。首次进入游戏保存诊断截图，F9 可手动截图；诊断设置默认关闭自动展示页面。
 
 本版保持插件标识 local.kingdom.advisor 和已有配置键。不会打包用户配置、存档、游戏程序集或其他 Mod。
