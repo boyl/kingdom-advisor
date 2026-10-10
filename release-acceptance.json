@@ -1,18 +1,18 @@
 {
-  "version": "0.6.6",
-  "userAcceptance": "2026-10-09 用户在获知104条图标、44页实机验证及尚未覆盖项目后明确授权发布",
+  "version": "0.6.7",
+  "userAcceptance": "2026-10-10 用户确认 0.6.7-preview.1 输入恢复正常，并明确要求作为正式版发布；正式版仅修改版本标记与说明",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
-    "src/Controller.cs": "A58D18521DD4DBA19B194A19A2880AE9A2B258BC0471DFF35966B3C597853290",
+    "src/Controller.cs": "823F7702DBBC811867E629E50DE51AA1547894E572F8B78CBDC329676A305CE0",
     "src/GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
     "src/Localization.cs": "AF2B5E7C2A6E954C824F6DE4B0FAE1207700927C88731C6088685F636386000D",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
-    "src/MenuState.cs": "581B232206EA75596AE30E97B619CC7E964527AEDA70B1EB885DC5DB4CC0760A",
+    "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
     "src/Model.cs": "89871E2903C5177B1F12385972C79C037DB46D7F89E555EE1FA6EF631E5F3AB4",
-    "src/PadInput.cs": "B6C22D911702AD56AE0CFC90EEEB092C52B75A911E0149C79FC39DC35DAB70F0",
-    "src/Plugin.cs": "7E1BD80845E7645B2DF17AF6C90037826CCE9B983FB8EE457005395A5E67507D",
+    "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
+    "src/Plugin.cs": "A701679CAA9C3380F448CB85E9726AE7B491BB6BDA34A974B1B243FAC2CCBADB",
     "src/View.cs": "3E5D883640AABEE7EE7DFD03E422EA7620155BDFCF8739A7E21AAE137042EAF8"
   },
   "channels": [
@@ -21,18 +21,17 @@
   ],
   "runtime": {
     "status": "Playing-faulted-False",
-    "evidence": "本轮work/0.6.6-full-icon-evidence/runtime.txt及44页原图"
+    "evidence": "work/release-067/runtime-0.6.7.txt; docs/acceptance/input-release.md"
   },
   "unverified": [
-    "实体手柄输入与双人联机矩阵",
-    "1024分辨率",
-    "全部DLC机制逐项实机",
-    "六类改造逐项实机操作"
+    "实体手柄专项与双人联机",
+    "全部关闭路径逐项实测",
+    "全部 DLC 矩阵",
+    "Cpp2IL RawPropertyType 启动异常未修复"
   ],
-  "dllHash": "7ADABD6F52E443DE992BF469CBBDDC6AC78B0A6F4586CAE48E1588276BB534DC",
+  "dllHash": "35B792B099DFCFF5B919E793AF3A5DE851BA9A85A664C6F2EFAC3CF9307E2BCF",
   "manual": {
-    "ChineseEnglishFont18Font28Pages44": "passed",
-    "catalogIconsAll104Visual": "passed",
+    "inputRecoveryUserAcceptance": "passed",
     "releaseAuthorization": "passed"
   }
 }

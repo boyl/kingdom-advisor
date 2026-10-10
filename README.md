@@ -23,7 +23,7 @@
 
 ### 2. 安装王国顾问
 
-1. 从 [0.6.6 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6) 下载 **`KingdomAdvisor-0.6.6.zip`**，不要下载源码包。
+1. 从 [0.6.6 Release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6) 下载 **`KingdomAdvisor-0.6.7.zip`**，不要下载源码包。
 2. 确保游戏已退出。解压 Mod，将其中的 `BepInEx` 文件夹合并到游戏目录。
 3. 核对插件路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。
 4. 正常启动游戏，Mod 自动加载。**F6** 打开设置，**F7** 打开图鉴；手柄默认短按**左摇杆 L3** 打开界面，无需独立启动器。
@@ -39,7 +39,7 @@
 压缩包内结构：
 
 ```text
-KingdomAdvisor-0.6.6.zip
+KingdomAdvisor-0.6.7.zip
 ├─ BepInEx\
 │  └─ plugins\
 │     └─ KingdomAdvisor\
@@ -76,7 +76,7 @@ Kingdom Two Crowns\                ← 游戏根目录
 常见放错位置（这些路径不会按本说明加载）：
 
 ```text
-游戏根目录\KingdomAdvisor-0.6.6\BepInEx\…   × 多套了一层解压文件夹
+游戏根目录\KingdomAdvisor-0.6.7\BepInEx\…   × 多套了一层解压文件夹
 游戏根目录\BepInEx\BepInEx\plugins\…      × 重复嵌套 BepInEx
 游戏根目录\KingdomTwoCrowns_Data\…         × 放进了游戏资源目录
 游戏根目录\KingdomAdvisor.dll              × DLL 放在根目录
@@ -117,7 +117,7 @@ Kingdom Two Crowns\                ← 游戏根目录
 
 ## 配置与诊断
 
-0.6.7-preview.1 修复候选以正式 0.6.6 为基线：修正关闭面板后的输入释放，键鼠无需等待手柄回中，手柄松开或读取失败后解除保护。自动回归、构建和安装验证已通过，2026-10-10 已获用户验收正常；手柄专项及全部关闭路径未逐项实测。不包含自定义坐骑或 Cpp2IL 加载器修补。
+0.6.7 正式版以正式 0.6.6 为基线：修正关闭面板后的输入释放，键鼠无需等待手柄回中，手柄松开或读取失败后解除保护。自动回归、构建和安装验证已通过，2026-10-10 已获用户验收正常；手柄专项及全部关闭路径未逐项实测。不包含自定义坐骑或 Cpp2IL 加载器修补。
 
 配置：BepInEx/config/local.kingdom.advisor.cfg。岛屿记录和诊断：BepInEx/config/KingdomAdvisor/。首次进入游戏保存诊断截图，F9 可手动截图；诊断设置默认关闭自动展示页面。
 

@@ -1,3 +1,16 @@
+# 0.6.7 更新说明 / Release notes
+
+修复关闭顾问面板后键鼠输入可能无法恢复的问题。键鼠关闭不再等待手柄回中；未连接手柄、设备读取失败或松开输入时清除遗留拦截。保留手柄按住关闭时的防误触保护。以正式 0.6.6 为基线，保留配置和存档，无新增依赖；不包含自定义坐骑。
+
+2026-10-10 用户验收输入恢复正常。自动输入回归与现有功能检查通过；实体手柄专项、全部关闭路径、双人联机和完整 DLC 矩阵未逐项实测。此更新不修复 Cpp2IL RawPropertyType 启动异常。
+
+Fixes keyboard/mouse input remaining blocked after closing the Advisor panel. Closing with keyboard/mouse no longer waits for a gamepad to return to neutral; stale release guards clear when a gamepad is absent, unavailable or released. Keeps held-gamepad input protection. Based on released 0.6.6, preserving settings and saves with no new dependencies. Custom mounts are not included.
+
+User accepted normal input recovery on October 10, 2026. Automated regression checks passed; physical gamepad scenarios, every close path, multiplayer and the full DLC matrix have not all been individually tested. This update does not fix the Cpp2IL RawPropertyType startup error.
+
+Requires BepInEx 6 Unity IL2CPP Windows x64; tested with game 2.4.2 and BepInEx 6.0.0-be.738. BepInEx is not bundled. Extract the package into the folder containing KingdomTwoCrowns.exe; the final plugin path is BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll. Installation directory diagrams are included in both README files.
+
+
 # 0.6.6 更新说明 / Release notes
 
 全部104条图鉴按身份明确映射主体＋用途／特征像素图标，完整图案互异；兴趣点改为地点，补充方向、距离、作用与原生交互状态，以及图鉴、地点和地图之间的联动。排除玩家及当前骑乘坐骑的冗余地点。中英文同步。

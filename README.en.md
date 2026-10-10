@@ -34,7 +34,7 @@ Skip this step if the appropriate BepInEx version is already installed. See the 
 
 ### 2. Install Kingdom Advisor
 
-1. Download **`KingdomAdvisor-0.6.6.zip`** from the [0.6.6 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6), rather than the source archive.
+1. Download **`KingdomAdvisor-0.6.7.zip`** from the [0.6.6 release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.6), rather than the source archive.
 2. With the game closed, extract the mod and merge its `BepInEx` folder into the game directory.
 3. Check that the plugin is at `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`.
 4. Launch the game normally. The mod loads automatically: **F6** opens settings, **F7** opens the catalog, and a short press of **left stick (L3)** opens the controller interface. No separate launcher is needed.
@@ -50,7 +50,7 @@ Example root: `D:\SteamLibrary\steamapps\common\Kingdom Two Crowns\`
 Inside the mod archive:
 
 ```text
-KingdomAdvisor-0.6.6.zip
+KingdomAdvisor-0.6.7.zip
 ├─ BepInEx\
 │  └─ plugins\
 │     └─ KingdomAdvisor\
@@ -87,7 +87,7 @@ This tree shows only the files needed to explain placement. Extract all other fi
 Incorrect placements:
 
 ```text
-Game root\KingdomAdvisor-0.6.6\BepInEx\…   × Extra enclosing folder
+Game root\KingdomAdvisor-0.6.7\BepInEx\…   × Extra enclosing folder
 Game root\BepInEx\BepInEx\plugins\…      × Nested BepInEx folder
 Game root\KingdomTwoCrowns_Data\…         × Game data folder
 Game root\KingdomAdvisor.dll              × DLL directly in the root
@@ -118,7 +118,7 @@ Panels can be dragged with the mouse. Release before the teleport timer complete
 
 ## Compatibility and diagnostics
 
-The 0.6.7-preview.1 candidate is based on released 0.6.6. It fixes input release after closing the panel: keyboard/mouse input no longer waits for a gamepad to return to neutral, and release protection clears when the gamepad is released or becomes unavailable. Automated checks, compilation and installation checks passed. The user confirmed normal operation on October 10, 2026; individual close paths and gamepad-specific scenarios have not all been tested in-game. Custom mounts and Cpp2IL loader patches are not included.
+The 0.6.7 release is based on released 0.6.6. It fixes input release after closing the panel: keyboard/mouse input no longer waits for a gamepad to return to neutral, and release protection clears when the gamepad is released or becomes unavailable. Automated checks, compilation and installation checks passed. The user confirmed normal operation on October 10, 2026; individual close paths and gamepad-specific scenarios have not all been tested in-game. Custom mounts and Cpp2IL loader patches are not included.
 
 Single-player was accepted by the user in 0.5.8. The bilingual changes in 0.6.0 include language-resolution tests, complete authored-text coverage checks and in-game screenshots in both languages. Multiplayer remains available, but two-client synchronization and the complete campaign/DLC matrix have not been verified. Other mods may alter costs, purse behavior or input mappings.
 

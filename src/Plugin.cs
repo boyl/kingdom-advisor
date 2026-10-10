@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.7-preview.1";
+        public const string Version="0.6.7";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
