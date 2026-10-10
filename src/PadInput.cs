@@ -52,10 +52,10 @@ namespace KingdomAdvisor
                     if(!routedInputs.TryGetValue(local.Id,out var input))input=ReInput.players.GetPlayer(local.Id);
                     if(input==null)continue;
                     var devices=input.controllers.Joysticks;int count=devices.Cast<Il2CppSystem.Collections.Generic.ICollection<Joystick>>().Count;
-                    if(count==0){data.Pad=null;data.DeviceId=-1;releaseGuard.Remove(local.Id);continue;}
+                    if(count==0){data.Pad=null;data.DeviceId=-1;continue;}
                     var joystick=input.controllers.GetLastActiveController(ControllerType.Joystick)??devices[0];
                                         if(data.DeviceId!=joystick.id){data.HudButton.Reset();data.Cursor=viewport.center;var native=joystick.GetTemplate(GamepadTemplate.typeGuid);data.Pad=native?.TryCast<IGamepadTemplate>();data.DeviceId=joystick.id;Plugin.Instance.Log.LogInfo("Pad binding player="+local.Id+" device="+joystick.name+" id="+joystick.id+" gamepadTemplate="+(data.Pad!=null));}
-                    if(data.Pad==null){releaseGuard.Remove(local.Id);continue;}
+                    if(data.Pad==null)continue;
                     var pad=data.Pad;ReservePointerAxes(local.Id,input,joystick,pad);data.Submit=pad.a.value;data.Down=pad.a.justPressed;data.Back=pad.b.justPressed;
                     if((pad.leftStick.value-pad.leftStick.valuePrev).sqrMagnitude>.04f||pad.a.justPressed||pad.b.justPressed||pad.leftBumper.justPressed||pad.rightBumper.justPressed)Device="手柄";
                     var rs=pad.rightStick.value;

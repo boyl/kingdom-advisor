@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.7.0-preview.19";
+        public const string Version="0.6.6";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -30,10 +30,7 @@ namespace KingdomAdvisor
     }
     internal sealed class Settings
     {
-        public ConfigEntry<int> CompanionPreviewKind;
-        public ConfigEntry<bool> CompanionSkillPreview;
-        public ConfigEntry<bool> CompanionVfxCapture;
-        public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,CompanionPreview,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
+        public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
         public ConfigEntry<int> FontSize,UiLanguage;
         public ConfigEntry<string> Layout;
         public ConfigEntry<bool> Teleport,InfiniteBag,InfiniteStamina,Icons,Journal,DefenseAlerts,StaffAlerts,MountInfo,MapBuildings,MapCamps,MapEnemies,MapMounts,MapSpecial;
@@ -60,10 +57,6 @@ namespace KingdomAdvisor
             FontSize=config.Bind("界面","字号",18,"字号范围 14–28。");
             Layout=config.Bind("布局","卡片位置","","按玩家分别保存拖动后的相对坐标；可在设置中复位。");
             PreviewCapture=config.Bind("Diagnostics","PreviewCapture",false,"开发验收：首次进入游戏后短暂展示设置和图鉴并截图，随后关闭。不写入存档。");
-            CompanionPreviewKind=config.Bind("Diagnostics","CompanionPreviewKind",1,"一次性诊断坐骑：1 猫，2 狗。");
-            CompanionSkillPreview=config.Bind("Diagnostics","CompanionSkillPreview",false,"一次性换乘诊断时发动一次技能并检查结束状态。");
-            CompanionVfxCapture=config.Bind("Diagnostics","CompanionVfxCapture",false,"下一次呆猫技能爆炸时截取一次诊断图片。");
-            CompanionPreview=config.Bind("Diagnostics","CompanionPreview",false,"一次性诊断：进入存档后临时选择呆猫并自动截图，不写入存档。");
             Teleport=config.Bind("操作便利","地图传送",false,"普通地图短按查看，长按 0.8 秒传送。单机与联机均可使用。");
             InfiniteBag=config.Bind("资源辅助","无限钱袋容量",false,"解除容量限制，并使用数字钱袋代替会溢出的物理钱袋。不自动增加金币。关闭后恢复原生钱袋、原容量及拾取溢出行为。单机与联机均可使用。");
             InfiniteStamina=config.Bind("操作便利","无限耐力",false,"使用原生无限耐力标志，关闭恢复原值。单机与联机均可使用。");
@@ -90,7 +83,6 @@ namespace KingdomAdvisor
         internal static AdvisorBehaviour Active;
         internal AdvisorController Controller;
         internal GameActions Actions;
-        internal CompanionMounts Mounts;
         internal IslandJournal Journal;
         internal bool InputAvailable=>!faulted;
         private GameReader reader;
@@ -104,15 +96,12 @@ namespace KingdomAdvisor
         private float captureAt=-1;
         private bool captured;
         private bool captureUnavailable;
-        private float companionPreviewAt=-1;
         private int previewStage,previewLanguage=-1,previewFont=-1;
         private float previewAt=-1;
         public void Awake()
         {
             Active=this;reader=new GameReader();Controller=new AdvisorController(Plugin.Instance.Settings);
             Actions=new GameActions(Plugin.Instance.Settings);Journal=new IslandJournal();Controller.Actions=Actions;Controller.Journal=Journal;
-            Mounts=new CompanionMounts(Actions);Controller.Mounts=Mounts;
-            try{Mounts.VerifyResources();}catch(Exception ex){Plugin.Instance.Log.LogError("Companion resources unavailable; original mounts retained: "+ex);}
             view=new AdvisorView(Plugin.Instance.Settings,Controller); nextEvidence=0;
         }
         public void Update()
@@ -126,7 +115,6 @@ namespace KingdomAdvisor
                 if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;}
                 if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
                 Controller.Update(reader.State);
-                try{Mounts.Update(reader.State,Controller);}catch(Exception ex){Mounts.Restore();Actions.Notify("自定义坐骑发生错误，已恢复原生坐骑");Plugin.Instance.Log.LogError("Companion mount stopped: "+ex);}
                 try{Actions.Apply(reader.State);}catch(Exception ex){Plugin.Instance.Log.LogError("Assist update failed: "+ex);Actions.Notify("操作辅助出错，已关闭");Plugin.Instance.Settings.InfiniteBag.Value=false;Plugin.Instance.Settings.InfiniteStamina.Value=false;Plugin.Instance.Settings.GameSpeed.Value=1;Actions.Restore();}
                 if(Plugin.Instance.Settings.Journal.Value&&now>=nextJournal){Journal.Observe(reader.State);nextJournal=now+1;}
                 if(now>=nextEvidence){WriteEvidence();nextEvidence=now+10;}
@@ -136,12 +124,6 @@ namespace KingdomAdvisor
                     if(now>=captureAt){Capture("first-gameplay.png");captured=true;}
                 }
                 if(Input.GetKeyDown(KeyCode.F9))Capture("manual-"+DateTime.Now.ToString("yyyyMMdd-HHmmss")+".png");
-                if(Mounts.CaptureAt>=0 && Time.time>=Mounts.CaptureAt){Capture("companion-skill-preview.png");Mounts.CaptureAt=-1;}
-                if(captured && reader.State.Playing && Plugin.Instance.Settings.CompanionPreview.Value)
-                {
-                    if(companionPreviewAt<0){var local=reader.State.Players.FirstOrDefault(p=>p.Local);if(local!=null){try{Mounts.Select(reader.State,local.Id,Math.Clamp(Plugin.Instance.Settings.CompanionPreviewKind.Value,1,2));if(Plugin.Instance.Settings.CompanionSkillPreview.Value){Mounts.Cast(reader.State,local.Id);Plugin.Instance.Settings.CompanionSkillPreview.Value=false;}companionPreviewAt=now+2;}catch(Exception ex){Plugin.Instance.Settings.CompanionPreview.Value=false;Plugin.Instance.Log.LogError("Companion preview failed: "+ex);}}}
-                    else if(now>=companionPreviewAt){Capture("companion-preview.png");WriteEvidence();Plugin.Instance.Settings.CompanionPreview.Value=false;}
-                }
                 if(captured&&Plugin.Instance.Settings.PreviewCapture.Value&&reader.State.Playing)
                 {
                     if(previewAt<0)previewAt=now+2;
@@ -197,8 +179,7 @@ namespace KingdomAdvisor
             try{if(view!=null)view.Draw(reader.State);}
             catch(Exception ex){faulted=true;lastError=ex.ToString();Controller?.Close();Plugin.Instance.Log.LogError("Rendering stopped: "+ex);WriteEvidence();}
         }
-        public void LateUpdate(){try{Mounts?.LateUpdate();}catch(Exception ex){Mounts?.Restore();Actions?.Notify("自定义坐骑发生错误，已恢复原生坐骑");Plugin.Instance.Log.LogError(ex);}}
-        public void OnDestroy(){Mounts?.Dispose();Controller?.Close();Controller?.RestorePadMappings();Actions?.Restore();Journal?.Flush();if(Active==this)Active=null;}
+        public void OnDestroy(){Controller?.Close();Controller?.RestorePadMappings();Actions?.Restore();Journal?.Flush();if(Active==this)Active=null;}
         private void Capture(string filename)
         {
             if(captureUnavailable)return;
@@ -223,11 +204,8 @@ namespace KingdomAdvisor
         private void WriteEvidence()
         {
             var s=reader.State;
-            // 保存换乘对象的真实状态，区分入口未触发、角色门禁与视觉接口缺失。
             var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"overlayOpen="+(Controller?.Open??false),"mapFocus="+(Controller?.MapFocus??false),"holdActive="+(Controller?.Hold.Active??false),"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
             foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" targetName="+(p.Target?.Name??"none")+" description="+(p.Target?.Description??"")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
-            lines.Add("companion="+(Mounts?.Evidence??"unavailable"));
-            foreach(var p in s.Players)lines.Add("companionPlayer="+(Mounts?.PlayerEvidence(p.Id)??"unavailable"));
             foreach(var row in PopulationPresentation.Rows(s))lines.Add("population="+row.Item2);
             lines.Add("populationTotal="+(s.Workers+s.Archers+s.Squires+s.Knights+s.UnclassifiedLeaders+s.Farmers+s.Beggars+s.Pikemen+s.Berserkers+s.Peasants+s.Ninjas+s.Fishers+s.StableKeepers));
             lines.Add("enemiesAvailable="+s.EnemiesAvailable+" enemies="+s.Enemies.Count+" camps="+s.Camps);
@@ -529,6 +507,3 @@ namespace KingdomAdvisor
         }
     }
 }
-
-
-

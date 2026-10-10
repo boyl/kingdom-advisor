@@ -22,13 +22,7 @@ $out=Join-Path $PSScriptRoot 'package/BepInEx/plugins/KingdomAdvisor'
 New-Item -ItemType Directory -Force $out | Out-Null
 $candidate=Join-Path $out ('KingdomAdvisor-build-'+[guid]::NewGuid().ToString('N')+'.tmp')
 $stream=[IO.File]::Create($candidate)
-$mountResources=[Collections.Generic.List[Microsoft.CodeAnalysis.ResourceDescription]]::new()
-foreach($mountName in @('cat','dog','cat-vfx')){
- $mountResourcePath=Join-Path $PSScriptRoot ('assets/mounts/'+$mountName+'.png')
- $mountProvider=[Func[IO.Stream]]({[IO.File]::OpenRead($mountResourcePath)}.GetNewClosure())
- $mountResources.Add([Microsoft.CodeAnalysis.ResourceDescription]::new('KingdomAdvisor.Mounts.'+$mountName+'.png',$mountProvider,$true))
-}
-try{$result=$compilation.Emit($stream,$null,$null,$null,$mountResources)}finally{$stream.Dispose()}
+try{$result=$compilation.Emit($stream)}finally{$stream.Dispose()}
 $result.Diagnostics | Where-Object Severity -in @('Error','Warning') | ForEach-Object ToString
 if(!$result.Success){Remove-Item -LiteralPath $candidate;throw '编译失败，旧包保留'}
 Move-Item -LiteralPath $candidate -Destination (Join-Path $out 'KingdomAdvisor.dll') -Force

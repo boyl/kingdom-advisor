@@ -36,7 +36,6 @@ namespace KingdomAdvisor
             "hermit"=>"person+question", "cabin"=>"house+hat",
             "chest"=>"chest", "bank"=>"house+coin", "merchant"=>"person+coin",
             "berry"=>"berry", "tree"=>"tree",
-            "advisorcat"=>"cat+bomb", "advisordog"=>"hound+bolt",
             "steed"=>"horse+question", "horse"=>"horse", "griffin"=>"eagle+wing",
             "bear"=>"bear", "stag"=>"antler", "warhorse"=>"horse+shield",
             "lizard"=>"reptile+flame", "unicorn"=>"horse+horn",

@@ -13,7 +13,7 @@ Check ([KingdomAdvisor.Localization]::Translate('农田',$true)) 'Farm' '目录�
 Check ([KingdomAdvisor.Localization]::Translate('Wall4(Clone) 10 / 100',$true)) 'Wall4(Clone) 10 / 100' '原生名称和数值保留'
 Check ([KingdomAdvisor.Localization]::Translate('金币 36',$false)) '金币 36' '中文原样'
 $missing=[Collections.Generic.HashSet[string]]::new()
-foreach($name in @('Model.cs','View.cs','AssistModel.cs','MapPresentation.cs','IslandJournal.cs','GameActions.cs','Controller.cs','PadInput.cs','Plugin.cs','CompanionMounts.cs','CompanionMountNetwork.cs')){
+foreach($name in @('Model.cs','View.cs','AssistModel.cs','MapPresentation.cs','IslandJournal.cs','GameActions.cs','Controller.cs','PadInput.cs','Plugin.cs')){
     $source=[IO.File]::ReadAllText((Join-Path $PSScriptRoot "src/$name"))
     if($name -eq 'Plugin.cs'){$source=$source.Substring($source.IndexOf('        private void ReadPlayer('))}
     foreach($match in [regex]::Matches($source,'"(?:[^"\\]|\\.)*"')){
