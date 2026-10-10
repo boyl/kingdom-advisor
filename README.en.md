@@ -6,6 +6,8 @@ In-game advisor for Kingdom Two Crowns. The plugin version remains 0.6.7; r1 rem
 
 [GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
+Nexus uses 0.6.7-r2 manual packages without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.7-r1 assets only.
+
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |

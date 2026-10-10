@@ -1,0 +1,114 @@
+[center][size=6][b]王国顾问 / Kingdom Advisor[/b][/size]
+[size=3]游戏内地图、图鉴、地点说明与资源辅助 / In-game map, catalog, locations and resource assistance[/size][/center]
+
+[b]当前 Nexus 下载：0.6.7-r2 手动安装版[/b]
+游戏内插件版本仍为 0.6.7。此次只调整资源包与安装说明，不改变已验收玩法。Nexus 包不含自动安装脚本，不需要 PowerShell 7。GitHub 另外保留一键安装版，请按照各自下载包内的说明操作。
+
+[size=4][b]功能[/b][/size]
+[list]
+[*]顶部地图：查看建筑、坐骑、敌群与资源位置，显示数量、方向和焦点信息。
+[*]图鉴：104 条中英文内容、身份像素图标、搜索与分类；可联动本岛地点和地图。
+[*]附近详情：对象作用、费用、升级、隐士改造条件及原生交互状态。
+[*]王国顾问与岛屿记录：资源、人口、科技、坐骑及岛屿信息。
+[*]可选辅助：资源添加/清空、无限钱袋、传送、无限耐力和速度调整。无限钱袋、传送和无限耐力默认关闭，速度默认 1 倍。
+[*]键鼠和手柄导航，界面位置与显示方式可设置。
+[/list]
+
+[size=4][b]选择下载包：两个任选一个[/b][/size]
+[b]ModOnly - Manual[/b]：仅本 Mod。适合已经安装了正常工作的 BepInEx 6 Unity IL2CPP Windows x64 的玩家，不含前置。
+[b]Complete - Manual[/b]：前置＋本 Mod。适合首次安装，或遇到 AndroidManager / RawPropertyType 首次生成错误的玩家。基于官方 BepInEx #788，仅两个 Cpp2IL 解析器 DLL 经过修复；这是修改过的兼容分发，并非纯官方包。
+
+[size=4][b]找到放入位置[/b][/size]
+Steam 游戏库 → 右键 Kingdom Two Crowns → 管理 → 浏览本地文件。
+[b]能直接看到 KingdomTwoCrowns.exe 的文件夹就是游戏根目录。[/b]
+示例：D:\SteamLibrary\steamapps\common\Kingdom Two Crowns\，实际可以在其他盘。
+
+[size=4][b]ModOnly 手动安装[/b][/size]
+[list=1]
+[*]保存并正常退出游戏，解压下载包到普通文件夹。
+[*]把解压包内的 BepInEx 文件夹复制到游戏根目录，与原 BepInEx 合并。
+[*]只替换 BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll，保留其他插件与配置。
+[*]正常启动游戏，F7 打开图鉴，F6 打开设置。
+[/list]
+
+[size=4][b]Complete 手动安装[/b][/size]
+[list=1]
+[*]保存并退出游戏，在游戏根目录外建立备份文件夹。
+[*]已有前置时，将整个 BepInEx、整个 dotnet 文件夹，以及根目录 winhttp.dll、doorstop_config.ini、.doorstop_version、changelog.txt 移入备份；不存在的项目跳过。不要直接把新核心覆盖混入旧 core。
+[*]将解压包内的 BepInEx、dotnet 及上述四个根目录文件复制到含游戏 EXE 的目录。README、图片、许可证等说明文件不用放入游戏。
+[*]从备份复制回 BepInEx/config，保留原配置与岛屿记录。其他插件确认支持新前置后再复制回来，王国顾问使用新包 DLL。不要恢复旧 core、interop、cache 或 dotnet。
+[*]正常启动游戏。首次启动需联网获取匹配的 Unity 基础库并生成程序集，可能需要数分钟，请等待。
+[*]F7 打开图鉴，F6 打开设置。报错时保留 BepInEx/LogOutput.log，按下方方式回退。
+[/list]
+
+[size=4][b]安装示意[/b][/size]
+[img]https://raw.githubusercontent.com/boyl/kingdom-advisor/main/distribution/nexus/INSTALLATION.png[/img]
+
+[code]Kingdom Two Crowns/                 ← 游戏根目录
+├─ KingdomTwoCrowns.exe             ← 以这个文件定位
+├─ KingdomTwoCrowns_Data/           ← 保留游戏原有内容
+├─ winhttp.dll                      ← Complete / 前置
+├─ doorstop_config.ini              ← Complete / 前置
+├─ .doorstop_version                ← Complete / 前置
+├─ changelog.txt                    ← Complete / 前置
+├─ dotnet/                          ← Complete / 前置
+└─ BepInEx/
+   ├─ core/                        ← Complete / 前置
+   ├─ plugins/
+   │  └─ KingdomAdvisor/
+   │     └─ KingdomAdvisor.dll     ← 本 Mod 必须放在这里
+   ├─ config/                      ← 更新保留，首次运行可生成
+   └─ interop/                     ← 本机自动生成，不随包分发[/code]
+
+[b]不要多套一层下载包名称，不要形成 BepInEx/BepInEx，也不要放入 KingdomTwoCrowns_Data。[/b]ModOnly 只提供插件文件，不包含上述前置。
+
+[size=4][b]更新、卸载、回退[/b][/size]
+只更新 Mod：退出游戏，替换 KingdomAdvisor.dll，保留配置和前置。
+只卸载 Mod：退出游戏，将 BepInEx/plugins/KingdomAdvisor 移出游戏目录；保留其他插件依赖的前置。
+撤销 Complete：退出游戏，将当前 BepInEx、dotnet 与本次安装的四个根目录文件移到另一备份位置，再将安装前备份的项目复制回原位置。首次安装没有旧备份时，移走本次添加的前置与 Mod 文件即可。不要改动游戏本体或存档。
+
+[size=4][b]操作与默认值[/b][/size]
+F4：显示/隐藏 HUD；F6：设置；F7：图鉴。
+手柄默认短按左摇杆 L3 呼出/关闭面板，长按 0.8 秒显隐 HUD；LB/RB 换页签，LT/RT 翻页，方向选择、确认/返回。按键可配置。
+地图短按查看；开启传送后长按 0.8 秒传送。辅助功能按需开启。
+
+[size=4][b]兼容范围与排障[/b][/size]
+已验收 Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完成首次生成、重启和用户游玩验收。全部 DLC、联机、其他游戏版本及其他插件组合尚未完整验证。
+纯官方 #738 或 #788 仍可能出现 AndroidManager / RawPropertyType 错误；此问题需要 Complete 包中的解析器修复，而不只是替换王国顾问 DLL。
+启动异常请附游戏版本、来源、所用资源包名称和 BepInEx/LogOutput.log。不要复制别人的 interop、游戏程序集、配置或存档来解决启动问题。
+
+[size=4][b]源码与第三方许可[/b][/size]
+[url=https://github.com/boyl/kingdom-advisor]项目源码[/url] · [url=https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1]GitHub 一键安装包与固定第三方源码[/url] · [url=https://github.com/boyl/kingdom-advisor/blob/v0.6.7-r1/distribution/REPRODUCE.md]解析器补丁复现说明[/url]
+Complete 保留第三方许可证。Nexus 手动包不含脚本或嵌套压缩包，源码和补丁可从上述公开 GitHub Complete 资源获取。
+
+[size=5][b]English installation guide[/b][/size]
+[b]Nexus 0.6.7-r2 packages use manual installation. No automatic installer or PowerShell 7 is required.[/b] The plugin still reports 0.6.7. GitHub separately retains the one-click installation packages.
+
+[b]Choose one:[/b]
+[list]
+[*][b]ModOnly - Manual[/b]: Advisor only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 loader.
+[*][b]Complete - Manual[/b]: Advisor plus modified complete #788 runtime, for fresh installs or AndroidManager / RawPropertyType generation errors. Only two Cpp2IL parser DLLs are patched; this is not stock official #788.
+[/list]
+
+[b]Game folder:[/b] Steam → Manage → Browse local files. Select the folder containing KingdomTwoCrowns.exe. The diagram above shows the final plugin path.
+
+[b]ModOnly:[/b] Quit, extract, copy the package's BepInEx folder into the game root and merge. Replace only BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll. Preserve settings and other plugins.
+
+[b]Complete:[/b]
+[list=1]
+[*]Quit and create a backup folder outside the game root.
+[*]Move existing BepInEx/dotnet folders and winhttp.dll, doorstop_config.ini, .doorstop_version, changelog.txt into that backup; skip missing items. Do not mix old and new core files.
+[*]Copy the archive's BepInEx/dotnet and those four root files into the game EXE folder.
+[*]Restore BepInEx/config to retain settings/journals. Restore other plugins only if compatible. Keep the new Advisor DLL; do not restore old core, interop, cache or dotnet.
+[*]Launch. Internet is required on first launch to fetch Unity libraries; assembly generation may take several minutes. F7 opens the catalog and F6 opens settings.
+[/list]
+
+Do not create an extra enclosing folder or BepInEx/BepInEx, and do not place the mod in KingdomTwoCrowns_Data. Preserve original game files and saves.
+
+[b]Rollback:[/b] Quit, move current loader folders/root files to a separate backup, then restore the pre-installation backup. For a fresh install, move out the files added by Complete. Uninstall only Advisor by moving out BepInEx/plugins/KingdomAdvisor; keep the loader needed by other plugins.
+
+[b]Features:[/b] In-game map, 104-entry bilingual catalog with distinct icons, linked locations, nearby costs/upgrades/hermit conversions, kingdom information and island journal. Optional resource controls, purse capacity, stamina, teleportation and speed settings. Unlimited purse, stamina and teleportation are off by default; speed is 1x. Keyboard/mouse and gamepad navigation are supported.
+
+[b]Verified scope:[/b] Windows x64, game 2.4.2, Unity 6000.0.66f2 IL2CPP: fresh generation, restart and user gameplay accepted. Other game versions, all DLC, multiplayer and all other-plugin combinations are not fully verified. Report issues with the game version/source, package name and BepInEx/LogOutput.log.
+
+[b]Sources:[/b] Public GitHub links above provide the project, pinned third-party sources and patch reproduction instructions. Nexus Complete retains licenses, without scripts or nested archives.

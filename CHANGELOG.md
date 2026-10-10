@@ -1,3 +1,9 @@
+# 0.6.7-r2 Nexus 手动资源包 / Nexus manual packages
+
+Nexus 两种资源移除自动安装脚本，直接提供可复制到游戏目录的文件，普通玩家不再需要 PowerShell 7。中英文手动说明、安装后目录和 PNG 示意图随包提供，Complete 保留许可证并链接公开固定版本源码，包中无嵌套归档。GitHub 0.6.7-r1 一键安装包保留。插件及前置二进制与已验收版本相同，游戏内版本仍为 0.6.7。Nexus 主页另提供双语 BBCode，由作者手动粘贴更新。
+
+Both Nexus packages now use manual installation without scripts or a PowerShell requirement. Includes bilingual placement instructions and PNG diagram, with licenses and public pinned source links for Complete. No nested archives. GitHub 0.6.7-r1 one-click assets remain available. Accepted plugin/runtime binaries are unchanged; plugin version remains 0.6.7. A bilingual homepage BBCode draft is provided for the author to paste manually.
+
 # 0.6.7-r1 安装包修订 / Distribution revision
 
 移除添加、清空资源等操作结果提示。提供 ModOnly（需已有正常前置）和 Complete（本 Mod＋修复后的 BepInEx #788）两种包，均包含中英文目录示意及安装脚本。插件版本仍为 0.6.7。
