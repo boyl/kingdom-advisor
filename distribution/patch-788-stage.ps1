@@ -52,4 +52,3 @@ public static class Patch788 {
 '@
 [Patch788]::Run($stage)
 Get-FileHash (Join-Path $stage 'LibCpp2IL.dll'),(Join-Path $stage 'Cpp2IL.Core.dll')
-
