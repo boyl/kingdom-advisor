@@ -16,7 +16,7 @@ $trees=[System.Collections.Generic.List[Microsoft.CodeAnalysis.SyntaxTree]]::new
 foreach($file in Get-ChildItem (Join-Path $PSScriptRoot 'src') -Filter '*.cs'){
  $trees.Add([Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree]::ParseText([IO.File]::ReadAllText($file.FullName),$null,$file.FullName))
 }
-$options=[Microsoft.CodeAnalysis.CSharp.CSharpCompilationOptions]::new([Microsoft.CodeAnalysis.OutputKind]::DynamicallyLinkedLibrary).WithOptimizationLevel([Microsoft.CodeAnalysis.OptimizationLevel]::Release)
+$options=[Microsoft.CodeAnalysis.CSharp.CSharpCompilationOptions]::new([Microsoft.CodeAnalysis.OutputKind]::DynamicallyLinkedLibrary).WithOptimizationLevel([Microsoft.CodeAnalysis.OptimizationLevel]::Release).WithDeterministic($true)
 $compilation=[Microsoft.CodeAnalysis.CSharp.CSharpCompilation]::Create('KingdomAdvisor',$trees,$refs,$options)
 $out=Join-Path $PSScriptRoot 'package/BepInEx/plugins/KingdomAdvisor'
 New-Item -ItemType Directory -Force $out | Out-Null

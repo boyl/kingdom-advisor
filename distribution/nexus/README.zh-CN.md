@@ -1,6 +1,6 @@
-# 王国顾问 0.6.7-r2 — Nexus 手动安装
+# 王国顾问 0.6.8 — Nexus 手动安装
 
-Nexus 下载包为手动安装版，不含自动安装脚本，不需要 PowerShell 7。插件版本仍为 0.6.7，玩法与已验收版本一致。
+Nexus 下载包为手动安装版，不含自动安装脚本，不需要 PowerShell 7。插件版本为 0.6.8，包含已验收的玩家路由、视口和读取异常隔离修正。
 
 ## 选择资源
 
@@ -80,4 +80,4 @@ Complete 回退：退出游戏，将当前 `BepInEx`、`dotnet` 及本次复制�
 
 已验收：Windows x64、游戏 2.4.2、Unity 6000.0.66f2，修复后的 #788 首次生成、重启与用户正常游玩。仅修改 `LibCpp2IL.dll` 和 `Cpp2IL.Core.dll`，其余前置组件来自官方 #788。全部 DLC、联机、其他游戏版本与其他插件组合未完整验证。
 
-对应源码、补丁脚本及完整构建记录可从 [公开 GitHub 资源](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1) 获取；其中 Complete 下载包含固定版本的第三方源码。源码不安装进游戏。Nexus 包内保留第三方许可证全文和来源说明。
+对应源码、补丁脚本及完整构建记录可从 [公开 GitHub 资源](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.8) 获取；其中 Complete 下载包含固定版本的第三方源码。源码不安装进游戏。Nexus 包内保留第三方许可证全文和来源说明。

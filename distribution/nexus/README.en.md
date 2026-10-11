@@ -1,6 +1,6 @@
-# Kingdom Advisor 0.6.7-r2 — Nexus manual installation
+# Kingdom Advisor 0.6.8 — Nexus manual installation
 
-Nexus packages use manual installation, contain no automatic installer and do not require PowerShell 7. The in-game plugin remains 0.6.7; accepted gameplay binaries are unchanged.
+Nexus packages use manual installation, contain no automatic installer and do not require PowerShell 7. The plugin version is 0.6.8, including player routing, viewport and optional-read isolation fixes.
 
 ## Choose one package
 
@@ -74,4 +74,4 @@ Undo Complete: quit, move the current BepInEx/dotnet folders and four installed 
 
 Accepted on Windows x64, game 2.4.2, Unity 6000.0.66f2: fresh generation, restart and user gameplay. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; remaining runtime files come from official #788. Other game versions, all DLC, multiplayer and all other-plugin combinations are not fully verified.
 
-Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
+Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.8), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.

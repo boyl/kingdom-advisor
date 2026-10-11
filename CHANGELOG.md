@@ -1,3 +1,17 @@
+# 0.6.8 更新说明 / Release notes
+
+修正联机加入者控制的二号玩家可能被双人模式标志漏读的问题，加入者使用主视口，本地双人仍保留分屏视口。摄像机缺失、停用或零尺寸时使用完整默认视口。世界、敌人、玩家详情及诊断对象清单读取分别隔离；可选数据连续失败三次后只停用对应通道，换场景或 F6/F7 显式重试可恢复。远端角色不参与本机输入阻断。
+
+2026-10-11 用户验收并授权发布。0.6.8 与验收候选 0.6.8-rc.1 仅版本标记不同；自动玩家路由、故障恢复及原有回归通过。本机运行时证据为单人 Playing；未独立完成双机或完整 DLC 矩阵验证。若加入者仍异常，请提供其联机期间的 BepInEx/LogOutput.log 和 BepInEx/config/KingdomAdvisor/runtime.txt。
+
+沿用兼容前置，不新增依赖或修改配置/存档格式。GitHub 提供 ModOnly 与 Complete（含安装脚本，需要 PowerShell 7）；Nexus 两种包均为手动安装，无自动脚本，附中英文安装说明及目录示意图。
+
+Fixes the local second player being omitted by a two-player mode flag and selects the main viewport for an online joiner, while retaining local split-screen. Missing, disabled or zero-size cameras use the default full viewport. World, enemy, player-detail and object-census reads are isolated; three consecutive failures disable only that channel until a scene change or an explicit F6/F7 retry. Remote actors are excluded from local input blocking.
+
+Accepted by the user for release on October 11, 2026. The final plugin differs from 0.6.8-rc.1 only in its version marker. Automated routing, recovery and existing regressions passed; local runtime evidence is single-player, with independent two-machine/full-DLC testing still outstanding. For persistent joiner issues, provide that client's BepInEx/LogOutput.log and BepInEx/config/KingdomAdvisor/runtime.txt from the online session.
+
+Uses the existing compatible loader and preserves settings/saves. GitHub includes ModOnly and Complete installers requiring PowerShell 7; Nexus uses script-free manual packages with bilingual placement guides and an installation diagram.
+
 # 0.6.7-r2 Nexus 手动资源包 / Nexus manual packages
 
 Nexus 两种资源移除自动安装脚本，直接提供可复制到游戏目录的文件，普通玩家不再需要 PowerShell 7。中英文手动说明、安装后目录和 PNG 示意图随包提供，Complete 保留许可证并链接公开固定版本源码，包中无嵌套归档。GitHub 0.6.7-r1 一键安装包保留。插件及前置二进制与已验收版本相同，游戏内版本仍为 0.6.7。Nexus 主页另提供双语 BBCode，由作者手动粘贴更新。

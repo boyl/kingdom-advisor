@@ -1,0 +1,41 @@
+version=0.6.8-rc.1
+utc=2026-10-11T14:23:55.0838595Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+releaseGuardCount=0
+playing=True
+online=False
+island=1
+day=12
+points=285
+worldReadMaxMs=73.292
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=2
+gameplayRuleWrites=6
+teleports=1
+resourceAdds=1
+error=
+localPlayers=1
+uiBlockedReason=none
+nativeP2Playing=False
+nativePlayer=0 active=True local=True
+nativePlayer=1 active=False local=True
+player=0 local=True coins=505 target=Tower2(Clone) targetName=弓箭塔 description=供弓箭手驻守射击；容量、遮蔽和特殊改造随等级变化。 rect=0,0,1,1 original=1000 capacity=2147483647 total=506 gems=0 numeric=True
+population=工匠 3
+population=弓手 14
+population=侍从 0
+population=骑士 0
+population=农民 7
+population=游民 11
+population=长枪兵 28
+populationTotal=63
+enemiesAvailable=True enemies=0 camps=4

@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.7";
+        public const string Version="0.6.8";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -106,7 +106,12 @@ namespace KingdomAdvisor
         }
         public void Update()
         {
-            if(faulted)return;
+            if(faulted){
+                // 不自动循环重启；明确的呼出键允许用户在联机加载完成后重试。
+                if(!Input.GetKeyDown(KeyCode.F6)&&!Input.GetKeyDown(KeyCode.F7))return;
+                faulted=false;failures=0;lastError="";reader=new GameReader();nextSlow=nextFast=nextEvidence=0;
+                Plugin.Instance.Log.LogInfo("Overlay read reset requested by user.");
+            }
             try
             {
                 var language=global::Language.current;
@@ -114,6 +119,7 @@ namespace KingdomAdvisor
                 var now=Time.unscaledTime;
                 if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;}
                 if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
+                if(Input.GetKeyDown(KeyCode.F6)||Input.GetKeyDown(KeyCode.F7))reader.ResetOptionalReads();
                 Controller.Update(reader.State);
                 try{Actions.Apply(reader.State);}catch(Exception ex){Plugin.Instance.Log.LogError("Assist update failed: "+ex);Actions.Notify("操作辅助出错，已关闭");Plugin.Instance.Settings.InfiniteBag.Value=false;Plugin.Instance.Settings.InfiniteStamina.Value=false;Plugin.Instance.Settings.GameSpeed.Value=1;Actions.Restore();}
                 if(Plugin.Instance.Settings.Journal.Value&&now>=nextJournal){Journal.Observe(reader.State);nextJournal=now+1;}
@@ -205,6 +211,15 @@ namespace KingdomAdvisor
         {
             var s=reader.State;
             var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"overlayOpen="+(Controller?.Open??false),"mapFocus="+(Controller?.MapFocus??false),"holdActive="+(Controller?.Hold.Active??false),"releaseGuardCount="+(Controller?.ReleaseGuardCount??0),"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
+            lines.Add("localPlayers="+s.Players.Count(p=>p.Local));
+            lines.AddRange(reader.ReadEvidence());
+            lines.Add("uiBlockedReason="+(!s.Playing?"not-playing":!s.Players.Any(p=>p.Local)?"no-local-authority":!Plugin.Instance.Settings.Enabled.Value?"disabled":"none"));
+            var managers=Managers._Inst;
+            if(managers&&managers.kingdom){
+                lines.Add("nativeP2Playing="+Managers.IsP2Playing);
+                foreach(var actor in new[]{managers.kingdom.playerOne,managers.kingdom.playerTwo})
+                    if(actor)lines.Add("nativePlayer="+actor.playerId+" active="+actor.gameObject.activeInHierarchy+" local="+actor.hasLocalAuthority);
+            }
             foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" targetName="+(p.Target?.Name??"none")+" description="+(p.Target?.Description??"")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
             foreach(var row in PopulationPresentation.Rows(s))lines.Add("population="+row.Item2);
             lines.Add("populationTotal="+(s.Workers+s.Archers+s.Squires+s.Knights+s.UnclassifiedLeaders+s.Farmers+s.Beggars+s.Pikemen+s.Berserkers+s.Peasants+s.Ninjas+s.Fishers+s.StableKeepers));
@@ -212,7 +227,8 @@ namespace KingdomAdvisor
             foreach(var enemy in s.Enemies.Take(12))lines.Add("enemy="+enemy.Id+" kind="+enemy.Kind+" x="+enemy.X.ToString("F2"));
             Directory.CreateDirectory(Path.Combine(Paths.ConfigPath,"KingdomAdvisor"));
             File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","runtime.txt"),lines);
-            if(s.Playing)File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","object-census.tsv"),reader.Census());
+            // 诊断文件失败不应中止游戏覆盖界面。
+            if(s.Playing)reader.WriteCensus(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","object-census.tsv"));
         }
     }
     // 只在本 Mod 的详情面板拥有该玩家焦点时阻断其玩法输入。
@@ -223,6 +239,7 @@ namespace KingdomAdvisor
 
         private static bool Prefix(Player __instance,Rewired.Player __0)
         {
+            if(!__instance||!__instance.hasLocalAuthority)return true;
             var active=AdvisorBehaviour.Active;
             var controller=active?.Controller;
             if(controller==null||!active.InputAvailable)return true;
@@ -235,6 +252,16 @@ namespace KingdomAdvisor
     internal sealed class GameReader
     {
         public Snapshot State=new Snapshot();
+        private readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
+        private string readContext="";
+        public void ResetOptionalReads()=>optionalReads.Clear();
+        public IEnumerable<string> ReadEvidence()=>optionalReads.Where(p=>p.Value.Failures>0).Select(p=>"readChannel="+p.Key+" failures="+p.Value.Failures+" blocked="+p.Value.Blocked+" error="+p.Value.Error.Replace("\r"," ").Replace("\n"," "));
+        private void ReadOptional(string channel,Action read)
+        {
+            if(!optionalReads.TryGetValue(channel,out var circuit))optionalReads[channel]=circuit=new OptionalReadCircuit();
+            if(circuit.Blocked)return;
+            if(!circuit.Run(read))Plugin.Instance.Log.LogWarning("Optional read failed: "+channel+" attempt="+circuit.Failures+" blocked="+circuit.Blocked+" "+circuit.Error);
+        }
         private int lastIsland=-1,lastSeed=int.MinValue;
         private Component[] detailBuildings=Array.Empty<Component>();private float nextBuildingScan;
         internal readonly Dictionary<int,System.Tuple<float,float>> Explored=new Dictionary<int,System.Tuple<float,float>>();
@@ -309,12 +336,21 @@ namespace KingdomAdvisor
             var m=GetManagers();
             if(!m||!m.game||!m.kingdom){State=new Snapshot();lastIsland=-1;return;}
             var game=m.game;
+            var context=m.kingdom.GetInstanceID()+":"+game.currentLand+":"+game.state;
+            if(context!=readContext){readContext=context;ResetOptionalReads();Explored.Clear();detailBuildings=Array.Empty<Component>();nextBuildingScan=0;}
             bool playable=game.state==Game.State.Playing||game.state==Game.State.NetworkClientPlaying;
             var s=new Snapshot{Playing=playable,State=game.state.ToString(),Island=game.currentLand+1,Online=NetworkBigBoss.IsOnline};
             if(!playable){State=s;return;}
             if(Level.isGenerating){State=s;State.Playing=false;return;}
             if(lastIsland!=s.Island||(m.level&&lastSeed!=m.level.cachedCurrentLevelSeed))
             {Explored.Clear();lastIsland=s.Island;lastSeed=m.level?m.level.cachedCurrentLevelSeed:0;}
+            // 基础游玩状态先发布，可选世界详情异常不能阻止后续玩家及界面读取。
+            State=s;
+            ReadOptional("world",()=>ReadWorldDetails(m,s));
+        }
+        public void WriteCensus(string path)=>ReadOptional("census",()=>File.WriteAllLines(path,Census()));
+        private void ReadWorldDetails(Managers m,Snapshot s)
+        {
             var k=m.kingdom;
             var campaign=CampaignSaveData.current;if(campaign!=null)s.CampaignKey=campaign.realStartDateTime+"-"+campaign.biomeIndex;
             var currencies=CurrencyManager.AllCurrencyTypes;if(currencies!=null)for(int ci=0;ci<currencies.Length;ci++)if(ResourceRules.Supported((int)currencies[ci]))s.ResourceTypes.Add((int)currencies[ci]);
@@ -355,7 +391,7 @@ namespace KingdomAdvisor
                     if(entry.Key=="unknown"&&Catalog.Clean(p.name).StartsWith("Player ",StringComparison.OrdinalIgnoreCase))continue;
                     var point=new MapPoint{Key=entry.Key,Name=entry.Key=="unknown"?Catalog.Clean(p.name):entry.Name,Category=entry.Category,X=x,Cost=p.Price};
                     if(k.playerOne&&k.playerOne.hasLocalAuthority)point.PlayerStates[k.playerOne.playerId]=ReadTarget(p,k.playerOne);
-                    if(Managers.IsP2Playing&&k.playerTwo&&k.playerTwo.hasLocalAuthority)point.PlayerStates[k.playerTwo.playerId]=ReadTarget(p,k.playerTwo);
+                    if(k.playerTwo&&k.playerTwo.gameObject.activeInHierarchy&&k.playerTwo.hasLocalAuthority)point.PlayerStates[k.playerTwo.playerId]=ReadTarget(p,k.playerTwo);
                     s.Points.Add(point);
                 }
             }
@@ -379,6 +415,10 @@ namespace KingdomAdvisor
         public void ReadEnemies()
         {
             State.Enemies.Clear();State.EnemiesAvailable=false;if(!State.Playing)return;
+            ReadOptional("enemies",ReadEnemyDetails);
+        }
+        private void ReadEnemyDetails()
+        {
             var m=GetManagers();if(!m||!m.enemies)return;
             var enemies=m.enemies.AllEnemies;if(enemies==null)return;
             var enemyArray=new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppReferenceArray<Enemy>(enemies.Count);
@@ -406,19 +446,33 @@ namespace KingdomAdvisor
         public void ReadPlayers()
         {
             State.Players.Clear();State.ExploredRanges.Clear();if(!State.Playing)return;
-            var m=GetManagers();if(!m||!m.kingdom)return;
+            var m=GetManagers();if(!m||!m.game||!m.kingdom)return;
+            // 玩家存在及控制权决定读取；不能用双人模式标志排除本机二号玩家。
             var k=m.kingdom;ReadPlayer(k.playerOne,m.game._mainCameraComponent);
-            if(Managers.IsP2Playing)ReadPlayer(k.playerTwo,m.game._secondCameraComponent);
+            bool localOne=k.playerOne&&k.playerOne.hasLocalAuthority;
+            bool localTwo=k.playerTwo&&k.playerTwo.hasLocalAuthority;
+            // 联机加入者的本机二号玩家使用主视口，本地双人仍使用第二视口。
+            ReadPlayer(k.playerTwo,localTwo&&!localOne?m.game._mainCameraComponent:m.game._secondCameraComponent);
             foreach(var range in Explored.Values)State.ExploredRanges.Add(range);
         }
         private void ReadPlayer(Player p,Camera cam)
         {
             if(!p||!p.gameObject.activeInHierarchy)return;
-            var info=new PlayerInfo{Id=p.playerId,Local=p.hasLocalAuthority,X=p.transform.position.x,Coins=p.coins,Gems=p.gems,Capacity=p.wallet?p.wallet.TotalCapacity:0};
+            var info=new PlayerInfo{Id=p.playerId,Local=p.hasLocalAuthority,X=p.transform.position.x};
+            if(cam){var rect=cam.rect;if(cam.isActiveAndEnabled&&rect.width>0&&rect.height>0){info.ViewX=rect.x;info.ViewY=rect.y;info.ViewW=rect.width;info.ViewH=rect.height;}}
+            if(!info.Local){info.ViewX=0;info.ViewY=0;info.ViewW=1;info.ViewH=1;}
+            State.Players.Add(info);
+            // 远端只提供地图位置，不查询其本机输入、钱袋或附近交互条件。
+            if(!info.Local)return;
+            if(Explored.TryGetValue(info.Id,out var range))Explored[info.Id]=System.Tuple.Create(Math.Min(range.Item1,info.X-15),Math.Max(range.Item2,info.X+15));
+            else Explored[info.Id]=System.Tuple.Create(info.X-15,info.X+15);
+            ReadOptional("player-details-"+info.Id,()=>ReadPlayerDetails(p,info));
+        }
+        private void ReadPlayerDetails(Player p,PlayerInfo info)
+        {
+            info.Coins=p.coins;info.Gems=p.gems;info.Capacity=p.wallet?p.wallet.TotalCapacity:0;
             if(p.wallet)foreach(var currency in State.ResourceTypes)info.Resources[currency]=p.wallet.GetCurrency((CurrencyType)currency);
             if(p.wallet){info.BagTotal=p.wallet.TotalCurrency;info.BagCapacity=AdvisorBehaviour.Active.Actions.NormalCapacity(p.playerId);}
-            if(cam){var rect=cam.rect;info.ViewX=rect.x;info.ViewY=rect.y;info.ViewW=rect.width;info.ViewH=rect.height;}
-            if(!info.Local){info.ViewX=0;info.ViewY=0;info.ViewW=1;info.ViewH=1;}
             var steed=p.steed;
             if(steed){info.Mount=Catalog.Clean(steed.name);info.Stamina=steed.Stamina;info.Fed=steed.WellFedTimer;info.MountState=steed.IsTired?"疲劳":steed.WellFedTimer>0?"饱食":"正常";info.Ability=p.IsManualAttackActivable?"攻击可用":p.IsSpitActivable?"特殊能力可用":"";}
             if(steed&&steed.steedAbilities!=null){var abilities=steed.steedAbilities;for(int ai=0;ai<abilities.Length;ai++){var ability=abilities[ai];if(ability&&!ability.IsAutomaticAbility)info.Ability+=(info.Ability.Length>0?" · ":"")+(ability.IsAbilityReady?"能力就绪":"能力冷却中");}}
@@ -461,9 +515,6 @@ namespace KingdomAdvisor
                 if(kingdom._farmHouses!=null)foreach(var farm in kingdom._farmHouses)Consider(farm);
             }
             if(nearest&&TargetProximity.Contains(info.X,nearest.transform.position.x))info.Target=ReadBuildingTarget(nearest,p);
-            if(Explored.TryGetValue(info.Id,out var range))Explored[info.Id]=System.Tuple.Create(Math.Min(range.Item1,info.X-15),Math.Max(range.Item2,info.X+15));
-            else Explored[info.Id]=System.Tuple.Create(info.X-15,info.X+15);
-            State.Players.Add(info);
         }
         private TargetInfo ReadTarget(Payable payable,Player player)
         {

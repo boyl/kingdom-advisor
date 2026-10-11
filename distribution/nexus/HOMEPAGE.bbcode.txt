@@ -1,8 +1,8 @@
 [center][size=6][b]王国顾问 / Kingdom Advisor[/b][/size]
 [size=3]游戏内地图、图鉴、地点说明与资源辅助 / In-game map, catalog, locations and resource assistance[/size][/center]
 
-[b]当前 Nexus 下载：0.6.7-r2 手动安装版[/b]
-游戏内插件版本仍为 0.6.7。此次只调整资源包与安装说明，不改变已验收玩法。Nexus 包不含自动安装脚本，不需要 PowerShell 7。GitHub 另外保留一键安装版，请按照各自下载包内的说明操作。
+[b]当前 Nexus 下载：0.6.8 手动安装版[/b]
+游戏内插件版本为 0.6.8。此次修正联机加入者玩家识别与视口选择，并隔离数据读取异常。Nexus 包不含自动安装脚本，不需要 PowerShell 7。GitHub 另外保留一键安装版，请按照各自下载包内的说明操作。
 
 [size=4][b]功能[/b][/size]
 [list]
@@ -78,11 +78,11 @@ F4：显示/隐藏 HUD；F6：设置；F7：图鉴。
 启动异常请附游戏版本、来源、所用资源包名称和 BepInEx/LogOutput.log。不要复制别人的 interop、游戏程序集、配置或存档来解决启动问题。
 
 [size=4][b]源码与第三方许可[/b][/size]
-[url=https://github.com/boyl/kingdom-advisor]项目源码[/url] · [url=https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1]GitHub 一键安装包与固定第三方源码[/url] · [url=https://github.com/boyl/kingdom-advisor/blob/v0.6.7-r1/distribution/REPRODUCE.md]解析器补丁复现说明[/url]
+[url=https://github.com/boyl/kingdom-advisor]项目源码[/url] · [url=https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.8]GitHub 一键安装包与固定第三方源码[/url] · [url=https://github.com/boyl/kingdom-advisor/blob/v0.6.8/distribution/REPRODUCE.md]解析器补丁复现说明[/url]
 Complete 保留第三方许可证。Nexus 手动包不含脚本或嵌套压缩包，源码和补丁可从上述公开 GitHub Complete 资源获取。
 
 [size=5][b]English installation guide[/b][/size]
-[b]Nexus 0.6.7-r2 packages use manual installation. No automatic installer or PowerShell 7 is required.[/b] The plugin still reports 0.6.7. GitHub separately retains the one-click installation packages.
+[b]Nexus 0.6.8 packages use manual installation. No automatic installer or PowerShell 7 is required.[/b] The plugin still reports 0.6.8. GitHub separately retains the one-click installation packages.
 
 [b]Choose one:[/b]
 [list]

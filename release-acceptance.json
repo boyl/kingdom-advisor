@@ -1,6 +1,6 @@
 {
-  "version": "0.6.7",
-  "userAcceptance": "2026-10-10 用户确认新前置和提示移除修正版均正常，并授权正式发布两种安装包",
+  "version": "0.6.8",
+  "userAcceptance": "2026-10-11 用户部署验收候选后授权正式发布；未宣称独立双机验收",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
@@ -10,9 +10,9 @@
     "src/Localization.cs": "AF2B5E7C2A6E954C824F6DE4B0FAE1207700927C88731C6088685F636386000D",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
-    "src/Model.cs": "89871E2903C5177B1F12385972C79C037DB46D7F89E555EE1FA6EF631E5F3AB4",
+    "src/Model.cs": "07DA6B8215B8F89BDABA9F8B57857BA801EFDE550729A27DFFB19411462F93D4",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
-    "src/Plugin.cs": "A701679CAA9C3380F448CB85E9726AE7B491BB6BDA34A974B1B243FAC2CCBADB",
+    "src/Plugin.cs": "E8459D1D76A1B2460770C24D007BC117B82635C159A0270299AC8038D746D62F",
     "src/View.cs": "740D5AF7E5B656D4F14F9516D01C6BC5C6C82D790C752AF94E808185A733F211"
   },
   "channels": [
@@ -20,18 +20,19 @@
     "Nexus Mods"
   ],
   "runtime": {
-    "status": "Playing-faulted-False",
-    "evidence": "docs/acceptance/bepinex-738-compatibility.md; docs/acceptance/two-installation-bundles.md"
+    "status": "formal-Playing-faulted-False",
+    "evidence": "docs/acceptance/evidence/v0.6.8-release-runtime.txt; docs/acceptance/evidence/v0.6.8-rc1-user-runtime.txt",
+    "candidateHash": "C1F804FFE683CDACB9F399D2FBB72A34BB83AFE5B40C02760FA5523F682DA71F",
+    "formalDifference": "version marker only; method IL compared"
   },
   "unverified": [
-    "实体手柄专项与双人联机",
-    "全部关闭路径逐项实测",
-    "全部 DLC 矩阵",
-    "安装器实际 UAC 交互"
+    "独立双机联机验收",
+    "实体手柄专项",
+    "完整 DLC 与其他插件矩阵"
   ],
-  "dllHash": "F5BB22DAD8D83CB0D58171CB94E4D8D266F0B89C1F4EA36B5B4B372F1CEDA8B7",
+  "dllHash": "94898AF4668B5258806BA82158F36EF2E00DAD516F47D35B90830CB08574166B",
   "manual": {
-    "inputRecoveryUserAcceptance": "passed",
+    "userAcceptance": "passed",
     "releaseAuthorization": "passed"
   }
 }

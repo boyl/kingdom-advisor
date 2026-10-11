@@ -1,0 +1,39 @@
+version=0.6.8
+utc=2026-10-11T14:32:26.5460959Z
+gameState=Loss
+overlayOpen=False
+mapFocus=False
+holdActive=False
+releaseGuardCount=0
+playing=False
+online=False
+island=1
+day=0
+points=0
+worldReadMaxMs=74.466
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=1
+gameplayRuleWrites=35
+teleports=0
+resourceAdds=0
+error=
+localPlayers=0
+uiBlockedReason=not-playing
+nativeP2Playing=False
+nativePlayer=0 active=True local=True
+nativePlayer=1 active=False local=True
+population=工匠 0
+population=弓手 0
+population=侍从 0
+population=骑士 0
+population=农民 0
+population=游民 0
+populationTotal=0
+enemiesAvailable=False enemies=0 camps=0

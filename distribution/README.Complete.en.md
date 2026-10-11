@@ -1,6 +1,6 @@
-# Kingdom Advisor — Complete loader + mod (0.6.7-r1)
+# Kingdom Advisor — Complete loader + mod (0.6.8)
 
-Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.7-r1**. The in-game mod version remains 0.6.7. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
+Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.8**. The in-game mod version remains 0.6.8. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
 
 Tested on Windows x64, game 2.4.2 / Unity 6000.0.66f2: fresh interop generation, restart, mod loading, catalog and notification removal. Other versions, operating systems, multiplayer and all other-plugin combinations are not fully verified.
 

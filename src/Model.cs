@@ -5,6 +5,19 @@ using System.Text.RegularExpressions;
 
 namespace KingdomAdvisor
 {
+    // 可选原生数据读取失败只停用对应通道；场景变化或用户明确重试后恢复。
+    public sealed class OptionalReadCircuit
+    {
+        public int Failures {get;private set;}
+        public string Error {get;private set;}="";
+        public bool Blocked=>Failures>=3;
+        public bool Run(Action read)
+        {
+            if(Blocked)return false;
+            try{read();Failures=0;Error="";return true;}
+            catch(Exception ex){Failures++;Error=ex.ToString();return false;}
+        }
+    }
     public sealed class Entry
     {
         public readonly string Key, Name, Description, Advice, Category;
