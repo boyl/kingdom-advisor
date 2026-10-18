@@ -1,6 +1,6 @@
-# Kingdom Advisor 0.6.7-r1
+# Kingdom Advisor 0.6.9
 
-In-game advisor for Kingdom Two Crowns. The plugin version remains 0.6.7; r1 removes action-result notifications and adds two installation choices.
+In-game advisor for Kingdom Two Crowns. Version 0.6.9 reads joiner population, camps and enemies from scene entities. Two-machine multiplayer remains unverified.
 
 ## Download and install
 
@@ -92,3 +92,6 @@ Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor
 ## Catalog and locations
 
 All 104 entries have explicit identity-based pixel icons: object on the left, purpose or trait on the right. Complete patterns differ between entries. Find matching island locations from the catalog; locations show direction, distance, purpose and current interaction state, with links to the catalog and map. Separate buildings keep separate locations. The ridden mount is excluded from purchase locations. Map focus does not teleport.
+
+
+0.6.9: joiner scene-entity reading; automated checks passed, two-machine multiplayer and real-game regression remain unverified.

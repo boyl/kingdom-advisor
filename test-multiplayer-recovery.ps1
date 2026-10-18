@@ -25,7 +25,7 @@ public class Rect {public float x,y,width=1,height=1;}
 public class Camera {public bool isActiveAndEnabled=true;public Rect rect=new Rect();public static implicit operator bool(Camera c)=>c!=null;}
 public class TestLog {public int warnings;public void LogWarning(string message){warnings++;}}
 public class Plugin {public static Plugin Instance=new Plugin();public TestLog Log=new TestLog();}
-public class Component {}
+public class Component {} public class Enemy {}
 public class Kingdom {public int GetInstanceID()=>1;public static implicit operator bool(Kingdom k)=>k!=null;}
 public class Level {public static bool isGenerating;public int cachedCurrentLevelSeed;public static implicit operator bool(Level l)=>l!=null;}
 public class Game {public enum State{Playing,NetworkClientPlaying,Menu};public State state=State.NetworkClientPlaying;public int currentLand;public static implicit operator bool(Game g)=>g!=null;}
@@ -52,7 +52,7 @@ public class WorldProbe {
  public Snapshot State=new Snapshot();public Managers managers=new Managers();public bool FailDetails=true;public int DetailCalls;
  readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
  readonly Dictionary<int,Tuple<float,float>> Explored=new Dictionary<int,Tuple<float,float>>();
- string readContext="";int lastIsland=-1,lastSeed=int.MinValue;public Component[] detailBuildings=Array.Empty<Component>();public float nextBuildingScan;
+ public Enemy[] clientEnemies=Array.Empty<Enemy>();public float nextClientEnemyScan;string readContext="";int lastIsland=-1,lastSeed=int.MinValue;public Component[] detailBuildings=Array.Empty<Component>();public float nextBuildingScan;
  Managers GetManagers()=>managers;public void ResetOptionalReads()=>optionalReads.Clear();
  $optionalMethod
  $worldMethod

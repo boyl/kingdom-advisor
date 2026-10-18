@@ -1,6 +1,6 @@
-# Kingdom Advisor — Complete loader + mod (0.6.8)
+# Kingdom Advisor — Complete loader + mod (0.6.9)
 
-Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.8**. The in-game mod version remains 0.6.8. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
+Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.9**. The in-game mod version remains 0.6.9. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
 
 Tested on Windows x64, game 2.4.2 / Unity 6000.0.66f2: fresh interop generation, restart, mod loading, catalog and notification removal. Other versions, operating systems, multiplayer and all other-plugin combinations are not fully verified.
 
@@ -72,3 +72,6 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 Rollback verifies current files and stops if later updates modified them. It restores the previous core, runtime, caches, loader and mod; newly generated directories are moved to the backup's `after` folder. Saves remain untouched. Keep required backups. To remove only the mod, move `BepInEx/plugins/KingdomAdvisor` out of the game. Use rollback to undo the entire installation.
 
 For issues, provide `BepInEx/LogOutput.log`, game version/source and archive name. `sources/patch-788-stage.ps1` reproduces parser changes and is not the install entry point.
+
+
+0.6.9: joiner scene-entity reading; automated checks passed, two-machine multiplayer and real-game regression remain unverified.

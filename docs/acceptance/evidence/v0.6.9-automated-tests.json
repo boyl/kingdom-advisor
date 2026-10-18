@@ -1,0 +1,78 @@
+[
+  {
+    "test": "test-assist.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-catalog-location.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-catalog-native.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-client-scene.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-content-accuracy.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-input-layout.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-input-release.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-localization.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-map-layout.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-map.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-mount-content.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-multiplayer-recovery.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-multiplayer-routing.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-population-role.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-population.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-statues.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-target-proximity.ps1",
+    "passed": true
+  },
+  {
+    "test": "test-wall-conversion.ps1",
+    "passed": true
+  },
+  {
+    "test": "test.ps1",
+    "passed": true
+  }
+]

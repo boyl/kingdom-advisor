@@ -1,6 +1,6 @@
-# 王国顾问：前置与 Mod 整合包（0.6.8）
+# 王国顾问：前置与 Mod 整合包（0.6.9）
 
-包含 **BepInEx 6.0.0-be.788 + 5b766a3、Il2CppInterop 1.5.3、Cpp2IL 属性解析修复、王国顾问 0.6.8**。游戏内 Mod 版本仍显示 0.6.8。修改过的两个解析器 DLL 已在 `THIRD-PARTY-NOTICES.md` 标明，不能称为官方原版。
+包含 **BepInEx 6.0.0-be.788 + 5b766a3、Il2CppInterop 1.5.3、Cpp2IL 属性解析修复、王国顾问 0.6.9**。游戏内 Mod 版本仍显示 0.6.9。修改过的两个解析器 DLL 已在 `THIRD-PARTY-NOTICES.md` 标明，不能称为官方原版。
 
 已验收：Windows x64、游戏 2.4.2、Unity 6000.0.66f2；空缓存首次生成、重启、Mod 加载、图鉴及操作提示移除。其他游戏版本、系统、联机与所有插件组合尚未完整验证。
 
@@ -84,3 +84,6 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 只卸载王国顾问：退出游戏后移走 `BepInEx/plugins/KingdomAdvisor`。想撤销整套安装请使用回滚，避免手动删除其他 Mod 依赖的前置。
 
 如报错，请附 `BepInEx/LogOutput.log`，游戏版本与来源，以及整合包名称。`sources/patch-788-stage.ps1` 仅用于复现解析器改动，不是用户安装入口。
+
+
+0.6.9：加入者改用场景实体读取；自动检查通过，双机联机及真实游戏回归尚未验证。

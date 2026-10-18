@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.8";
+        public const string Version="0.6.9";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -223,6 +223,7 @@ namespace KingdomAdvisor
             foreach(var p in s.Players)lines.Add("player="+p.Id+" local="+p.Local+" coins="+p.Coins+" target="+(p.Target?.Raw??"none")+" targetName="+(p.Target?.Name??"none")+" description="+(p.Target?.Description??"")+" rect="+p.ViewX+","+p.ViewY+","+p.ViewW+","+p.ViewH+(Actions?.WalletEvidence(p.Id)??""));
             foreach(var row in PopulationPresentation.Rows(s))lines.Add("population="+row.Item2);
             lines.Add("populationTotal="+(s.Workers+s.Archers+s.Squires+s.Knights+s.UnclassifiedLeaders+s.Farmers+s.Beggars+s.Pikemen+s.Berserkers+s.Peasants+s.Ninjas+s.Fishers+s.StableKeepers));
+            lines.Add("entityReadSource="+(s.State==Game.State.NetworkClientPlaying.ToString()?"client-scene":"manager"));
             lines.Add("enemiesAvailable="+s.EnemiesAvailable+" enemies="+s.Enemies.Count+" camps="+s.Camps);
             foreach(var enemy in s.Enemies.Take(12))lines.Add("enemy="+enemy.Id+" kind="+enemy.Kind+" x="+enemy.X.ToString("F2"));
             Directory.CreateDirectory(Path.Combine(Paths.ConfigPath,"KingdomAdvisor"));
@@ -337,7 +338,7 @@ namespace KingdomAdvisor
             if(!m||!m.game||!m.kingdom){State=new Snapshot();lastIsland=-1;return;}
             var game=m.game;
             var context=m.kingdom.GetInstanceID()+":"+game.currentLand+":"+game.state;
-            if(context!=readContext){readContext=context;ResetOptionalReads();Explored.Clear();detailBuildings=Array.Empty<Component>();nextBuildingScan=0;}
+            if(context!=readContext){readContext=context;ResetOptionalReads();Explored.Clear();detailBuildings=Array.Empty<Component>();nextBuildingScan=0;clientEnemies=Array.Empty<Enemy>();nextClientEnemyScan=0;}
             bool playable=game.state==Game.State.Playing||game.state==Game.State.NetworkClientPlaying;
             var s=new Snapshot{Playing=playable,State=game.state.ToString(),Island=game.currentLand+1,Online=NetworkBigBoss.IsOnline};
             if(!playable){State=s;return;}
@@ -354,6 +355,9 @@ namespace KingdomAdvisor
             var k=m.kingdom;
             var campaign=CampaignSaveData.current;if(campaign!=null)s.CampaignKey=campaign.realStartDateTime+"-"+campaign.biomeIndex;
             var currencies=CurrencyManager.AllCurrencyTypes;if(currencies!=null)for(int ci=0;ci<currencies.Length;ci++)if(ResourceRules.Supported((int)currencies[ci]))s.ResourceTypes.Add((int)currencies[ci]);
+            if(s.State==Game.State.NetworkClientPlaying.ToString())ReadClientPopulation(s);
+            else
+            {
             s.Workers=k.Workers?.Count??0;s.Archers=k.ArcherCount;
             if(k._knights!=null)foreach(var leader in k._knights){if(!leader||!leader.isActiveAndEnabled)continue;if(LeaderRole.Classify(leader.NeedsArmor)=="squire")s.Squires++;else s.Knights++;}
             s.UnclassifiedLeaders=Math.Max(0,k.KnightCount-s.Squires-s.Knights);
@@ -369,6 +373,7 @@ namespace KingdomAdvisor
                 var ninja=NativeComponent<Ninja>(c);var pike=NativeComponent<Pikeman>(c);var fisher=NativeComponent<Fisher>(c);var stable=NativeComponent<StableKeeper>(c);var peasant=NativeComponent<Peasant>(c);
                 switch(PopulationRole.Supplemental(ninja&&ninja.isActiveAndEnabled,pike&&pike.isActiveAndEnabled,fisher&&fisher.isActiveAndEnabled,stable&&stable.isActiveAndEnabled,peasant&&peasant.isActiveAndEnabled))
                 {case "ninja":s.Ninjas++;break;case "fisher":s.Fishers++;break;case "stable":s.StableKeepers++;break;case "peasant":s.Peasants++;break;}
+            }
             }
             s.Stone=k.StoneBuildingUnlocked;s.Iron=k.IronBuildingUnlocked;
             if(m.director){s.Day=m.director.TotalDaysInReign;s.Season=m.director.CurrentSeason.ToString();s.Phase=m.director.IsDaytime?"白昼":"夜晚";}
@@ -395,7 +400,7 @@ namespace KingdomAdvisor
                     s.Points.Add(point);
                 }
             }
-            var camps=k.BeggarCamps;
+            var camps=ReadCamps(k,s.State==Game.State.NetworkClientPlaying.ToString());
             if(camps!=null)
             {
                 var iterator=camps.GetEnumerator();
@@ -412,6 +417,35 @@ namespace KingdomAdvisor
             s.Points.Sort((a,b)=>a.X.CompareTo(b.X));
             State=s;
         }
+        private Enemy[] clientEnemies=Array.Empty<Enemy>();
+        private float nextClientEnemyScan;
+        private static IEnumerable<BeggarCamp> ReadCamps(Kingdom k,bool client)
+        {
+            if(client){foreach(var camp in NativeObjects<BeggarCamp>())yield return camp;yield break;}
+            var camps=k.BeggarCamps;if(camps==null)yield break;
+            var iterator=camps.GetEnumerator();while(iterator.MoveNext())yield return iterator.Current;
+        }
+        private static void ReadClientPopulation(Snapshot s)
+        {
+            // 客户端不依赖房主 AI 注册表；按同一实体的启用职业组件分类，派生职业优先。
+            s.Hermits=NativeObjects<Hermit>().Count(h=>h&&h.gameObject.activeInHierarchy);
+            var seen=new HashSet<int>();
+            foreach(var c in NativeObjects<Character>())
+            {
+                if(!c||!c.gameObject.activeInHierarchy||!seen.Add(c.gameObject.GetInstanceID()))continue;
+                if(ActiveComponent<Knight>(c)){var leader=NativeComponent<Knight>(c);if(leader.NeedsArmor)s.Squires++;else s.Knights++;}
+                else if(ActiveComponent<Ninja>(c))s.Ninjas++;
+                else if(ActiveComponent<Pikeman>(c))s.Pikemen++;
+                else if(ActiveComponent<Berserker>(c))s.Berserkers++;
+                else if(ActiveComponent<Worker>(c))s.Workers++;
+                else if(ActiveComponent<Archer>(c))s.Archers++;
+                else if(ActiveComponent<Farmer>(c))s.Farmers++;
+                else if(ActiveComponent<Beggar>(c))s.Beggars++;
+                else if(ActiveComponent<StableKeeper>(c))s.StableKeepers++;
+                else if(ActiveComponent<Fisher>(c))s.Fishers++;
+                else if(ActiveComponent<Peasant>(c))s.Peasants++;
+            }
+        }
         public void ReadEnemies()
         {
             State.Enemies.Clear();State.EnemiesAvailable=false;if(!State.Playing)return;
@@ -419,10 +453,21 @@ namespace KingdomAdvisor
         }
         private void ReadEnemyDetails()
         {
-            var m=GetManagers();if(!m||!m.enemies)return;
-            var enemies=m.enemies.AllEnemies;if(enemies==null)return;
-            var enemyArray=new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppReferenceArray<Enemy>(enemies.Count);
-            enemies.CopyTo(enemyArray,0);
+            var m=GetManagers();if(!m)return;
+            bool client=State.State==Game.State.NetworkClientPlaying.ToString();
+            Enemy[] enemyArray;
+            if(client)
+            {
+                if(Time.unscaledTime>=nextClientEnemyScan){clientEnemies=NativeObjects<Enemy>().ToArray();nextClientEnemyScan=Time.unscaledTime+1;}
+                enemyArray=clientEnemies;
+            }
+            else
+            {
+                if(!m.enemies)return;
+                var enemies=m.enemies.AllEnemies;if(enemies==null)return;
+                var nativeArray=new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppReferenceArray<Enemy>(enemies.Count);
+                enemies.CopyTo(nativeArray,0);enemyArray=nativeArray.ToArray();
+            }
             for(int ei=0;ei<enemyArray.Length;ei++)
             {
                 var enemy=enemyArray[ei];if(!enemy||!enemy.gameObject.activeInHierarchy||enemy.IsDespawning)continue;

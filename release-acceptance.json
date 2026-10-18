@@ -1,6 +1,8 @@
 {
-  "version": "0.6.8",
-  "userAcceptance": "2026-10-11 用户部署验收候选后授权正式发布；未宣称独立双机验收",
+  "version": "0.6.9",
+  "releaseAuthorization": "2026-10-18 用户明确要求：作为正式版发布吧",
+  "userAcceptance": "未执行双机或真实游戏验收，不以发布授权代替验收",
+  "dllHash": "0E04282E460562301E591AE7AAA6CAA124BC691BF99F596E5476738D0BFC9C82",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
@@ -12,7 +14,7 @@
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
     "src/Model.cs": "07DA6B8215B8F89BDABA9F8B57857BA801EFDE550729A27DFFB19411462F93D4",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
-    "src/Plugin.cs": "E8459D1D76A1B2460770C24D007BC117B82635C159A0270299AC8038D746D62F",
+    "src/Plugin.cs": "4E314EF36C4C6C7D304A3755B844FA4F8ABF66B05E4DDDB52C2F98242C60DA91",
     "src/View.cs": "740D5AF7E5B656D4F14F9516D01C6BC5C6C82D790C752AF94E808185A733F211"
   },
   "channels": [
@@ -20,19 +22,18 @@
     "Nexus Mods"
   ],
   "runtime": {
-    "status": "formal-Playing-faulted-False",
-    "evidence": "docs/acceptance/evidence/v0.6.8-release-runtime.txt; docs/acceptance/evidence/v0.6.8-rc1-user-runtime.txt",
-    "candidateHash": "C1F804FFE683CDACB9F399D2FBB72A34BB83AFE5B40C02760FA5523F682DA71F",
-    "formalDifference": "version marker only; method IL compared"
+    "status": "unverified",
+    "formalDifference": "version marker only"
   },
   "unverified": [
-    "独立双机联机验收",
-    "实体手柄专项",
-    "完整 DLC 与其他插件矩阵"
+    "双机联机",
+    "单人及本地双人实机回归",
+    "完整 DLC",
+    "营地内部人数同步"
   ],
-  "dllHash": "94898AF4668B5258806BA82158F36EF2E00DAD516F47D35B90830CB08574166B",
   "manual": {
-    "userAcceptance": "passed",
+    "userAcceptance": "pending",
     "releaseAuthorization": "passed"
-  }
+  },
+  "releaseException": "用户在已明确告知盲修、未双机验收的上下文中要求正式发布；完整实机门禁未通过，不宣称完整验收"
 }
