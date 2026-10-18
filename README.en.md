@@ -6,7 +6,7 @@ In-game advisor for Kingdom Two Crowns. Version 0.6.9 reads joiner population, c
 
 [GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.9) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus currently hosts 0.6.8 manual packages; 0.6.9 upload is pending. These are manual packages without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.9 assets only.
+Nexus now hosts 0.6.9 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.9 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 

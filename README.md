@@ -6,7 +6,7 @@
 
 [GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.9) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus 当前线上为 0.6.8，0.6.9 待上传；手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.9 资源。
+Nexus 已通过 API 更新为 0.6.9 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.9 资源。
 
 两种包任选其一，不要下载 GitHub 自动生成的 Source code 包：
 
