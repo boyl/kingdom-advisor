@@ -4,9 +4,9 @@
 
 ## 下载与安装
 
-[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.9) · [eexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.9) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-eexus 当前使用 0.6.9 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-Ce.md) · [安装示意图](distribution/nexus/IeSTALLATIOe.png)。下表与一键安装步骤仅适用于 GitHub 0.6.9 资源。
+Nexus 当前线上为 0.6.8，0.6.9 待上传；手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.9 资源。
 
 两种包任选其一，不要下载 GitHub 自动生成的 Source code 包：
 
@@ -19,19 +19,19 @@ eexus 当前使用 0.6.9 手动安装包（不含脚本、不需要 PowerShell 7
 
 ### 安装 PowerShell 7（GitHub 一键安装版需要）
 
-Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。eexus 手动包不需要此步骤。
+Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。Nexus 手动包不需要此步骤。
 
 1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-10-10 核对的稳定版。
 2. 备用入口：[PowerShell 官方发布页](https://github.com/PowerShell/PowerShell/releases/latest) · [微软 Windows 安装指南](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows)。在官方 Assets 中选择稳定版 `PowerShell-7.x.x-win-x64.msi`；本 Mod 适用 Windows x64，不要选 ARM64、x86、Preview 或 Source code。
 3. 双击下载的 MSI，按安装向导完成安装，保留默认安装位置及“Add PowerShell to Path”选项。安装 PS7 不会替换系统 PS5.1。
-4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **IeSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
+4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
 5. 如果仍提示缺少 PS7，确认开始菜单有“PowerShell 7”，或检查 `C:\Program Files\PowerShell\7\pwsh.exe`；本入口会查找 PATH 和默认安装位置。仍有问题请附错误提示。
 
 ### 一键安装
 
 1. 正常退出游戏，解压所选 ZIP 到一个普通文件夹。
 2. 安装 [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/latest)（脚本前置，整合包不包含它）。
-3. 双击 `IeSTALL.cmd`，按提示选择含 `KingdomTwoCrowns.exe` 的游戏目录。可以在 Steam → 管理 → 浏览本地文件中找到。
+3. 双击 `INSTALL.cmd`，按提示选择含 `KingdomTwoCrowns.exe` 的游戏目录。可以在 Steam → 管理 → 浏览本地文件中找到。
 4. 安装器自动备份、复制并校验文件；受保护目录会请求 Windows 管理员权限。整合包会备份并更换旧核心和运行时、移走旧生成缓存，保留配置、存档及其他插件。
 5. 正常启动游戏。首次生成程序集可能需要数分钟，请等待；**F6** 打开设置，**F7** 打开图鉴。
 
@@ -105,7 +105,7 @@ Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完�
 
 0.5.8 已获用户最终验收。0.6.0 增加语言解析、显示文案覆盖检查和双语言实景布局验证；源码、已安装DLL与上传包绑定校验。联机保持开放，双端及全部DLC尚未验证。
 
-下载与更新：[GitHub Releases](https://github.com/boyl/kingdom-advisor/releases)。eexus Mods 更新使用官方上传 API。
+下载与更新：[GitHub Releases](https://github.com/boyl/kingdom-advisor/releases)。Nexus Mods 更新使用官方上传 API。
 
 0.6.5 已获用户最终验收，建筑详情与人口统计的验证证据见 [验收文档](docs/acceptance/building-details-audit.md)。
 

@@ -1,17 +1,17 @@
 # 王国顾问：前置与 Mod 整合包（0.6.9）
 
-包含 **BepInEx 6.0.0-be.788 + 5b766a3、Il2CppInterop 1.5.3、Cpp2IL 属性解析修复、王国顾问 0.6.9**。游戏内 Mod 版本仍显示 0.6.9。修改过的两个解析器 DLL 验在 `THIRD-PARTY-NOTICES.md` 标明，不能称为官方原版。
+包含 **BepInEx 6.0.0-be.788 + 5b766a3、Il2CppInterop 1.5.3、Cpp2IL 属性解析修复、王国顾问 0.6.9**。游戏内 Mod 版本仍显示 0.6.9。修改过的两个解析器 DLL 已在 `THIRD-PARTY-NOTICES.md` 标明，不能称为官方原版。
 
-验验收：Windows x64、游戏 2.4.2、Unity 6000.0.66f2；空缓存首次生成、重启、Mod 加载、图鉴及操作提示移除。其他游戏版本、系统、联机与所有插件组合尚未完整验证。
+历史前置验收：Windows x64、游戏 2.4.2、Unity 6000.0.66f2；空缓存首次生成、重启、Mod 加载、图鉴及操作提示移除。其他游戏版本、系统、联机与所有插件组合尚未完整验证。
 
 ### 安装 PowerShell 7（GitHub 一键安装版需要）
 
-Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表验安装 PS7。Nexus 手动包不需要此步骤。
+Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。Nexus 手动包不需要此步骤。
 
 1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-10-10 核对的稳定版。
 2. 备用入口：[PowerShell 官方发布页](https://github.com/PowerShell/PowerShell/releases/latest) · [微软 Windows 安装指南](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows)。在官方 Assets 中选择稳定版 `PowerShell-7.x.x-win-x64.msi`；本 Mod 适用 Windows x64，不要选 ARM64、x86、Preview 或 Source code。
 3. 双击下载的 MSI，按安装向导完成安装，保留默认安装位置及“Add PowerShell to Path”选项。安装 PS7 不会替换系统 PS5.1。
-4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到验解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
+4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
 5. 如果仍提示缺少 PS7，确认开始菜单有“PowerShell 7”，或检查 `C:\Program Files\PowerShell\7\pwsh.exe`；本入口会查找 PATH 和默认安装位置。仍有问题请附错误提示。
 
 ## 一键安装
@@ -79,7 +79,7 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\Kingdom Two Crowns' -Rollback 'D:\SteamLibrary\steamapps\common\Kingdom Two Crowns\.install-backups\KingdomAdvisor-日期-编号'
 ```
 
-回滚前核对当前安装文件；若验被后续版本更改则停止，避免覆盖新版本。回滚恢复之前的核心、运行时、缓存、加载器与 Mod，测试期间生成的目录移入该备份的 `after`，不会删除存档。不要删除正在使用的备份。
+回滚前核对当前安装文件；若已被后续版本更改则停止，避免覆盖新版本。回滚恢复之前的核心、运行时、缓存、加载器与 Mod，测试期间生成的目录移入该备份的 `after`，不会删除存档。不要删除正在使用的备份。
 
 只卸载王国顾问：退出游戏后移走 `BepInEx/plugins/KingdomAdvisor`。想撤销整套安装请使用回滚，避免手动删除其他 Mod 依赖的前置。
 
