@@ -4,16 +4,16 @@ In-game advisor for Kingdom Two Crowns. Version 0.6.9 reads joiner population, c
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.7-r1) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.9) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus uses 0.6.7-r2 manual packages without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.7-r1 assets only.
+Nexus currently hosts 0.6.8 manual packages; 0.6.9 upload is pending. These are manual packages without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.9 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.7-r1-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.7-r1-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.9-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.9-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 

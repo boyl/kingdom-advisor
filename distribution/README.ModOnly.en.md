@@ -1,6 +1,6 @@
 # Kingdom Advisor — Mod only (0.6.9)
 
-This release fixes joiner player routing and viewport selection, and isolates optional data-read failures. The in-game version is 0.6.9. Tested on Windows x64, game 2.4.2 / Unity 6000.0.66f2. Other environments are unverified.
+This release reads joiner population, camps and enemies from synchronized scene entities. The in-game version is 0.6.9. Built against local Windows x64 game 2.4.2 / Unity 6000.0.66f2 interop; 0.6.9 real-game and two-machine multiplayer remain unverified.
 
 Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.9-Complete.zip` and its installer.
 
