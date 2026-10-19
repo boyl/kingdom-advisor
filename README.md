@@ -1,5 +1,3 @@
-![GitHub Release Downloads](https://img.shields.io/github/downloads/boyl/kingdom-advisor/total?label=Downloads&color=blue)
-
 # 王国顾问 Kingdom Advisor 0.6.9
 
 《王国：两位君主》游戏内辅助 Mod。插件版本为 0.6.9，加入者改从场景实体读取人口、营地和敌人；双机真实效果尚待验证。前置沿用已有兼容修复。
