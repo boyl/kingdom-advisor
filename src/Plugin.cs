@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.9";
+        public const string Version="0.6.10";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -355,7 +355,13 @@ namespace KingdomAdvisor
             var k=m.kingdom;
             var campaign=CampaignSaveData.current;if(campaign!=null)s.CampaignKey=campaign.realStartDateTime+"-"+campaign.biomeIndex;
             var currencies=CurrencyManager.AllCurrencyTypes;if(currencies!=null)for(int ci=0;ci<currencies.Length;ci++)if(ResourceRules.Supported((int)currencies[ci]))s.ResourceTypes.Add((int)currencies[ci]);
-            if(s.State==Game.State.NetworkClientPlaying.ToString())ReadClientPopulation(s);
+            if(s.State==Game.State.NetworkClientPlaying.ToString())
+            {
+                ReadClientPopulation(s);
+                // These getters explicitly use received counts on a non-authoritative client.
+                s.Archers=k.ArcherCount;
+                s.UnclassifiedLeaders=Math.Max(0,k.KnightCount-s.Squires-s.Knights);
+            }
             else
             {
             s.Workers=k.Workers?.Count??0;s.Archers=k.ArcherCount;
@@ -410,6 +416,8 @@ namespace KingdomAdvisor
                     s.Camps++;float cx=camp.transform.position.x;
                     var point=s.Points.FirstOrDefault(p=>p.Name.Contains("营地")&&Math.Abs(p.X-cx)<1);
                     if(point==null){point=new MapPoint{Key="beggarcamp",Name="难民营",Category="人口",X=cx};s.Points.Add(point);}
+                    // Camp membership is maintained by host AI and is not a client census.
+                    if(s.State==Game.State.NetworkClientPlaying.ToString()){point.CampPeople=-1;continue;}
                     point.CampPeople=0;var beggars=camp._beggars;
                     if(beggars!=null)for(int i=0;i<beggars.Count;i++)if(beggars[i]&&beggars[i].gameObject.activeInHierarchy)point.CampPeople++;
                 }
@@ -427,23 +435,23 @@ namespace KingdomAdvisor
         }
         private static void ReadClientPopulation(Snapshot s)
         {
-            // 客户端不依赖房主 AI 注册表；按同一实体的启用职业组件分类，派生职业优先。
+            // 客户端职业 AI 可因无控制权而禁用；职业转换替换实体，按组件身份分类，派生职业优先。
             s.Hermits=NativeObjects<Hermit>().Count(h=>h&&h.gameObject.activeInHierarchy);
             var seen=new HashSet<int>();
             foreach(var c in NativeObjects<Character>())
             {
                 if(!c||!c.gameObject.activeInHierarchy||!seen.Add(c.gameObject.GetInstanceID()))continue;
-                if(ActiveComponent<Knight>(c)){var leader=NativeComponent<Knight>(c);if(leader.NeedsArmor)s.Squires++;else s.Knights++;}
-                else if(ActiveComponent<Ninja>(c))s.Ninjas++;
-                else if(ActiveComponent<Pikeman>(c))s.Pikemen++;
-                else if(ActiveComponent<Berserker>(c))s.Berserkers++;
-                else if(ActiveComponent<Worker>(c))s.Workers++;
-                else if(ActiveComponent<Archer>(c))s.Archers++;
-                else if(ActiveComponent<Farmer>(c))s.Farmers++;
-                else if(ActiveComponent<Beggar>(c))s.Beggars++;
-                else if(ActiveComponent<StableKeeper>(c))s.StableKeepers++;
-                else if(ActiveComponent<Fisher>(c))s.Fishers++;
-                else if(ActiveComponent<Peasant>(c))s.Peasants++;
+                if(NativeComponent<Knight>(c)){var leader=NativeComponent<Knight>(c);if(leader.NeedsArmor)s.Squires++;else s.Knights++;}
+                else if(NativeComponent<Ninja>(c))s.Ninjas++;
+                else if(NativeComponent<Pikeman>(c))s.Pikemen++;
+                else if(NativeComponent<Berserker>(c))s.Berserkers++;
+                else if(NativeComponent<Worker>(c))s.Workers++;
+                else if(NativeComponent<Archer>(c))s.Archers++;
+                else if(NativeComponent<Farmer>(c))s.Farmers++;
+                else if(NativeComponent<Beggar>(c))s.Beggars++;
+                else if(NativeComponent<StableKeeper>(c))s.StableKeepers++;
+                else if(NativeComponent<Fisher>(c))s.Fishers++;
+                else if(NativeComponent<Peasant>(c))s.Peasants++;
             }
         }
         public void ReadEnemies()

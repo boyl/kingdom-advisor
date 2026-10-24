@@ -1,3 +1,13 @@
+# 王国顾问 0.6.10 / Kingdom Advisor 0.6.10
+
+修正联机加入者因职业 AI 被游戏禁用而漏计工人等人口的问题。职业判断不再依赖 AI 启用状态，仍过滤回收实体并避免派生职业重复统计；保留游戏原生同步的弓箭手数量和未细分领队数量。客户端营地位置继续显示，未同步的营地人数不再误报为 0。敌人与营地继续使用场景实体读取。
+
+构建、19 项自动回归及只读 API 审计通过。逆向核对基于游戏 2.4.3；双机联机、重连、换岛及完整 DLC 实机验证尚未完成。保留原有前置、配置、存档和单人/房主读取方式。已有前置选 ModOnly，首次安装选 Complete；GitHub 提供 PowerShell 7 安装包，Nexus 提供无脚本手动包。升级前退出游戏并保留配置，完整安装与卸载步骤见包内中英文 README。
+
+Fixes missing joiner population counts when the game disables local role AI. Classification no longer depends on AI enable state; inactive pooled entities and overlapping derived roles remain excluded. Native synchronized archer and unclassified leader counts are preserved. Client camp locations remain visible, while unsynchronized occupant counts are no longer shown as zero. Enemy and camp scene discovery is retained.
+
+Build, 19 automated regressions and the API audit passed. Native analysis used game 2.4.3; two-machine multiplayer, reconnects, island transitions and full DLC runtime coverage remain unverified. Existing loader, settings, saves and host/single-player sources are preserved. Choose ModOnly for a working loader or Complete for a fresh install. GitHub offers PowerShell 7 installers; Nexus offers script-free manual packages. Quit the game before upgrading and keep your settings. Bilingual installation and removal instructions are included.
+
 # 王国顾问 0.6.9 / Kingdom Advisor 0.6.9
 
 联机加入者的人口、难民营和敌人改从已同步的场景实体读取，避免依赖可能仅在房主端维护的管理器列表。人口按启用职业组件分类并去重，敌人列表每秒刷新，位置持续更新。房主与单人保留管理器数据来源。诊断文件新增 entityReadSource。

@@ -1,19 +1,19 @@
-# Kingdom Advisor 0.6.9
+# Kingdom Advisor 0.6.10
 
-In-game advisor for Kingdom Two Crowns. Version 0.6.9 reads joiner population, camps and enemies from scene entities. Two-machine multiplayer remains unverified.
+In-game advisor for Kingdom Two Crowns. Version 0.6.10 counts client role components even when their AI is disabled and preserves native synchronized counts. Two-machine multiplayer remains unverified.
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.9) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.10) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus now hosts 0.6.9 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.9 assets only.
+Nexus now hosts 0.6.10 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.10 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.9-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.9-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.10-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.10-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
@@ -94,4 +94,4 @@ Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor
 All 104 entries have explicit identity-based pixel icons: object on the left, purpose or trait on the right. Complete patterns differ between entries. Find matching island locations from the catalog; locations show direction, distance, purpose and current interaction state, with links to the catalog and map. Separate buildings keep separate locations. The ridden mount is excluded from purchase locations. Map focus does not teleport.
 
 
-0.6.9: joiner scene-entity reading; automated checks passed, two-machine multiplayer and real-game regression remain unverified.
+0.6.10: joiner scene-entity reading; automated checks passed, two-machine multiplayer and real-game regression remain unverified.

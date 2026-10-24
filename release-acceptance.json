@@ -1,8 +1,8 @@
 {
-  "version": "0.6.9",
-  "releaseAuthorization": "2026-10-18 用户明确要求：作为正式版发布吧",
+  "version": "0.6.10",
+  "releaseAuthorization": "2026-10-24 用户要求修复并发布；沿用已知无双机实测的正式版发布授权",
   "userAcceptance": "未执行双机或真实游戏验收，不以发布授权代替验收",
-  "dllHash": "0E04282E460562301E591AE7AAA6CAA124BC691BF99F596E5476738D0BFC9C82",
+  "dllHash": "426068D067F69D21EEFF2AB34700D6BF198DB67D9B46F9928397A85017CCCEB5",
   "sourceHashes": {
     "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
     "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
@@ -14,7 +14,7 @@
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
     "src/Model.cs": "07DA6B8215B8F89BDABA9F8B57857BA801EFDE550729A27DFFB19411462F93D4",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
-    "src/Plugin.cs": "4E314EF36C4C6C7D304A3755B844FA4F8ABF66B05E4DDDB52C2F98242C60DA91",
+    "src/Plugin.cs": "37B9B635D791ED2818C88A8E1D802B9D7FC1063ABED076E01CE2CC41252EDEB0",
     "src/View.cs": "740D5AF7E5B656D4F14F9516D01C6BC5C6C82D790C752AF94E808185A733F211"
   },
   "channels": [
@@ -23,7 +23,7 @@
   ],
   "runtime": {
     "status": "unverified",
-    "formalDifference": "version marker only"
+    "formalDifference": "客户端职业按组件身份识别，保留同步计数，隐藏未同步营地人数；原生证据基于 2.4.3"
   },
   "unverified": [
     "双机联机",
