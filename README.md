@@ -1,3 +1,5 @@
+[![Downloads](https://img.shields.io/github/downloads/boyl/kingdom-advisor/total?label=Downloads&color=blue)](https://github.com/boyl/kingdom-advisor/releases) [![Stars](https://img.shields.io/github/stars/boyl/kingdom-advisor?label=Stars)](https://github.com/boyl/kingdom-advisor/stargazers) [![Latest Release](https://img.shields.io/github/v/release/boyl/kingdom-advisor?label=Release)](https://github.com/boyl/kingdom-advisor/releases/latest) [![License](https://img.shields.io/github/license/boyl/kingdom-advisor?label=License)](https://github.com/boyl/kingdom-advisor/blob/HEAD/LICENSE)
+
 # 王国顾问 Kingdom Advisor 0.6.10
 
 《王国：两位君主》游戏内辅助 Mod。插件版本为 0.6.10，修正加入者因职业 AI 禁用而漏计人口，保留原生同步计数；双机真实效果尚待验证。前置沿用已有兼容修复。
