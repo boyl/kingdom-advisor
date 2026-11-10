@@ -1,21 +1,21 @@
 [![Downloads](https://img.shields.io/github/downloads/boyl/kingdom-advisor/total?label=Downloads&color=blue)](https://github.com/boyl/kingdom-advisor/releases) [![Stars](https://img.shields.io/github/stars/boyl/kingdom-advisor?label=Stars)](https://github.com/boyl/kingdom-advisor/stargazers) [![Latest Release](https://img.shields.io/github/v/release/boyl/kingdom-advisor?label=Release)](https://github.com/boyl/kingdom-advisor/releases/latest) [![License](https://img.shields.io/github/license/boyl/kingdom-advisor?label=License)](https://github.com/boyl/kingdom-advisor/blob/HEAD/LICENSE)
 
-# 王国顾问 Kingdom Advisor 0.6.10
+# 王国顾问 Kingdom Advisor 0.6.11
 
-《王国：两位君主》游戏内辅助 Mod。插件版本为 0.6.10，修正加入者因职业 AI 禁用而漏计人口，保留原生同步计数；双机真实效果尚待验证。前置沿用已有兼容修复。
+《王国：两位君主》游戏内辅助 Mod。0.6.11 显示自定义更新：地图标记支持按类型勾选、常用清单和分类批量操作；地图、顾问、附近详情、提醒及主界面的背景模式和独立不透明度集中在“显示与外观”，支持0～100%滑动条和统一应用。主界面默认不透明度71%，其他信息面板默认无背景。采用暖炭灰与旧金色配色，修正单项动作菜单、默认数值展示及地图提示重复底色。
 
 ## 下载与安装
 
-[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.10) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.11) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus 已通过 API 更新为 0.6.10 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.10 资源。
+Nexus 已通过 API 更新为 0.6.11 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.11 资源。
 
 两种包任选其一，不要下载 GitHub 自动生成的 Source code 包：
 
 | 资源 | 内容与适用情况 | 安装说明 |
 |---|---|---|
-| `KingdomAdvisor-0.6.10-ModOnly.zip` | 仅本 Mod，适合已有正常工作前置的玩家；不含 BepInEx | [中文](distribution/README.ModOnly.md) · [English](distribution/README.ModOnly.en.md) |
-| `KingdomAdvisor-0.6.10-Complete.zip` | Mod＋完整 #788 前置＋解析器兼容补丁，适合首次安装或遇到 `AndroidManager / RawPropertyType` 启动错误的玩家 | [中文](distribution/README.Complete.md) · [English](distribution/README.Complete.en.md) |
+| `KingdomAdvisor-0.6.11-ModOnly.zip` | 仅本 Mod，适合已有正常工作前置的玩家；不含 BepInEx | [中文](distribution/README.ModOnly.md) · [English](distribution/README.ModOnly.en.md) |
+| `KingdomAdvisor-0.6.11-Complete.zip` | Mod＋完整 #788 前置＋解析器兼容补丁，适合首次安装或遇到 `AndroidManager / RawPropertyType` 启动错误的玩家 | [中文](distribution/README.Complete.md) · [English](distribution/README.Complete.en.md) |
 
 整合包是基于官方 BepInEx 6.0.0-be.788 的修订包，**并非未修改的官方包**。仅替换 `LibCpp2IL.dll` 与 `Cpp2IL.Core.dll`，包含对应源码、补丁脚本和许可证。纯官方 #738、#788 的首次生成错误已在本机复现；不要将整合包内的修复误认为官方原版已解决。[检测记录](docs/acceptance/bepinex-738-compatibility.md)。
 
@@ -72,6 +72,13 @@ Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完�
 - 无限钱袋、传送、无限耐力默认关闭；速度默认1倍。无限容量关闭即恢复原生拾取及溢出行为。
 - 手动添加资源和直接清空所选资源，无二次确认。普通钱袋显示资源合计，不将原生容量字段误作物理容积。
 
+
+### 显示自定义
+
+- F6 → 地图标记：默认常用清单，可按类别筛选，单击勾选；支持本类全选／全不选、全部显示和恢复默认。旧大类设置自动迁移。
+- 地点列表仍可查询已隐藏目标，并在“在地图查看”时临时定位；关闭或切页清除临时显示。
+- F6 → 显示与外观：地图、顾问、附近详情、提醒、主界面各自的模式与0～100%透明度并排集中显示，支持统一应用。调整滑动条自动启用背景，文字图标保持清晰。
+- 主界面默认不透明度71%，其他信息面板默认无背景；保留已有显式设置，测试记录见 `docs/specs/display-customization.md`。
 ## 操作
 
 |输入|操作|
@@ -91,7 +98,7 @@ Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完�
 
 ## 配置与诊断
 
-0.6.10 正式版以正式 0.6.6 为基线：修正关闭面板后的输入释放，键鼠无需等待手柄回中，手柄松开或读取失败后解除保护。自动回归、构建和安装验证已通过，2026-10-10 已获用户验收正常；手柄专项及全部关闭路径未逐项实测。不包含自定义坐骑或 Cpp2IL 加载器修补。
+此前版本以正式 0.6.6 为基线：修正关闭面板后的输入释放，键鼠无需等待手柄回中，手柄松开或读取失败后解除保护。自动回归、构建和安装验证已通过，2026-10-10 已获用户验收正常；手柄专项及全部关闭路径未逐项实测。不包含自定义坐骑或 Cpp2IL 加载器修补。
 
 配置：BepInEx/config/local.kingdom.advisor.cfg。岛屿记录和诊断：BepInEx/config/KingdomAdvisor/。首次进入游戏保存诊断截图，F9 可手动截图；诊断设置默认关闭自动展示页面。
 
@@ -116,4 +123,4 @@ Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完�
 全部104条图鉴使用按身份区分的像素示意图标，左侧主体、右侧用途或特征；不同条目的完整图案不同。选择本岛已有条目可查看地点；地点显示方向、距离、用途和当前交互状态，可打开对应图鉴或在地图定位。同名建筑分别保留，当前骑乘坐骑不列作购买地点。地图定位不会自动传送。
 
 
-0.6.10：加入者改用场景实体读取；自动检查通过，双机联机及真实游戏回归尚未验证。
+联机兼容：沿用 0.6.10 的加入者场景实体读取；自动检查通过，双机真实联机尚未验证。

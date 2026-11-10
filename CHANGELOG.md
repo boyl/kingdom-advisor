@@ -1,3 +1,27 @@
+# 王国顾问 0.6.11 / Kingdom Advisor 0.6.11
+
+0.6.11 显示自定义更新：地图标记支持按类型勾选、常用清单和分类批量操作；地图、顾问、附近详情、提醒及主界面的背景模式和独立不透明度集中在“显示与外观”，支持0～100%滑动条和统一应用。主界面默认不透明度71%，其他信息面板默认无背景。采用暖炭灰与旧金色配色，修正单项动作菜单、默认数值展示及地图提示重复底色。
+
+- F6 → 地图标记：单击切换城墙、塔、农舍、浆果丛等类型；隐藏不影响防线提醒，仍可从地点列表临时定位。
+- F6 → 显示与外观：鼠标拖动或键盘／手柄左右微调1%；恢复默认与显示数值一致。
+- 升级保留现有配置和存档，旧大类筛选自动迁移；更新前建议备份 `BepInEx/config/local.kingdom.advisor.cfg`，回退旧版时一并还原。已有显式透明度值不被新的71%默认覆盖。
+
+本次显示功能已实机验收；22项自动回归及API审计通过。双机联机、完整DLC及全部分辨率/手柄组合未重新完整验收。前置保持原有修订版BepInEx #788，不新增依赖。
+
+已有正常前置选择 **ModOnly**，首次安装选择 **Complete**。GitHub包附PowerShell 7安装入口；Nexus包为无脚本手动安装。退出游戏后按照包内中英文README操作；Mod路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。卸载只移除该Mod目录，保留共享前置和其他插件。
+
+## English
+
+0.6.11 adds individual map-marker checkboxes, a Common list and category-wide selection. Display & appearance groups independent 0–100% background-opacity sliders for the map, advisor, nearby details, alerts and main interface, with an apply-to-all option. The main interface defaults to 71% opacity; information overlays remain background-free by default. Includes a charcoal-and-muted-gold palette and fixes for action menus, default-value displays and the map tooltip background.
+
+- F6 → Map markers: toggle walls, towers, farmhouses, berry bushes and other types with one click. Hidden markers remain available in Locations; defense alerts are unaffected.
+- F6 → Display & appearance: drag sliders or adjust in 1% steps with keyboard/gamepad.
+- Existing saves and settings are retained; old category filters migrate automatically. Back up `BepInEx/config/local.kingdom.advisor.cfg` before upgrading and restore it with the old DLL when rolling back. Existing explicit opacity values are retained.
+
+The display changes have been tested in-game; 22 automated regressions and the API audit passed. Two-machine multiplayer, all DLC and every resolution/controller combination have not been revalidated. The existing patched BepInEx #788 runtime is unchanged.
+
+Choose **ModOnly** for a working loader, or **Complete** for a fresh install. GitHub includes PowerShell 7 installers; Nexus uses script-free manual packages. Quit the game and follow the included bilingual README. The plugin path is `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`. Uninstall only the KingdomAdvisor plugin folder, retaining the shared loader and other mods.
+
 # 王国顾问 0.6.10 / Kingdom Advisor 0.6.10
 
 修正联机加入者因职业 AI 被游戏禁用而漏计工人等人口的问题。职业判断不再依赖 AI 启用状态，仍过滤回收实体并避免派生职业重复统计；保留游戏原生同步的弓箭手数量和未细分领队数量。客户端营地位置继续显示，未同步的营地人数不再误报为 0。敌人与营地继续使用场景实体读取。

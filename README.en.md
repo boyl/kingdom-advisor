@@ -1,19 +1,19 @@
-# Kingdom Advisor 0.6.10
+# Kingdom Advisor 0.6.11
 
-In-game advisor for Kingdom Two Crowns. Version 0.6.10 counts client role components even when their AI is disabled and preserves native synchronized counts. Two-machine multiplayer remains unverified.
+In-game advisor for Kingdom Two Crowns. 0.6.11 adds individual map-marker checkboxes, a Common list and category-wide selection. Display & appearance groups independent 0–100% background-opacity sliders for the map, advisor, nearby details, alerts and main interface, with an apply-to-all option. The main interface defaults to 71% opacity; information overlays remain background-free by default. Includes a charcoal-and-muted-gold palette and fixes for action menus, default-value displays and the map tooltip background.
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.10) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.11) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus now hosts 0.6.10 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.10 assets only.
+Nexus now hosts 0.6.11 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.11 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.10-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.10-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.11-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.11-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
@@ -94,4 +94,11 @@ Downloads and updates: [GitHub Releases](https://github.com/boyl/kingdom-advisor
 All 104 entries have explicit identity-based pixel icons: object on the left, purpose or trait on the right. Complete patterns differ between entries. Find matching island locations from the catalog; locations show direction, distance, purpose and current interaction state, with links to the catalog and map. Separate buildings keep separate locations. The ridden mount is excluded from purchase locations. Map focus does not teleport.
 
 
-0.6.10: joiner scene-entity reading; automated checks passed, two-machine multiplayer and real-game regression remain unverified.
+Multiplayer compatibility retains the 0.6.10 joiner scene-entity reading. Automated checks passed; two-machine multiplayer remains unverified.
+
+
+## Display customization
+
+0.6.11 adds individual map-marker checkboxes, a Common list and category-wide selection. Display & appearance groups independent 0–100% background-opacity sliders for the map, advisor, nearby details, alerts and main interface, with an apply-to-all option. The main interface defaults to 71% opacity; information overlays remain background-free by default. Includes a charcoal-and-muted-gold palette and fixes for action menus, default-value displays and the map tooltip background.
+
+Back up the configuration before upgrading. Old category filters migrate to per-type visibility. Hidden locations can still be queried and temporarily highlighted.

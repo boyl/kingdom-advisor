@@ -1,39 +1,39 @@
 {
-  "version": "0.6.10",
-  "releaseAuthorization": "2026-10-24 用户要求修复并发布；沿用已知无双机实测的正式版发布授权",
-  "userAcceptance": "未执行双机或真实游戏验收，不以发布授权代替验收",
-  "dllHash": "426068D067F69D21EEFF2AB34700D6BF198DB67D9B46F9928397A85017CCCEB5",
+  "version": "0.6.11",
+  "releaseAuthorization": "2026-11-10 用户明确要求发布至既有渠道",
+  "userAcceptance": "用户确认显示功能、配色与提示背景正常，指定主界面71%为默认后授权发布；正式版仅将已验收候选版本号从0.6.10改为0.6.11",
+  "acceptedCandidateHash": "04AA0F3BD9CD9A88BB121B9209F48FEA09D3161B455FD4FB64FB2744890DB27B",
+  "dllHash": "E236EC570F99DE83C4F15ED01A564A97DC1E08131C1D85DA4D481A0B8E94D549",
   "sourceHashes": {
-    "src/AssistModel.cs": "568782B2A9288E95BC61BADE2FBC7FA0B0F8644DEA5722F2E8F5A3B4549ECA1B",
+    "src/AssistModel.cs": "BAB59BF6DCD85520BEBF1D84F8AF4EAE8705E79D43C5759B23C3984E18014FD8",
     "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
-    "src/Controller.cs": "823F7702DBBC811867E629E50DE51AA1547894E572F8B78CBDC329676A305CE0",
+    "src/Controller.cs": "5BBFE85D66946703A975199577D6E088BDE548585BBBEBF36082ADA1B4C19C3D",
     "src/GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
-    "src/Localization.cs": "AF2B5E7C2A6E954C824F6DE4B0FAE1207700927C88731C6088685F636386000D",
+    "src/Localization.cs": "A4E500D5B0490C64FD33E8DB0C11BF7F6F3F99E21FCD6DE0911B5874D57C70D3",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
     "src/Model.cs": "07DA6B8215B8F89BDABA9F8B57857BA801EFDE550729A27DFFB19411462F93D4",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
-    "src/Plugin.cs": "37B9B635D791ED2818C88A8E1D802B9D7FC1063ABED076E01CE2CC41252EDEB0",
-    "src/View.cs": "740D5AF7E5B656D4F14F9516D01C6BC5C6C82D790C752AF94E808185A733F211"
+    "src/Plugin.cs": "FAF17F95D9156044644CF7B8C8101FF67A22D1FA35E3BED78F8E5121EA00575C",
+    "src/View.cs": "EB6F5FB0573E496B2AFAEE371A33BA4729049B0EE33D9A650BF264DAA7D2DA25"
   },
   "channels": [
     "GitHub",
     "Nexus Mods"
   ],
   "runtime": {
-    "status": "unverified",
-    "formalDifference": "客户端职业按组件身份识别，保留同步计数，隐藏未同步营地人数；原生证据基于 2.4.3"
+    "formalDifference": "仅版本标记0.6.11",
+    "status": "single-player observed",
+    "evidence": "docs/acceptance/evidence/v0.6.11-runtime.txt"
   },
   "unverified": [
-    "双机联机",
-    "单人及本地双人实机回归",
-    "完整 DLC",
-    "营地内部人数同步"
+    "双机联机专项回归",
+    "完整DLC矩阵",
+    "全部分辨率与手柄组合"
   ],
   "manual": {
-    "userAcceptance": "pending",
-    "releaseAuthorization": "passed"
-  },
-  "releaseException": "用户在已明确告知盲修、未双机验收的上下文中要求正式发布；完整实机门禁未通过，不宣称完整验收"
+    "releaseAuthorization": "passed",
+    "userAcceptance": "passed"
+  }
 }

@@ -11,10 +11,14 @@ namespace KingdomAdvisor
     internal sealed partial class AdvisorController
     {
         public bool Open;public int Tab,Focus,Selected,Owner,DetailPage;public string Search="",Category="全部";
-        public string PointCatalogKey="";
+        public string PointCatalogKey="";private string temporaryMapPoint="";
+        private string hiddenTypesCache;private MapDisplayPreferences displayPreferences;
+        private MapDisplayPreferences DisplayPreferences {get {if(displayPreferences==null||hiddenTypesCache!=settings.HiddenMapTypes.Value){hiddenTypesCache=settings.HiddenMapTypes.Value;displayPreferences=new MapDisplayPreferences(hiddenTypesCache);}return displayPreferences;}}
         public string Device="键鼠";
         public Snapshot CurrentSnapshot=>current;
         public GameActions Actions;public IslandJournal Journal;private Snapshot current=new Snapshot();
+        private int filterCategory;private OptionItem[] filterItems;
+        public OptionItem[] SettingsItems=>Section==OptionGroups.MapFilterSection?(filterItems??=MapFilterMenu.Items(filterCategory)):OptionGroups.Items[Section];
         public int Section,Choice,ResourcePlayer,ResourceType,ClearMode;public bool SettingsDropdown,ResourceDropdown,ResourceEditing,MapFocus;
         public string ResourceText="10";
         public readonly MapHold Hold=new MapHold();private MapPoint pressedPoint;private string mouseTarget="";
@@ -23,7 +27,7 @@ namespace KingdomAdvisor
         public void BeginMapDraw(int id){mouseTarget="";ClearPadHit(id);}
         public void MapHit(MapPoint point,int owner){mouseTarget=PointKey(point);if(Event.current.type==EventType.MouseDown&&Event.current.button==0){Device="键鼠";pressedPoint=point;mousePress=true;Hold.Begin(mouseTarget,owner,Time.unscaledTime,settings.Teleport.Value);Event.current.Use();}}
         public void Inspect(MapPoint point,int owner)
-        {if(!Open||Tab!=3)Toggle(3,current,owner);Category="全部";PointCatalogKey="";Hold.Cancel();var p=current.Players.FirstOrDefault(p=>p.Id==owner);if(p!=null){var items=FilteredPoints(current,p);int found=LocationPresentation.Find(items,point);if(found>=0)Selected=found;}}
+        {if(!Open||Tab!=3)Toggle(3,current,owner);Category="全部";PointCatalogKey="";temporaryMapPoint=PointKey(point);Hold.Cancel();var p=current.Players.FirstOrDefault(p=>p.Id==owner);if(p!=null){var items=FilteredPoints(current,p);int found=LocationPresentation.Find(items,point);if(found>=0)Selected=found;}}
         public void ShowPointCatalog(MapPoint point)
         {
             var entry=LocationPresentation.Entry(point);if(entry==null){Actions.Notify("该地点尚无对应图鉴条目。");return;}
@@ -33,7 +37,7 @@ namespace KingdomAdvisor
         {
             var player=current.Players.FirstOrDefault(p=>p.Id==Owner);if(player==null)return;
             Category="全部";PointCatalogKey=entry.Key;
-            if(FilteredPoints(current,player).Length==0){PointCatalogKey="";Actions.Notify("本岛可见范围内没有对应地点。");return;}
+            if(FilteredPoints(current,player,true).Length==0){PointCatalogKey="";Actions.Notify("本岛可见范围内没有对应地点。");return;}
             if(!Open||Tab!=1)Toggle(1,current,Owner);Selected=0;DetailPage=0;
         }
         private void StepMapHold(string target,bool held)
@@ -58,12 +62,12 @@ namespace KingdomAdvisor
         public bool ChordHeld(int player)=>false;
         public AdvisorController(Settings config){settings=config;}
         public bool Blocks(int id)=>((Open||MapFocus)&&Owner==id)||(Hold.Active&&Hold.Owner==id)||releaseGuard.Contains(id)||PadBlocks(id);
-        public void Close(){PointCatalogKey="";if(Open||MapFocus)GuardPadRelease(Owner);Open=MapFocus=false;Hold.Cancel();SettingsDropdown=ResourceDropdown=ResourceEditing=false;Focus=0;Search="";SearchFocused=false;SearchEditing=false;PadRegion=0;verticalRepeat.Reset();horizontalRepeat.Reset();}
+        public void Close(){temporaryMapPoint="";PointCatalogKey="";if(Open||MapFocus)GuardPadRelease(Owner);Open=MapFocus=false;Hold.Cancel();SettingsDropdown=ResourceDropdown=ResourceEditing=false;Focus=0;Search="";SearchFocused=false;SearchEditing=false;PadRegion=0;verticalRepeat.Reset();horizontalRepeat.Reset();}
         public void Toggle(int tab,Snapshot state,int? player=null)
         {
             if(Open&&Tab==tab){Close();return;}
             Owner=player??state.Players.FirstOrDefault(p=>p.Local)?.Id??0;ClearPadHit(Owner);
-            Open=true;MapFocus=false;Tab=tab;Focus=0;PadRegion=0;SettingsDropdown=ResourceDropdown=ResourceEditing=false;SearchEditing=false;SearchFocused=false;verticalRepeat.Reset();horizontalRepeat.Reset();
+            temporaryMapPoint="";Open=true;MapFocus=false;Tab=tab;Focus=0;PadRegion=0;SettingsDropdown=ResourceDropdown=ResourceEditing=false;SearchEditing=false;SearchFocused=false;verticalRepeat.Reset();horizontalRepeat.Reset();
             var m=Managers._Inst;
             if(m&&m.kingdom){var p=m.kingdom.playerOne;if(p&&p.playerId==Owner)p.ReleaseInput();p=m.kingdom.playerTwo;if(p&&p.playerId==Owner)p.ReleaseInput();}
         }
@@ -109,7 +113,7 @@ namespace KingdomAdvisor
                 if(Tab==3&&Device=="键鼠")UpdatePanelMapHold(Input.GetKey(KeyCode.Return),Input.GetKeyDown(KeyCode.Return));
             }
         }
-        public void ChangeTab(int direction){PointCatalogKey="";ClearPadHit(Owner);Tab=(Tab+direction+6)%6;Focus=0;Selected=0;DetailPage=0;PadRegion=0;SettingsDropdown=ResourceDropdown=ResourceEditing=false;Hold.Cancel();SearchEditing=false;SearchFocused=false;verticalRepeat.Reset();horizontalRepeat.Reset();}
+        public void ChangeTab(int direction){temporaryMapPoint="";PointCatalogKey="";ClearPadHit(Owner);Tab=(Tab+direction+6)%6;Focus=0;Selected=0;DetailPage=0;PadRegion=0;SettingsDropdown=ResourceDropdown=ResourceEditing=false;Hold.Cancel();SearchEditing=false;SearchFocused=false;verticalRepeat.Reset();horizontalRepeat.Reset();}
         public void SearchKey(int index)
         {string key=SearchKeys[index];if(key=="删除"){if(Search.Length>0)Search=Search.Substring(0,Search.Length-1);}else if(key=="清空")Search="";else if(key=="完成"){SearchEditing=false;PadRegion=0;}else if(Search.Length<256)Search+=key;Selected=0;}
         private void DiscoverActions()
@@ -122,16 +126,18 @@ namespace KingdomAdvisor
             discovered=true;Plugin.Instance.Log.LogInfo("Rewired actions: "+string.Join(", ",lines));
         }
         public Entry[] FilteredEntries()=>Catalog.Entries.Where(e=>(Category=="全部"||e.Category==Category)&&(string.IsNullOrWhiteSpace(Search)||(e.Name+e.Description+e.Key+Localization.Translate(e.Name+" "+e.Description,true)).IndexOf(Search,StringComparison.OrdinalIgnoreCase)>=0)).ToArray();
-        public MapPoint[] FilteredPoints(Snapshot state,PlayerInfo player)=>state.Points.Where(p=>PointVisible(p)&&(PointCatalogKey.Length==0||p.Key==PointCatalogKey)&&(Category=="全部"||p.Category==Category)&&(settings.FullMap.Value||state.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2))).OrderBy(p=>Math.Abs(p.X-player.X)).ToArray();
+        public MapPoint[] FilteredPoints(Snapshot state,PlayerInfo player,bool includeHidden=false)=>state.Points.Where(p=>(includeHidden||Open&&Tab==1||MapPointVisible(p,true))&&(PointCatalogKey.Length==0||p.Key==PointCatalogKey)&&(Category=="全部"||p.Category==Category)&&(settings.FullMap.Value||state.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2))).OrderBy(p=>Math.Abs(p.X-player.X)).ToArray();
         public void FlipPage(int direction,Snapshot s)
         {
-            if(Tab==2){SettingsDropdown=false;int rows=Math.Max(1,VisibleRows),count=OptionGroups.Items[Section].Length;Focus=MenuPaging.Flip(Focus,rows,count,direction);return;}
+            if(Tab==2){SettingsDropdown=false;int rows=Math.Max(1,VisibleRows),count=SettingsItems.Length;
+                if(Section==OptionGroups.MapFilterSection){Focus=5+MenuPaging.Flip(Math.Max(0,Focus-5),rows,Math.Max(1,count-5),direction);Focus=Math.Min(Focus,count-1);}
+                else Focus=MenuPaging.Flip(Focus,rows,count,direction);return;}
             Navigate(direction*Math.Max(1,VisibleRows),s);
         }
         public void Horizontal(int direction)
-        {if(Tab==2){if(SettingsDropdown)Choice=Math.Clamp(Choice+direction,0,OptionGroups.Items[Section][Focus].Choices.Length-1);else {Section=(Section+direction+OptionGroups.Names.Length)%OptionGroups.Names.Length;Focus=0;}}else if(Tab==5){if(ResourceDropdown)Choice=Math.Clamp(Choice+direction,0,ResourceChoices().Length-1);else ResourceAdjust(direction);}else{int index=Array.IndexOf(Categories,Category);Category=Categories[(index+direction+Categories.Length)%Categories.Length];Selected=0;DetailPage=0;}}
+        {if(OpacityEditing){if(Choice==0)SetOpacity(PanelAppearance.Step(OpacityValue,direction));return;}if(Tab==2){if(SettingsDropdown)Choice=Math.Clamp(Choice+direction,0,SettingsItems[Focus].Choices.Length-1);else {Section=(Section+direction+OptionGroups.Names.Length)%OptionGroups.Names.Length;Focus=0;}}else if(Tab==5){if(ResourceDropdown)Choice=Math.Clamp(Choice+direction,0,ResourceChoices().Length-1);else ResourceAdjust(direction);}else{int index=Array.IndexOf(Categories,Category);Category=Categories[(index+direction+Categories.Length)%Categories.Length];Selected=0;DetailPage=0;}}
         public void Navigate(int delta,Snapshot state)
-        {Hold.Cancel();if(Tab==2){if(SettingsDropdown)Choice=Math.Clamp(Choice+delta,0,OptionGroups.Items[Section][Focus].Choices.Length-1);else {int length=OptionGroups.Items[Section].Length;Focus=(Focus+delta+length)%length;}}else if(Tab==5){if(ResourceDropdown)Choice=Math.Clamp(Choice+delta,0,ResourceChoices().Length-1);else Focus=(Focus+delta+7)%7;}else {var player=state.Players.FirstOrDefault(p=>p.Id==Owner);int count=Tab==4?Journal.Records.Count:Tab==0?FilteredEntries().Length:player==null?0:FilteredPoints(state,player).Length;Selected=Math.Clamp(Selected+delta,0,Math.Max(0,count-1));}}
+        {Hold.Cancel();if(OpacityEditing){Choice=Math.Clamp(Choice+delta,0,2);return;}if(Tab==2){if(SettingsDropdown)Choice=Math.Clamp(Choice+delta,0,SettingsItems[Focus].Choices.Length-1);else {int length=SettingsItems.Length;Focus=(Focus+delta+length)%length;}}else if(Tab==5){if(ResourceDropdown)Choice=Math.Clamp(Choice+delta,0,ResourceChoices().Length-1);else Focus=(Focus+delta+7)%7;}else {var player=state.Players.FirstOrDefault(p=>p.Id==Owner);int count=Tab==4?Journal.Records.Count:Tab==0?FilteredEntries().Length:player==null?0:FilteredPoints(state,player).Length;Selected=Math.Clamp(Selected+delta,0,Math.Max(0,count-1));}}
         private void UpdateMapPad(Snapshot s)
         {
             if(!routedInputs.TryGetValue(Owner,out var input))return;
@@ -162,10 +168,24 @@ namespace KingdomAdvisor
             case OptionId.Defense:return settings.DefenseAlerts;case OptionId.Staff:return settings.StaffAlerts;case OptionId.MountInfo:return settings.MountInfo;case OptionId.Icons:return settings.Icons;case OptionId.Journal:return settings.Journal;
             case OptionId.PadCursor:return settings.PadCursor;case OptionId.InfiniteBag:return settings.InfiniteBag;case OptionId.Teleport:return settings.Teleport;case OptionId.InfiniteStamina:return settings.InfiniteStamina;default:return null;}
         }
+        public bool OpacityEditing=>Open&&Tab==2&&SettingsDropdown&&SettingsItems[Focus].Kind==OptionKind.Slider;
+        public string OpacityName=>SettingsItems[Focus].Name;
+        public int GetOpacity(OptionId id)=>id==OptionId.PanelOpacity?settings.PanelOpacity.Value:settings.PanelOpacities[id].Value;
+        public int GetDisplayedOpacity(OptionId id){if(id==OptionId.PanelOpacity){var values=settings.PanelOpacities.Keys.Select(GetDisplayedOpacity).Distinct().ToArray();return values.Length==1?values[0]:-1;}return Boolean(PanelAppearance.BackgroundFor(id)).Value?0:PanelAppearance.SliderValue(GetOpacity(id));}
+        public int OpacityValue=>Math.Max(0,GetDisplayedOpacity(SettingsItems[Focus].Id));
+        public void SetOpacity(int value){value=Math.Clamp(value,-1,100);var id=SettingsItems[Focus].Id;if(id==OptionId.PanelOpacity){settings.PanelOpacity.Value=value;foreach(var target in settings.PanelOpacities.Keys)ApplyOpacity(target,value);}else ApplyOpacity(id,value);}
+        private void ApplyOpacity(OptionId id,int value){if(id==OptionId.InterfaceOpacity&&value<0)value=PanelAppearance.InterfaceDefaultOpacity;settings.PanelOpacities[id].Value=value;Boolean(PanelAppearance.BackgroundFor(id)).Value=value<0&&id!=OptionId.InterfaceOpacity;}
+        public int OptionValue(OptionItem item)=>item.Id==OptionId.MapType?(DisplayPreferences.Visible(item.MapKey)&&(item.MapKey!="tree"||settings.Trees.Value)?1:0):OptionValue(item.Id);
+        public void SetOption(OptionItem item,int value)
+        {if(item.Id==OptionId.MapType){if(item.MapKey=="tree")settings.Trees.Value=value==1;DisplayPreferences.Set(item.MapKey,value==1);settings.HiddenMapTypes.Value=DisplayPreferences.Encode();Hold.Cancel();return;}SetOption(item.Id,value);}
         public int OptionValue(OptionId id)
-        {if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
+        {if(id==OptionId.FilterCategory)return filterCategory;if(id==OptionId.PanelOpacity||settings.PanelOpacities.ContainsKey(id))return 0;if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
         public void SetOption(OptionId id,int value)
         {
+            if(id==OptionId.FilterCategory){filterCategory=value;filterItems=null;Focus=0;return;}
+            if(id==OptionId.ShowFiltered||id==OptionId.HideFiltered){foreach(var entry in SettingsItems.Where(i=>i.Kind==OptionKind.Toggle))SetOption(entry,id==OptionId.ShowFiltered?1:0);return;}
+            if(id==OptionId.PanelOpacity||settings.PanelOpacities.ContainsKey(id)){SetOpacity(value);return;}
+            if(id==OptionId.ShowAllTypes||id==OptionId.ResetTypes){settings.HiddenMapTypes.Value="";settings.MapBuildings.Value=settings.MapCamps.Value=settings.MapEnemies.Value=settings.MapMounts.Value=settings.MapSpecial.Value=true;settings.Trees.Value=id==OptionId.ShowAllTypes;Hold.Cancel();return;}
             if(id==OptionId.Language){settings.UiLanguage.Value=value;Localization.English=Localization.IsEnglish(value,global::Language.current?global::Language.current.languageCode:null,Application.systemLanguage.ToString());DetailPage=0;return;}
             if(id==OptionId.PadOpen){settings.PadOpenButton.Value=value;return;}
             if(id==OptionId.PadSpeed){settings.PadSpeed.Value=new[]{300f,700f,1000f,1400f}[value];return;}
@@ -192,12 +212,14 @@ namespace KingdomAdvisor
         {if(Focus==5){ClearMode=index;ResourceDropdown=false;return;}if(Focus==0){var ps=current.Players.Where(p=>p.Local).ToArray();if(index>=0&&index<ps.Length)ResourcePlayer=ps[index].Id;}else if(Focus==1){if(index>=0&&index<current.ResourceTypes.Count)ResourceType=current.ResourceTypes[index];}else if(Focus==3)settings.ResourceAmount.Value=new[]{1,5,20,100}[Math.Clamp(index,0,3)];ResourceDropdown=false;}
         public void AddResources()
         {if(ResourceEditing)CommitAmount();if(ResourceEditing)return;Actions.Add(current,ResourcePlayer,ResourceType,settings.ResourceAmount.Value);}
+        public bool MapPointVisible(MapPoint p,bool allowTemporary)=>PointVisible(p)||(allowTemporary&&Open&&Tab==3&&temporaryMapPoint==PointKey(p));
         public bool PointVisible(MapPoint p)
-        {if(p.Category=="坐骑")return settings.MapMounts.Value;if(p.Category=="人口")return settings.MapCamps.Value;if(p.Category=="建设"||p.Category=="防御"||p.Category=="经济"||p.Category=="工具"||p.Category=="环境")return settings.MapBuildings.Value;return settings.MapSpecial.Value;}
+        {return DisplayPreferences.Visible(p.Key)&&(p.Key!="tree"||settings.Trees.Value);}
         public void Activate()
         {
-            if(Tab==5){if(Focus==6){Actions.ClearResources(current,ResourcePlayer,ClearTypes());return;}if(ResourceDropdown){SelectResourceChoice(Choice);return;}if(Focus==0||Focus==1||Focus==3||Focus==5){Choice=ResourceChoiceIndex();ResourceDropdown=true;return;}if(Focus==4)AddResources();else if(Focus==2){if(Device=="手柄")ResourceAdjust(1);else{ResourceEditing=!ResourceEditing;ResourceText=settings.ResourceAmount.Value.ToString();}}return;}
-            if(Tab==2){var item=OptionGroups.Items[Section][Focus];if(item.Id==OptionId.Resources){Toggle(5,current,Owner);return;}if(item.Id==OptionId.ResetLayout){settings.Layout.Value="";return;}if(SettingsDropdown){SetOption(item.Id,Choice);SettingsDropdown=false;}else{Choice=OptionValue(item.Id);SettingsDropdown=true;}return;}
+            if(Tab==5){if(Focus==6){Actions.ClearResources(current,ResourcePlayer,ClearTypes());return;}if(ResourceDropdown){SelectResourceChoice(Choice);return;}if(Focus==0||Focus==1||Focus==3||Focus==5){if(!OptionItem.HasSelection(ResourceChoices().Length))return;Choice=ResourceChoiceIndex();ResourceDropdown=true;return;}if(Focus==4)AddResources();else if(Focus==2){if(Device=="手柄")ResourceAdjust(1);else{ResourceEditing=!ResourceEditing;ResourceText=settings.ResourceAmount.Value.ToString();}}return;}
+            if(OpacityEditing){if(Choice==1)SetOpacity(-1);else SettingsDropdown=false;return;}
+            if(Tab==2){var item=SettingsItems[Focus];if(item.Kind==OptionKind.Toggle){SetOption(item,1-OptionValue(item));return;}if(item.Id==OptionId.Resources){Toggle(5,current,Owner);return;}if(item.Kind==OptionKind.Action){SettingsDropdown=false;if(item.Id==OptionId.ResetLayout)settings.Layout.Value="";else SetOption(item,0);return;}if(SettingsDropdown){SetOption(item,Choice);SettingsDropdown=false;}else{Choice=OptionValue(item);SettingsDropdown=true;}return;}
             if(Tab==0){var entries=FilteredEntries();if(entries.Length>0)ShowCatalogLocations(entries[Math.Clamp(Selected,0,entries.Length-1)]);return;}
             if(Tab==1){var player=current.Players.FirstOrDefault(p=>p.Id==Owner);if(player!=null){var points=FilteredPoints(current,player);if(points.Length>0)Inspect(points[Math.Clamp(Selected,0,points.Length-1)],Owner);}return;}
             if(Tab==3){MapNearby=!MapNearby;return;}

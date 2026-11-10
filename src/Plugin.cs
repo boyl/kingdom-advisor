@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.10";
+        public const string Version="0.6.11";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -32,7 +32,9 @@ namespace KingdomAdvisor
     {
         public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
         public ConfigEntry<int> FontSize,UiLanguage;
-        public ConfigEntry<string> Layout;
+        public ConfigEntry<string> Layout,HiddenMapTypes;
+        public ConfigEntry<int> PanelOpacity;
+        public readonly System.Collections.Generic.Dictionary<OptionId,ConfigEntry<int>> PanelOpacities=new();
         public ConfigEntry<bool> Teleport,InfiniteBag,InfiniteStamina,Icons,Journal,DefenseAlerts,StaffAlerts,MountInfo,MapBuildings,MapCamps,MapEnemies,MapMounts,MapSpecial;
         public ConfigEntry<float> GameSpeed,PadSpeed;public ConfigEntry<bool> PadCursor;public ConfigEntry<int> PadOpenButton;
         public ConfigEntry<int> ResourceAmount;
@@ -70,11 +72,19 @@ namespace KingdomAdvisor
             DefenseAlerts=config.Bind("提醒","防线风险",true,"最外城墙受损、失守或敌群接近时提醒。");
             StaffAlerts=config.Bind("提醒","人员缺口",true,"显示施工缺工匠及招募工具缺口。");
             MountInfo=config.Bind("提醒","坐骑状态",true,"显示耐力、饱食与能力冷却状态。");
+            HiddenMapTypes=config.Bind("地图筛选","隐藏类型","","按稳定类型键保存隐藏列表。");
+            PanelOpacity=config.Bind("界面样式","面板背景不透明度",-1,new ConfigDescription("-1 保留原外观；0–100 为面板底色不透明度百分比，文字图标不变。",new AcceptableValueRange<int>(-1,100)));
             MapBuildings=config.Bind("地图筛选","建筑",true,"显示建筑及工具。");
             MapCamps=config.Bind("地图筛选","营地与人口",true,"显示人口地点。");
             MapEnemies=config.Bind("地图筛选","敌人",true,"显示敌群图标与数量。");
             MapMounts=config.Bind("地图筛选","坐骑",true,"显示坐骑地点。");
             MapSpecial=config.Bind("地图筛选","特殊地点",true,"显示科技、探索、航行和其他特殊地点。");
+            foreach(var id in new[]{OptionId.MapOpacity,OptionId.AdvisorOpacity,OptionId.PlayerOpacity,OptionId.AlertOpacity,OptionId.InterfaceOpacity})
+                PanelOpacities[id]=config.Bind("界面样式",id.ToString(),id==OptionId.InterfaceOpacity?PanelAppearance.InterfaceDefaultOpacity:PanelOpacity.Value,new ConfigDescription("-1 原外观；0–100 背景不透明度。",new AcceptableValueRange<int>(-1,100)));
+            if(PanelOpacities[OptionId.InterfaceOpacity].Value<0)PanelOpacities[OptionId.InterfaceOpacity].Value=PanelAppearance.InterfaceDefaultOpacity;
+            var migrated=config.Bind("地图筛选","细分迁移完成",false,"内部配置迁移标记。");
+            if(!migrated.Value){var preferences=new MapDisplayPreferences(HiddenMapTypes.Value);foreach(var entry in Catalog.Entries)if(!MapFilterMenu.LegacyVisible(entry.Category,MapBuildings.Value,MapCamps.Value,MapMounts.Value,MapSpecial.Value))preferences.Set(entry.Key,false);HiddenMapTypes.Value=preferences.Encode();migrated.Value=true;}
+
         }
     }
     public sealed class AdvisorBehaviour : MonoBehaviour

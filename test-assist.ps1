@@ -24,5 +24,5 @@ Equal ([KingdomAdvisor.ResourceRules]::Addition(50,100)) 150 '添加余额'
 foreach($amount in @(0,-1,10001)){try{[void][KingdomAdvisor.ResourceRules]::Addition(0,$amount);throw '未拒绝无效数量'}catch{if($_.Exception.Message -eq '未拒绝无效数量'){throw}}}
 try{[void][KingdomAdvisor.ResourceRules]::Addition([int]::MaxValue,1);throw '未拒绝溢出'}catch{if($_.Exception.Message -eq '未拒绝溢出'){throw}}
 $ids=@([KingdomAdvisor.OptionGroups]::Items|ForEach-Object {$_|ForEach-Object {$_.Id}})
-Equal ($ids|Select-Object -Unique).Count ([Enum]::GetValues([KingdomAdvisor.OptionId]).Count) '配置覆盖且唯一'
+Equal ($ids|Select-Object -Unique).Count ([Enum]::GetValues([KingdomAdvisor.OptionId]).Count-5) '配置覆盖（5个旧大类/树木入口由细分标记替代）'
 '通过：短按、长按一次触发、取消锁存、释放复位、资源边界、配置覆盖。'

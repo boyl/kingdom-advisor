@@ -10,6 +10,7 @@ namespace KingdomAdvisor
         private readonly Settings settings;private readonly AdvisorController controller;
         private GUIStyle text,title,small,button,fillStyle;
         private Font font;private int lastSize;private bool stylesReady;
+        private bool opacityDragging;private int activePanelOpacity=-1;
         private string lastCatalogKey="",lastLocationKey="";
         private readonly StableMapExtent stableExtent=new StableMapExtent();private int extentIsland=-1;
         private LayoutPositions positions;
@@ -21,10 +22,13 @@ namespace KingdomAdvisor
         private readonly System.Collections.Generic.Dictionary<int,int> hudPages=new System.Collections.Generic.Dictionary<int,int>();
         private readonly System.Collections.Generic.Dictionary<int,string> hudTargets=new System.Collections.Generic.Dictionary<int,string>();
         public string FontEvidence="not initialised";
-        private readonly Color background=new Color(.045f,.065f,.085f,.94f);
-        private readonly Color gold=new Color(.87f,.73f,.45f);
-        private readonly Color muted=new Color(.65f,.73f,.77f);
-        private readonly Color border=new Color(.23f,.29f,.32f,.9f);
+        private readonly Color background=new Color(36/255f,35/255f,42/255f,.94f);
+        private readonly Color gold=new Color(195/255f,166/255f,106/255f);
+        private readonly Color muted=new Color(182/255f,176/255f,162/255f);
+        private readonly Color border=new Color(87/255f,82/255f,75/255f,.5f);
+        private readonly Color bodyText=new Color(221/255f,216/255f,203/255f);
+        private readonly Color hoverFill=new Color(52/255f,50/255f,59/255f,.65f);
+        private readonly Color selectedFill=new Color(69/255f,65/255f,55/255f,.8f);
         private readonly Color green=new Color(.49f,.79f,.67f);
         public AdvisorView(Settings config,AdvisorController input){settings=config;controller=input;}
         private Rect Place(string key,Rect rect,Rect viewport,float handleWidth=-1)
@@ -61,7 +65,7 @@ namespace KingdomAdvisor
                 Font.Internal_CreateDynamicFont(font,new Il2CppInterop.Runtime.InteropTypes.Arrays.Il2CppStringArray(new[]{"Microsoft YaHei"}),size);
                 if(!font)throw new InvalidOperationException("Microsoft YaHei font unavailable");
             }
-            text=new GUIStyle(GUI.skin.label){font=font,fontSize=size,wordWrap=true,richText=false,padding=new RectOffset(0,0,0,0)};text.normal.textColor=new Color(.91f,.93f,.91f);
+            text=new GUIStyle(GUI.skin.label){font=font,fontSize=size,wordWrap=true,richText=false,padding=new RectOffset(0,0,0,0)};text.normal.textColor=bodyText;
             title=new GUIStyle(text){fontSize=size+4};title.normal.textColor=gold;
             small=new GUIStyle(text){fontSize=Math.Max(14,size-2)};small.normal.textColor=muted;
             button=new GUIStyle(text){alignment=TextAnchor.MiddleLeft,padding=new RectOffset(12,12,4,4)};
@@ -72,13 +76,23 @@ namespace KingdomAdvisor
             lastSize=size;stylesReady=true;
         }
         private void Fill(Rect rect,Color color){var old=GUI.color;GUI.color=color;GUI.Box(rect,GUIContent.none,fillStyle);GUI.color=old;}
-        private void Card(Rect rect,bool transparent=false)
+        private void PanelFill(Rect rect,Color color){color.a=PanelAppearance.Alpha(color.a,activePanelOpacity);Fill(rect,color);}
+        private void Card(Rect rect,bool transparent=false,bool decorated=false)
         {
-
             if(transparent)return;
-            Fill(new Rect(rect.x+3,rect.y+4,rect.width,rect.height),new Color(0,0,0,.22f));
-            Fill(rect,border);Fill(new Rect(rect.x+1,rect.y+1,rect.width-2,rect.height-2),background);
-            Fill(new Rect(rect.x+16,rect.y,Math.Min(48,rect.width-32),2),gold);
+            // 底色保持单层；细边与外侧阴影不叠在内容下面。
+            var fill=background;if(activePanelOpacity>=0)fill.a=activePanelOpacity/100f;
+            Fill(new Rect(rect.x+1,rect.y+1,rect.width-2,rect.height-2),fill);
+            PanelFill(new Rect(rect.x,rect.y,rect.width,1),border);
+            PanelFill(new Rect(rect.x,rect.yMax-1,rect.width,1),border);
+            PanelFill(new Rect(rect.x,rect.y+1,1,rect.height-2),border);
+            PanelFill(new Rect(rect.xMax-1,rect.y+1,1,rect.height-2),border);
+            if(decorated){
+                PanelFill(new Rect(rect.x+2,rect.yMax,rect.width,2),new Color(0,0,0,.12f));
+                PanelFill(new Rect(rect.xMax,rect.y+2,2,rect.height-2),new Color(0,0,0,.12f));
+                var accent=gold;accent.a=.55f;
+                PanelFill(new Rect(rect.x+16,rect.y,Math.Min(40,rect.width-32),1),accent);
+            }
         }
         private bool Button(Rect rect,string label,bool transparent=false,bool selectedOverride=false)
         {
@@ -87,11 +101,11 @@ namespace KingdomAdvisor
             bool selected=selectedOverride||label.StartsWith("▶")||label.StartsWith("●");
             bool hover=(controller.Device!="手柄"||controller.PadPointerHover(guiPlayer))&&rect.Contains(PointerPosition);
 
-            if(!transparent&&(!settings.InterfaceTransparent.Value||selected||hover))Fill(rect,selected?new Color(.22f,.24f,.20f,.98f):hover?new Color(.16f,.22f,.25f,.98f):new Color(.095f,.13f,.16f,.96f));
-            if(selected)Fill(new Rect(rect.x,rect.y,3,rect.height),gold);
+            if(!transparent&&(selected||hover))PanelFill(rect,selected?selectedFill:hoverFill);
+            if(selected)Fill(new Rect(rect.x,rect.y+4,2,Math.Max(1,rect.height-8)),gold);
             int originalSize=button.fontSize;
             while(button.fontSize>14&&button.CalcHeight(new GUIContent(label),rect.width)>rect.height)button.fontSize--;
-            bool clicked=GUI.Button(rect,label,button)||controller.PointerButton(rect,guiPlayer,guiOrigin);button.fontSize=originalSize;return clicked;
+            bool clicked=GUI.Button(rect,label,button)||(GUI.enabled&&controller.PointerButton(rect,guiPlayer,guiOrigin));button.fontSize=originalSize;return clicked;
         }
         private float Label(Rect area,string content,GUIStyle style)
         {content=Localization.Text(content);float h=style.CalcHeight(new GUIContent(content),area.width);var color=style.normal.textColor;style.normal.textColor=new Color(0,0,0,.85f);GUI.Label(new Rect(area.x+1,area.y+1,area.width,h),content,style);style.normal.textColor=color;GUI.Label(new Rect(area.x,area.y,area.width,h),content,style);return h;}
@@ -99,6 +113,7 @@ namespace KingdomAdvisor
         public void Draw(Snapshot state)
         {
             if(Event.current.type==EventType.MouseMove||Event.current.type==EventType.MouseDrag)controller.Device="键鼠";
+            if(!controller.OpacityEditing)opacityDragging=false;
             if(!state.Playing){enemyPositions.Clear();stableExtent.Reset();extentIsland=-1;return;}if(!settings.Enabled.Value)return;
             Styles();int previousDepth=GUI.depth;GUI.depth=-200;
             try
@@ -146,7 +161,7 @@ namespace KingdomAdvisor
             y=Math.Max(18,viewport.height-cardH-66);
             var advisorRect=new Rect(pad,y,width,cardH);
             if(settings.ShowKingdomAdvisor.Value){
-            var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);advisorRect=statusRect;Card(statusRect,settings.AdvisorTransparent.Value);
+            var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);advisorRect=statusRect;activePanelOpacity=settings.PanelOpacities[OptionId.AdvisorOpacity].Value;Card(statusRect,settings.AdvisorTransparent.Value);
             float cy=statusRect.y+16;cy+=Row(statusRect.x+16,cy,width-32,heading+"  ⇄",title)+2;
             cy+=Row(statusRect.x+16,cy,width-32,day,small)+10;
             Fill(new Rect(statusRect.x+16,cy-5,width-32,1),border);
@@ -178,7 +193,7 @@ namespace KingdomAdvisor
                 float objectH=headH+bodyH+42;
                 objectY=advisorRect.y;
                 if(objectX+width>viewport.width-18){objectX=advisorRect.x;objectY=Math.Max(18,advisorRect.y-objectH-12);}
-                var objectRect=Place("p"+player.Id+".object",new Rect(objectX,objectY,width,objectH),viewport);Card(objectRect,settings.PlayerTransparent.Value);
+                var objectRect=Place("p"+player.Id+".object",new Rect(objectX,objectY,width,objectH),viewport);activePanelOpacity=settings.PanelOpacities[OptionId.PlayerOpacity].Value;Card(objectRect,settings.PlayerTransparent.Value);
                 float by=objectRect.y+16+Row(objectRect.x+16,objectRect.y+16,width-32,objectTitle+"  ⇄",title)+10;
                 foreach(var value in detailRows)
                 {
@@ -193,7 +208,7 @@ namespace KingdomAdvisor
                 var staff=settings.StaffAlerts.Value?AdvisorAlerts.Staff(s,player.Id):"";
                 if(defense.Length>0)alert=defense;else if(staff.Length>0)alert=staff;
                 float ah=small.CalcHeight(new GUIContent(Localization.Text(alert)),width-32)+24;
-                if(alert.Length>0){var alertRect=Place("p"+player.Id+".alert",new Rect(pad,Math.Max(18,viewport.height-cardH-66-ah-12),width,ah),viewport);Card(alertRect,settings.AlertTransparent.Value);Label(new Rect(alertRect.x+16,alertRect.y+12,width-32,0),alert,small);}
+                if(alert.Length>0){var alertRect=Place("p"+player.Id+".alert",new Rect(pad,Math.Max(18,viewport.height-cardH-66-ah-12),width,ah),viewport);activePanelOpacity=settings.PanelOpacities[OptionId.AlertOpacity].Value;Card(alertRect,settings.AlertTransparent.Value);Label(new Rect(alertRect.x+16,alertRect.y+12,width-32,0),alert,small);}
             }
             if(controller.Device=="手柄"){
                 float hw=Math.Min(560,viewport.width-pad*2);
@@ -212,9 +227,10 @@ namespace KingdomAdvisor
         }
         private void DrawMap(Rect area,Snapshot s,PlayerInfo player,bool transparent=false,bool hud=false)
         {
+            activePanelOpacity=settings.PanelOpacities[OptionId.MapOpacity].Value;
             bool interactive=controller.Open?!hud&&controller.Tab==3:hud;
             if(interactive)controller.BeginMapDraw(player.Id);
-            if(!transparent)Card(area);float x0=area.x+18,width=area.width-36,rowH=small.lineHeight+5;
+            if(!transparent&&(activePanelOpacity<0||hud||settings.InterfaceTransparent.Value))Card(area);float x0=area.x+18,width=area.width-36,rowH=small.lineHeight+5;
             MapLabel(new Rect(x0,area.y+14,width-108,0),"岛屿地图 ⇄",title);
             string scope=Localization.Text(controller.MapNearby?"附近 →":"全岛 →");float scopeWidth=Math.Max(98,button.CalcSize(new GUIContent(scope)).x+8);
             if(Button(new Rect(area.x+area.width-scopeWidth-18,area.y+12,scopeWidth,34),scope,transparent))controller.MapNearby=!controller.MapNearby;
@@ -229,7 +245,7 @@ namespace KingdomAdvisor
             if(controller.MapNearby&&right-left>260){left=Math.Max(extent.Item1,Math.Min(focusX-130,extent.Item2-260));right=Math.Min(extent.Item2,left+260);}
             float length=Math.Max(1,right-left),axisY=area.y+78+rowH*2+10;
             Fill(new Rect(x0,axisY,width,2),border);
-            var points=s.Points.Where(p=>controller.PointVisible(p)&&p.X>=left&&p.X<=right&&(settings.FullMap.Value||s.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2)))
+            var points=s.Points.Where(p=>controller.MapPointVisible(p,!hud)&&p.X>=left&&p.X<=right&&(settings.FullMap.Value||s.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2)))
                 .GroupBy(p=>p.Name+"|"+Math.Round(p.X)).Select(g=>g.First()).OrderBy(p=>p.X).ToArray();
             var pointGroups=points.GroupBy(p=>p.Name+"|"+MapGrouping.Cell(p.X,extent.Item1,length*24/width)).ToArray();
             var counts=pointGroups.Select(g=>g.Count()).ToArray();
@@ -305,7 +321,6 @@ namespace KingdomAdvisor
             if(tip.Length>0)
             {
                 float tipY=area.y+area.height-small.lineHeight-12;
-                if(!transparent)Fill(new Rect(x0,tipY-4,width,small.lineHeight+8),background);
                 MapLabel(new Rect(x0,tipY,width,small.lineHeight),tip,small);
             }
         }
@@ -360,9 +375,10 @@ namespace KingdomAdvisor
         }
         private void DrawPanel(Rect viewport,Snapshot state,PlayerInfo player)
         {
+            activePanelOpacity=settings.PanelOpacities[OptionId.InterfaceOpacity].Value;
             if(controller.Tab!=0)controller.SearchFocused=false;
             float pw=Math.Min(1040,viewport.width-40),ph=Math.Min(720,viewport.height-40);var panel=new Rect(Mathf.Round((viewport.width-pw)/2),Mathf.Round((viewport.height-ph)/2),pw,ph);
-            if(!settings.InterfaceTransparent.Value)Fill(viewport,new Color(0,0,0,.38f));Card(panel,settings.InterfaceTransparent.Value);guiOrigin+=new Vector2(panel.x,panel.y);GUI.BeginGroup(panel);
+            if(!settings.InterfaceTransparent.Value&&activePanelOpacity<0)PanelFill(viewport,new Color(0,0,0,.38f));Card(panel,settings.InterfaceTransparent.Value,true);guiOrigin+=new Vector2(panel.x,panel.y);GUI.BeginGroup(panel);
             float w=panel.width,h=panel.height,line=Math.Max(24,text.lineHeight+7);
             var tabs=new[]{"图鉴","地点","设置","地图","岛屿记录","资源"};for(int i=0;i<tabs.Length;i++){var rect=new Rect(12+i*(w-115)/tabs.Length,10,(w-131)/tabs.Length,line+6);if(Button(rect,(controller.Tab==i?"● ":"")+tabs[i])){controller.ChangeTab(i-controller.Tab);}}
             if(Button(new Rect(w-91,10,79,line+6),Localization.English?"Close":"关闭"))controller.Close();
@@ -388,26 +404,68 @@ namespace KingdomAdvisor
         private void DrawSettings(float w,float top,float bottom)
         {
             float rail=Localization.English?210:180,rowH=Math.Max(42,text.lineHeight*2+8);
+            float railRowH=Math.Min(rowH,(bottom-top)/OptionGroups.Names.Length-6);
             bool priorEnabled=GUI.enabled;if(controller.SettingsDropdown)GUI.enabled=false;
-            for(int i=0;i<OptionGroups.Names.Length;i++)if(Button(new Rect(14,top+i*(rowH+6),rail-14,rowH),(controller.Section==i?"● ":"")+OptionGroups.Names[i])){controller.Section=i;controller.Focus=0;controller.SettingsDropdown=false;}
-            var items=OptionGroups.Items[controller.Section];float x=rail+14,rw=w-x-14;
-            string note="即时保存 · 玩法辅助默认关闭 · 单机与联机均开放";float noteH=small.CalcHeight(new GUIContent(Localization.Text(note)),rw),py=bottom-noteH-rowH-12;
-            int visible=Math.Max(1,(int)((py-top-8)/(rowH+5))),page=controller.Focus/visible,start=page*visible;controller.VisibleRows=visible;
-            for(int i=start;i<Math.Min(start+visible,items.Length);i++){
-                var item=items[i];int value=Math.Clamp(controller.OptionValue(item.Id),0,item.Choices.Length-1);
-                if(Button(new Rect(x,top+(i-start)*(rowH+5),rw,rowH),(controller.Focus==i?"▶ ":"")+item.Name+"    "+item.Choices[value]+"  ▾")){controller.Focus=i;controller.SettingsDropdown=false;controller.Activate();}
+            for(int i=0;i<OptionGroups.Names.Length;i++)if(Button(new Rect(14,top+i*(railRowH+6),rail-14,railRowH),(controller.Section==i?"● ":"")+OptionGroups.Names[i])){controller.Section=i;controller.Focus=0;controller.SettingsDropdown=false;}
+            var items=controller.SettingsItems;float x=rail+14,rw=w-x-14;
+            if(controller.OpacityEditing){GUI.enabled=priorEnabled;DrawOpacityEditor(new Rect(x,top,rw,bottom-top));return;}
+            if(controller.Section==OptionGroups.MapFilterSection)rowH=Math.Max(34,text.lineHeight+10);
+            string note=controller.Section==OptionGroups.MapFilterSection?"单击勾选 · 按类别筛选 · 即时保存":"即时保存 · 玩法辅助默认关闭 · 单机与联机均开放";float noteH=small.CalcHeight(new GUIContent(Localization.Text(note)),rw),py=bottom-noteH-rowH-12;
+            bool appearance=controller.Section==OptionGroups.AppearanceSection,filters=controller.Section==OptionGroups.MapFilterSection;
+            int visible=appearance?items.Length:Math.Max(1,(int)((py-top-8)/(rowH+5))),page=controller.Focus/visible,start=page*visible;controller.VisibleRows=visible;
+            if(appearance)rowH=Math.Min(rowH,(py-top-8)/7-5);
+            if(filters){visible=Math.Max(1,visible-2);page=controller.Focus<5?0:(controller.Focus-5)/visible;start=5+page*visible;controller.VisibleRows=visible;}
+            for(int i=filters?0:start;i<Math.Min(start+visible,items.Length);i++){
+                if(filters&&i>=5&&i<start)continue;
+                var item=items[i];int value=Math.Clamp(controller.OptionValue(item),0,item.Choices.Length-1);
+                bool paired=appearance&&i>0&&i<items.Length-1;
+                int row=appearance?(i==0?0:i==items.Length-1?6:(i+1)/2):i-start;
+                var rowRect=new Rect(x+(paired&&i%2==0?(rw+8)/2:0),top+row*(rowH+5),paired?(rw-8)/2:rw,rowH);
+                if(filters){row=i==0?0:i<5?1:2+i-start;rowRect=new Rect(x+(i>0&&i<5?(i-1)*(rw+6)/4:0),top+row*(rowH+5),i>0&&i<5?(rw-18)/4:rw,rowH);}
+                if(Button(rowRect,(controller.Focus==i?"▶ ":"")+item.DisplayLabel(item.Kind==OptionKind.Slider?OpacityTextFor(item.Id):item.Choices[value]))){controller.Focus=i;controller.SettingsDropdown=false;controller.Activate();}
             }
 
+            if(!appearance){
             float pageButtonW=Math.Max(100,Math.Max(button.CalcSize(new GUIContent(Localization.Text("上一页"))).x,button.CalcSize(new GUIContent(Localization.Text("下一页"))).x)+8);
             if(Button(new Rect(x,py,pageButtonW,rowH),"上一页")){controller.FlipPage(-1,controller.CurrentSnapshot);}
-            Label(new Rect(x+pageButtonW+15,py,rw-pageButtonW*2-30,rowH),(page+1)+" / "+((items.Length+visible-1)/visible),small);
+            Label(new Rect(x+pageButtonW+15,py,rw-pageButtonW*2-30,rowH),(page+1)+" / "+((Math.Max(1,items.Length-(filters?5:0))+visible-1)/visible),small);
             if(Button(new Rect(w-14-pageButtonW,py,pageButtonW,rowH),"下一页")){controller.FlipPage(1,controller.CurrentSnapshot);}
+            }
             Label(new Rect(x,py+rowH+8,rw,noteH),note,small);
             GUI.enabled=priorEnabled;
             if(controller.SettingsDropdown){
                 var item=items[controller.Focus];int columns=item.Choices.Length*(rowH+3)+16>bottom-top?2:1;int choiceRows=(item.Choices.Length+columns-1)/columns;float dh=choiceRows*(rowH+3)+16;var rect=new Rect(w-Math.Min(300,rw)-20,Math.Clamp(top+(controller.Focus-start)*(rowH+5)+rowH,top,Math.Max(top,bottom-dh)),Math.Min(300,rw),dh);Card(rect);
-                for(int i=0;i<item.Choices.Length;i++)if(Button(new Rect(rect.x+8+(i/choiceRows)*(rect.width-16)/columns,rect.y+8+(i%choiceRows)*(rowH+3),(rect.width-16)/columns,rowH),(controller.Choice==i?"▶ ":"")+item.Choices[i])){controller.Choice=i;controller.SetOption(item.Id,i);controller.SettingsDropdown=false;}
+                for(int i=0;i<item.Choices.Length;i++)if(Button(new Rect(rect.x+8+(i/choiceRows)*(rect.width-16)/columns,rect.y+8+(i%choiceRows)*(rowH+3),(rect.width-16)/columns,rowH),(controller.Choice==i?"▶ ":"")+item.Choices[i])){controller.Choice=i;controller.SetOption(item,i);controller.SettingsDropdown=false;}
             }
+        }
+        private string OpacityTextFor(OptionId id){int value=controller.GetDisplayedOpacity(id);if(value<0)return "各面板不同";return (controller.GetOpacity(id)<0?"默认 · ":"")+value+"%";}
+        private string OpacityText=>OpacityTextFor(controller.SettingsItems[controller.Focus].Id);
+        private void DrawOpacityEditor(Rect area)
+        {
+            float y=area.y,buttonH=Math.Max(40,text.lineHeight+14);
+            y+=Row(area.x,y,area.width,controller.OpacityName,title);
+            y+=Row(area.x,y,area.width,OpacityText,text);
+            string help=controller.Device=="手柄"?"左右微调 1% · 上下选择 · A 确认 · B 返回":"拖动滑动条 · 左右微调 1% · 上下选择 · Enter 确认 · Esc 返回";
+            y+=Row(area.x,y,area.width,help,small);
+            // 同一矩形用于可见轨道、鼠标拖动和手柄光标点击。
+            var track=new Rect(area.x+12,y+10,area.width-24,36);
+            if(!Input.GetMouseButton(0))opacityDragging=false;
+            var ev=Event.current;
+            if(ev.type==EventType.MouseDown&&ev.button==0&&track.Contains(ev.mousePosition)){
+                opacityDragging=true;controller.Device="键鼠";controller.Choice=0;
+                controller.SetOpacity(PanelAppearance.FromPosition(ev.mousePosition.x,track.x,track.width));ev.Use();
+            }
+            if(opacityDragging&&ev.type==EventType.MouseDrag){controller.SetOpacity(PanelAppearance.FromPosition(ev.mousePosition.x,track.x,track.width));ev.Use();}
+            if(ev.type==EventType.MouseUp&&ev.button==0&&opacityDragging){opacityDragging=false;ev.Use();}
+            if(controller.PointerButton(track,guiPlayer,guiOrigin)){controller.Choice=0;controller.SetOpacity(PanelAppearance.FromPosition(PointerPosition.x,track.x,track.width));}
+            Fill(new Rect(track.x,track.center.y-2,track.width,4),border);
+            float thumbX=track.x+track.width*PanelAppearance.SliderValue(controller.OpacityValue)/100f;
+            Fill(new Rect(track.x,track.center.y-2,thumbX-track.x,4),gold);
+            if(controller.GetDisplayedOpacity(controller.SettingsItems[controller.Focus].Id)>=0)Fill(new Rect(thumbX-6,track.y+5,12,26),controller.Choice==0?gold:muted);
+            y=track.yMax+12;
+            Label(new Rect(track.x,y,60,small.lineHeight),"0%",small);float endWidth=small.CalcSize(new GUIContent("100%")).x;Label(new Rect(track.xMax-endWidth,y,endWidth,small.lineHeight),"100%",small);y+=small.lineHeight+12;
+            float half=(area.width-8)/2;if(Button(new Rect(area.x,y,half,buttonH),(controller.Choice==1?"▶ ":"")+"恢复默认")){controller.Choice=1;controller.SetOpacity(-1);}
+            if(Button(new Rect(area.x+half+8,y,half,buttonH),(controller.Choice==2?"▶ ":"")+"完成"))controller.SettingsDropdown=false;
         }
         private void DrawResources(float w,float top,float bottom,Snapshot s)
         {
@@ -416,9 +474,14 @@ namespace KingdomAdvisor
             if(p==null)return;controller.ResourcePlayer=p.Id;
             if(!s.ResourceTypes.Contains(controller.ResourceType)&&s.ResourceTypes.Count>0)controller.ResourceType=s.ResourceTypes[0];
             int balance=p.Resources.TryGetValue(controller.ResourceType,out var b)?b:0;
-            string[] rows={"玩家：P"+(p.Id+1)+"  ▾","资源："+ResourceRules.Name(controller.ResourceType)+" · 当前 "+balance+"  ▾","数量："+(controller.ResourceEditing?controller.ResourceText+" ▏":settings.ResourceAmount.Value.ToString()),"快捷数量："+settings.ResourceAmount.Value+"  ▾","添加 "+settings.ResourceAmount.Value+" "+ResourceRules.Name(controller.ResourceType),"清空范围："+new[]{"仅金币","当前资源","全部钱袋资源"}[controller.ClearMode]+"  ▾","清空所选资源"};
+            string[] rows={"玩家：P"+(p.Id+1)+(OptionItem.HasSelection(s.Players.Count(t=>t.Local))?"  ▾":""),"资源："+ResourceRules.Name(controller.ResourceType)+" · 当前 "+balance+(OptionItem.HasSelection(s.ResourceTypes.Count)?"  ▾":""),"数量："+(controller.ResourceEditing?controller.ResourceText+" ▏":settings.ResourceAmount.Value.ToString()),"快捷数量："+settings.ResourceAmount.Value+"  ▾","添加 "+settings.ResourceAmount.Value+" "+ResourceRules.Name(controller.ResourceType),"清空范围："+new[]{"仅金币","当前资源","全部钱袋资源"}[controller.ClearMode]+"  ▾","清空所选资源"};
             bool priorEnabled=GUI.enabled;if(controller.ResourceDropdown)GUI.enabled=false;
-            for(int i=0;i<rows.Length;i++)if(Button(new Rect(20,top+i*(rowH+9),w-40,rowH),(controller.Focus==i?"▶ ":"")+rows[i])){controller.Focus=i;controller.Activate();}
+            for(int i=0;i<rows.Length;i++){
+                bool enabled=GUI.enabled;
+                if(i==0&&!OptionItem.HasSelection(s.Players.Count(t=>t.Local))||i==1&&!OptionItem.HasSelection(s.ResourceTypes.Count))GUI.enabled=false;
+                if(Button(new Rect(20,top+i*(rowH+9),w-40,rowH),(controller.Focus==i?"▶ ":"")+rows[i])){controller.Focus=i;controller.Activate();}
+                GUI.enabled=enabled;
+            }
             GUI.enabled=priorEnabled;
             Label(new Rect(20,top+rows.Length*(rowH+9)+8,w-40,0),"上下选择，左右调整；数量可直接输入，范围 1–10000。只显示当前主题支持的资源。无限钱袋只扩充容量，需在资源辅助设置中开启。",small);
             if(controller.ResourceDropdown){var choices=controller.ResourceChoices();float dh=choices.Length*(rowH+3)+16;var rect=new Rect(w-340,Math.Clamp(top+controller.Focus*(rowH+9)+rowH,top,Math.Max(top,bottom-dh)),320,dh);Card(rect);for(int i=0;i<choices.Length;i++)if(Button(new Rect(rect.x+8,rect.y+8+i*(rowH+3),rect.width-16,rowH),(controller.Choice==i?"▶ ":"")+choices[i]))controller.SelectResourceChoice(i);}
@@ -489,7 +552,7 @@ namespace KingdomAdvisor
             Pagination(14,bottom-line-4,listW-22,line,page,Math.Max(1,(points.Length+visible-1)/visible),visible,points.Length);
             var selected=points[controller.Selected];float dx=listW+8,dw=w-dx-14,y=top;
             var key=LocationPresentation.Identity(selected);if(lastLocationKey!=key){lastLocationKey=key;controller.DetailPage=0;}
-            y+=Row(dx,y,dw,selected.Name,title);y+=Row(dx,y,dw,"类别："+selected.Category,small);
+            y+=Row(dx,y,dw,selected.Name,title);y+=Row(dx,y,dw,"类别："+selected.Category,small);if(!controller.PointVisible(selected))y+=Row(dx,y,dw,"已在地图隐藏 · 可临时定位",small);
             var pages=SplitPages(LocationPresentation.Detail(selected,player),dw,Math.Max(line,bottom-y-line*3-20));
             controller.DetailPages=pages.Length;controller.DetailPage%=pages.Length;
             Label(new Rect(dx,y,dw,0),pages[controller.DetailPage],text);
@@ -522,7 +585,7 @@ namespace KingdomAdvisor
         private void DrawMapPage(float w,float top,float bottom,Snapshot state,PlayerInfo player)
         {
             float mapH=Math.Min(Math.Max(350,small.lineHeight*7+196),bottom-top-115);
-            if(mapH>=Math.Max(350,small.lineHeight*7+196)){DrawMap(new Rect(14,top,w-28,mapH),state,player);top+=mapH+16;}
+            if(mapH>=Math.Max(350,small.lineHeight*7+196)){DrawMap(new Rect(14,top,w-28,mapH),state,player);activePanelOpacity=settings.PanelOpacities[OptionId.InterfaceOpacity].Value;top+=mapH+16;}
             var points=controller.FilteredPoints(state,player);
             if(points.Length==0){Label(new Rect(14,top,w-28,0),"当前筛选没有地点。切换兴趣点分类或地图情报范围。",text);return;}
             controller.Selected=Math.Clamp(controller.Selected,0,points.Length-1);
