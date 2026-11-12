@@ -1,0 +1,6467 @@
+{
+  "date": "2026-11-12",
+  "gameAssemblyHash": "CB3F28D73766C9FFB035512161BEA1AD82835B0684330CE12F5D83DA365E2342",
+  "assetIndexHash": "846853A9CDE7E39F2FEF95253EAB1802BF15A121BFA6AF2075C0CA83D5D7EB5D",
+  "resourceGameObjects": 25732,
+  "candidateTypes": 93,
+  "distinctCandidates": 593,
+  "types": [
+    {
+      "type": "ArtemisCage",
+      "entry": "artemiscage",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Artemis_Cage_Greece"
+      ]
+    },
+    {
+      "type": "AssembledBuildProject",
+      "entry": "unknown",
+      "disposition": "通用组装工程：按最终设施组件及已确认资源名称识别",
+      "resourceNames": [
+        "BindingStatue_Artemis_Unbuilt_MtOlympus_Greece",
+        "BindingStatue_Athena_Unbuilt_Greece Variant",
+        "BindingStatue_Hephaestus_Unbuilt_Greece Variant",
+        "BindingStatue_Hermes_Unbuilt_Greece Variant",
+        "CrownStatue_Unbuilt_MtOlympus_Greece",
+        "Hephaestus_Forge_Unbuilt_Greece",
+        "Statue_Buildable_Party",
+        "TrojanHorse_ConstructionSite"
+      ]
+    },
+    {
+      "type": "AthenaFarmhouse",
+      "entry": "athenafarm",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Athena_Farmhouse2_greece"
+      ]
+    },
+    {
+      "type": "BoatSailPosition",
+      "entry": "boat",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BoatSailPosition",
+        "BoatSailPosition Stone",
+        "BoatSailPosition Stone_Greece",
+        "BoatSailPosition_Greece"
+      ]
+    },
+    {
+      "type": "BoatSummoningBell",
+      "entry": "bell",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "SummonBell"
+      ]
+    },
+    {
+      "type": "Bomb",
+      "entry": "bomb",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Bomb"
+      ]
+    },
+    {
+      "type": "BunnyStatue",
+      "entry": "bunnystatue",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Bunny Statue"
+      ]
+    },
+    {
+      "type": "BunnyTholos",
+      "entry": "springtemple",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Tholos_SpringEdict"
+      ]
+    },
+    {
+      "type": "Cabin",
+      "entry": "cabin",
+      "disposition": "隐士类型枚举分发",
+      "resourceNames": [
+        "Hermit House Baker",
+        "Hermit House Baker_greece",
+        "Hermit House Baker_norselands",
+        "Hermit House Ballista",
+        "Hermit House Ballista_greece",
+        "Hermit House Ballista_norselands",
+        "Hermit House Fire_greece",
+        "Hermit House Horn",
+        "Hermit House Horn_greece",
+        "Hermit House Horn_norselands",
+        "Hermit House Horsekeeper",
+        "Hermit House Horsekeeper_greece",
+        "Hermit House Horsekeeper_norselands",
+        "Hermit House Knight",
+        "Hermit House Knight_greece",
+        "Hermit House Knight_norselands"
+      ]
+    },
+    {
+      "type": "CerberusPuzzlePillar",
+      "entry": "cerberuspuzzle",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "PillarCenter",
+        "PillarLeft",
+        "PillarRight",
+        "Puzzle Shard 1",
+        "Puzzle Shard 2",
+        "Puzzle Shard 3"
+      ]
+    },
+    {
+      "type": "ChangeItemOfPowerShop",
+      "entry": "powershop",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "ShopChangeItem_greece",
+        "ShopChangeItem_norselands"
+      ]
+    },
+    {
+      "type": "ChangeRulerShop",
+      "entry": "rulershop",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "ShopChangeRuler"
+      ]
+    },
+    {
+      "type": "ChariotPuzzlePillar",
+      "entry": "chariotpuzzle",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "StatueDay",
+        "StatueNight"
+      ]
+    },
+    {
+      "type": "CitizenHousePayable",
+      "entry": "citizenhouse",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Citizen_House",
+        "Citizen_House_Bamboo",
+        "Citizen_House_Deadlands",
+        "Citizen_House_greece",
+        "Citizen_House_Norselands"
+      ]
+    },
+    {
+      "type": "CurrencyBagPayable",
+      "entry": "unknown",
+      "disposition": "排除建筑：货币袋物件",
+      "resourceNames": [
+        "Easter Bag Payable",
+        "Hermes Bag Payable"
+      ]
+    },
+    {
+      "type": "EggMound",
+      "entry": "eggmound",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Egg Mound"
+      ]
+    },
+    {
+      "type": "EraUpgradeBuilding",
+      "entry": "unknown",
+      "disposition": "科技变体：按已核实的采石场、矿场、北欧木材资源名称识别",
+      "resourceNames": [
+        "Logging_tier1_norselands",
+        "Logging_tier2_norselands",
+        "Mine",
+        "Mine_deadlands",
+        "Mine_greece",
+        "Quarry",
+        "Quarry_deadlands",
+        "Quarry_greece"
+      ]
+    },
+    {
+      "type": "FireTower",
+      "entry": "firetower",
+      "disposition": "既有专用读取器：火焰塔组件",
+      "resourceNames": [
+        "Tower_upgrade_Fire_greece"
+      ]
+    },
+    {
+      "type": "GiantGoldenAppleTree",
+      "entry": "appletree",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Athena_Tree_Greece"
+      ]
+    },
+    {
+      "type": "GreedBuybackTrader",
+      "entry": "buyback",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Buyback tent"
+      ]
+    },
+    {
+      "type": "GreedGemTrader",
+      "entry": "unknown",
+      "disposition": "证据不足：只有原生类，本机资源无实例",
+      "resourceNames": []
+    },
+    {
+      "type": "GreedGolem",
+      "entry": "greedgolem",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "GreedGolem"
+      ]
+    },
+    {
+      "type": "HeimdallPuzzleHorn",
+      "entry": "heimdallpuzzle",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "water_statues"
+      ]
+    },
+    {
+      "type": "HeimdallPuzzlePillar",
+      "entry": "heimdallpuzzle",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Payable"
+      ]
+    },
+    {
+      "type": "HelPuzzleItem",
+      "entry": "hel",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Hel Item"
+      ]
+    },
+    {
+      "type": "HelPuzzlePillar",
+      "entry": "hel",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "puzzle_Hel_pillar1_norselands",
+        "puzzle_Hel_pillar2_norselands",
+        "puzzle_Hel_pillar3_norselands",
+        "puzzle_Hel_pillar4_norselands",
+        "puzzle_Hel_statue_norselands"
+      ]
+    },
+    {
+      "type": "HephaestusForge",
+      "entry": "hephaestusforge",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Hephaestus_Forge_Built_Greece"
+      ]
+    },
+    {
+      "type": "HermesDock",
+      "entry": "hermesdock",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Hermes_Dock"
+      ]
+    },
+    {
+      "type": "HermesShade",
+      "entry": "unknown",
+      "disposition": "排除建筑：任务幽魂",
+      "resourceNames": [
+        "Hermes_Shade",
+        "Hermes_Shade [Forced]"
+      ]
+    },
+    {
+      "type": "Hermit",
+      "entry": "hermit",
+      "disposition": "人物，原生类型分发",
+      "resourceNames": [
+        "Hermit Baker",
+        "Hermit Ballista",
+        "Hermit Fire",
+        "Hermit Horn",
+        "Hermit Horsekeeper",
+        "Hermit Knight"
+      ]
+    },
+    {
+      "type": "ItemOfPowerReward",
+      "entry": "powerreward",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Quest_Reward_Artemis",
+        "Quest_Reward_Athena",
+        "Quest_Reward_Hephaestus",
+        "Quest_Reward_Hermes"
+      ]
+    },
+    {
+      "type": "Lighthouse",
+      "entry": "lighthouse",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Lighthouse_Iron",
+        "Lighthouse_Iron_greece",
+        "Lighthouse_Iron_norselands",
+        "Lighthouse_Stone",
+        "Lighthouse_Stone_greece",
+        "Lighthouse_Stone_norselands",
+        "Lighthouse_Wood",
+        "Lighthouse_Wood_greece",
+        "Lighthouse_Wood_greece_oracle",
+        "Lighthouse_Wood_norselands"
+      ]
+    },
+    {
+      "type": "LokiPuzzleStaff",
+      "entry": "lokipuzzle",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "staff"
+      ]
+    },
+    {
+      "type": "MasonShrine",
+      "entry": "masonshrine",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Mason Shrine Stone"
+      ]
+    },
+    {
+      "type": "Merchant",
+      "entry": "merchant",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Merchant"
+      ]
+    },
+    {
+      "type": "Monument",
+      "entry": "monument",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "DireMonument",
+        "LandFiveMonument",
+        "LandFourMonument",
+        "LandOneMonument",
+        "LandThreeMonument",
+        "LandTwoMonument",
+        "Monument_Anniversary",
+        "Monument_Artemis_GodIsland_Greece",
+        "Monument_Artemis_Greece",
+        "Monument_Athena_GodIsland_Greece",
+        "Monument_Athena_Greece",
+        "Monument_Cliff_Norselands",
+        "Monument_Gate_Norselands",
+        "Monument_Giant_Bonfire_SpringEdict",
+        "Monument_Giant_Norselands",
+        "Monument_Hephaestus_GodIsland_Greece",
+        "Monument_Hephaestus_Greece",
+        "Monument_Hermes_GodIsland_Greece",
+        "Monument_Hermes_Greece",
+        "Monument_Longhouse_Norselands",
+        "Monument_Oracle_Island_Greece",
+        "Monument_Serpent_Island_Greece",
+        "Monument_Snake_Norselands",
+        "Monument_Tree_Norselands",
+        "PlagueMonument",
+        "TradeRoutesOneMonument",
+        "TradeRoutesTwoMonument"
+      ]
+    },
+    {
+      "type": "MonumentVolcano",
+      "entry": "monument",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "VolcanoMonument"
+      ]
+    },
+    {
+      "type": "MtOlympusGates",
+      "entry": "olympusgates",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "MtOlympus_Gates",
+        "MtOlympus_Gates_Greece"
+      ]
+    },
+    {
+      "type": "MtOlympusStatue",
+      "entry": "bindingstatue",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BindingStatue_Artemis_MtOlympus_Greece",
+        "BindingStatue_Athena_MtOlympus_Greece",
+        "BindingStatue_Hephaestus_MtOlympus_Greece",
+        "BindingStatue_Hermes_MtOlympus_Greece"
+      ]
+    },
+    {
+      "type": "Oracle",
+      "entry": "oracle",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Oracle_Greece"
+      ]
+    },
+    {
+      "type": "Payable",
+      "entry": "unknown",
+      "disposition": "通用基类",
+      "resourceNames": []
+    },
+    {
+      "type": "PayableAssembledBuildSpawner",
+      "entry": "unknown",
+      "disposition": "内部组装生成入口：以生成后的设施身份为准",
+      "resourceNames": [
+        "Body Parts",
+        "FixedForge"
+      ]
+    },
+    {
+      "type": "PayableBoat",
+      "entry": "boat",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Boat",
+        "Boat_bamboo",
+        "Boat_deadlands",
+        "Boat_greece",
+        "Boat_norselands"
+      ]
+    },
+    {
+      "type": "PayableBombLeft",
+      "entry": "bombpurchase",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BombBannerLeft"
+      ]
+    },
+    {
+      "type": "PayableBombPurchase",
+      "entry": "bombpurchase",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": []
+    },
+    {
+      "type": "PayableBombRight",
+      "entry": "bombpurchase",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BombBannerRight"
+      ]
+    },
+    {
+      "type": "PayableBorder",
+      "entry": "border",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Border",
+        "Border_bamboo",
+        "Border_greece",
+        "Border_norselands"
+      ]
+    },
+    {
+      "type": "PayableBorderBanner",
+      "entry": "formationbanner",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BBB"
+      ]
+    },
+    {
+      "type": "PayableBush",
+      "entry": "berry",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BerryBush",
+        "BerryBush_Greece",
+        "BerryBush_norselands"
+      ]
+    },
+    {
+      "type": "PayableComponent",
+      "entry": "unknown",
+      "disposition": "通用交互：由同本体专用组件或精确资源名称分发",
+      "resourceNames": [
+        "Artemis_Cage_Greece",
+        "Athena_Tree_Greece",
+        "BBB",
+        "BindingStatue_Artemis_Unbuilt_MtOlympus_Greece",
+        "BindingStatue_Athena_Unbuilt_Greece Variant",
+        "BindingStatue_Hephaestus_Unbuilt_Greece Variant",
+        "BindingStatue_Hermes_Unbuilt_Greece Variant",
+        "Bunny Statue",
+        "Bunny_Idol",
+        "Buyback tent",
+        "CrownStatue_MtOlympus_Greece",
+        "CrownStatue_Unbuilt_MtOlympus_Greece",
+        "Easter Bag Payable",
+        "Egg Mound",
+        "FishingRod",
+        "Gold_nugget_Party",
+        "GreedGolem",
+        "Hephaestus_Forge_Unbuilt_Greece",
+        "Hephaestus_Hammer_greece",
+        "Hermes Bag Payable",
+        "Hermes_Dock",
+        "Hermes_Shade",
+        "Hermes_Shade [Forced]",
+        "Idol_Artemis_greece",
+        "Idol_Athena_greece",
+        "Idol_Hepaestus_greece",
+        "Idol_Hermes_greece",
+        "Idol_Oracle_greece",
+        "MtOlympus_Serpent_Weakpoint",
+        "Oracle_Greece",
+        "P2 stag spawner",
+        "PillarCenter",
+        "PillarLeft",
+        "PillarRight",
+        "Puzzle Shard 1",
+        "Puzzle Shard 2",
+        "Puzzle Shard 3",
+        "Quest_Reward_Artemis",
+        "Quest_Reward_Athena",
+        "Quest_Reward_Hephaestus",
+        "Quest_Reward_Hermes",
+        "Shipyard_greece",
+        "Shipyard_Small_greece",
+        "Statue_Buildable_Party",
+        "StatueDay",
+        "StatueNight",
+        "Tower_upgrade_Fire_greece",
+        "TrojanHorse_ConstructionSite",
+        "TrojanHorse_Crown",
+        "TrojanHorse_MtOlympus_Serpent_Greece",
+        "TrojanHorse_SummoningBell",
+        "TrojanHorse_Wheel"
+      ]
+    },
+    {
+      "type": "PayableCrownStatue",
+      "entry": "crownstatue",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "CrownStatue_MtOlympus_Greece"
+      ]
+    },
+    {
+      "type": "PayableFishingRod",
+      "entry": "fishingrod",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "FishingRod"
+      ]
+    },
+    {
+      "type": "PayableForge",
+      "entry": "forge",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": []
+    },
+    {
+      "type": "PayableGemChest",
+      "entry": "chest",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "GemBankChest"
+      ]
+    },
+    {
+      "type": "PayableGemGuard",
+      "entry": "gemguard",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "GemGuard"
+      ]
+    },
+    {
+      "type": "PayableHorn",
+      "entry": "unknown",
+      "disposition": "号角墙：专用读取器识别",
+      "resourceNames": [
+        "Horn"
+      ]
+    },
+    {
+      "type": "PayablePlayer",
+      "entry": "unknown",
+      "disposition": "排除：玩家内部交互，不是建筑",
+      "resourceNames": [
+        "Player"
+      ]
+    },
+    {
+      "type": "PayableShield",
+      "entry": "shield",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "BerzerkerTowerShop_norselands",
+        "CastleShieldShop"
+      ]
+    },
+    {
+      "type": "PayableShieldWallActivator",
+      "entry": "shieldwall",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "ActiveShieldWallTotem"
+      ]
+    },
+    {
+      "type": "PayableShop",
+      "entry": "unknown",
+      "disposition": "商店：运行时商品类型分发",
+      "resourceNames": [
+        "Bakery_Party",
+        "FarmhouseStable_norselands",
+        "Forge",
+        "Forge_bamboo",
+        "Forge_deadlands",
+        "Forge_greece",
+        "Forge_norselands",
+        "ShopBow",
+        "ShopBow_bamboo",
+        "ShopBow_deadlands",
+        "ShopBow_greece",
+        "ShopBow_norselands",
+        "ShopBow_Party",
+        "ShopBow_springEdict",
+        "ShopHammer",
+        "ShopHammer_bamboo",
+        "ShopHammer_deadlands",
+        "ShopHammer_greece",
+        "ShopHammer_norselands",
+        "ShopHammer_Party",
+        "ShopHammer_springEdict",
+        "ShopScythe",
+        "ShopScythe_bamboo",
+        "ShopScythe_deadlands",
+        "ShopScythe_greece",
+        "ShopScythe_norselands",
+        "ShopScythe_Party",
+        "ShopScythe_springEdict",
+        "Tower Baker",
+        "Tower Baker_bamboo",
+        "Tower Baker_deadlands",
+        "Tower_upgrade_Bread_greece",
+        "Tower_upgrade_Mead_norselands"
+      ]
+    },
+    {
+      "type": "PayableSidedShop",
+      "entry": "unknown",
+      "disposition": "商店：运行时商品与侧边商店枚举分发",
+      "resourceNames": [
+        "ShopBerserker_norselands",
+        "ShopNinja",
+        "ShopNpcShield_norselands",
+        "ShopPike",
+        "ShopPike_deadlands",
+        "ShopPike_greece",
+        "ShopPike_Party",
+        "ShopPike_springEdict"
+      ]
+    },
+    {
+      "type": "PayableTeleporter",
+      "entry": "teleporter",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Teleporter"
+      ]
+    },
+    {
+      "type": "PayableTree",
+      "entry": "tree",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "bambooTree",
+        "birchTree",
+        "hickoryTree",
+        "oakTree",
+        "Tree",
+        "TreeBirchNorselands",
+        "TreeCypress_Greece",
+        "TreeCypress_Greece_SpringEdict",
+        "TreeDeadlands",
+        "TreeNoleavesDeadlands",
+        "TreeOlive_Greece",
+        "TreeOlive_Greece_SpringEdict",
+        "TreePine_Greece",
+        "TreePine_Greece_SpringEdict",
+        "TreePineNorselands",
+        "TreeSpruceNorselands",
+        "TreeWild_Pear_Greece",
+        "TreeWild_Pear_Greece_SpringEdict"
+      ]
+    },
+    {
+      "type": "PayableUpgrade",
+      "entry": "unknown",
+      "disposition": "通用升级：按资源名称/升级目标识别",
+      "resourceNames": [
+        "Artemis_Cage_Unbuilt_Greece",
+        "Athena_Farmhouse0_greece",
+        "Beggar_Camp_Rubble",
+        "Beggar_Camp_Rubble_Bamboo",
+        "Beggar_Camp_Rubble_Deadlands",
+        "Beggar_Camp_Rubble_greece",
+        "Beggar_Camp_Rubble_Norselands",
+        "BlockedCaveEntrance_Greece",
+        "BoatSailPosition",
+        "BoatSailPosition Stone",
+        "BoatSailPosition Stone_Greece",
+        "BoatSailPosition_Greece",
+        "Castle0",
+        "Castle0_greece",
+        "Castle0_norselands",
+        "Castle0_Party",
+        "Castle1",
+        "Castle1_greece",
+        "Castle1_norselands",
+        "Castle1_Party",
+        "Castle2",
+        "Castle2_greece",
+        "Castle2_norselands",
+        "Castle2_Party",
+        "Castle2_springEdict",
+        "Castle3",
+        "Castle3_greece",
+        "Castle3_norselands",
+        "Castle3_Party",
+        "Castle3_springEdict",
+        "Castle4",
+        "Castle4_bamboo",
+        "Castle4_deadlands",
+        "Castle4_greece",
+        "Castle4_norselands",
+        "Castle4_Party",
+        "Castle4_springEdict",
+        "Castle5",
+        "Castle5_bamboo",
+        "Castle5_deadlands",
+        "Castle5_greece",
+        "Castle5_norselands",
+        "Castle5_Party",
+        "Castle5_springEdict",
+        "Castle6",
+        "Castle6_bamboo",
+        "Castle6_deadlands",
+        "Castle6_greece",
+        "Castle6_norselands",
+        "Castle6_Party",
+        "Castle6_springEdict",
+        "Castle7",
+        "Castle7_bamboo",
+        "Castle7_deadlands",
+        "Castle7_greece",
+        "Castle7_norselands",
+        "Castle7_Party",
+        "Castle7_springEdict",
+        "Farmhouse0",
+        "Farmhouse0_greece",
+        "Farmhouse0_norselands",
+        "Farmhouse1",
+        "Farmhouse1_Bamboo",
+        "Farmhouse1_greece",
+        "Farmhouse1_norselands",
+        "Farmhouse2",
+        "Farmhouse2_Bamboo",
+        "Farmhouse2_greece",
+        "Farmhouse2_norselands",
+        "Lighthouse_Stone",
+        "Lighthouse_Stone_greece",
+        "Lighthouse_Stone_norselands",
+        "Lighthouse_undeveloped",
+        "Lighthouse_undeveloped_greece",
+        "Lighthouse_undeveloped_norselands",
+        "Lighthouse_Wood",
+        "Lighthouse_Wood_greece",
+        "Lighthouse_Wood_greece_oracle",
+        "Lighthouse_Wood_norselands",
+        "Logging_tier1_undeveloped_norselands",
+        "Logging_tier2_undeveloped_norselands",
+        "Mason Shrine Wood",
+        "Mine_undeveloped",
+        "Mine_undeveloped_deadlands",
+        "Mine_undeveloped_greece",
+        "Quarry_undeveloped",
+        "Quarry_undeveloped_deadlands",
+        "Quarry_undeveloped_greece",
+        "Shipyard_Small_Unbuilt_Greece",
+        "Steed_BirthdayParty_Abandoned",
+        "Steed_Chimera_BlockedCaveEntrance_Greece",
+        "TeleporterRift",
+        "Temple_Oracle_Unbuilt_Greece",
+        "Tholos_Artemis_Unbuilt_Greece",
+        "Tholos_Athena_Unbuilt_Greece",
+        "Tholos_Hephaestus_Unbuilt_Greece",
+        "Tholos_Hermes_Unbuilt_Greece",
+        "Tholos_SpringEdict_Unbuilt_Greece",
+        "Tower0",
+        "Tower0_greece",
+        "Tower0_greece (1)",
+        "Tower0_greece (2)",
+        "Tower0_greece (3)",
+        "Tower0_greece (4)",
+        "Tower0_norselands",
+        "Tower0_norselands (1)",
+        "Tower0_norselands (2)",
+        "Tower0_norselands (3)",
+        "Tower0B (1)",
+        "Tower0B 1",
+        "Tower0B 1 (1)",
+        "Tower1",
+        "Tower1_bamboo",
+        "Tower1_greece",
+        "Tower1_norselands",
+        "Tower2",
+        "Tower2_bamboo",
+        "Tower2_greece",
+        "Tower2_norselands",
+        "Tower3",
+        "Tower3_bamboo",
+        "Tower3_greece",
+        "Tower3_norselands",
+        "Tower4",
+        "Tower4_bamboo",
+        "Tower4_greece",
+        "Tower4_norselands",
+        "Tower5",
+        "Tower5_Bamboo",
+        "Tower5_greece",
+        "Tower5_norselands",
+        "Tower6",
+        "Tower6_Bamboo",
+        "Tower6_Deadlands",
+        "Tower6_greece",
+        "Tower6_norselands",
+        "Wall0",
+        "Wall1",
+        "Wall1 Wreck",
+        "Wall1 Wreck_greece",
+        "Wall1 Wreck_norselands",
+        "Wall1_greece",
+        "Wall1_norselands",
+        "Wall2",
+        "Wall2 Wreck",
+        "Wall2 Wreck_greece",
+        "Wall2 Wreck_norselands",
+        "Wall2_Bamboo",
+        "Wall2_greece",
+        "Wall2_norselands",
+        "Wall3",
+        "Wall3 Wreck",
+        "Wall3 Wreck_greece",
+        "Wall3 Wreck_norselands",
+        "Wall3_Bamboo",
+        "Wall3_greece",
+        "Wall3_norselands",
+        "Wall4",
+        "Wall4 Wreck",
+        "Wall4 Wreck_greece",
+        "Wall4 Wreck_norselands",
+        "Wall4_Bamboo",
+        "Wall4_greece",
+        "Wall4_horn",
+        "Wall4_Horn_Bamboo",
+        "Wall4_horn_greece",
+        "Wall4_horn_norselands",
+        "Wall4_norselands",
+        "Wall5",
+        "Wall5 Wreck",
+        "Wall5 Wreck_greece",
+        "Wall5 Wreck_norselands",
+        "Wall5_Bamboo",
+        "Wall5_greece",
+        "Wall5_horn",
+        "Wall5_Horn_Bamboo",
+        "Wall5_horn_greece",
+        "Wall5_horn_norselands",
+        "Wall5_norselands",
+        "Wreck",
+        "Wreck (1)",
+        "Wreck_Greece"
+      ]
+    },
+    {
+      "type": "PayableWorkshop",
+      "entry": "workshop",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Workshop",
+        "Workshop_bamboo",
+        "Workshop_Deadlands",
+        "Workshop_greece"
+      ]
+    },
+    {
+      "type": "PayableWorkshopBarrel",
+      "entry": "barrel",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Barrel"
+      ]
+    },
+    {
+      "type": "PayableXbox",
+      "entry": "unknown",
+      "disposition": "保留未知：平台交互类，本机资源无实例",
+      "resourceNames": []
+    },
+    {
+      "type": "Persephone",
+      "entry": "persephone",
+      "disposition": "人物，保留既有原生人物分发",
+      "resourceNames": [
+        "Persephone"
+      ]
+    },
+    {
+      "type": "PersephoneCage",
+      "entry": "persephonecage",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Athena_Persephone_Cage_greece"
+      ]
+    },
+    {
+      "type": "PlayerCargo",
+      "entry": "unknown",
+      "disposition": "排除建筑：搬运物件；已确认神像供品另用精确名称识别",
+      "resourceNames": [
+        "Bunny_Idol",
+        "Gold_nugget_Party",
+        "Hephaestus_Hammer_greece",
+        "Idol_Artemis_greece",
+        "Idol_Athena_greece",
+        "Idol_Hepaestus_greece",
+        "Idol_Hermes_greece",
+        "Idol_Oracle_greece",
+        "TrojanHorse_Crown",
+        "TrojanHorse_Wheel"
+      ]
+    },
+    {
+      "type": "PushableStatue",
+      "entry": "pushablestatue",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Statue_Pushable_Party"
+      ]
+    },
+    {
+      "type": "QuestLocationTag",
+      "entry": "unknown",
+      "disposition": "排除：任务定位标签，不能单独确定设施身份",
+      "resourceNames": [
+        "Artemis_Cage_Greece",
+        "Artemis_Cage_Unbuilt_Greece",
+        "Athena_Persephone_Cage_greece",
+        "Athena_Tree_Greece",
+        "Bunny Statue",
+        "ForestPortal Artemis",
+        "ForestPortal Athena",
+        "ForestPortal Hephaestus",
+        "ForestPortal Hermes",
+        "ForestPortal Oracle",
+        "ForestPortal Spring",
+        "ForestPortal SpringEdict",
+        "Greed_Location",
+        "Greed_Location_Artemis",
+        "Greed_Location_Athena",
+        "Greed_Location_Hephaestus",
+        "Greed_Location_Hepheastus",
+        "Greed_Location_Hermes",
+        "GreedGolem",
+        "Hephaestus_Forge_Built_Greece",
+        "Hephaestus_Forge_Unbuilt_Greece",
+        "Hephaestus_Hammer_Location",
+        "Hephaestus_Portal_Greece",
+        "Hind",
+        "MtOlympus_Gates",
+        "MtOlympus_Gates_Greece",
+        "MtOlympus_Serpent_Weakpoint",
+        "Oracle_Greece",
+        "QuestLocatorAnchor",
+        "Statue_Buildable_Party",
+        "Statue_Pushable_Party",
+        "Steed_BirthdayParty_Abandoned",
+        "Temple_Oracle_Greece",
+        "Temple_Oracle_Unbuilt_Greece",
+        "Tholos_Artemis_Greece",
+        "Tholos_Artemis_Unbuilt_Greece",
+        "Tholos_Athena_Greece",
+        "Tholos_Athena_Unbuilt_Greece",
+        "Tholos_Base_Greece",
+        "Tholos_Hephaestus_Greece",
+        "Tholos_Hephaestus_Unbuilt_Greece",
+        "Tholos_Hermes_Greece",
+        "Tholos_Hermes_Unbuilt_Greece",
+        "Tholos_SpringEdict",
+        "Tholos_SpringEdict_Unbuilt_Greece"
+      ]
+    },
+    {
+      "type": "SerpentLevelTrojanHorse",
+      "entry": "trojan",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "TrojanHorse_MtOlympus_Serpent_Greece"
+      ]
+    },
+    {
+      "type": "Shipyard",
+      "entry": "shipyard",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Shipyard_greece",
+        "Shipyard_Small_greece"
+      ]
+    },
+    {
+      "type": "Signpost",
+      "entry": "signpost",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Signpost"
+      ]
+    },
+    {
+      "type": "Snowman",
+      "entry": "snowman",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Snowman"
+      ]
+    },
+    {
+      "type": "SpringEdictMonument",
+      "entry": "monument",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Bonfire"
+      ]
+    },
+    {
+      "type": "StagSpawnerHelper",
+      "entry": "steed",
+      "disposition": "排除建筑：坐骑生成辅助",
+      "resourceNames": [
+        "P2 stag spawner"
+      ]
+    },
+    {
+      "type": "Statue",
+      "entry": "statue",
+      "disposition": "原生神祇枚举分发",
+      "resourceNames": [
+        "Statue Archer",
+        "Statue Farmer",
+        "Statue Knight",
+        "Statue Pike",
+        "Statue Worker"
+      ]
+    },
+    {
+      "type": "Steed",
+      "entry": "steed",
+      "disposition": "坐骑枚举分发",
+      "resourceNames": [
+        "Bear",
+        "Bear Greece",
+        "Beetle",
+        "BMXBike",
+        "BMXBike P2",
+        "Catcart_norselands",
+        "Cerberus Greece",
+        "Chariot Day Greece",
+        "Chariot Night Greece",
+        "Chimera Greece",
+        "Donkey Greece",
+        "Gamigin",
+        "Golem",
+        "Griffin Greece",
+        "Griffin P1",
+        "Griffin P2",
+        "Griffin Skull P1",
+        "Griffin Skull P2",
+        "Gullinbursti",
+        "Hippocampus Greece",
+        "Horse Burst",
+        "Horse DayNight_norselands",
+        "Horse Fast",
+        "Horse Regular",
+        "Horse Regular P1 Greece",
+        "Horse Regular P2",
+        "Horse Regular P2 Greece",
+        "Horse Stamina",
+        "Horse Stamina Greece",
+        "Horse Stamina_bamboo",
+        "Kelpie",
+        "Kelpie P2",
+        "Kirin",
+        "Lizard",
+        "Molossian Hound Greece",
+        "Pegasus Greece",
+        "Rainbow Pony",
+        "Reindeer",
+        "Reindeer_norselands",
+        "Reindeer_norselands P2",
+        "Sleipnir",
+        "Spider Greece",
+        "Spookyhorse",
+        "Stag",
+        "Stag Greece",
+        "Stag P2",
+        "Stag P2 Greece",
+        "Unicorn",
+        "Unicorn Dark",
+        "Warhorse P1",
+        "Warhorse P2",
+        "Warhorse Plague P1",
+        "Warhorse Plague P2",
+        "Wolf Bamboo P1",
+        "Wolf Bamboo P2",
+        "Wolf Norselands P1",
+        "Wolf Norselands P2",
+        "Wolf P1",
+        "Wolf P2",
+        "Wolf_norselands"
+      ]
+    },
+    {
+      "type": "SteedSpawn",
+      "entry": "steed",
+      "disposition": "生成点内坐骑枚举分发",
+      "resourceNames": [
+        "Bearcave",
+        "BearCave_Greece",
+        "BeetleHouse",
+        "BlockedCaveEntrance_Greece",
+        "BlossomTree",
+        "BlossomTree_springEdict",
+        "BlossomTreeDark",
+        "BoarAltar_norselands",
+        "BoarAltar_norselands_trade_routes",
+        "BoarCave",
+        "CatCartArch_norselands",
+        "Egg",
+        "GamiginHouse",
+        "GolemHouse",
+        "Horse_DayNight_area_norselands",
+        "HouseRuin_Greece",
+        "KelpiePool_norselands",
+        "King Grave",
+        "Mansion",
+        "Marketplace_Greece",
+        "Meadow",
+        "Meadow_Greece",
+        "MountAreaBeetle",
+        "MountAreaBonus1",
+        "MountAreaBonus2",
+        "MountAreaGolem",
+        "MountAreaGriffin",
+        "MountAreaGriffin_Greece",
+        "PegasusStatue_Greece",
+        "Reindeer_area_norselands",
+        "Santa House",
+        "SleipnirTree_norselands",
+        "Steed_Bear_Cave_Greece",
+        "Steed_BirthdayParty_Activated",
+        "Steed_Cerberus_Underworld_Greece",
+        "Steed_Chimera_BlockedCaveEntrance_Greece",
+        "Steed_Chimera_BlockedCaveEntranceComplete_Greece",
+        "Steed_Donkey_Marketplace_Greece",
+        "Steed_Donkey_Marketplace_Greece Trade Routes",
+        "Steed_Griffin_Crash_Greece",
+        "Steed_Horse_Stamina_Meadow_Greece",
+        "Steed_Molossian_Hound_HouseRuin_Greece",
+        "Steed_Pegasus_Statue_Greece",
+        "Steed_Spider_WebbedTrees_Greece",
+        "Steed_Stag_Waterfall_Greece",
+        "SteedSpawn",
+        "SteedSpawnDay",
+        "SteedSpawnNight",
+        "SwampTree",
+        "Waterfall",
+        "Waterfall_Greece",
+        "WebbedTrees_Greece",
+        "WolfRock_norselands"
+      ]
+    },
+    {
+      "type": "Telescope",
+      "entry": "unknown",
+      "disposition": "证据不足：只有原生类，本机资源无实例",
+      "resourceNames": []
+    },
+    {
+      "type": "ThorPuzzleHammer",
+      "entry": "thor",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "hammer"
+      ]
+    },
+    {
+      "type": "ThorPuzzlePillar",
+      "entry": "thor",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "pillar1",
+        "pillar2",
+        "pillar3",
+        "pillar4",
+        "pillar5",
+        "pillar6",
+        "pillar7"
+      ]
+    },
+    {
+      "type": "ThorPuzzleStatue",
+      "entry": "thor",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "statue"
+      ]
+    },
+    {
+      "type": "TimedStatue",
+      "entry": "statue",
+      "disposition": "原生神祇枚举分发",
+      "resourceNames": [
+        "Statue Farmer Timed"
+      ]
+    },
+    {
+      "type": "TimeStatue",
+      "entry": "hourglass",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Statue Time"
+      ]
+    },
+    {
+      "type": "TrojanHorse",
+      "entry": "trojan",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "TrojanHorse_MtOlympus",
+        "TrojanHorse_MtOlympus_Greece"
+      ]
+    },
+    {
+      "type": "TrojanHorseSummoningBell",
+      "entry": "trojanbell",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "TrojanHorse_SummoningBell"
+      ]
+    },
+    {
+      "type": "UnlockNewRulerStatue",
+      "entry": "rulerstatue",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Statue Unlock Ruler"
+      ]
+    },
+    {
+      "type": "Wharf",
+      "entry": "wharf",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "Wharf",
+        "Wharf_deadlands",
+        "Wharf_greece",
+        "Wharf_norselands"
+      ]
+    },
+    {
+      "type": "WorkableBuilding",
+      "entry": "unknown",
+      "disposition": "通用建筑：按专用组件、名称及建造状态分发",
+      "resourceNames": [
+        "Artemis_Cage_Greece",
+        "Athena_Farmhouse2_greece",
+        "Bakery_Party",
+        "BindingStatue_Artemis_MtOlympus_Greece",
+        "BindingStatue_Athena_MtOlympus_Greece",
+        "BindingStatue_Hephaestus_MtOlympus_Greece",
+        "BindingStatue_Hermes_MtOlympus_Greece",
+        "Boat_Fleet_Workable_Greece",
+        "Catapult",
+        "Citizen_House",
+        "Citizen_House_Bamboo",
+        "Citizen_House_Deadlands",
+        "Citizen_House_greece",
+        "Citizen_House_Norselands",
+        "Farmhouse1",
+        "Farmhouse1_Bamboo",
+        "Farmhouse1_greece",
+        "Farmhouse1_norselands",
+        "Farmhouse2",
+        "Farmhouse2_Bamboo",
+        "Farmhouse2_greece",
+        "Farmhouse2_norselands",
+        "FarmhouseStable",
+        "FarmhouseStable_Bamboo",
+        "FarmhouseStable_deadlands",
+        "FarmhouseStable_greece",
+        "FarmhouseStable_norselands",
+        "Forge",
+        "Forge_bamboo",
+        "Forge_deadlands",
+        "Forge_greece",
+        "Forge_norselands",
+        "Keep",
+        "Lighthouse_Iron",
+        "Lighthouse_Iron_greece",
+        "Lighthouse_Iron_norselands",
+        "Lighthouse_Stone",
+        "Lighthouse_Stone_greece",
+        "Lighthouse_Stone_norselands",
+        "Lighthouse_Wood",
+        "Lighthouse_Wood_greece",
+        "Lighthouse_Wood_greece_oracle",
+        "Lighthouse_Wood_norselands",
+        "Logging_tier1_norselands",
+        "Logging_tier2_norselands",
+        "Mason Shrine Stone",
+        "Mine",
+        "Mine_deadlands",
+        "Mine_greece",
+        "PrebuiltCatapult",
+        "Quarry",
+        "Quarry_deadlands",
+        "Quarry_greece",
+        "Shipyard_Small_greece",
+        "ShopBerserker_norselands",
+        "ShopBow",
+        "ShopBow_bamboo",
+        "ShopBow_deadlands",
+        "ShopBow_greece",
+        "ShopBow_norselands",
+        "ShopBow_Party",
+        "ShopBow_springEdict",
+        "ShopChangeItem_greece",
+        "ShopChangeItem_norselands",
+        "ShopChangeRuler",
+        "ShopHammer",
+        "ShopHammer_bamboo",
+        "ShopHammer_deadlands",
+        "ShopHammer_greece",
+        "ShopHammer_norselands",
+        "ShopHammer_Party",
+        "ShopHammer_springEdict",
+        "ShopNinja",
+        "ShopNpcShield_norselands",
+        "ShopPike",
+        "ShopPike_deadlands",
+        "ShopPike_greece",
+        "ShopPike_Party",
+        "ShopPike_springEdict",
+        "ShopScythe",
+        "ShopScythe_bamboo",
+        "ShopScythe_deadlands",
+        "ShopScythe_greece",
+        "ShopScythe_norselands",
+        "ShopScythe_Party",
+        "ShopScythe_springEdict",
+        "Steed_Chimera_BlockedCaveEntranceComplete_Greece",
+        "Teleporter",
+        "Temple_Oracle_Greece",
+        "Tholos_Artemis_Greece",
+        "Tholos_Athena_Greece",
+        "Tholos_Base_Greece",
+        "Tholos_Hephaestus_Greece",
+        "Tholos_Hermes_Greece",
+        "Tholos_SpringEdict",
+        "Tower Baker",
+        "Tower Baker_bamboo",
+        "Tower Baker_deadlands",
+        "Tower Ballista",
+        "Tower Ballista_bamboo",
+        "Tower Ballista_deadlands",
+        "Tower Ballista_greece",
+        "Tower Knight",
+        "Tower Knight_bamboo",
+        "Tower Knight_greece",
+        "Tower_upgrade_Berzerker_norselands",
+        "Tower_upgrade_Bread_greece",
+        "Tower_upgrade_Fire_greece",
+        "Tower_upgrade_FireOil_norselands",
+        "Tower_upgrade_Mead_norselands",
+        "Tower1",
+        "Tower1_bamboo",
+        "Tower1_greece",
+        "Tower1_norselands",
+        "Tower2",
+        "Tower2_bamboo",
+        "Tower2_greece",
+        "Tower2_norselands",
+        "Tower3",
+        "Tower3_bamboo",
+        "Tower3_greece",
+        "Tower3_norselands",
+        "Tower4",
+        "Tower4_bamboo",
+        "Tower4_greece",
+        "Tower4_norselands",
+        "Tower5",
+        "Tower5_Bamboo",
+        "Tower5_greece",
+        "Tower5_norselands",
+        "Tower6",
+        "Tower6_Bamboo",
+        "Tower6_Deadlands",
+        "Tower6_greece",
+        "Tower6_norselands",
+        "Wall1",
+        "Wall1_greece",
+        "Wall1_norselands",
+        "Wall2",
+        "Wall2_Bamboo",
+        "Wall2_greece",
+        "Wall2_norselands",
+        "Wall3",
+        "Wall3_Bamboo",
+        "Wall3_greece",
+        "Wall3_norselands",
+        "Wall4",
+        "Wall4_Bamboo",
+        "Wall4_greece",
+        "Wall4_horn",
+        "Wall4_Horn_Bamboo",
+        "Wall4_horn_greece",
+        "Wall4_horn_norselands",
+        "Wall4_norselands",
+        "Wall5",
+        "Wall5_Bamboo",
+        "Wall5_greece",
+        "Wall5_horn",
+        "Wall5_Horn_Bamboo",
+        "Wall5_horn_greece",
+        "Wall5_horn_norselands",
+        "Wall5_norselands",
+        "Workshop",
+        "Workshop_bamboo",
+        "Workshop_Deadlands",
+        "Workshop_greece"
+      ]
+    },
+    {
+      "type": "WorldEatingSerpentWeakPoint",
+      "entry": "serpent",
+      "disposition": "明确类型或既有名称识别",
+      "resourceNames": [
+        "MtOlympus_Serpent_Weakpoint"
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "raw": "Tower0_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower2_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe_norselands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower2",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopChangeRuler",
+      "components": [
+        "WorkableBuilding",
+        "ChangeRulerShop"
+      ],
+      "entry": "rulershop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower2_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Temple_Oracle_Greece",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag"
+      ],
+      "entry": "templeoracle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hind",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall1_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle2",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle3_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle2_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Base_Greece",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag"
+      ],
+      "entry": "temple",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle1_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBerserker_norselands",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "berserkershop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall1_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall0",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow_deadlands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_horn",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow_greece",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe_deadlands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Giant_Norselands",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_horn_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "hornwall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Temple_Oracle_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "templeoracle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopChangeItem_norselands",
+      "components": [
+        "WorkableBuilding",
+        "ChangeItemOfPowerShop"
+      ],
+      "entry": "powershop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle2_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Player",
+      "components": [
+        "PayablePlayer"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe_greece",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_horn_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "hornwall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopNpcShield_norselands",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "shield",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "LandOneMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle0_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tree",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopChangeItem_greece",
+      "components": [
+        "WorkableBuilding",
+        "ChangeItemOfPowerShop"
+      ],
+      "entry": "powershop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle1_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle0_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "GreedGolem",
+      "components": [
+        "GreedGolem",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "greedgolem",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle1",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall1",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle0",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle3",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle3_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow_norselands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Merchant",
+      "components": [
+        "Merchant"
+      ],
+      "entry": "merchant",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse0_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer_norselands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse0_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer_greece",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse0",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer_deadlands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Athena_Farmhouse0_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "athenafarm",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower1_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower1",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower1_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse1_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse2_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse2",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Athena_Farmhouse2_greece",
+      "components": [
+        "WorkableBuilding",
+        "AthenaFarmhouse"
+      ],
+      "entry": "athenafarm",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse1",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse2_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse1_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Boat_greece",
+      "components": [
+        "PayableBoat"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Boat",
+      "components": [
+        "PayableBoat"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Boat_deadlands",
+      "components": [
+        "PayableBoat"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Boat_norselands",
+      "components": [
+        "PayableBoat"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BlossomTree_springEdict",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BlossomTree",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BlossomTreeDark",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower3",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower3_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower_upgrade_FireOil_norselands",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "firetower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower3_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TeleporterRift",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "teleporter",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Baker_deadlands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "baker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower_upgrade_Bread_greece",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "baker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower_upgrade_Mead_norselands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "baker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Baker",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "baker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bakery_Party",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "baker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower4",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower4_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower4_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Meadow",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Horse_Stamina_Meadow_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wreck_Greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wreck",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower_upgrade_Fire_greece",
+      "components": [
+        "WorkableBuilding",
+        "FireTower",
+        "PayableComponent"
+      ],
+      "entry": "firetower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Knight",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "knighttower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower_upgrade_Berzerker_norselands",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "berserkertower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3 Wreck_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2 Wreck_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3 Wreck_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2 Wreck_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4 Wreck_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4 Wreck",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4 Wreck_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2 Wreck",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3 Wreck",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Workshop_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableWorkshop"
+      ],
+      "entry": "workshop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Workshop",
+      "components": [
+        "WorkableBuilding",
+        "PayableWorkshop"
+      ],
+      "entry": "workshop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall1 Wreck_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall1 Wreck_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall1 Wreck",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Reindeer_area_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "reindeer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Waterfall",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Stag_Waterfall_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Signpost",
+      "components": [
+        "Signpost"
+      ],
+      "entry": "signpost",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Knight",
+      "components": [
+        "Statue"
+      ],
+      "entry": "statueknight",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Pike",
+      "components": [
+        "Statue"
+      ],
+      "entry": "statuepike",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "CastleShieldShop",
+      "components": [
+        "PayableShield"
+      ],
+      "entry": "shield",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BerzerkerTowerShop_norselands",
+      "components": [
+        "PayableShield"
+      ],
+      "entry": "shield",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Archer",
+      "components": [
+        "Statue"
+      ],
+      "entry": "statuearcher",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Border_greece",
+      "components": [
+        "PayableBorder"
+      ],
+      "entry": "border",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Border",
+      "components": [
+        "PayableBorder"
+      ],
+      "entry": "border",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Border_norselands",
+      "components": [
+        "PayableBorder"
+      ],
+      "entry": "border",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Catapult",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "catapult",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Keep",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Fire_greece",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Athena_Persephone_Cage_greece",
+      "components": [
+        "PersephoneCage",
+        "QuestLocationTag"
+      ],
+      "entry": "persephonecage",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Baker_greece",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Baker",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Baker_norselands",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Burst",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Griffin P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "griffin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Fast",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Stamina",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Teleporter",
+      "components": [
+        "PayableTeleporter",
+        "WorkableBuilding"
+      ],
+      "entry": "teleporter",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mason Shrine Wood",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "masonshrine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit Horn",
+      "components": [
+        "Hermit"
+      ],
+      "entry": "hermit",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit Horsekeeper",
+      "components": [
+        "Hermit"
+      ],
+      "entry": "hermit",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Persephone",
+      "components": [
+        "Persephone"
+      ],
+      "entry": "persephone",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit Ballista",
+      "components": [
+        "Hermit"
+      ],
+      "entry": "hermit",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Ballista_norselands",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Ballista_greece",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Ballista",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Ballista",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "ballista",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Ballista_deadlands",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "ballista",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Ballista_bamboo",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "ballista",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Shipyard_greece",
+      "components": [
+        "Shipyard",
+        "PayableComponent"
+      ],
+      "entry": "shipyard",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermes_Dock",
+      "components": [
+        "PayableComponent",
+        "HermesDock"
+      ],
+      "entry": "hermesdock",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BerryBush_norselands",
+      "components": [
+        "PayableBush"
+      ],
+      "entry": "berry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BerryBush",
+      "components": [
+        "PayableBush"
+      ],
+      "entry": "berry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BerryBush_Greece",
+      "components": [
+        "PayableBush"
+      ],
+      "entry": "berry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Beggar_Camp_Rubble",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "beggarcamp",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Citizen_House",
+      "components": [
+        "CitizenHousePayable",
+        "WorkableBuilding"
+      ],
+      "entry": "citizenhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bear",
+      "components": [
+        "Steed"
+      ],
+      "entry": "bear",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_Crown",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "trojan",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_Wheel",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "trojan",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Farmer Timed",
+      "components": [
+        "TimedStatue"
+      ],
+      "entry": "statue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Farmer",
+      "components": [
+        "Statue"
+      ],
+      "entry": "statuefarmer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit Fire",
+      "components": [
+        "Hermit"
+      ],
+      "entry": "hermit",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit Baker",
+      "components": [
+        "Hermit"
+      ],
+      "entry": "hermit",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Worker",
+      "components": [
+        "Statue"
+      ],
+      "entry": "statueworker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Artemis_Cage_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "artemiscage",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Artemis_Cage_Greece",
+      "components": [
+        "ArtemisCage",
+        "WorkableBuilding",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "artemiscage",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Athena_Tree_Greece",
+      "components": [
+        "GiantGoldenAppleTree",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "appletree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Oracle_Greece",
+      "components": [
+        "Oracle",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "oracle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Shipyard_Small_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "shipyard",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "King Grave",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Knight_greece",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Knight_norselands",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Knight",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wharf_greece",
+      "components": [
+        "Wharf"
+      ],
+      "entry": "wharf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wharf_deadlands",
+      "components": [
+        "Wharf"
+      ],
+      "entry": "wharf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wharf_norselands",
+      "components": [
+        "Wharf"
+      ],
+      "entry": "wharf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_ConstructionSite",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent"
+      ],
+      "entry": "trojan",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wharf",
+      "components": [
+        "Wharf"
+      ],
+      "entry": "wharf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Warhorse P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit Knight",
+      "components": [
+        "Hermit"
+      ],
+      "entry": "hermit",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mason Shrine Stone",
+      "components": [
+        "MasonShrine",
+        "WorkableBuilding"
+      ],
+      "entry": "masonshrine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoarAltar_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bearcave",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "bear",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "SleipnirTree_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Pegasus_Statue_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Molossian_Hound_HouseRuin_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Cerberus_Underworld_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "CatCartArch_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "catcart",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Donkey_Marketplace_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "WolfRock_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "GolemHouse",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "golem",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "KelpiePool_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "kelpie",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Bear_Cave_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Spider_WebbedTrees_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse_DayNight_area_norselands",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "GamiginHouse",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "gamigin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BeetleHouse",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "beetle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Unicorn",
+      "components": [
+        "Steed"
+      ],
+      "entry": "unicorn",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Stag",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Catcart_norselands",
+      "components": [
+        "Steed"
+      ],
+      "entry": "catcart",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Gullinbursti",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Golem",
+      "components": [
+        "Steed"
+      ],
+      "entry": "golem",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Beetle",
+      "components": [
+        "Steed"
+      ],
+      "entry": "beetle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Gamigin",
+      "components": [
+        "Steed"
+      ],
+      "entry": "gamigin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Chariot Day Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "chariotday",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Spider Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "spider",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Chariot Night Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "chariotnight",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Snowman",
+      "components": [
+        "Snowman"
+      ],
+      "entry": "snowman",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mansion",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Reindeer",
+      "components": [
+        "Steed"
+      ],
+      "entry": "reindeer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Reindeer_norselands",
+      "components": [
+        "Steed"
+      ],
+      "entry": "reindeer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Santa House",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Spookyhorse",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "SwampTree",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_undeveloped_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_undeveloped",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_undeveloped_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Barrel",
+      "components": [
+        "PayableWorkshopBarrel"
+      ],
+      "entry": "barrel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horn",
+      "components": [
+        "PayableHorn"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Workshop_bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableWorkshop"
+      ],
+      "entry": "workshop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer_bamboo",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow_bamboo",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "GemBankChest",
+      "components": [
+        "PayableGemChest"
+      ],
+      "entry": "chest",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "LandThreeMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Gate_Norselands",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Tree_Norselands",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "VolcanoMonument",
+      "components": [
+        "MonumentVolcano"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "LandTwoMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BombBannerRight",
+      "components": [
+        "PayableBombRight"
+      ],
+      "entry": "bombpurchase",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower1_bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lizard",
+      "components": [
+        "Steed"
+      ],
+      "entry": "lizard",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7_bamboo",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7_deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FarmhouseStable_greece",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FarmhouseStable",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FarmhouseStable_deadlands",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FarmhouseStable_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableShop"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "PrebuiltCatapult",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "catapult",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Hermes_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Giant_Bonfire_SpringEdict",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Athena_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "LandFourMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Cliff_Norselands",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Hephaestus_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Oracle_Island_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Anniversary",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Artemis_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Serpent_Island_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower3_bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Boat_bamboo",
+      "components": [
+        "PayableBoat"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bomb",
+      "components": [
+        "Bomb"
+      ],
+      "entry": "bomb",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower5",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower5_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower5_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower5_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_horn_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "hornwall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_horn",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_horn_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "hornwall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Logging_tier1_norselands",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "logging1",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quarry_deadlands",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "quarry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quarry_greece",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "quarry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quarry",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "quarry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hephaestus_Forge_Built_Greece",
+      "components": [
+        "HephaestusForge",
+        "QuestLocationTag",
+        "QuestLocationTag"
+      ],
+      "entry": "hephaestusforge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hephaestus_Forge_Unbuilt_Greece",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "hephaestusforge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hephaestus_Portal_Greece",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "hephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoatSailPosition Stone",
+      "components": [
+        "BoatSailPosition",
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_SummoningBell",
+      "components": [
+        "TrojanHorseSummoningBell",
+        "PayableComponent"
+      ],
+      "entry": "trojanbell",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoatSailPosition",
+      "components": [
+        "BoatSailPosition",
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "birchTree",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Stone_greece",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Stone",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Stone_norselands",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Logging_tier2_undeveloped_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "logging2",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mine_undeveloped_deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "mine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mine_undeveloped",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "mine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mine_undeveloped_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "mine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower2_bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe_bamboo",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Egg",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Wood_greece",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Wood",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Wood_norselands",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Border_bamboo",
+      "components": [
+        "PayableBorder"
+      ],
+      "entry": "border",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5 Wreck_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5 Wreck_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5 Wreck",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Forge_bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableShop"
+      ],
+      "entry": "forge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopNinja",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "ninja",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MountAreaGriffin",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Griffin_Crash_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "bambooTree",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Regular P2 Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Regular P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Iron_greece",
+      "components": [
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Iron",
+      "components": [
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Iron_norselands",
+      "components": [
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Kirin",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Chimera Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "chimera",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hippocampus Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "hippocampus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BMXBike",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Kelpie",
+      "components": [
+        "Steed"
+      ],
+      "entry": "kelpie",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Donkey Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "donkey",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Pegasus Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "pegasus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Sleipnir",
+      "components": [
+        "Steed"
+      ],
+      "entry": "sleipnir",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse DayNight_norselands",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Regular P1 Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Baker_bamboo",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "baker",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "oakTree",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Snake_Norselands",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "LandFiveMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Longhouse_Norselands",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Forge_norselands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "forge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Forge_greece",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "forge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Forge",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "forge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Forge_deadlands",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "forge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower6_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower6_Deadlands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower6_norselands",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower6_greece",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower6",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Horsekeeper_greece",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Horsekeeper",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Horsekeeper_norselands",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopPike_deadlands",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "pike",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopPike",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "pike",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopPike_greece",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "pike",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mine_deadlands",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "mine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mine_greece",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "mine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Mine",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "mine",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Logging_tier2_norselands",
+      "components": [
+        "WorkableBuilding",
+        "EraUpgradeBuilding"
+      ],
+      "entry": "logging2",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "hickoryTree",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "GemGuard",
+      "components": [
+        "PayableGemGuard"
+      ],
+      "entry": "gemguard",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quarry_undeveloped_deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "quarry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Logging_tier1_undeveloped_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "logging1",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quarry_undeveloped_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "quarry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quarry_undeveloped",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "quarry",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Unlock Ruler",
+      "components": [
+        "UnlockNewRulerStatue"
+      ],
+      "entry": "rulerstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue Time",
+      "components": [
+        "TimeStatue"
+      ],
+      "entry": "hourglass",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5_deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5_bamboo",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MountAreaBonus1",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MountAreaBonus2",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower4_bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Horn_greece",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Horn",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermit House Horn_norselands",
+      "components": [
+        "Cabin"
+      ],
+      "entry": "cabin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4_deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4_bamboo",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "SummonBell",
+      "components": [
+        "BoatSummoningBell"
+      ],
+      "entry": "bell",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6_deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6_norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6_bamboo",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Warhorse Plague P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Warhorse Plague P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Athena_Unbuilt_Greece Variant",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Donkey_Marketplace_Greece Trade Routes",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hephaestus_Hammer_Location",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "hephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_greece (1)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FixedForge",
+      "components": [
+        "PayableAssembledBuildSpawner"
+      ],
+      "entry": "forge",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Hephaestus_Unbuilt_Greece Variant",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoarAltar_norselands_trade_routes",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_Horn_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopPike_springEdict",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "pike",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "SteedSpawnDay",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quest_Reward_Hermes",
+      "components": [
+        "ItemOfPowerReward",
+        "PayableComponent"
+      ],
+      "entry": "powerreward",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quest_Reward_Artemis",
+      "components": [
+        "ItemOfPowerReward",
+        "PayableComponent"
+      ],
+      "entry": "powerreward",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quest_Reward_Athena",
+      "components": [
+        "ItemOfPowerReward",
+        "PayableComponent"
+      ],
+      "entry": "powerreward",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Quest_Reward_Hephaestus",
+      "components": [
+        "ItemOfPowerReward",
+        "PayableComponent"
+      ],
+      "entry": "powerreward",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Egg Mound",
+      "components": [
+        "EggMound",
+        "PayableComponent"
+      ],
+      "entry": "eggmound",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Puzzle Shard 1",
+      "components": [
+        "CerberusPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "cerberuspuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoatSailPosition_Greece",
+      "components": [
+        "BoatSailPosition",
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Waterfall_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf Norselands P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "staff",
+      "components": [
+        "LokiPuzzleStaff"
+      ],
+      "entry": "lokipuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_norselands (2)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_norselands (3)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Griffin Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "griffin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FishingRod",
+      "components": [
+        "PayableFishingRod",
+        "PayableComponent"
+      ],
+      "entry": "fishingrod",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Hermes_Unbuilt_Greece Variant",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BombBannerLeft",
+      "components": [
+        "PayableBombLeft"
+      ],
+      "entry": "bombpurchase",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer_Party",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BBB",
+      "components": [
+        "PayableBorderBanner",
+        "PayableComponent"
+      ],
+      "entry": "formationbanner",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Workshop_Deadlands",
+      "components": [
+        "WorkableBuilding",
+        "PayableWorkshop"
+      ],
+      "entry": "workshop",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Greed_Location_Hephaestus",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "hephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Greed_Location_Athena",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Greed_Location_Artemis",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "artemis",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Greed_Location_Hermes",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "statue",
+      "components": [
+        "ThorPuzzleStatue"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Payable",
+      "components": [
+        "HeimdallPuzzlePillar"
+      ],
+      "entry": "heimdallpuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar5",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Stamina Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_greece (2)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_greece (4)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse2_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ActiveShieldWallTotem",
+      "components": [
+        "PayableShieldWallActivator"
+      ],
+      "entry": "shieldwall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf Norselands P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Idol_Oracle_greece",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "questidol",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow_springEdict",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue_Buildable_Party",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "statue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Statue_Pushable_Party",
+      "components": [
+        "PushableStatue",
+        "QuestLocationTag"
+      ],
+      "entry": "pushablestatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_BirthdayParty_Activated",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_BirthdayParty_Abandoned",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle3_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "PegasusStatue_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "StatueDay",
+      "components": [
+        "ChariotPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "chariotpuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopBow_Party",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "bow",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4_springEdict",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "P2 stag spawner",
+      "components": [
+        "StagSpawnerHelper",
+        "PayableComponent"
+      ],
+      "entry": "stag",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Artemis_Unbuilt_MtOlympus_Greece",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Beggar_Camp_Rubble_Bamboo",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "beggarcamp",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Beggar_Camp_Rubble_Deadlands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "beggarcamp",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Beggar_Camp_Rubble_Norselands",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "beggarcamp",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Beggar_Camp_Rubble_greece",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "beggarcamp",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Warhorse P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "HouseRuin_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoatSailPosition Stone_Greece",
+      "components": [
+        "BoatSailPosition",
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MtOlympus_Gates_Greece",
+      "components": [
+        "QuestLocationTag",
+        "MtOlympusGates"
+      ],
+      "entry": "olympusgates",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar1",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0B 1",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0B 1 (1)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0B (1)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall4_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Griffin P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "griffin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MtOlympus_Serpent_Weakpoint",
+      "components": [
+        "WorldEatingSerpentWeakPoint",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "serpent",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Marketplace_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreePine_Greece_SpringEdict",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_norselands (1)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermes_Shade",
+      "components": [
+        "HermesShade",
+        "PayableComponent"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Athena_MtOlympus_Greece",
+      "components": [
+        "WorkableBuilding",
+        "MtOlympusStatue"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Hermes_MtOlympus_Greece",
+      "components": [
+        "WorkableBuilding",
+        "MtOlympusStatue"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Hephaestus_MtOlympus_Greece",
+      "components": [
+        "WorkableBuilding",
+        "MtOlympusStatue"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle2_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Farmhouse1_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BoarCave",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle2_springEdict",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_Horn_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Body Parts",
+      "components": [
+        "PayableAssembledBuildSpawner"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Knight_bamboo",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "knighttower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Puzzle Shard 2",
+      "components": [
+        "CerberusPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "cerberuspuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Lighthouse_Wood_greece_oracle",
+      "components": [
+        "PayableUpgrade",
+        "WorkableBuilding",
+        "Lighthouse"
+      ],
+      "entry": "lighthouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "QuestLocatorAnchor",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Puzzle Shard 3",
+      "components": [
+        "CerberusPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "cerberuspuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle5_springEdict",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle0_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Ballista_greece",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "ballista",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "WebbedTrees_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Greed_Location_Hepheastus",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Stag P2 Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Stag P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Stag Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "puzzle_Hel_pillar2_norselands",
+      "components": [
+        "HelPuzzlePillar"
+      ],
+      "entry": "hel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "StatueNight",
+      "components": [
+        "ChariotPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "chariotpuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower0_greece (3)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "tower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hephaestus_Hammer_greece",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "hephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bunny_Idol",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "questidol",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Gold_nugget_Party",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hel Item",
+      "components": [
+        "HelPuzzleItem"
+      ],
+      "entry": "hel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "SteedSpawn",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bear Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "bear",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Reindeer_norselands P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "reindeer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "CrownStatue_Unbuilt_MtOlympus_Greece",
+      "components": [
+        "AssembledBuildProject",
+        "PayableComponent"
+      ],
+      "entry": "crownstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BindingStatue_Artemis_MtOlympus_Greece",
+      "components": [
+        "WorkableBuilding",
+        "MtOlympusStatue"
+      ],
+      "entry": "bindingstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "CrownStatue_MtOlympus_Greece",
+      "components": [
+        "PayableCrownStatue",
+        "PayableComponent"
+      ],
+      "entry": "crownstatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bunny Statue",
+      "components": [
+        "BunnyStatue",
+        "PayableComponent",
+        "QuestLocationTag"
+      ],
+      "entry": "bunnystatue",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "SteedSpawnNight",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MtOlympus_Gates",
+      "components": [
+        "QuestLocationTag",
+        "MtOlympusGates"
+      ],
+      "entry": "olympusgates",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Idol_Hepaestus_greece",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "questidol",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BearCave_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "bear",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Hephaestus_GodIsland_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Hermes_GodIsland_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Athena_GodIsland_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Monument_Artemis_GodIsland_Greece",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Citizen_House_Bamboo",
+      "components": [
+        "CitizenHousePayable",
+        "WorkableBuilding"
+      ],
+      "entry": "citizenhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Citizen_House_Norselands",
+      "components": [
+        "CitizenHousePayable",
+        "WorkableBuilding"
+      ],
+      "entry": "citizenhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Citizen_House_greece",
+      "components": [
+        "CitizenHousePayable",
+        "WorkableBuilding"
+      ],
+      "entry": "citizenhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Citizen_House_Deadlands",
+      "components": [
+        "CitizenHousePayable",
+        "WorkableBuilding"
+      ],
+      "entry": "citizenhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall5_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal Hephaestus",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "hephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal Athena",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "portal",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal SpringEdict",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "portal",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal Hermes",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "portal",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal Artemis",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "artemis",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal Oracle",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "portal",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle3_springEdict",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeWild_Pear_Greece_SpringEdict",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "PillarRight",
+      "components": [
+        "CerberusPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "cerberuspuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Idol_Athena_greece",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "questidol",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MountAreaBeetle",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Shipyard_Small_greece",
+      "components": [
+        "Shipyard",
+        "PayableComponent",
+        "WorkableBuilding"
+      ],
+      "entry": "shipyard",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "puzzle_Hel_pillar4_norselands",
+      "components": [
+        "HelPuzzlePillar"
+      ],
+      "entry": "hel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Artemis_Greece",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag"
+      ],
+      "entry": "templeartemis",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Hermes_Greece",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag"
+      ],
+      "entry": "templehermes",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Hephaestus_Greece",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag"
+      ],
+      "entry": "templehephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_SpringEdict",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag",
+        "BunnyTholos"
+      ],
+      "entry": "springtemple",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Athena_Greece",
+      "components": [
+        "WorkableBuilding",
+        "QuestLocationTag"
+      ],
+      "entry": "templeathena",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Idol_Hermes_greece",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "questidol",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall3_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeOlive_Greece_SpringEdict",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Hermes_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "templehermes",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Athena_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "templeathena",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Artemis_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "templeartemis",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_SpringEdict_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "springtemple",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tholos_Hephaestus_Unbuilt_Greece",
+      "components": [
+        "PayableUpgrade",
+        "QuestLocationTag"
+      ],
+      "entry": "templehephaestus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BlockedCaveEntrance_Greece",
+      "components": [
+        "PayableUpgrade",
+        "SteedSpawn"
+      ],
+      "entry": "cave",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Boat_Fleet_Workable_Greece",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Bonfire",
+      "components": [
+        "SpringEdictMonument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_MtOlympus_Serpent_Greece",
+      "components": [
+        "SerpentLevelTrojanHorse",
+        "PayableComponent"
+      ],
+      "entry": "trojan",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_MtOlympus_Greece",
+      "components": [
+        "TrojanHorse"
+      ],
+      "entry": "trojan",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Hermes Bag Payable",
+      "components": [
+        "CurrencyBagPayable",
+        "PayableComponent"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Easter Bag Payable",
+      "components": [
+        "CurrencyBagPayable",
+        "PayableComponent"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "puzzle_Hel_pillar3_norselands",
+      "components": [
+        "HelPuzzlePillar"
+      ],
+      "entry": "hel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Molossian Hound Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Cerberus Greece",
+      "components": [
+        "Steed"
+      ],
+      "entry": "cerberus",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf_norselands",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Rainbow Pony",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Unicorn Dark",
+      "components": [
+        "Steed"
+      ],
+      "entry": "unicorn",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar6",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle1_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "water_statues",
+      "components": [
+        "HeimdallPuzzleHorn"
+      ],
+      "entry": "heimdallpuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "hammer",
+      "components": [
+        "ThorPuzzleHammer"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MountAreaGriffin_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar3",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopHammer_springEdict",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "hammer",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle4_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "PillarCenter",
+      "components": [
+        "CerberusPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "cerberuspuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TrojanHorse_MtOlympus",
+      "components": [
+        "TrojanHorse"
+      ],
+      "entry": "trojan",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar7",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeWild_Pear_Greece",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeBirchNorselands",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeOlive_Greece",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeCypress_Greece",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeSpruceNorselands",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeDeadlands",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreePineNorselands",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeNoleavesDeadlands",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreePine_Greece",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar2",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopPike_Party",
+      "components": [
+        "PayableSidedShop",
+        "WorkableBuilding"
+      ],
+      "entry": "pike",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "pillar4",
+      "components": [
+        "ThorPuzzlePillar"
+      ],
+      "entry": "thor",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wall2_Bamboo",
+      "components": [
+        "WorkableBuilding",
+        "PayableUpgrade"
+      ],
+      "entry": "wall",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Greed_Location",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "unknown",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "DireMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Griffin Skull P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "griffin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Griffin Skull P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "griffin",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Idol_Artemis_greece",
+      "components": [
+        "PlayerCargo",
+        "PayableComponent"
+      ],
+      "entry": "questidol",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe_springEdict",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "puzzle_Hel_statue_norselands",
+      "components": [
+        "HelPuzzlePillar"
+      ],
+      "entry": "hel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6_springEdict",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TreeCypress_Greece_SpringEdict",
+      "components": [
+        "PayableTree"
+      ],
+      "entry": "tree",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TradeRoutesOneMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "TradeRoutesTwoMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "PlagueMonument",
+      "components": [
+        "Monument"
+      ],
+      "entry": "monument",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ForestPortal Spring",
+      "components": [
+        "QuestLocationTag"
+      ],
+      "entry": "portal",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle7_springEdict",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "MountAreaGolem",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "ShopScythe_Party",
+      "components": [
+        "PayableShop",
+        "WorkableBuilding"
+      ],
+      "entry": "scythe",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "puzzle_Hel_pillar1_norselands",
+      "components": [
+        "HelPuzzlePillar"
+      ],
+      "entry": "hel",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "PillarLeft",
+      "components": [
+        "CerberusPuzzlePillar",
+        "PayableComponent"
+      ],
+      "entry": "cerberuspuzzle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Meadow_Greece",
+      "components": [
+        "SteedSpawn"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "BMXBike P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Castle6_Party",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "castle",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Tower Knight_greece",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "knighttower",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Kelpie P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "kelpie",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wreck (1)",
+      "components": [
+        "PayableUpgrade"
+      ],
+      "entry": "boat",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Buyback tent",
+      "components": [
+        "GreedBuybackTrader",
+        "PayableComponent"
+      ],
+      "entry": "buyback",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Stamina_bamboo",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Chimera_BlockedCaveEntranceComplete_Greece",
+      "components": [
+        "SteedSpawn",
+        "WorkableBuilding"
+      ],
+      "entry": "steed",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Steed_Chimera_BlockedCaveEntrance_Greece",
+      "components": [
+        "PayableUpgrade",
+        "SteedSpawn"
+      ],
+      "entry": "cave",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "FarmhouseStable_Bamboo",
+      "components": [
+        "WorkableBuilding"
+      ],
+      "entry": "farmhouse",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf Bamboo P2",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Wolf Bamboo P1",
+      "components": [
+        "Steed"
+      ],
+      "entry": "wolf",
+      "resource": "resources.assets"
+    },
+    {
+      "raw": "Horse Regular",
+      "components": [
+        "Steed"
+      ],
+      "entry": "horse",
+      "resource": "sharedassets0.assets"
+    },
+    {
+      "raw": "Hermes_Shade [Forced]",
+      "components": [
+        "HermesShade",
+        "PayableComponent"
+      ],
+      "entry": "unknown",
+      "resource": "sharedassets0.assets"
+    }
+  ]
+}

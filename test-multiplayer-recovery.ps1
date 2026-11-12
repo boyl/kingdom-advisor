@@ -52,7 +52,7 @@ public class WorldProbe {
  public Snapshot State=new Snapshot();public Managers managers=new Managers();public bool FailDetails=true;public int DetailCalls;
  readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
  readonly Dictionary<int,Tuple<float,float>> Explored=new Dictionary<int,Tuple<float,float>>();
- public Enemy[] clientEnemies=Array.Empty<Enemy>();public float nextClientEnemyScan;string readContext="";int lastIsland=-1,lastSeed=int.MinValue;public Component[] detailBuildings=Array.Empty<Component>();public float nextBuildingScan;
+ public Enemy[] clientEnemies=Array.Empty<Enemy>();public float nextClientEnemyScan;string readContext="";int lastIsland=-1,lastSeed=int.MinValue;public Component[] detailBuildings=Array.Empty<Component>(),specialBuildings=Array.Empty<Component>();public float nextBuildingScan;
  Managers GetManagers()=>managers;public void ResetOptionalReads()=>optionalReads.Clear();
  $optionalMethod
  $worldMethod
@@ -75,7 +75,9 @@ $local.gameObject.activeInHierarchy=$false;$probe.Read($local,$camera);if($probe
 $world=[Test.WorldProbe]::new()
 foreach($i in 1..5){$world.ReadWorld();if(!$world.State.Playing -or !$world.State.Online -or $world.State.State -ne 'NetworkClientPlaying'){throw '世界详情异常阻止加入者基础游玩状态'}}
 if($world.DetailCalls -ne 3){throw '世界详情未在三次失败后停用'}
+$world.specialBuildings=@([Test.Component]::new());$world.detailBuildings=@([Test.Component]::new())
 $world.managers.game.state=[Test.Game+State]::Menu;$world.ReadWorld();if($world.State.Playing){throw '菜单被误判为游玩状态'}
+if($world.specialBuildings.Count -or $world.detailBuildings.Count){throw '退出场景后仍保留设施缓存'}
 $world.FailDetails=$false;$world.managers.game.state=[Test.Game+State]::NetworkClientPlaying;$world.ReadWorld()
 if($world.State.Day -ne 12){throw '重连后可选世界详情未恢复'}
 [Test.Level]::isGenerating=$true;$world.ReadWorld();if($world.State.Playing){throw '地图生成期间绕过安全门禁'}

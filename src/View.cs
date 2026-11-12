@@ -8,7 +8,7 @@ namespace KingdomAdvisor
     internal sealed class AdvisorView
     {
         private readonly Settings settings;private readonly AdvisorController controller;
-        private GUIStyle text,title,small,button,fillStyle;
+        private GUIStyle text,title,small,dayStyle,button,fillStyle;
         private Font font;private int lastSize;private bool stylesReady;
         private bool opacityDragging;private int activePanelOpacity=-1;
         private string lastCatalogKey="",lastLocationKey="";
@@ -68,6 +68,7 @@ namespace KingdomAdvisor
             text=new GUIStyle(GUI.skin.label){font=font,fontSize=size,wordWrap=true,richText=false,padding=new RectOffset(0,0,0,0)};text.normal.textColor=bodyText;
             title=new GUIStyle(text){fontSize=size+4};title.normal.textColor=gold;
             small=new GUIStyle(text){fontSize=Math.Max(14,size-2)};small.normal.textColor=muted;
+            dayStyle=new GUIStyle(small){wordWrap=false};
             button=new GUIStyle(text){alignment=TextAnchor.MiddleLeft,padding=new RectOffset(12,12,4,4)};
             fillStyle=new GUIStyle();fillStyle.normal.background=Texture2D.whiteTexture;
             var measure=text.CalcSize(new GUIContent("王国顾问 · 升级条件"));
@@ -160,8 +161,11 @@ namespace KingdomAdvisor
             float y=18;
             string heading="王国顾问";
             string clockHeader=ClockPresentation.Header(s.Clock,settings.ShowClock.Value);
-            string day="岛 "+s.Island+"   /   第 "+s.Day+" 天   /   "+clockHeader+" · "+Season(s.Season);
+            string day="岛 "+s.Island+" / 第 "+s.Day+" 天 / "+clockHeader+" · "+Season(s.Season);
             if(Localization.English)day="Island "+s.Island+" / Day "+s.Day+" / "+Localization.Text(clockHeader)+" · "+Season(s.Season);
+            // 单行页眉先测量再分配卡片宽度；附近详情沿用同一宽度与卡片边缘，避免覆盖。
+            float dayWidth=dayStyle.CalcSize(new GUIContent(Localization.Text(day))).x;
+            width=Math.Min(viewport.width-36,Math.Max(width,(float)Math.Ceiling(dayWidth)+34));
             string countdown=ClockPresentation.Countdown(s.Clock);
             var rows=new System.Collections.Generic.List<System.Tuple<string,string>>();
             void Info(string icon,string value){rows.Add(System.Tuple.Create(icon,value));}
@@ -172,7 +176,7 @@ namespace KingdomAdvisor
             if(settings.Status.Value){rows.AddRange(PopulationPresentation.Rows(s));Info("tower","建设科技 · "+(s.Iron?"高阶已解锁":s.Stone?"中阶已解锁":"基础")+(s.Online?" · 联机":""));}
             if(settings.MountInfo.Value&&player.Mount.Length>0&&viewport.height>=640){Info("horse","坐骑 "+player.Mount+" · "+player.MountState);Info("stamina","耐力 "+player.Stamina.ToString("F1")+(player.Fed>0?" · 饱食 "+player.Fed.ToString("F0")+" 秒":""));if(player.Ability.Length>0)Info("stamina",player.Ability);}
             float headingH=title.CalcHeight(new GUIContent(Localization.Text(heading)),width-32);
-            float dayH=small.CalcHeight(new GUIContent(Localization.Text(day)),width-32);
+            float dayH=dayStyle.CalcHeight(new GUIContent(Localization.Text(day)),width-32);
             float statusH=rows.Sum(r=>small.CalcHeight(new GUIContent(Localization.Text(r.Item2)),width-60)+5);
             float clockH=small.CalcHeight(new GUIContent(Localization.Text(countdown)),width-32)+18;
             float cardH=16+headingH+6+dayH+18+clockH+statusH+16;
@@ -181,7 +185,7 @@ namespace KingdomAdvisor
             if(settings.ShowKingdomAdvisor.Value){
             var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);advisorRect=statusRect;activePanelOpacity=settings.PanelOpacities[OptionId.AdvisorOpacity].Value;Card(statusRect,settings.AdvisorTransparent.Value);
             float cy=statusRect.y+16;cy+=Row(statusRect.x+16,cy,width-32,heading+"  ⇄",title)+2;
-            cy+=Row(statusRect.x+16,cy,width-32,day,small)+4;
+            cy+=Row(statusRect.x+16,cy,width-32,day,dayStyle)+4;
             cy+=Row(statusRect.x+16,cy,width-32,countdown,small)+6;
             DrawClockProgress(new Rect(statusRect.x+16,cy,width-32,6),s.Clock);cy+=14;
             Fill(new Rect(statusRect.x+16,cy-5,width-32,1),border);

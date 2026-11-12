@@ -17,6 +17,7 @@ foreach($name in @('Model.cs','View.cs','AssistModel.cs','MapPresentation.cs','I
     $source=[IO.File]::ReadAllText((Join-Path $PSScriptRoot "src/$name"))
     if($name -eq 'Plugin.cs'){$source=$source.Substring($source.IndexOf('        private void ReadPlayer('))}
     foreach($match in [regex]::Matches($source,'"(?:[^"\\]|\\.)*"')){
+        if($match.Value -notmatch '[\u4e00-\u9fff]'){continue}
         $literal=[regex]::Unescape($match.Value.Substring(1,$match.Value.Length-2))
         if($literal -notmatch '[\u4e00-\u9fff]'){continue}
         $english=[KingdomAdvisor.Localization]::Translate($literal,$true)

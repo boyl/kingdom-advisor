@@ -144,10 +144,191 @@ namespace KingdomAdvisor
             ,new Entry("gemguard","宝石保管员","与宝石存取有关的交互入口。","确认当前交互需要的货币。","经济")
             ,new Entry("grave","君主墓地","涉及君主或主题解锁的特殊交互，当前尚未核实专属作用。","当前费用与状态以实际对象为准。","特殊")
             ,new Entry("border","王国边界","标记王国建设区域与防线边界。","能否建设由实际区域与锁定条件决定；边界并不是城墙。","建设")
+            ,new Entry("lokipuzzle","洛基谜题设施","北欧洛基神器谜题的交互设施，与普通工具商店不同。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("heimdallpuzzle","海姆达尔谜题设施","北欧海姆达尔谜题的号角与立柱交互设施。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("hermesdock","赫尔墨斯码头","奥林匹斯赫尔墨斯任务的幽魂交付与奖励交互地点。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("appletree","金苹果树","雅典娜任务中的特殊树木，与珀耳塞福涅和金苹果生长有关，不是普通可砍伐树。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("athenafarm","雅典娜任务农舍","奥林匹斯雅典娜任务中的专用农舍，同时保留农舍的农田信息。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("artemiscage","金鹿捕获笼","阿耳忒弥斯任务设施，用于捕获任务金鹿；不是普通坐骑解锁点。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("persephonecage","珀耳塞福涅囚笼","雅典娜任务中囚禁珀耳塞福涅的设施，与敌方威胁和解救任务有关。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("hephaestusforge","赫淮斯托斯锻造设施","赫淮斯托斯任务中的重建与奖励设施，不是出售骑士晋升装备的普通锻造店。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("trojanbell","木马召集铃","为木马相关行动召集人员；与普通航船召集铃区分显示。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("powershop","神力更换设施","在当前战役允许的君主神器或能力之间切换；不是普通工具补给。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("rulershop","君主更换设施","在当前战役已开放的君主之间切换。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("rulerstatue","君主解锁设施","死亡之地用于解救或解锁其他君主的设施，当前阶段决定可执行的交互。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("masonshrine","石匠神殿","建设科技相关设施；建造阶段与当前解锁条件由游戏决定。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("oracle","神谕者","奥林匹斯任务提示交互，根据当前神祇任务和进度提供线索。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("cerberuspuzzle","三头犬谜题石柱","奥林匹斯三头犬解锁谜题的石柱，交互会改变石柱状态。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("fishingrod","钓鱼点","可付费尝试钓鱼；等待咬钩、收竿和冷却由游戏控制。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("buyback","失物赎回商人","展示并赎回被贪婪怪夺走、当前可购回的物品。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("shieldwall","盾墙集结点","召集附近符合条件的部队组成盾墙；不是城墙建筑升级。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("formationbanner","编队旗帜","用于招集或解散相关部队编队，是否可用取决于当前条件。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("signpost","地图路牌","地图相关交互路牌，是否可使用由当前游戏状态决定。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("snowman","雪人","带有帽子交互的季节性对象，不是普通建设科技设施。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("templeoracle","神谕神殿","奥林匹斯神谕相关的任务建筑；未建与建成状态共用同一身份。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("templeathena","雅典娜神殿","雅典娜任务相关神殿，与任务农舍和金苹果树分别识别。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("templehermes","赫尔墨斯神殿","赫尔墨斯任务相关神殿，与幽魂交付码头分别识别。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("templeartemis","阿耳忒弥斯神殿","阿耳忒弥斯任务相关神殿，与金鹿捕获笼分别识别。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("templehephaestus","赫淮斯托斯神殿","赫淮斯托斯任务相关神殿，与专用锻造设施分别识别。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("temple","神祇神殿","奥林匹斯任务神殿；具体神祇和任务状态以当前游戏提示为准。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("springtemple","春季任务神殿","春季活动中的任务建筑，与供品交付和任务完成有关。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("logging1","中阶木材科技设施","北欧主题的第一阶木材科技设施，用于替代常规主题的对应建设科技设施。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("logging2","高阶木材科技设施","北欧主题的第二阶木材科技设施；科技解锁后，建筑仍需单独支付升级。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("berserkershop","狂战士补给设施","北欧主题用于取得狂战士相关补给的设施，不是普通长枪或骑士装备商店。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("powerreward","神力奖励","任务完成后领取君主神器或神力的交互地点，具体奖励取决于当前任务。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("bindingstatue","奥林匹斯束缚神像","奥林匹斯山终章的任务神像，参与建造与束缚仪式，不提供普通增益雕像的效果。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("crownstatue","奥林匹斯王冠神像","奥林匹斯山终章的王冠交付设施，交互会推进终章事件。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("questidol","任务神像供品","可由君主携带的任务神像供品，交付地点与任务进度由游戏决定。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("chariotpuzzle","昼夜战车谜题","战车解锁相关的昼夜石柱，交互与宝石状态参与谜题。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("bunnystatue","春季兔子雕像","春季活动的彩蛋收集交互设施，记录阶段进度。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("eggmound","彩蛋土堆","春季活动中可标记挖掘的土堆，完成挖掘后产出活动彩蛋。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("greedgolem","贪婪魔像","带有战斗和采掘交互的特殊贪婪怪，具体交互取决于状态；不是君主坐骑。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("pushablestatue","可推动雕像","活动任务中由工人推动的雕像，移动与目标位置由游戏任务控制。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
+            ,new Entry("olympusgates","奥林匹斯山大门","奥林匹斯山任务中的关卡大门，开启条件由当前任务进度决定。","费用、锁定条件和可用交互以当前游戏为准。","特殊")
         };
         public static string Clean(string raw) => (raw ?? "").Replace("(Clone)","").Replace("_undeveloped"," · 未建造").Replace("_Wood"," · 木制").Replace("_Stone"," · 石制").Replace("_Iron"," · 铁制");
+        // 经资源GameObject和原生组件核对的专用身份；通用Payable不在此表中。
+        private static readonly Dictionary<string,string> structureTypes=new(StringComparer.Ordinal) {
+            {"MtOlympusGates","olympusgates"},
+            {"ChariotPuzzlePillar","chariotpuzzle"},{"BunnyStatue","bunnystatue"},{"EggMound","eggmound"},
+            {"GreedGolem","greedgolem"},{"PushableStatue","pushablestatue"},
+            {"Monument","monument"},{"MonumentVolcano","monument"},{"SpringEdictMonument","monument"},
+            {"WorldEatingSerpentWeakPoint","serpent"},
+            {"MtOlympusStatue","bindingstatue"},{"PayableCrownStatue","crownstatue"},
+            {"LokiPuzzleStaff","lokipuzzle"},
+            {"HeimdallPuzzleHorn","heimdallpuzzle"},
+            {"HeimdallPuzzlePillar","heimdallpuzzle"},
+            {"ThorPuzzleHammer","thor"},
+            {"ThorPuzzlePillar","thor"},
+            {"ThorPuzzleStatue","thor"},
+            {"HelPuzzleItem","hel"},
+            {"HelPuzzlePillar","hel"},
+            {"HermesDock","hermesdock"},
+            {"GiantGoldenAppleTree","appletree"},
+            {"AthenaFarmhouse","athenafarm"},
+            {"ArtemisCage","artemiscage"},
+            {"PersephoneCage","persephonecage"},
+            {"HephaestusForge","hephaestusforge"},
+            {"TrojanHorseSummoningBell","trojanbell"},
+            {"ChangeItemOfPowerShop","powershop"},
+            {"ChangeRulerShop","rulershop"},
+            {"UnlockNewRulerStatue","rulerstatue"},
+            {"MasonShrine","masonshrine"},
+            {"Oracle","oracle"},
+            {"CerberusPuzzlePillar","cerberuspuzzle"},
+            {"PayableFishingRod","fishingrod"},
+            {"GreedBuybackTrader","buyback"},
+            {"PayableShieldWallActivator","shieldwall"},
+            {"PayableBorderBanner","formationbanner"},
+            {"Signpost","signpost"},
+            {"Snowman","snowman"},
+            {"BunnyTholos","springtemple"},
+            {"ItemOfPowerReward","powerreward"},
+            {"Shipyard","shipyard"},
+            {"TrojanHorse","trojan"},
+            {"SerpentLevelTrojanHorse","trojan"},
+            {"Lighthouse","lighthouse"},
+        };
+        private static readonly Dictionary<string,string> structureAliases=new(StringComparer.OrdinalIgnoreCase) {
+            {"Artemis_Cage_Unbuilt_Greece","artemiscage"},
+            {"Hephaestus_Forge_Unbuilt_Greece","hephaestusforge"},
+            {"Athena_Farmhouse0_greece","athenafarm"},
+            {"BindingStatue_Artemis_MtOlympus_Greece","bindingstatue"},
+            {"BindingStatue_Artemis_Unbuilt_MtOlympus_Greece","bindingstatue"},
+            {"BindingStatue_Athena_MtOlympus_Greece","bindingstatue"},
+            {"BindingStatue_Athena_Unbuilt_Greece Variant","bindingstatue"},
+            {"BindingStatue_Hephaestus_MtOlympus_Greece","bindingstatue"},
+            {"BindingStatue_Hephaestus_Unbuilt_Greece Variant","bindingstatue"},
+            {"BindingStatue_Hermes_MtOlympus_Greece","bindingstatue"},
+            {"BindingStatue_Hermes_Unbuilt_Greece Variant","bindingstatue"},
+            {"CrownStatue_MtOlympus_Greece","crownstatue"},
+            {"CrownStatue_Unbuilt_MtOlympus_Greece","crownstatue"},
+            {"Idol_Artemis_greece","questidol"},{"Idol_Athena_greece","questidol"},
+            {"Idol_Hepaestus_greece","questidol"},{"Idol_Hermes_greece","questidol"},{"Idol_Oracle_greece","questidol"},
+            {"Bunny_Idol","questidol"},
+            {"ActiveShieldWallTotem","shieldwall"},
+            {"Artemis_Cage_Greece","artemiscage"},
+            {"Athena_Farmhouse2_greece","athenafarm"},
+            {"Athena_Persephone_Cage_greece","persephonecage"},
+            {"Athena_Tree_Greece","appletree"},
+            {"BBB","formationbanner"},
+            {"Buyback tent","buyback"},
+            {"FishingRod","fishingrod"},
+            {"Hel Item","hel"},
+            {"Hephaestus_Forge_Built_Greece","hephaestusforge"},
+            {"Hermes_Dock","hermesdock"},
+            {"Lighthouse_Iron","lighthouse"},
+            {"Lighthouse_Iron_greece","lighthouse"},
+            {"Lighthouse_Iron_norselands","lighthouse"},
+            {"Lighthouse_Stone","lighthouse"},
+            {"Lighthouse_Stone_greece","lighthouse"},
+            {"Lighthouse_Stone_norselands","lighthouse"},
+            {"Lighthouse_Wood","lighthouse"},
+            {"Lighthouse_Wood_greece","lighthouse"},
+            {"Lighthouse_Wood_greece_oracle","lighthouse"},
+            {"Lighthouse_Wood_norselands","lighthouse"},
+            {"Logging_tier1_norselands","logging1"},
+            {"Logging_tier1_undeveloped_norselands","logging1"},
+            {"Logging_tier2_norselands","logging2"},
+            {"Logging_tier2_undeveloped_norselands","logging2"},
+            {"Mason Shrine Stone","masonshrine"},
+            {"Mason Shrine Wood","masonshrine"},
+            {"Oracle_Greece","oracle"},
+            {"Quest_Reward_Artemis","powerreward"},
+            {"Quest_Reward_Athena","powerreward"},
+            {"Quest_Reward_Hephaestus","powerreward"},
+            {"Quest_Reward_Hermes","powerreward"},
+            {"Shipyard_Small_greece","shipyard"},
+            {"Shipyard_greece","shipyard"},
+            {"ShopBerserker_norselands","berserkershop"},
+            {"ShopChangeItem_greece","powershop"},
+            {"ShopChangeItem_norselands","powershop"},
+            {"ShopChangeRuler","rulershop"},
+            {"Statue Unlock Ruler","rulerstatue"},
+            {"Temple_Oracle_Greece","templeoracle"},
+            {"Temple_Oracle_Unbuilt_Greece","templeoracle"},
+            {"Tholos_Artemis_Greece","templeartemis"},
+            {"Tholos_Artemis_Unbuilt_Greece","templeartemis"},
+            {"Tholos_Athena_Greece","templeathena"},
+            {"Tholos_Athena_Unbuilt_Greece","templeathena"},
+            {"Tholos_Base_Greece","temple"},
+            {"Tholos_Hephaestus_Greece","templehephaestus"},
+            {"Tholos_Hephaestus_Unbuilt_Greece","templehephaestus"},
+            {"Tholos_Hermes_Greece","templehermes"},
+            {"Tholos_Hermes_Unbuilt_Greece","templehermes"},
+            {"Tholos_SpringEdict","springtemple"},
+            {"Tholos_SpringEdict_Unbuilt_Greece","springtemple"},
+            {"Tower_upgrade_Berzerker_norselands","berserkertower"},
+            {"Tower_upgrade_Bread_greece","baker"},
+            {"Tower_upgrade_FireOil_norselands","firetower"},
+            {"Tower_upgrade_Fire_greece","firetower"},
+            {"Tower_upgrade_Mead_norselands","baker"},
+            {"TrojanHorse_MtOlympus","trojan"},
+            {"TrojanHorse_MtOlympus_Greece","trojan"},
+            {"TrojanHorse_MtOlympus_Serpent_Greece","trojan"},
+            {"TrojanHorse_SummoningBell","trojanbell"},
+            {"Wall4_horn_greece","hornwall"},
+            {"Wall4_horn_norselands","hornwall"},
+            {"Wall5_horn_greece","hornwall"},
+            {"Wall5_horn_norselands","hornwall"},
+            {"Wreck_Greece","boat"},
+            {"puzzle_Hel_pillar1_norselands","hel"},
+            {"puzzle_Hel_pillar2_norselands","hel"},
+            {"puzzle_Hel_pillar3_norselands","hel"},
+            {"puzzle_Hel_pillar4_norselands","hel"},
+            {"puzzle_Hel_statue_norselands","hel"},
+            {"water_statues","heimdallpuzzle"},
+        };
+        public static IEnumerable<string> StructureTypes=>structureTypes.Keys;
+        public static Entry ResolveStructureType(string type)=>type!=null&&structureTypes.TryGetValue(type,out var key)?Entries.First(e=>e.Key==key):null;
+        public static Entry ResolveStructureName(string raw)
+        {
+            string name=Regex.Replace((raw??"").Replace("(Clone)",""),@"\s*\([0-9]+\)$","").Trim();
+            return structureAliases.TryGetValue(name,out var key)?Entries.First(e=>e.Key==key):null;
+        }
         public static Entry Resolve(string raw)
         {
+            var structure=ResolveStructureName(raw);if(structure!=null)return structure;
             var name=(raw??"").ToLowerInvariant().Replace("_","").Replace(" ","");
             if(name.StartsWith("bearcave")||name=="bear"||name=="bear(clone)")return Entries.First(e=>e.Key=="bear");
             if(name.StartsWith("stonemine")||name.StartsWith("stonequarry"))return Entries.First(e=>e.Key=="quarry");
@@ -183,6 +364,7 @@ namespace KingdomAdvisor
         }
         public static Entry ResolveNative(string raw,string nativeType)
         {
+            var structure=ResolveStructureType(nativeType);if(structure!=null)return structure;
             var named=Resolve(raw);
             string key=nativeType switch{
                 "Bomb"=>"bomb","PayableBombPurchase" or "PayableBombLeft" or "PayableBombRight"=>"bombpurchase",
@@ -360,6 +542,8 @@ namespace KingdomAdvisor
     {
         public string Context="";
         public double Hour,RealTime,SpeedSignature=1,DayStart,DayEnd;
+        // 单人/房主按游戏自身推进公式提供；加入者不假定本机倍率代表房主。
+        public double? AuthoritativeRate;
         public int Day;public bool Paused,Client;
         public ClockPhase Phase;
         public double[] PhaseStarts;
@@ -396,7 +580,8 @@ namespace KingdomAdvisor
         public DayClockSnapshot Observe(ClockObservation input)
         {
             if(input==null||!HourValid(input.Hour)||input.Day<0||!Finite(input.RealTime)||input.RealTime<0||
-                !Finite(input.SpeedSignature)||input.SpeedSignature<0||!Enum.IsDefined(typeof(ClockPhase),input.Phase)||
+                !Finite(input.SpeedSignature)||input.SpeedSignature<0||
+                (input.AuthoritativeRate.HasValue&&(!Finite(input.AuthoritativeRate.Value)||input.AuthoritativeRate.Value<0))||!Enum.IsDefined(typeof(ClockPhase),input.Phase)||
                 !HourValid(input.DayStart)||!HourValid(input.DayEnd)||Forward(input.DayStart,input.DayEnd)==0||
                 input.PhaseStarts==null||input.PhaseStarts.Length!=4||input.PhaseStarts.Any(h=>!HourValid(h)))
             {Reset();return new DayClockSnapshot{UnavailableReason="invalid-clock-observation"};}
@@ -426,7 +611,9 @@ namespace KingdomAdvisor
                 stalled=true;rate=null;anchorHour=absolute;anchorReal=input.RealTime;
                 result.State=ClockState.Stalled;return result;
             }
-            if(input.RealTime-anchorReal>=0.5)
+            if(input.AuthoritativeRate.HasValue)
+                rate=input.AuthoritativeRate.Value>0?input.AuthoritativeRate:(double?)null;
+            else if(input.RealTime-anchorReal>=0.5)
             {
                 double measured=(absolute-anchorHour)/(input.RealTime-anchorReal);
                 rate=measured>0.000001?measured:(double?)null;anchorHour=absolute;anchorReal=input.RealTime;

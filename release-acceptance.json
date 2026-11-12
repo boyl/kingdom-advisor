@@ -1,38 +1,40 @@
 {
-  "version": "0.6.12",
-  "releaseAuthorization": "2026-11-12 用户明确表示“可以发布了”，沿用 GitHub 与 Nexus 渠道",
-  "userAcceptance": "用户操作完成单人时钟验收，修订后的游戏时间与现实时间文案已实机确认；正式版仅将已验收候选版本标记由0.6.11改为0.6.12",
-  "acceptedCandidateHash": "FB28986559BFA2C2D085B1D885432948325C02CA5C84592B4DFADFCA96B07A05",
-  "dllHash": "3FE4B083FC0E1F361437164369F20BACCCDCA79337E52FD37EABCB093EB3E985",
+  "version": "0.6.13",
+  "releaseAuthorization": "2026-11-12 用户明确要求发布；建筑当做盲修复，发布文案直接标注盲修复。沿用 GitHub 与 Nexus 渠道。",
+  "userAcceptance": "候选实机正常/2倍/短时4倍、暂停43.63秒及恢复、入夜黎明切换通过；rc.2单行页眉截图确认。建筑按用户授权盲修复发布，不标为DLC实机通过。",
+  "acceptedCandidateHash": "CCF4642959A006F42E9778482A645DF56820E046D517748F0BA62F8DB9ACE451",
+  "dllHash": "6CA84C362A6A204313064AC17938FC12C5488B895C344DDD5030D2B0F18D4BF2",
   "sourceHashes": {
     "src/AssistModel.cs": "2BA1F4E01E6AC630CB533BD24A15040AE234B72C63140AC4C33FF80B3AF6B6C3",
-    "src/CatalogPresentation.cs": "FC0C81701E9381A560489C0BF0208A9A39A5A2A909A210E9DE653D1FAB960A34",
+    "src/CatalogPresentation.cs": "D388E4DA1448335AF70C53CB151DD83E40E3EC67B3E5C24B658D8C1F32779AD9",
     "src/ClockPresentation.cs": "1644C3EF2C2F85F97C5B7D2D8F2590DE3C4522620D6E79A78D449B8CC4CA6131",
+    "src/ClockTrace.cs": "7A85B159CB4F6CB9AA519F840899D93B51FDD339BAD71C35242FEE60554BCE01",
     "src/Controller.cs": "19F20D82DFC01CDEC6726354CE4C298AAAED5C166DF4935543FF397ACBF183D0",
     "src/GameActions.cs": "8E78DEF3FD0967A3C7C1C0FD075B75F322F8CB587B19A63E57D66C72E5AC52C5",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
-    "src/Localization.cs": "BEE1DE93567BABFD596DE752869A42A7DDAFA3AF56FE88C28D5672B874061105",
+    "src/Localization.cs": "59F656C318F1C3010CBAEA972FD8ED58AF7E98AFCD87A7B8C0288877EC2D8D4F",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
-    "src/Model.cs": "3798F2E2F89FAC1A18613950B910713AF974FCFA5D29365F4235826C9140A85F",
-    "src/NativeClockReader.cs": "8FEB0D40F417B5F20471A58AB90B9AC2E922E2726D94D6873EC649FBC9DA7E73",
+    "src/Model.cs": "B48587956D4A34B534403A965E3382F87BD95E8270EF4169153312482C98AFF0",
+    "src/NativeClockReader.cs": "190D7D6255572E4C94490703B76FB72D6D0B8DD9B412DD1C2236C45DB34C5AB7",
+    "src/NativeStructureReader.cs": "5E3516B17794346F7D5E5302ADE68FE0D62F3EA1B46D3D6119408718987B1E2C",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
-    "src/Plugin.cs": "D0FDAA8FCE9D23CB1186FD5A03582C4BF16495F96C8BDA438708B0B6E4D52606",
-    "src/View.cs": "41DB469AFE45C1E6AEB0863F3A26CF7A5F30621ED49AD943F13428AD6FFADF8A"
+    "src/Plugin.cs": "74A59406B846889B110B708FFD9B019BE5E8C5787B52A872F93B0E65E5AD80FF",
+    "src/View.cs": "E067CA2C34A889CF016DB3DE44FC5A0B3B06EC8EB555BF8C8F8015092608CBE1"
   },
   "channels": [
     "GitHub",
     "Nexus Mods"
   ],
   "runtime": {
-    "formalDifference": "仅版本标记0.6.12",
-    "status": "0.6.12 single-player Playing observed; clock running; no fault or movement leak",
-    "evidence": "docs/acceptance/evidence/day-clock-20261112/release-runtime.txt"
+    "formalDifference": "相对已验收0.6.13-rc.2仅版本标记改为0.6.13",
+    "status": "0.6.13 single-player Playing observed; clock running; faulted=False; no optional read failure",
+    "evidence": "docs/acceptance/evidence/cross-theme-20261112/release-runtime.txt"
   },
   "unverified": [
-    "双机联机、重连与换岛专项实机回归",
-    "完整DLC及原生菜单／特殊事件暂停",
-    "所有语言、字号、分辨率与本地分屏／手柄组合"
+    "建筑跨主题补齐与错误识别：按用户明确授权作为盲修复发布",
+    "双机联机与完整DLC实机回归",
+    "本候选F9关闭时钟再开启流程及全部语言/字号/分辨率组合"
   ],
   "manual": {
     "releaseAuthorization": "passed",

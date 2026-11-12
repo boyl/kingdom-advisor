@@ -1,6 +1,6 @@
-# Kingdom Advisor — Complete loader + mod (0.6.12)
+# Kingdom Advisor — Complete loader + mod (0.6.13)
 
-Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.12**. The in-game mod version remains 0.6.12. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
+Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.13**. The in-game mod version remains 0.6.13. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
 
 Tested on Windows x64, game 2.4.2 / Unity 6000.0.66f2: fresh interop generation, restart, mod loading, catalog and notification removal. Other versions, operating systems, multiplayer and all other-plugin combinations are not fully verified.
 
@@ -74,7 +74,7 @@ Rollback verifies current files and stops if later updates modified them. It res
 For issues, provide `BepInEx/LogOutput.log`, game version/source and archive name. `sources/patch-788-stage.ps1` reproduces parser changes and is not the install entry point.
 
 
-0.6.12: single-player tests covered normal/2x/4x speed, pause/resume, nightfall/dawn, and hiding/restoring clock digits. Two-machine multiplayer, all DLC and every language/font/resolution combination remain unverified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
+Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn; the single-line information row was checked in game. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
 
 
-0.6.12 adds a day/night clock: dawn, day, evening and night phases, in-game hours and minutes, a real-time countdown to nightfall or dawn, and a day-progress bar. The clock is enabled by default and can be hidden under F6 → Movement & time while retaining the phase, countdown and progress bar. Readings follow game pauses and speed changes, with explicit Game time and real time labels.
+0.6.13 fixes countdown jitter and keeps island, day, phase, game time and season on one line. Building omissions and misidentification: blind fixes. Day/night phases, in-game clock, real-time countdown and progress bar follow game pauses and speed changes. Clock digits are enabled by default and can be hidden under F6 → Movement & time.

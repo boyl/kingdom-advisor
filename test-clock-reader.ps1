@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 $ErrorActionPreference='Stop'
 # 编译原生适配器与纯模型；原生替身只提供明确读契约，不复制任何时间计算。
-$sources=@('Model.cs','NativeClockReader.cs') | ForEach-Object {[IO.File]::ReadAllText((Join-Path $PSScriptRoot "src/$_"))}
+$sources=@('Model.cs','NativeClockReader.cs','ClockTrace.cs') | ForEach-Object {[IO.File]::ReadAllText((Join-Path $PSScriptRoot "src/$_"))}
 $body=($sources | ForEach-Object {[regex]::Replace($_,'(?m)^using [^;]+;\r?\n','')}) -join "`n"
 $body=$body.Replace('internal sealed class NativeClockReader','public sealed class NativeClockReader')
 $plugin=[IO.File]::ReadAllText((Join-Path $PSScriptRoot 'src/Plugin.cs'))
@@ -18,7 +18,7 @@ public class Level:NativeObject {public static bool isGenerating;public int cach
 public enum DayPhase {Dawn,Day,Evening,Night}
 public class TimesOfDay {public readonly float dawnStart=4,dayStart=6,eveningStart=18,nightStart=22;public DayPhase Phase=DayPhase.Day;public float LastArgument;public DayPhase GetDayPhase(float hour){LastArgument=hour;return Phase;}}
 public class Director:NativeObject {
- public float Hour=10,Modifier=1;public bool Pause,Fail;public int Day=7,Id=99;public TimesOfDay Times=new();
+ public float Hour=10,Modifier=1,_gameHoursPerSecond=0.1f;public bool Pause,Fail;public int Day=7,Id=99;public TimesOfDay Times=new();
  public int GetInstanceID()=>Id;public float currentTime=>Hour;public int TotalDaysInReign=>Day;
  public bool IsTimePaused=>Pause;public float ClockSpeedModifier=>Modifier;
  public float dayStart=>5;public float dayEnd=>21.5f;
@@ -28,7 +28,7 @@ namespace KingdomAdvisor {
  public class LogProbe {public int Warnings;public void LogWarning(string value){Warnings++;}}
  public class Plugin {public static Plugin Instance=new();public LogProbe Log=new();}
  public class ClockChannelProbe {
- public Snapshot State=new();private NativeClockReader clockReader=new();
+ public Snapshot State=new();private NativeClockReader clockReader=new();private ClockTrace clockTrace=new();
  private readonly Dictionary<string,OptionalReadCircuit> optionalReads=new();
  public void ResetOptionalReads()=>optionalReads.Clear();
  $readClock
@@ -36,7 +36,7 @@ namespace KingdomAdvisor {
  }
 }
 "@
-Add-Type -TypeDefinition ("using System;using System.Linq;using System.Collections.Generic;using System.Text.RegularExpressions;using UnityEngine;`n"+$body+"`n"+$stubs)
+Add-Type -TypeDefinition ("using System;using System.Linq;using System.Collections.Generic;using System.Globalization;using System.Text.RegularExpressions;using UnityEngine;`n"+$body+"`n"+$stubs)
 function Check($ok,$label){if(!$ok){throw $label}}
 function Near($actual,$expected,$label){Check ([Math]::Abs($actual-$expected) -lt 0.02) "$label : $actual != $expected"}
 foreach($role in @('Playing','NetworkClientPlaying')){

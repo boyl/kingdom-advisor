@@ -1,3 +1,31 @@
+# 王国顾问 0.6.13 / Kingdom Advisor 0.6.13
+
+- 修复倒计时跳动，继续跟随游戏暂停与变速。
+- 岛屿、天数、阶段、游戏时间和季节保持单行显示。
+- 建筑遗漏与错误识别：盲修复。
+
+单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换；单行信息栏已实机确认。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。
+
+已有正常工作的 BepInEx 6 IL2CPP 前置请选择 **ModOnly**；首次安装请选择 **Complete**，内含既有的修订版 BepInEx #788、两项 Cpp2IL 兼容补丁、许可证与对应源码，不新增依赖。官方原版 #788 不能替代此兼容包的首次生成修复。
+
+GitHub 包：先安装 [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)，退出游戏，解压后双击 INSTALL.cmd，选择 Steam“浏览本地文件”打开的游戏根目录。Nexus 包：无需 PowerShell，退出游戏，把包内 BepInEx 文件夹合并到游戏根目录；Complete 按随包 README 同时复制前置文件。Mod 路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。升级保留配置与存档；回退前备份旧 DLL 和 `BepInEx/config/local.kingdom.advisor.cfg`；卸载只移除 KingdomAdvisor 插件目录，保留共享前置与其他 Mod。
+
+[完整中文安装说明](https://github.com/boyl/kingdom-advisor/blob/v0.6.13/README.md) · [Nexus 手动安装说明及目录示意](https://github.com/boyl/kingdom-advisor/blob/v0.6.13/distribution/nexus/README.zh-CN.md)
+
+## English
+
+- Fixed countdown jitter while retaining pause and speed tracking.
+- Kept island, day, phase, game time and season on one line.
+- Building omissions and misidentification: blind fixes.
+
+Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn; the single-line information row was checked in game. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
+
+Choose **ModOnly** for an existing working BepInEx 6 IL2CPP loader, or **Complete** for a fresh installation. Complete retains the existing patched BepInEx #788 runtime, two Cpp2IL compatibility patches, licenses and corresponding sources; no new dependencies are introduced. Stock official #788 does not include these first-generation compatibility fixes.
+
+For GitHub packages, install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6), quit the game, extract the ZIP, then run INSTALL.cmd and select the game root using Steam's Browse local files. Nexus packages require no PowerShell: quit, merge the included BepInEx folder into the game root, and follow the included README for Complete's additional loader files. Plugin location: `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`. Keep settings and saves on upgrade. Back up the previous DLL and `BepInEx/config/local.kingdom.advisor.cfg` for rollback. Uninstall only the KingdomAdvisor plugin folder, retaining the shared loader and other mods.
+
+[Full English installation guide](https://github.com/boyl/kingdom-advisor/blob/v0.6.13/README.en.md) · [Nexus manual installation and directory layout](https://github.com/boyl/kingdom-advisor/blob/v0.6.13/distribution/nexus/README.en.md)
+
 # 王国顾问 0.6.12 / Kingdom Advisor 0.6.12
 
 0.6.12 新增昼夜时钟：显示黎明、白昼、黄昏、夜晚阶段、游戏内几点几分、距入夜／黎明的现实时间倒计时，以及昼夜进度条。钟点默认显示，可在 F6 → 移动与时间中关闭；阶段、倒计时和进度条保留。读数跟随游戏暂停和变速，明确区分“游戏时间”与“现实时间”。

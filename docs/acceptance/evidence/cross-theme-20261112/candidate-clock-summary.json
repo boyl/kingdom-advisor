@@ -1,0 +1,162 @@
+{
+  "utc": "2026-11-12T09:43:28.6868001Z",
+  "samples": 2024,
+  "segments": [
+    {
+      "key": "1/Running",
+      "start": 557.8341035005669,
+      "end": 597.0304689980159,
+      "samples": 373,
+      "firstHour": 11.64887523651123,
+      "lastHour": 15.568623542785645,
+      "advance": 3.919748306274414,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.26691249999998945,
+      "duration": 39.196,
+      "hoursPerRealSecond": 0.100004
+    },
+    {
+      "key": "2/Synchronizing",
+      "start": 597.1305746031745,
+      "end": 597.1305746031745,
+      "samples": 1,
+      "firstHour": 15.578634262084961,
+      "lastHour": 15.578634262084961,
+      "advance": 0.0,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.0,
+      "duration": 0.0,
+      "hoursPerRealSecond": null
+    },
+    {
+      "key": "2/Running",
+      "start": 597.2306449971655,
+      "end": 639.4626456986961,
+      "samples": 402,
+      "firstHour": 15.598649024963379,
+      "lastHour": 0.04525616765022278,
+      "advance": 8.446607142686844,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.26688750000005257,
+      "duration": 42.232,
+      "hoursPerRealSecond": 0.200005
+    },
+    {
+      "key": "4/Synchronizing",
+      "start": 639.5627128968254,
+      "end": 639.5627128968254,
+      "samples": 1,
+      "firstHour": 0.06860996782779694,
+      "lastHour": 0.06860996782779694,
+      "advance": 0.0,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.0,
+      "duration": 0.0,
+      "hoursPerRealSecond": null
+    },
+    {
+      "key": "4/Running",
+      "start": 639.812906802721,
+      "end": 647.0850575963718,
+      "samples": 71,
+      "firstHour": 0.16868752241134644,
+      "lastHour": 3.077545166015625,
+      "advance": 2.9088576436042786,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.250211203231288,
+      "duration": 7.272,
+      "hoursPerRealSecond": 0.400008
+    },
+    {
+      "key": "1/Synchronizing",
+      "start": 647.1851309027777,
+      "end": 647.1851309027777,
+      "samples": 1,
+      "firstHour": 3.107577085494995,
+      "lastHour": 3.107577085494995,
+      "advance": 0.0,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.0,
+      "duration": 0.0,
+      "hoursPerRealSecond": null
+    },
+    {
+      "key": "1/Running",
+      "start": 647.2852125,
+      "end": 702.1601283021541,
+      "samples": 520,
+      "firstHour": 3.1175854206085205,
+      "lastHour": 8.605208396911621,
+      "advance": 5.487622976303101,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.28354659863941833,
+      "duration": 54.875,
+      "hoursPerRealSecond": 0.100002
+    },
+    {
+      "key": "0/Paused",
+      "start": 702.2602232001134,
+      "end": 745.8933118976757,
+      "samples": 415,
+      "firstHour": 8.615218162536621,
+      "lastHour": 8.615218162536621,
+      "advance": 0.0,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.25022220096377623,
+      "duration": 43.633,
+      "hoursPerRealSecond": 0.0
+    },
+    {
+      "key": "1/Synchronizing",
+      "start": 745.9933173965419,
+      "end": 745.9933173965419,
+      "samples": 1,
+      "firstHour": 8.620220184326172,
+      "lastHour": 8.620220184326172,
+      "advance": 0.0,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.0,
+      "duration": 0.0,
+      "hoursPerRealSecond": null
+    },
+    {
+      "key": "1/Running",
+      "start": 746.0934207979025,
+      "end": 771.0623830994898,
+      "samples": 239,
+      "firstHour": 8.630230903625488,
+      "lastHour": 11.127180099487305,
+      "advance": 2.4969491958618164,
+      "countdownIncreases": 0,
+      "nativeBacksteps": 0,
+      "maxGap": 0.2668551941609394,
+      "duration": 24.969,
+      "hoursPerRealSecond": 0.100002
+    }
+  ],
+  "dayNightTransitions": [
+    {
+      "at": 626.7530190972222,
+      "gameHour": 21.50325584411621,
+      "untilDawn": "True",
+      "before": "0.08378982419088744",
+      "after": "37.48372022086799"
+    },
+    {
+      "at": 666.1495041028911,
+      "gameHour": 5.004059791564941,
+      "untilDawn": "False",
+      "before": "0.059437750884328025",
+      "after": "164.95939962626397"
+    }
+  ]
+}

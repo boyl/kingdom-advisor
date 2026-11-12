@@ -15,6 +15,8 @@ namespace KingdomAdvisor
             var director=m.director;var times=director.CurrentTimesOfDay;
             if(times==null){Reset();return new DayClockSnapshot();}
             float hour=director.currentTime;
+            bool client=game.state==Game.State.NetworkClientPlaying;
+            double signature=(double)Time.timeScale*director.ClockSpeedModifier;
             return tracker.Observe(new ClockObservation{
                 Context=director.GetInstanceID()+":"+game.currentLand+":"+(m.level?m.level.cachedCurrentLevelSeed:0)+":"+game.state,
                 Hour=hour,Day=director.TotalDaysInReign,RealTime=realTime,
@@ -22,8 +24,9 @@ namespace KingdomAdvisor
                 PhaseStarts=new double[]{times.dawnStart,times.dayStart,times.eveningStart,times.nightStart},
                 DayStart=director.dayStart,DayEnd=director.dayEnd,
                 Paused=director.IsTimePaused||Time.timeScale==0,
-                SpeedSignature=(double)Time.timeScale*director.ClockSpeedModifier,
-                Client=game.state==Game.State.NetworkClientPlaying
+                SpeedSignature=signature,
+                AuthoritativeRate=client?(double?)null:director._gameHoursPerSecond*signature,
+                Client=client
             });
         }
     }

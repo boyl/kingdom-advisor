@@ -1,0 +1,44 @@
+version=0.6.13-rc.2
+utc=2026-11-12T09:47:01.1149004Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+releaseGuardCount=0
+playing=True
+online=False
+island=1
+day=110
+points=69
+worldReadMaxMs=265.022
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=1
+actualTimeScale=1
+gameplayRuleWrites=3
+teleports=0
+resourceAdds=0
+error=
+localPlayers=1
+clockState=Running clockPhase=Dawn clock=07:55 untilDawn=False remainingSeconds=135.8177117136462 progress=0.14242619276046753 client=False clockUnavailable=
+uiBlockedReason=none
+nativeP2Playing=False
+nativePlayer=0 active=True local=True
+nativePlayer=1 active=False local=True
+player=0 local=True coins=2975 target=BoatSailPosition Stone(Clone) targetName=船只 description=用于岛屿间航行或当前主题的船队活动。 rect=0,0,1,1 original=1000 capacity=2147483647 total=2977 gems=1 numeric=True
+population=工匠 29
+population=弓手 17
+population=侍从 0
+population=骑士 3
+population=农民 27
+population=游民 0
+population=长枪兵 74
+population=隐士 4
+populationTotal=150
+entityReadSource=manager
+enemiesAvailable=True enemies=0 camps=0

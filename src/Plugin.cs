@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.12";
+        public const string Version="0.6.13";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -100,6 +100,7 @@ namespace KingdomAdvisor
         private GameReader reader;
         private AdvisorView view;
         private float nextFast,nextSlow,nextEvidence,nextJournal;
+        private double nextClock;
         private int failures;
         private bool faulted;
         private string lastError="";
@@ -121,7 +122,7 @@ namespace KingdomAdvisor
             if(faulted){
                 // 不自动循环重启；明确的呼出键允许用户在联机加载完成后重试。
                 if(!Input.GetKeyDown(KeyCode.F6)&&!Input.GetKeyDown(KeyCode.F7))return;
-                faulted=false;failures=0;lastError="";reader=new GameReader();nextSlow=nextFast=nextEvidence=0;
+                faulted=false;failures=0;lastError="";reader=new GameReader();nextSlow=nextFast=nextEvidence=0;nextClock=0;
                 Plugin.Instance.Log.LogInfo("Overlay read reset requested by user.");
             }
             try
@@ -129,13 +130,12 @@ namespace KingdomAdvisor
                 var language=global::Language.current;
                 Localization.English=Localization.IsEnglish(previewLanguage<0?Plugin.Instance.Settings.UiLanguage.Value:previewLanguage,language?language.languageCode:null,Application.systemLanguage.ToString());
                 var now=Time.unscaledTime;
-                if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;}
-                if(now>=nextFast){reader.ReadClock(now);reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
+                if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;nextClock=0;}
+                if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
                 if(Input.GetKeyDown(KeyCode.F6)||Input.GetKeyDown(KeyCode.F7))reader.ResetOptionalReads();
                 Controller.Update(reader.State);
                 try{Actions.Apply(reader.State);}catch(Exception ex){Plugin.Instance.Log.LogError("Assist update failed: "+ex);Actions.Notify("操作辅助出错，已关闭");Plugin.Instance.Settings.InfiniteBag.Value=false;Plugin.Instance.Settings.InfiniteStamina.Value=false;Plugin.Instance.Settings.GameSpeed.Value=1;Actions.Restore();}
                 if(Plugin.Instance.Settings.Journal.Value&&now>=nextJournal){Journal.Observe(reader.State);nextJournal=now+1;}
-                if(now>=nextEvidence){WriteEvidence();nextEvidence=now+10;}
                 if(reader.State.Playing&&!captured&&reader.State.Players.Count>0)
                 {
                     if(captureAt<0)captureAt=now+4;
@@ -191,6 +191,16 @@ namespace KingdomAdvisor
                 if(++failures>=3){faulted=true;lastError=ex.ToString();Controller.Close();WriteEvidence();Plugin.Instance.Log.LogError("Overlay stopped after 3 consecutive failures. Gameplay left unchanged.");}
             }
         }
+        public void LateUpdate()
+        {
+            if(faulted||reader==null)return;
+            double now=Time.unscaledTimeAsDouble;
+            if(now>=nextClock){reader.ReadClock(now);nextClock=now+0.1;}
+            if(now>=nextEvidence){
+                nextEvidence=Time.unscaledTime+10;
+                try{WriteEvidence();}catch(Exception ex){Plugin.Instance.Log.LogWarning("Evidence write failed: "+ex.Message);}
+            }
+        }
         public void OnGUI()
         {
             if(faulted){GUI.Label(new Rect(20,20,650,30),"Kingdom Advisor stopped: see BepInEx/LogOutput.log");return;}
@@ -241,6 +251,7 @@ namespace KingdomAdvisor
             foreach(var enemy in s.Enemies.Take(12))lines.Add("enemy="+enemy.Id+" kind="+enemy.Kind+" x="+enemy.X.ToString("F2"));
             Directory.CreateDirectory(Path.Combine(Paths.ConfigPath,"KingdomAdvisor"));
             File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","runtime.txt"),lines);
+            reader.WriteClockTrace(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","clock-samples.tsv"));
             // 诊断文件失败不应中止游戏覆盖界面。
             if(s.Playing)reader.WriteCensus(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","object-census.tsv"));
         }
@@ -269,11 +280,14 @@ namespace KingdomAdvisor
         private readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
         private string readContext="";
         private readonly NativeClockReader clockReader=new NativeClockReader();
+        private readonly ClockTrace clockTrace=new ClockTrace();
+        public void WriteClockTrace(string path)=>ReadOptional("clock-evidence",()=>File.WriteAllLines(path,clockTrace.Lines()));
         public void ReadClock(double realTime)
         {
             State.Clock=new DayClockSnapshot();
             ReadOptional("clock",()=>State.Clock=clockReader.Read(realTime));
             if(!State.Clock.Available)clockReader.Reset();
+            clockTrace.Record(realTime,Time.timeScale,State.Clock);
         }
         public void ResetOptionalReads()=>optionalReads.Clear();
         public IEnumerable<string> ReadEvidence()=>optionalReads.Where(p=>p.Value.Failures>0).Select(p=>"readChannel="+p.Key+" failures="+p.Value.Failures+" blocked="+p.Value.Blocked+" error="+p.Value.Error.Replace("\r"," ").Replace("\n"," "));
@@ -284,7 +298,21 @@ namespace KingdomAdvisor
             if(!circuit.Run(read))Plugin.Instance.Log.LogWarning("Optional read failed: "+channel+" attempt="+circuit.Failures+" blocked="+circuit.Blocked+" "+circuit.Error);
         }
         private int lastIsland=-1,lastSeed=int.MinValue;
-        private Component[] detailBuildings=Array.Empty<Component>();private float nextBuildingScan;
+        private Component[] detailBuildings=Array.Empty<Component>(),specialBuildings=Array.Empty<Component>();private float nextBuildingScan;
+        private void RefreshBuildings()
+        {
+            if(Time.unscaledTime<nextBuildingScan)return;
+            specialBuildings=detailBuildings=Array.Empty<Component>();
+            ReadOptional("structures",()=>{
+                specialBuildings=NativeStructureReader.Discover().ToArray();
+                var buildings=new List<Component>(specialBuildings);
+                buildings.AddRange(NativeObjects<WorkableBuilding>().Select(b=>(Component)b));
+                buildings.AddRange(NativeObjects<Ballista>().Select(b=>b.tower?(Component)b.tower:(Component)b));
+                buildings.AddRange(NativeObjects<Baker>().Select(b=>(Component)b));
+                detailBuildings=buildings.Where(b=>b).GroupBy(b=>b.gameObject.GetInstanceID()).Select(g=>g.First()).ToArray();
+            });
+            nextBuildingScan=Time.unscaledTime+2;
+        }
         internal readonly Dictionary<int,System.Tuple<float,float>> Explored=new Dictionary<int,System.Tuple<float,float>>();
                 private Managers GetManagers()=>Managers._Inst;
         private static T NativeParent<T>(Component obj) where T:Component
@@ -297,6 +325,7 @@ namespace KingdomAdvisor
         private static T NativeComponent<T>(Component obj) where T:Component=>NativeComponent<T>(obj.gameObject);
         private static Entry ResolvePayable(Payable payable)
         {
+            var structure=NativeStructureReader.Resolve(payable.gameObject);if(structure!=null)return structure;
             var horn=payable.TryCast<PayableHorn>();if(horn)return Catalog.ResolveWall(payable.name,true);
             var wall=NativeComponent<Wall>(payable.gameObject);if(wall&&wall.isHornUpgrade)return Catalog.ResolveWall(payable.name,true);
             var statue=payable.TryCast<Statue>();
@@ -312,6 +341,7 @@ namespace KingdomAdvisor
         }
         private static Entry ResolveBuilding(GameObject obj)
         {
+            var structure=NativeStructureReader.Resolve(obj);if(structure!=null)return structure;
             var payable=NativeComponent<Payable>(obj);
             var entry=payable?ResolvePayable(payable):Catalog.Resolve(obj.name);
             var wall=NativeComponent<Wall>(obj);if(wall&&wall.isHornUpgrade)return Catalog.ResolveWall(obj.name,true);
@@ -339,7 +369,7 @@ namespace KingdomAdvisor
             {
                 if(!p||!p.gameObject.activeInHierarchy)continue;
                 var e=ResolvePayable(p);
-                yield return "payable\t"+p.name+"\t"+p.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+p.transform.position.x+"\t"+PayableIdentity(p)+"\t"+e.Description;
+                yield return "payable\t"+p.name+"\t"+p.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+p.transform.position.x+"\t"+PayableIdentity(p)+" components="+NativeStructureReader.Evidence(p.gameObject)+"\t"+e.Description;
             }
             var kingdom=Managers._Inst?.kingdom;
             if(kingdom&&kingdom._characters!=null)foreach(var c in kingdom._characters)
@@ -348,7 +378,7 @@ namespace KingdomAdvisor
                 var leader=NativeComponent<Knight>(c);var peasant=NativeComponent<Peasant>(c);var fisher=NativeComponent<Fisher>(c);var ninja=NativeComponent<Ninja>(c);var pike=NativeComponent<Pikeman>(c);
                 yield return "character\t"+c.name+"\t"+c.GetIl2CppType().Name+"\tpeasant="+(peasant&&peasant.isActiveAndEnabled)+"\tfisher="+(fisher&&fisher.isActiveAndEnabled)+" ninja="+(ninja&&ninja.isActiveAndEnabled)+" pike="+(pike&&pike.isActiveAndEnabled)+" worker="+ActiveComponent<Worker>(c)+" archer="+ActiveComponent<Archer>(c)+" farmer="+ActiveComponent<Farmer>(c)+" knight="+ActiveComponent<Knight>(c)+" beggar="+ActiveComponent<Beggar>(c)+" berserker="+ActiveComponent<Berserker>(c)+" stable="+ActiveComponent<StableKeeper>(c)+"\t"+c.transform.position.x+"\t"+(leader&&leader.isActiveAndEnabled?"needsArmor="+leader.NeedsArmor+" rank="+leader.rank:"")+"\t";
             }
-            foreach(var c in detailBuildings)if(c&&c.gameObject.activeInHierarchy){var e=Catalog.Resolve(c.name);yield return "building\t"+c.name+"\t"+c.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+c.transform.position.x+"\t\t"+e.Description;}
+            foreach(var c in detailBuildings)if(c&&c.gameObject.activeInHierarchy){var e=ResolveBuilding(c.gameObject);yield return "building\t"+c.name+"\t"+c.GetIl2CppType().Name+"\t"+e.Category+"\t"+e.Key+"\t"+c.transform.position.x+"\tcomponents="+NativeStructureReader.Evidence(c.gameObject)+"\t"+e.Description;}
         }
         private static T NativeComponent<T>(GameObject obj) where T:Component
         {var c=obj.GetComponent(Il2CppType.Of<T>());return c?c.TryCast<T>():null;}
@@ -358,7 +388,7 @@ namespace KingdomAdvisor
             if(!m||!m.game||!m.kingdom){State=new Snapshot();lastIsland=-1;return;}
             var game=m.game;
             var context=m.kingdom.GetInstanceID()+":"+game.currentLand+":"+game.state;
-            if(context!=readContext){readContext=context;ResetOptionalReads();Explored.Clear();detailBuildings=Array.Empty<Component>();nextBuildingScan=0;clientEnemies=Array.Empty<Enemy>();nextClientEnemyScan=0;}
+            if(context!=readContext){readContext=context;ResetOptionalReads();Explored.Clear();detailBuildings=specialBuildings=Array.Empty<Component>();nextBuildingScan=0;clientEnemies=Array.Empty<Enemy>();nextClientEnemyScan=0;}
             bool playable=game.state==Game.State.Playing||game.state==Game.State.NetworkClientPlaying;
             var s=new Snapshot{Playing=playable,State=game.state.ToString(),Island=game.currentLand+1,Online=NetworkBigBoss.IsOnline};
             if(!playable){State=s;return;}
@@ -406,6 +436,7 @@ namespace KingdomAdvisor
             if(m.world&&World.GroundCollider){var b=World.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
             else if(m.level&&m.level.GroundCollider){var b=m.level.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
             var all=m.payables?.AllPayables;
+            var mappedObjects=new HashSet<int>();
             if(all!=null)
             {
                 for(int i=0;i<all.Length;i++)
@@ -415,7 +446,7 @@ namespace KingdomAdvisor
                     if(NativeParent<Player>(p))continue;
                     var ridden=NativeParent<Steed>(p);
                     if(ridden&&((k.playerOne&&k.playerOne.steed&&ridden==k.playerOne.steed)||(k.playerTwo&&k.playerTwo.steed&&ridden==k.playerTwo.steed)))continue;
-                    var entry=ResolvePayable(p);var x=p.transform.position.x;
+                    var entry=ResolvePayable(p);var x=p.transform.position.x;mappedObjects.Add(p.gameObject.GetInstanceID());
                     s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
                     if(!s.Counts.ContainsKey(entry.Key))s.Counts[entry.Key]=0;s.Counts[entry.Key]++;
                     if(entry.Category=="环境"&&!Plugin.Instance.Settings.Trees.Value)continue;
@@ -425,6 +456,19 @@ namespace KingdomAdvisor
                     if(k.playerTwo&&k.playerTwo.gameObject.activeInHierarchy&&k.playerTwo.hasLocalAuthority)point.PlayerStates[k.playerTwo.playerId]=ReadTarget(p,k.playerTwo);
                     s.Points.Add(point);
                 }
+            }
+            RefreshBuildings();
+            foreach(var building in specialBuildings)
+            {
+                if(!building||!building.gameObject.activeInHierarchy||!mappedObjects.Add(building.gameObject.GetInstanceID()))continue;
+                var entry=ResolveBuilding(building.gameObject);if(entry.Key=="unknown")continue;
+                float x=building.transform.position.x;
+                s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
+                s.Counts[entry.Key]=s.Counts.TryGetValue(entry.Key,out var count)?count+1:1;
+                var point=new MapPoint{Key=entry.Key,Name=entry.Name,Category=entry.Category,X=x,Cost=-1};
+                if(k.playerOne&&k.playerOne.hasLocalAuthority)point.PlayerStates[k.playerOne.playerId]=ReadBuildingTarget(building.gameObject,k.playerOne);
+                if(k.playerTwo&&k.playerTwo.gameObject.activeInHierarchy&&k.playerTwo.hasLocalAuthority)point.PlayerStates[k.playerTwo.playerId]=ReadBuildingTarget(building.gameObject,k.playerTwo);
+                s.Points.Add(point);
             }
             var camps=ReadCamps(k,s.State==Game.State.NetworkClientPlaying.ToString());
             if(camps!=null)
@@ -573,14 +617,7 @@ namespace KingdomAdvisor
             var kingdom=Managers._Inst.kingdom;
             if(info.Local&&kingdom)
             {
-                if(Time.unscaledTime>=nextBuildingScan)
-                {
-                    var buildings=new List<Component>();
-                    buildings.AddRange(NativeObjects<WorkableBuilding>().Select(b=>(Component)b));
-                    buildings.AddRange(NativeObjects<Ballista>().Select(b=>b.tower?(Component)b.tower:(Component)b));
-                    buildings.AddRange(NativeObjects<Baker>().Select(b=>(Component)b));
-                    detailBuildings=buildings.ToArray();nextBuildingScan=Time.unscaledTime+2;
-                }
+                RefreshBuildings();
                 foreach(var building in detailBuildings)Consider(building);
                 Consider(kingdom.castle);
                 if(kingdom._walls!=null)foreach(var wall in kingdom._walls)Consider(wall);
