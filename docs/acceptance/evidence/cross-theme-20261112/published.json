@@ -1,0 +1,76 @@
+{
+  "version": "0.6.13",
+  "sourceCommit": "17fe9fb52055024c9d83726eb3494dce8a84f592",
+  "dllSha256": "6CA84C362A6A204313064AC17938FC12C5488B895C344DDD5030D2B0F18D4BF2",
+  "github": {
+    "public": true,
+    "url": "https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.13",
+    "assets": [
+      {
+        "name": "KingdomAdvisor-0.6.13-Complete.zip",
+        "size": 38090285,
+        "digest": "sha256:c30c6010ef4ca6f16a3de5d662fdb13647ad558e42bd5dd95162bc014b3ee966",
+        "browser_download_url": "https://github.com/boyl/kingdom-advisor/releases/download/v0.6.13/KingdomAdvisor-0.6.13-Complete.zip"
+      },
+      {
+        "name": "KingdomAdvisor-0.6.13-ModOnly.zip",
+        "size": 150046,
+        "digest": "sha256:a919bd380a5c3cb8b1be1fc9363df1f92cf97f25a441c1a3bc6d04af467212cc",
+        "browser_download_url": "https://github.com/boyl/kingdom-advisor/releases/download/v0.6.13/KingdomAdvisor-0.6.13-ModOnly.zip"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 203,
+        "digest": "sha256:3f76175f9461f248a9310cde9e3fb3fe603a21b94c23c5eb362fd88aafa85e9b",
+        "browser_download_url": "https://github.com/boyl/kingdom-advisor/releases/download/v0.6.13/SHA256SUMS.txt"
+      }
+    ],
+    "tag": "v0.6.13",
+    "prerelease": false
+  },
+  "nexus": {
+    "files": [
+      {
+        "kind": "ModOnly",
+        "version": "0.6.13",
+        "id": "11574936862920",
+        "fileId": "200",
+        "chain": "8109336",
+        "category": "main",
+        "scan": "cleared",
+        "files": 5,
+        "sha256": "7bf17426231e8bb152a23510fdaa7b3c984e8b70b11ada9a0ee54294bbafa31f",
+        "verifiedUtc": "2026-11-12T10:02:22.4448275Z"
+      },
+      {
+        "kind": "Complete",
+        "version": "0.6.13",
+        "id": "11574936862921",
+        "fileId": "201",
+        "chain": "8121609",
+        "category": "main",
+        "scan": "unverified",
+        "files": 254,
+        "sha256": "17f2f0b317cde5598d766e67dc4a7917fc72ecb11f9383d166aafb10b2111528",
+        "verifiedUtc": "2026-11-12T10:02:24.1029731Z"
+      }
+    ],
+    "uploadMethod": "Official multipart API; single-part session endpoint returned HTTP 500 twice",
+    "status": "published",
+    "changelogVerified": true,
+    "pageVersion": "0.6.13",
+    "downloadVerified": true,
+    "descriptionVerified": true,
+    "anonymousPageCheck": "Web fetch returned HTTP 403; published API state and remote downloads verified",
+    "url": "https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files"
+  },
+  "localInstalled": true,
+  "runtimeVerified": true,
+  "blindFixWording": "建筑遗漏与错误识别：盲修复",
+  "unverified": [
+    "建筑及DLC专项实机，按用户授权盲修复发布",
+    "双机联机",
+    "本候选F9关闭时钟再开启及全部语言/字号/分辨率组合"
+  ],
+  "verifiedUtc": "2026-11-12T10:03:35.0192793Z"
+}
