@@ -1,0 +1,72 @@
+{
+  "version": "0.6.12",
+  "sourceCommit": "e8836062e0a034c101dac3ce21df67c3ed2f34ba",
+  "dllSha256": "3FE4B083FC0E1F361437164369F20BACCCDCA79337E52FD37EABCB093EB3E985",
+  "github": {
+    "assets": [
+      {
+        "name": "KingdomAdvisor-0.6.12-Complete.zip",
+        "size": 38078435,
+        "digest": "sha256:4d3154a156169276892e3b47cdba0f702ae3fb3a38bbe7b50a84634877c356ff",
+        "browser_download_url": "https://github.com/boyl/kingdom-advisor/releases/download/v0.6.12/KingdomAdvisor-0.6.12-Complete.zip"
+      },
+      {
+        "name": "KingdomAdvisor-0.6.12-ModOnly.zip",
+        "size": 138193,
+        "digest": "sha256:cd2515ae596385a9460c42d5c937633109f3b6da9be1ae21d975c8dbfbadb995",
+        "browser_download_url": "https://github.com/boyl/kingdom-advisor/releases/download/v0.6.12/KingdomAdvisor-0.6.12-ModOnly.zip"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 203,
+        "digest": "sha256:65600de7b061d4f7b59bda0f04bda3ce6a26156e175e1abb99b2fe129bb593fe",
+        "browser_download_url": "https://github.com/boyl/kingdom-advisor/releases/download/v0.6.12/SHA256SUMS.txt"
+      }
+    ],
+    "public": true,
+    "prerelease": false,
+    "tag": "v0.6.12",
+    "url": "https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.12"
+  },
+  "nexus": {
+    "pageVersion": "0.6.12",
+    "files": [
+      {
+        "kind": "ModOnly",
+        "version": "0.6.12",
+        "id": "11574936862918",
+        "fileId": "198",
+        "chain": "8109336",
+        "category": "main",
+        "scan": "unverified",
+        "files": 5,
+        "sha256": "6e49e5cb23b6cbc50996feaf534846184f5ff3645db2c42069522c7a7ad3e4b8",
+        "verifiedUtc": "2026-11-12T04:01:29.940738Z"
+      },
+      {
+        "kind": "Complete",
+        "version": "0.6.12",
+        "id": "11574936862919",
+        "fileId": "199",
+        "chain": "8121609",
+        "category": "main",
+        "scan": "unverified",
+        "files": 254,
+        "sha256": "f959aef725ab78952c4805ed4490dbe86183b0575261f608a7f7b6f4c83d74a5",
+        "verifiedUtc": "2026-11-12T04:01:31.8389797Z"
+      }
+    ],
+    "descriptionVerified": true,
+    "url": "https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files",
+    "changelogVerified": true,
+    "status": "published",
+    "downloadVerified": true
+  },
+  "localInstalled": true,
+  "runtimeVerified": true,
+  "unverified": [
+    "双机联机实测",
+    "完整DLC及全部语言/字号/分辨率组合"
+  ],
+  "verifiedUtc": "2026-11-12T04:02:52.7209288Z"
+}
