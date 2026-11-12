@@ -1,8 +1,8 @@
-# Kingdom Advisor — Mod only (0.6.11)
+# Kingdom Advisor — Mod only (0.6.12)
 
-Mod-only package; requires an existing working BepInEx IL2CPP loader. 0.6.11 adds individual map-marker checkboxes, a Common list and category-wide selection. Display & appearance groups independent 0–100% background-opacity sliders for the map, advisor, nearby details, alerts and main interface, with an apply-to-all option. The main interface defaults to 71% opacity; information overlays remain background-free by default. Includes a charcoal-and-muted-gold palette and fixes for action menus, default-value displays and the map tooltip background.
+Mod-only package; requires an existing working BepInEx IL2CPP loader. 0.6.12 adds a day/night clock: dawn, day, evening and night phases, in-game hours and minutes, a real-time countdown to nightfall or dawn, and a day-progress bar. The clock is enabled by default and can be hidden under F6 → Movement & time while retaining the phase, countdown and progress bar. Readings follow game pauses and speed changes, with explicit Game time and real time labels.
 
-Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.11-Complete.zip` and its installer.
+Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.12-Complete.zip` and its installer.
 
 ### Install PowerShell 7 for the GitHub one-click installer
 
@@ -48,4 +48,4 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 Rollback stops if installed files were modified later. Keep backups until satisfied. Report issues with `BepInEx/LogOutput.log`, game version/source and loader package name. Do not send keys, account data or saves. Compatibility with every other mod is not verified.
 
 
-0.6.11: joiner scene-entity reading; automated checks passed, two-machine multiplayer and real-game regression remain unverified.
+0.6.12: single-player tests covered normal/2x/4x speed, pause/resume, nightfall/dawn, and hiding/restoring clock digits. Two-machine multiplayer, all DLC and every language/font/resolution combination remain unverified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.

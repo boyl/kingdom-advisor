@@ -22,7 +22,7 @@ namespace KingdomAdvisor
         public void Cancel(){if(Active)Latched=true;}
         public void Reset(){Target="";Active=Latched=CanTeleport=false;}
     }
-    public enum OptionId { Language, Map,Background,Position,FullMap,Trees,Buildings,Camps,Enemies,Mounts,Special,Kingdom,Player,AdvisorBackground,PlayerBackground,AlertBackground,InterfaceBackground,Population,Details,Alerts,Defense,Staff,MountInfo,Icons,Journal,Font,ResetLayout,InfiniteBag,Resources,Teleport,InfiniteStamina,Speed,PadCursor,PadSpeed,PadOpen,MapType,ShowAllTypes,ResetTypes,PanelOpacity,MapOpacity,AdvisorOpacity,PlayerOpacity,AlertOpacity,InterfaceOpacity,FilterCategory,ShowFiltered,HideFiltered }
+    public enum OptionId { Language, Map,Background,Position,FullMap,Trees,Buildings,Camps,Enemies,Mounts,Special,Kingdom,Player,AdvisorBackground,PlayerBackground,AlertBackground,InterfaceBackground,Population,Details,Alerts,Defense,Staff,MountInfo,Icons,Journal,Font,ResetLayout,InfiniteBag,Resources,Teleport,InfiniteStamina,Speed,PadCursor,PadSpeed,PadOpen,MapType,ShowAllTypes,ResetTypes,PanelOpacity,MapOpacity,AdvisorOpacity,PlayerOpacity,AlertOpacity,InterfaceOpacity,FilterCategory,ShowFiltered,HideFiltered,Clock }
     public enum OptionKind { Choice,Action,Navigation,Slider,Toggle }
     public sealed class OptionItem
     {
@@ -43,7 +43,7 @@ namespace KingdomAdvisor
             new[]{new OptionItem(OptionId.Kingdom,"王国顾问卡片"),new OptionItem(OptionId.Player,"附近建筑详情"),new OptionItem(OptionId.AdvisorBackground,"顾问背景","透明","面板"),new OptionItem(OptionId.PlayerBackground,"附近详情背景","透明","面板"),new OptionItem(OptionId.AlertBackground,"提醒背景","透明","面板"),new OptionItem(OptionId.Population,"人口与科技"),new OptionItem(OptionId.Details,"用途与升级建议"),new OptionItem(OptionId.Alerts,"情境提醒"),new OptionItem(OptionId.Defense,"防线风险提醒"),new OptionItem(OptionId.Staff,"建设与招募缺口"),new OptionItem(OptionId.MountInfo,"坐骑能力状态")},
             new[]{new OptionItem(OptionId.Language,"语言 / Language","自动","简体中文","English"),new OptionItem(OptionId.InterfaceBackground,"主界面背景","透明","面板"),new OptionItem(OptionId.PanelOpacity,"面板背景不透明度","调节"),new OptionItem(OptionId.Icons,"图鉴图标"),new OptionItem(OptionId.Journal,"岛屿进度记录"),new OptionItem(OptionId.Font,"字号","14","16","18","20","22","24","26","28"),new OptionItem(OptionId.ResetLayout,"恢复卡片默认位置","执行")},
             new[]{new OptionItem(OptionId.InfiniteBag,"无限钱袋容量"),new OptionItem(OptionId.Resources,"手动添加资源","打开")},
-            new[]{new OptionItem(OptionId.Teleport,"地图长按传送"),new OptionItem(OptionId.InfiniteStamina,"无限耐力"),new OptionItem(OptionId.Speed,"游戏速度","暂停","正常","2 倍","4 倍")},
+            new[]{new OptionItem(OptionId.Teleport,"地图长按传送"),new OptionItem(OptionId.InfiniteStamina,"无限耐力"),new OptionItem(OptionId.Speed,"游戏速度","暂停","正常","2 倍","4 倍"),new OptionItem(OptionId.Clock,"显示游戏时钟")},
             new[]{new OptionItem(OptionId.PadCursor,"常驻手柄光标"),new OptionItem(OptionId.PadSpeed,"光标速度","慢","标准","快","很快"),new OptionItem(OptionId.PadOpen,"呼出按键","左摇杆按压 L3","右摇杆按压 R3","Back／Select")},
             new[]{new OptionItem(OptionId.ShowAllTypes,"全部显示","执行"),new OptionItem(OptionId.ResetTypes,"恢复显示默认","执行")}.Concat(Catalog.Entries.OrderBy(e=>e.Category,StringComparer.Ordinal).Select(e=>new OptionItem(OptionId.MapType,e.Category+" · "+e.Name){MapKey=e.Key})).ToArray()
         };

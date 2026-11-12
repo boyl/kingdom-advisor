@@ -1,0 +1,33 @@
+[Message: Preloader] BepInEx 6.0.0-be.788 - KingdomTwoCrowns (2026/10/4 21:57:28)
+[Message: Preloader] Built from commit 5b766a3b7f6c164d4798924a93f3acf4db769d06
+[Info   :   BepInEx] System platform: Windows 10 64-bit
+[Info   :   BepInEx] Process bitness: 64-bit (x64)
+[Info   :   BepInEx] Running under Unity 6000.0.66f2
+[Info   :   BepInEx] Runtime version: 6.0.7
+[Info   :   BepInEx] Runtime information: .NET 6.0.7
+[Info   : Preloader] 0 patcher plugins loaded
+[Info   : Preloader] 0 assemblies discovered
+[Message:AssemblyPatcher] Executing 0 patch(es)
+[Message:   BepInEx] Chainloader initialized
+[Warning:Il2CppInterop] Class::Init signatures have been exhausted, using a substitute!
+[Info   :Il2CppInterop] Registered mono type Il2CppInterop.Runtime.DelegateSupport+Il2CppToMonoDelegateReference in il2cpp domain
+[Info   :   BepInEx] 3 plugins to load
+[Info   :   BepInEx] Loading [KingdomMod.DevTools 2.4.2]
+[Info   :KingdomMod.DevTools] Plugin KingdomMod.DevTools is loaded!
+[Info   :Il2CppInterop] Registered mono type KingdomMod.DevTools.DevToolsHolder in il2cpp domain
+[Message:KingdomMod.DevTools] patchedMethod: ValidatedSettings
+[Message:KingdomMod.DevTools] isDebugBuild: False
+[Info   :   BepInEx] Loading [KingdomMod.StaminaBar 2.4.2]
+[Info   :KingdomMod.StaminaBar] Plugin KingdomMod.StaminaBar is loaded!
+[Info   :Il2CppInterop] Registered mono type KingdomMod.StaminaBar.StaminaBarHolder in il2cpp domain
+[Info   :   BepInEx] Loading [王国顾问 Kingdom Advisor 0.6.12]
+[Warning:Il2CppInterop] Method Boolean <Update>b__26_0(KingdomAdvisor.MapPoint) on type KingdomAdvisor.AdvisorBehaviour has unsupported parameter KingdomAdvisor.MapPoint p of type KingdomAdvisor.MapPoint
+[Warning:Il2CppInterop] Method Boolean <Update>b__26_1(KingdomAdvisor.PlayerInfo) on type KingdomAdvisor.AdvisorBehaviour has unsupported parameter KingdomAdvisor.PlayerInfo p of type KingdomAdvisor.PlayerInfo
+[Info   :Il2CppInterop] Registered mono type KingdomAdvisor.AdvisorBehaviour in il2cpp domain
+[Info   :王国顾问 Kingdom Advisor] Kingdom Advisor 0.6.12 loaded; automatic in-game overlay; gameplay rule writes=0.
+[Message:   BepInEx] Chainloader startup complete
+[Message:KingdomMod.DevTools] DevToolsHolder Start.
+[Message:KingdomMod.StaminaBar] StaminaBarHolder Start.
+[Info   :王国顾问 Kingdom Advisor] Rewired actions: 0	Horizontal	Horizontal movement, 1	Pay	Pay or drop coins, 2	Gallop	Make the horse gallop, 3	Vertical	Vertical, 4	Submit	Submit, 5	Start	Start, 6	Cancel	Cancel, 10	Debug	Summon Debug Menu, 13	AccelerationZ	Gyro Acceleration Z, 19	ActivateRulerAbility	Activate ruler ability, 22	MenuPrevTab	Toggle prev tab, 23	MenuNextTab	Toggle next tab
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
+[Info   :王国顾问 Kingdom Advisor] Screenshot saved: first-gameplay.png

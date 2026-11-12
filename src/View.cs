@@ -137,6 +137,21 @@ namespace KingdomAdvisor
             }
             finally {GUI.depth=previousDepth;}
         }
+        private void DrawClockProgress(Rect rect,DayClockSnapshot clock)
+        {
+            Fill(new Rect(rect.x-1,rect.y-1,rect.width+2,rect.height+2),new Color(0,0,0,.8f));
+            if(!clock.Available){Fill(rect,border);return;}
+            var colors=new[]{muted,gold,new Color(.60f,.39f,.24f),new Color(.31f,.39f,.53f)};
+            for(int i=0;i<4;i++)
+            {
+                float left=(float)Math.Round(rect.width*clock.PhasePositions[i]);
+                float right=(float)Math.Round(rect.width*(i==3?1:clock.PhasePositions[i+1]));
+                Fill(new Rect(rect.x+left,rect.y,Math.Max(0,right-left-1),rect.height),colors[i]);
+            }
+            float marker=(float)Math.Round((rect.width-3)*clock.Progress);
+            Fill(new Rect(rect.x+marker-1,rect.y-2,5,rect.height+4),new Color(0,0,0,1));
+            Fill(new Rect(rect.x+marker,rect.y-2,3,rect.height+4),bodyText);
+        }
         private void DrawHud(Rect viewport,Snapshot s,PlayerInfo player)
         {
             float pad=18,line=Math.Max(22,text.lineHeight),width=Math.Min(viewport.width-36,viewport.width>=900?390:viewport.width*.44f);
@@ -144,8 +159,10 @@ namespace KingdomAdvisor
             if(stacked)width=viewport.width-36;
             float y=18;
             string heading="王国顾问";
-            string day="岛 "+s.Island+"   /   第 "+s.Day+" 天   /   "+s.Phase+" · "+Season(s.Season);
-            if(Localization.English)day="Island "+s.Island+" / Day "+s.Day+" / "+Localization.Text(s.Phase)+" · "+Season(s.Season);
+            string clockHeader=ClockPresentation.Header(s.Clock,settings.ShowClock.Value);
+            string day="岛 "+s.Island+"   /   第 "+s.Day+" 天   /   "+clockHeader+" · "+Season(s.Season);
+            if(Localization.English)day="Island "+s.Island+" / Day "+s.Day+" / "+Localization.Text(clockHeader)+" · "+Season(s.Season);
+            string countdown=ClockPresentation.Countdown(s.Clock);
             var rows=new System.Collections.Generic.List<System.Tuple<string,string>>();
             void Info(string icon,string value){rows.Add(System.Tuple.Create(icon,value));}
             Info("person","P"+(player.Id+1));
@@ -157,13 +174,16 @@ namespace KingdomAdvisor
             float headingH=title.CalcHeight(new GUIContent(Localization.Text(heading)),width-32);
             float dayH=small.CalcHeight(new GUIContent(Localization.Text(day)),width-32);
             float statusH=rows.Sum(r=>small.CalcHeight(new GUIContent(Localization.Text(r.Item2)),width-60)+5);
-            float cardH=16+headingH+6+dayH+18+statusH+16;
+            float clockH=small.CalcHeight(new GUIContent(Localization.Text(countdown)),width-32)+18;
+            float cardH=16+headingH+6+dayH+18+clockH+statusH+16;
             y=Math.Max(18,viewport.height-cardH-66);
             var advisorRect=new Rect(pad,y,width,cardH);
             if(settings.ShowKingdomAdvisor.Value){
             var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);advisorRect=statusRect;activePanelOpacity=settings.PanelOpacities[OptionId.AdvisorOpacity].Value;Card(statusRect,settings.AdvisorTransparent.Value);
             float cy=statusRect.y+16;cy+=Row(statusRect.x+16,cy,width-32,heading+"  ⇄",title)+2;
-            cy+=Row(statusRect.x+16,cy,width-32,day,small)+10;
+            cy+=Row(statusRect.x+16,cy,width-32,day,small)+4;
+            cy+=Row(statusRect.x+16,cy,width-32,countdown,small)+6;
+            DrawClockProgress(new Rect(statusRect.x+16,cy,width-32,6),s.Clock);cy+=14;
             Fill(new Rect(statusRect.x+16,cy-5,width-32,1),border);
             foreach(var row in rows){HudIcon(statusRect.x+24,cy+3,row.Item1);cy+=Row(statusRect.x+44,cy,width-60,row.Item2,small)+1;}
             }

@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.11";
+        public const string Version="0.6.12";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -32,6 +32,7 @@ namespace KingdomAdvisor
     {
         public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
         public ConfigEntry<int> FontSize,UiLanguage;
+        public ConfigEntry<bool> ShowClock;
         public ConfigEntry<string> Layout,HiddenMapTypes;
         public ConfigEntry<int> PanelOpacity;
         public readonly System.Collections.Generic.Dictionary<OptionId,ConfigEntry<int>> PanelOpacities=new();
@@ -52,6 +53,7 @@ namespace KingdomAdvisor
             ShowKingdomAdvisor=config.Bind("界面","显示王国顾问",true,"显示左下王国顾问整张概况卡片。");
             ShowPlayerPanel=config.Bind("界面","显示Player详情",true,"显示顾问旁的附近建筑／交互物详情，可拖动并记忆位置。");
             Status=config.Bind("界面","王国概况",true,"显示人口、科技与时间。");
+            ShowClock=config.Bind("界面","显示游戏时钟",true,"显示游戏内几点几分。关闭后仍显示阶段、昼夜倒计时和进度条；倒计时按当前速度估计现实时间，不代表敌人到达或安全时间。");
             Details=config.Bind("界面","对象详情",true,"显示升级目标与使用建议。");
             Alerts=config.Bind("界面","情境提醒",true,"仅在风险条件成立时显示提醒。");
             FullMap=config.Bind("地图","全情报",true,"显示当前已加载岛屿的所有兴趣点；不会伪造其他岛屿信息。");
@@ -128,7 +130,7 @@ namespace KingdomAdvisor
                 Localization.English=Localization.IsEnglish(previewLanguage<0?Plugin.Instance.Settings.UiLanguage.Value:previewLanguage,language?language.languageCode:null,Application.systemLanguage.ToString());
                 var now=Time.unscaledTime;
                 if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;}
-                if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
+                if(now>=nextFast){reader.ReadClock(now);reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
                 if(Input.GetKeyDown(KeyCode.F6)||Input.GetKeyDown(KeyCode.F7))reader.ResetOptionalReads();
                 Controller.Update(reader.State);
                 try{Actions.Apply(reader.State);}catch(Exception ex){Plugin.Instance.Log.LogError("Assist update failed: "+ex);Actions.Notify("操作辅助出错，已关闭");Plugin.Instance.Settings.InfiniteBag.Value=false;Plugin.Instance.Settings.InfiniteStamina.Value=false;Plugin.Instance.Settings.GameSpeed.Value=1;Actions.Restore();}
@@ -222,6 +224,7 @@ namespace KingdomAdvisor
             var s=reader.State;
             var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"overlayOpen="+(Controller?.Open??false),"mapFocus="+(Controller?.MapFocus??false),"holdActive="+(Controller?.Hold.Active??false),"releaseGuardCount="+(Controller?.ReleaseGuardCount??0),"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
             lines.Add("localPlayers="+s.Players.Count(p=>p.Local));
+            lines.Add("clockState="+s.Clock.State+" clockPhase="+s.Clock.Phase+" clock="+(s.Clock.Available?s.Clock.ClockText:"unavailable")+" untilDawn="+s.Clock.UntilDawn+" remainingSeconds="+s.Clock.RemainingSeconds+" progress="+s.Clock.Progress+" client="+s.Clock.Client+" clockUnavailable="+s.Clock.UnavailableReason);
             lines.AddRange(reader.ReadEvidence());
             lines.Add("uiBlockedReason="+(!s.Playing?"not-playing":!s.Players.Any(p=>p.Local)?"no-local-authority":!Plugin.Instance.Settings.Enabled.Value?"disabled":"none"));
             var managers=Managers._Inst;
@@ -265,6 +268,13 @@ namespace KingdomAdvisor
         public Snapshot State=new Snapshot();
         private readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
         private string readContext="";
+        private readonly NativeClockReader clockReader=new NativeClockReader();
+        public void ReadClock(double realTime)
+        {
+            State.Clock=new DayClockSnapshot();
+            ReadOptional("clock",()=>State.Clock=clockReader.Read(realTime));
+            if(!State.Clock.Available)clockReader.Reset();
+        }
         public void ResetOptionalReads()=>optionalReads.Clear();
         public IEnumerable<string> ReadEvidence()=>optionalReads.Where(p=>p.Value.Failures>0).Select(p=>"readChannel="+p.Key+" failures="+p.Value.Failures+" blocked="+p.Value.Blocked+" error="+p.Value.Error.Replace("\r"," ").Replace("\n"," "));
         private void ReadOptional(string channel,Action read)

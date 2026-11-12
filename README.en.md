@@ -1,19 +1,19 @@
-# Kingdom Advisor 0.6.11
+# Kingdom Advisor 0.6.12
 
-In-game advisor for Kingdom Two Crowns. 0.6.11 adds individual map-marker checkboxes, a Common list and category-wide selection. Display & appearance groups independent 0–100% background-opacity sliders for the map, advisor, nearby details, alerts and main interface, with an apply-to-all option. The main interface defaults to 71% opacity; information overlays remain background-free by default. Includes a charcoal-and-muted-gold palette and fixes for action menus, default-value displays and the map tooltip background.
+In-game advisor for Kingdom Two Crowns. 0.6.12 adds a day/night clock: dawn, day, evening and night phases, in-game hours and minutes, a real-time countdown to nightfall or dawn, and a day-progress bar. The clock is enabled by default and can be hidden under F6 → Movement & time while retaining the phase, countdown and progress bar. Readings follow game pauses and speed changes, with explicit Game time and real time labels.
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.11) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.12) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus now hosts 0.6.11 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.11 assets only.
+Nexus now hosts 0.6.12 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.12 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.11-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.11-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.12-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.12-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
@@ -97,8 +97,10 @@ All 104 entries have explicit identity-based pixel icons: object on the left, pu
 Multiplayer compatibility retains the 0.6.10 joiner scene-entity reading. Automated checks passed; two-machine multiplayer remains unverified.
 
 
-## Display customization
+## Day/night clock
 
-0.6.11 adds individual map-marker checkboxes, a Common list and category-wide selection. Display & appearance groups independent 0–100% background-opacity sliders for the map, advisor, nearby details, alerts and main interface, with an apply-to-all option. The main interface defaults to 71% opacity; information overlays remain background-free by default. Includes a charcoal-and-muted-gold palette and fixes for action menus, default-value displays and the map tooltip background.
+0.6.12 adds a day/night clock: dawn, day, evening and night phases, in-game hours and minutes, a real-time countdown to nightfall or dawn, and a day-progress bar. The clock is enabled by default and can be hidden under F6 → Movement & time while retaining the phase, countdown and progress bar. Readings follow game pauses and speed changes, with explicit Game time and real time labels.
 
 Back up the configuration before upgrading. Old category filters migrate to per-type visibility. Hidden locations can still be queried and temporarily highlighted.
+
+Single-player tests covered normal/2x/4x speed, sustained pause/resume, nightfall/dawn and hiding/restoring clock digits. Two-machine multiplayer, all DLC and every language/font/resolution combination remain unverified. The countdown is not an enemy-arrival or safe-return estimate; no return-travel estimate is included.

@@ -1,21 +1,21 @@
 [![Downloads](https://img.shields.io/github/downloads/boyl/kingdom-advisor/total?label=Downloads&color=blue)](https://github.com/boyl/kingdom-advisor/releases) [![Stars](https://img.shields.io/github/stars/boyl/kingdom-advisor?label=Stars)](https://github.com/boyl/kingdom-advisor/stargazers) [![Latest Release](https://img.shields.io/github/v/release/boyl/kingdom-advisor?label=Release)](https://github.com/boyl/kingdom-advisor/releases/latest) [![License](https://img.shields.io/github/license/boyl/kingdom-advisor?label=License)](https://github.com/boyl/kingdom-advisor/blob/HEAD/LICENSE)
 
-# 王国顾问 Kingdom Advisor 0.6.11
+# 王国顾问 Kingdom Advisor 0.6.12
 
-《王国：两位君主》游戏内辅助 Mod。0.6.11 显示自定义更新：地图标记支持按类型勾选、常用清单和分类批量操作；地图、顾问、附近详情、提醒及主界面的背景模式和独立不透明度集中在“显示与外观”，支持0～100%滑动条和统一应用。主界面默认不透明度71%，其他信息面板默认无背景。采用暖炭灰与旧金色配色，修正单项动作菜单、默认数值展示及地图提示重复底色。
+《王国：两位君主》游戏内辅助 Mod。0.6.12 新增昼夜时钟：显示黎明、白昼、黄昏、夜晚阶段、游戏内几点几分、距入夜／黎明的现实时间倒计时，以及昼夜进度条。钟点默认显示，可在 F6 → 移动与时间中关闭；阶段、倒计时和进度条保留。读数跟随游戏暂停和变速，明确区分“游戏时间”与“现实时间”。
 
 ## 下载与安装
 
-[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.11) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.12) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus 已通过 API 更新为 0.6.11 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.11 资源。
+Nexus 已通过 API 更新为 0.6.12 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.12 资源。
 
 两种包任选其一，不要下载 GitHub 自动生成的 Source code 包：
 
 | 资源 | 内容与适用情况 | 安装说明 |
 |---|---|---|
-| `KingdomAdvisor-0.6.11-ModOnly.zip` | 仅本 Mod，适合已有正常工作前置的玩家；不含 BepInEx | [中文](distribution/README.ModOnly.md) · [English](distribution/README.ModOnly.en.md) |
-| `KingdomAdvisor-0.6.11-Complete.zip` | Mod＋完整 #788 前置＋解析器兼容补丁，适合首次安装或遇到 `AndroidManager / RawPropertyType` 启动错误的玩家 | [中文](distribution/README.Complete.md) · [English](distribution/README.Complete.en.md) |
+| `KingdomAdvisor-0.6.12-ModOnly.zip` | 仅本 Mod，适合已有正常工作前置的玩家；不含 BepInEx | [中文](distribution/README.ModOnly.md) · [English](distribution/README.ModOnly.en.md) |
+| `KingdomAdvisor-0.6.12-Complete.zip` | Mod＋完整 #788 前置＋解析器兼容补丁，适合首次安装或遇到 `AndroidManager / RawPropertyType` 启动错误的玩家 | [中文](distribution/README.Complete.md) · [English](distribution/README.Complete.en.md) |
 
 整合包是基于官方 BepInEx 6.0.0-be.788 的修订包，**并非未修改的官方包**。仅替换 `LibCpp2IL.dll` 与 `Cpp2IL.Core.dll`，包含对应源码、补丁脚本和许可证。纯官方 #738、#788 的首次生成错误已在本机复现；不要将整合包内的修复误认为官方原版已解决。[检测记录](docs/acceptance/bepinex-738-compatibility.md)。
 
@@ -124,3 +124,5 @@ Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完�
 
 
 联机兼容：沿用 0.6.10 的加入者场景实体读取；自动检查通过，双机真实联机尚未验证。
+
+单人实测已覆盖正常／2倍／4倍速度、暂停保持与恢复、入夜／黎明切换、隐藏与恢复钟点。双机联机、完整DLC和全部语言／字号／分辨率组合尚未实机验证。倒计时不代表敌人到达或安全返程时间，本次不含返程估算。

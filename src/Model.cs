@@ -353,11 +353,98 @@ namespace KingdomAdvisor
             return rows;
         }
     }
+    public enum ClockPhase { Dawn,Day,Evening,Night }
+    public enum ClockState { Unavailable,Synchronizing,Running,Paused,Stalled }
+    // 原生适配器一次提交完整读数；模型不访问引擎、不累计自己的游戏时间。
+    public sealed class ClockObservation
+    {
+        public string Context="";
+        public double Hour,RealTime,SpeedSignature=1,DayStart,DayEnd;
+        public int Day;public bool Paused,Client;
+        public ClockPhase Phase;
+        public double[] PhaseStarts;
+    }
+    public sealed class DayClockSnapshot
+    {
+        public ClockState State;
+        public string UnavailableReason="not-ready";
+        public ClockPhase Phase;
+        public bool UntilDawn,Client;
+        public double Hour,Progress;
+        public double? RemainingSeconds;
+        public double[] PhasePositions=Array.Empty<double>();
+        public bool Available=>State!=ClockState.Unavailable;
+        public string ClockText {
+            get {int minutes=((int)Math.Floor(Hour*60+0.000001))%1440;return (minutes/60).ToString("D2")+":"+(minutes%60).ToString("D2");}
+        }
+    }
+    public sealed class DayClockTracker
+    {
+        private bool initialized,stalled;
+        private string context="";
+        private double previousHour,previousReal,anchorHour,anchorReal,lastMovement,speed;
+        private double? rate;
+        public void Reset(){initialized=false;stalled=false;rate=null;}
+        private static bool Finite(double value)=>!double.IsNaN(value)&&!double.IsInfinity(value);
+        private static bool HourValid(double value)=>Finite(value)&&value>=0&&value<=24;
+        public static double Forward(double start,double end)=>(end-start+24)%24;
+        private void Seed(ClockObservation input,double absolute)
+        {
+            initialized=true;stalled=false;context=input.Context;speed=input.SpeedSignature;rate=null;
+            previousHour=anchorHour=absolute;previousReal=anchorReal=lastMovement=input.RealTime;
+        }
+        public DayClockSnapshot Observe(ClockObservation input)
+        {
+            if(input==null||!HourValid(input.Hour)||input.Day<0||!Finite(input.RealTime)||input.RealTime<0||
+                !Finite(input.SpeedSignature)||input.SpeedSignature<0||!Enum.IsDefined(typeof(ClockPhase),input.Phase)||
+                !HourValid(input.DayStart)||!HourValid(input.DayEnd)||Forward(input.DayStart,input.DayEnd)==0||
+                input.PhaseStarts==null||input.PhaseStarts.Length!=4||input.PhaseStarts.Any(h=>!HourValid(h)))
+            {Reset();return new DayClockSnapshot{UnavailableReason="invalid-clock-observation"};}
+            var positions=input.PhaseStarts.Select(h=>Forward(input.PhaseStarts[0],h)/24).ToArray();
+            if(!(positions[1]>0&&positions[2]>positions[1]&&positions[3]>positions[2]))
+            {Reset();return new DayClockSnapshot{UnavailableReason="invalid-phase-boundaries"};}
+            double hour=input.Hour%24,absolute=input.Day*24.0+hour;
+            bool night=Forward(input.DayStart,hour)>=Forward(input.DayStart,input.DayEnd);
+            var result=new DayClockSnapshot{State=ClockState.Synchronizing,UnavailableReason="",Phase=input.Phase,Hour=hour,
+                UntilDawn=night,Client=input.Client,Progress=Forward(input.PhaseStarts[0],hour)/24,PhasePositions=positions};
+            if(input.Paused||input.SpeedSignature==0){Reset();result.State=ClockState.Paused;return result;}
+            if(!initialized||context!=input.Context||Math.Abs(speed-input.SpeedSignature)>0.000001||
+                input.RealTime<previousReal||input.RealTime-previousReal>2)
+            {Seed(input,absolute);return result;}
+            double elapsed=input.RealTime-previousReal,advance=absolute-previousHour;
+            // 跳时／网络校正不作为运行速率。上限随已观测速率扩展，不限制正常高倍率。
+            if(advance< -0.00001||advance>(rate.HasValue?Math.Max(0.05,rate.Value*elapsed*4):1))
+            {Seed(input,absolute);return result;}
+            if(advance>0.000001)
+            {
+                if(stalled){Seed(input,absolute);return result;}
+                lastMovement=input.RealTime;
+            }
+            previousHour=absolute;previousReal=input.RealTime;
+            if(input.RealTime-lastMovement>=0.75)
+            {
+                stalled=true;rate=null;anchorHour=absolute;anchorReal=input.RealTime;
+                result.State=ClockState.Stalled;return result;
+            }
+            if(input.RealTime-anchorReal>=0.5)
+            {
+                double measured=(absolute-anchorHour)/(input.RealTime-anchorReal);
+                rate=measured>0.000001?measured:(double?)null;anchorHour=absolute;anchorReal=input.RealTime;
+            }
+            if(rate.HasValue)
+            {
+                result.State=ClockState.Running;
+                result.RemainingSeconds=Forward(hour,night?input.DayStart:input.DayEnd)/rate.Value;
+            }
+            return result;
+        }
+    }
     public sealed class Snapshot
     {
         public bool Playing,Online; public int Island,Day,Workers,Archers,Knights,Farmers,Beggars;
         public int Squires,UnclassifiedLeaders;public int Pikemen,Berserkers,Peasants,Ninjas,Fishers,StableKeepers,Hermits;
         public bool Stone,Iron;public string Season="",Phase="",State="";
+        public DayClockSnapshot Clock=new DayClockSnapshot();
         public float Left=-1,Right=1;
         public int Camps;public bool EnemiesAvailable;
         public string CampaignKey="";

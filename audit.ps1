@@ -33,7 +33,9 @@ function Inspect-Type($Type) {
             if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.FullName -eq 'UnityEngine.GUI' -and $operand.Name -in @('SetNextControlName','GetNameOfFocusedControl','TextField','DoTextField')){throw "本机 IL2CPP 未还原的文本编辑接口：$operand"}
             if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.Scope.Name -eq 'Assembly-CSharp'){
                 [void]$calls.Add($operand.FullName)
-                                if($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$')){
+                # 原生 GetDayPhase 仅按传入钟点和阶段边界返回阶段；只允许时钟适配器调用此精确签名。
+                $clockPhaseRead=$Type.FullName -eq 'KingdomAdvisor.NativeClockReader' -and $method.Name -eq 'Read' -and $operand.FullName -eq 'DayPhase TimesOfDay::GetDayPhase(System.Single)'
+                if(!$clockPhaseRead -and ($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$'))){
                     if($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin $approvedWrites){throw "超出动作边界或未审查的游戏调用：$operand"}
                 }
             }

@@ -10,6 +10,20 @@ namespace KingdomAdvisor
         public static bool English {get;set;}=true;
         private static readonly Dictionary<string,string> translations=new Dictionary<string,string>(StringComparer.Ordinal)
         {
+            { "显示游戏时钟", "Show game clock" },
+            { "游戏时间", "Game time" },
+            { "时间暂不可用", "Time unavailable" },
+            { "F6 / F7 重试时间读取", "F6 / F7: retry clock" },
+            { "距黎明", "Dawn in " },
+            { "距入夜", "Nightfall in " },
+            { "已暂停", "Paused" },
+            { "时间停滞／等待同步", "Clock stopped / awaiting sync" },
+            { "时间停滞", "Clock stopped" },
+            { "正在同步", "Synchronizing" },
+            { "约 ", "~ " },
+            { "{0}分{1}秒（现实时间）", "{0}m {1}s (real time)" },
+            { "黎明", "Dawn" },
+            { "黄昏", "Evening" },
             { "显示与外观", "Display & appearance" },
             { "地图标记", "Map markers" },
             { "统一设置透明度", "Apply opacity to all panels" },

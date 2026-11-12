@@ -1,3 +1,31 @@
+# 王国顾问 0.6.12 / Kingdom Advisor 0.6.12
+
+0.6.12 新增昼夜时钟：显示黎明、白昼、黄昏、夜晚阶段、游戏内几点几分、距入夜／黎明的现实时间倒计时，以及昼夜进度条。钟点默认显示，可在 F6 → 移动与时间中关闭；阶段、倒计时和进度条保留。读数跟随游戏暂停和变速，明确区分“游戏时间”与“现实时间”。
+
+- 正常速度依然使用游戏自身压缩的昼夜时间，并非与现实钟表同步；倒计时按当前速度换算实际等待时长。
+- 已实机验证单人正常／2倍／4倍速度、暂停保持与恢复、入夜／黎明切换，以及关闭和恢复钟点。新增读取只读，不改变游戏时间或存档。
+- 双机联机、完整 DLC 和所有语言／字号／分辨率组合尚未实机验证。长日期行可能自动换行；倒计时不代表敌人到达或安全返程时间。本次不含返程估算。
+
+已有正常工作的 BepInEx 6 IL2CPP 前置请选择 **ModOnly**；首次安装请选择 **Complete**，内含既有的修订版 BepInEx #788、两项 Cpp2IL 兼容补丁、许可证与对应源码，不新增依赖。官方原版 #788 不能替代此兼容包的首次生成修复。
+
+GitHub 包：先安装 [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)，退出游戏，解压后双击 INSTALL.cmd，选择 Steam“浏览本地文件”打开的游戏根目录。Nexus 包：无需 PowerShell，退出游戏，把包内 BepInEx 文件夹合并到游戏根目录；Complete 按随包 README 同时复制前置文件。Mod 路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。升级保留配置与存档；回退前备份旧 DLL 和 `BepInEx/config/local.kingdom.advisor.cfg`；卸载只移除 KingdomAdvisor 插件目录，保留共享前置与其他 Mod。
+
+[完整中文安装说明](https://github.com/boyl/kingdom-advisor/blob/v0.6.12/README.md) · [Nexus 手动安装说明及目录示意](https://github.com/boyl/kingdom-advisor/blob/v0.6.12/distribution/nexus/README.zh-CN.md)
+
+## English
+
+0.6.12 adds a day/night clock: dawn, day, evening and night phases, in-game hours and minutes, a real-time countdown to nightfall or dawn, and a day-progress bar. The clock is enabled by default and can be hidden under F6 → Movement & time while retaining the phase, countdown and progress bar. Readings follow game pauses and speed changes, with explicit Game time and real time labels.
+
+- Normal speed still uses the game's compressed day/night cycle; it does not match a wall clock. The countdown estimates actual waiting time at the current speed.
+- Single-player testing covered normal/2x/4x speed, sustained pause/resume, nightfall/dawn and hiding/restoring clock digits. The new clock reader does not change game time or saves.
+- Two-machine multiplayer, all DLC and every language/font/resolution combination remain unverified. Long date lines may wrap. The countdown is not an enemy-arrival or safe-return estimate; no return-travel estimate is included.
+
+Choose **ModOnly** for an existing working BepInEx 6 IL2CPP loader, or **Complete** for a fresh installation. Complete retains the existing patched BepInEx #788 runtime, two Cpp2IL compatibility patches, licenses and corresponding sources; no new dependencies are introduced. Stock official #788 does not include these first-generation compatibility fixes.
+
+For GitHub packages, install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6), quit the game, extract the ZIP, then run INSTALL.cmd and select the game root using Steam's Browse local files. Nexus packages require no PowerShell: quit, merge the included BepInEx folder into the game root, and follow the included README for Complete's additional loader files. Plugin location: `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`. Keep settings and saves on upgrade. Back up the previous DLL and `BepInEx/config/local.kingdom.advisor.cfg` for rollback. Uninstall only the KingdomAdvisor plugin folder, retaining the shared loader and other mods.
+
+[Full English installation guide](https://github.com/boyl/kingdom-advisor/blob/v0.6.12/README.en.md) · [Nexus manual installation and directory layout](https://github.com/boyl/kingdom-advisor/blob/v0.6.12/distribution/nexus/README.en.md)
+
 # 王国顾问 0.6.11 / Kingdom Advisor 0.6.11
 
 0.6.11 显示自定义更新：地图标记支持按类型勾选、常用清单和分类批量操作；地图、顾问、附近详情、提醒及主界面的背景模式和独立不透明度集中在“显示与外观”，支持0～100%滑动条和统一应用。主界面默认不透明度71%，其他信息面板默认无背景。采用暖炭灰与旧金色配色，修正单项动作菜单、默认数值展示及地图提示重复底色。
