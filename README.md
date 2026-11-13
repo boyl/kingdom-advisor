@@ -1,21 +1,21 @@
 [![Downloads](https://img.shields.io/github/downloads/boyl/kingdom-advisor/total?label=Downloads&color=blue)](https://github.com/boyl/kingdom-advisor/releases) [![Stars](https://img.shields.io/github/stars/boyl/kingdom-advisor?label=Stars)](https://github.com/boyl/kingdom-advisor/stargazers) [![Latest Release](https://img.shields.io/github/v/release/boyl/kingdom-advisor?label=Release)](https://github.com/boyl/kingdom-advisor/releases/latest) [![License](https://img.shields.io/github/license/boyl/kingdom-advisor?label=License)](https://github.com/boyl/kingdom-advisor/blob/HEAD/LICENSE)
 
-# 王国顾问 Kingdom Advisor 0.6.13
+# 王国顾问 Kingdom Advisor 0.6.14
 
-《王国：两位君主》游戏内辅助 Mod。0.6.13 修复倒计时跳动，岛屿、天数、阶段、游戏时间和季节保持单行显示。建筑遗漏与错误识别：盲修复。保留昼夜阶段、游戏内钟点、现实时间倒计时和进度条，跟随游戏暂停与变速；钟点默认显示，可在 F6 → 移动与时间中关闭。
+《王国：两位君主》游戏内辅助 Mod。0.6.14 修复英文与多行详情溢出、手柄提示遮挡及无限容量乘船金币截断，降低周期扫描引起的卡顿。新增长按连续购买／升级和隐藏原生钱袋开关（默认关闭）；长按功能支持单人、本地双人及房主本机角色，暂不支持联机加入者。顾问默认单列，可选两列，恢复行距与分组留白，提醒置于上方；透明度 0 时保留文字、图标和进度条。
 
 ## 下载与安装
 
-[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.13) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub 正式下载](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.14) · [Nexus Mods 原有条目](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus 已通过 API 更新为 0.6.13 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.13 资源。
+Nexus 已通过 API 更新为 0.6.14 手动安装包（不含脚本、不需要 PowerShell 7）：[中文手动说明](distribution/nexus/README.zh-CN.md) · [安装示意图](distribution/nexus/INSTALLATION.png)。下表与一键安装步骤仅适用于 GitHub 0.6.14 资源。
 
 两种包任选其一，不要下载 GitHub 自动生成的 Source code 包：
 
 | 资源 | 内容与适用情况 | 安装说明 |
 |---|---|---|
-| `KingdomAdvisor-0.6.13-ModOnly.zip` | 仅本 Mod，适合已有正常工作前置的玩家；不含 BepInEx | [中文](distribution/README.ModOnly.md) · [English](distribution/README.ModOnly.en.md) |
-| `KingdomAdvisor-0.6.13-Complete.zip` | Mod＋完整 #788 前置＋解析器兼容补丁，适合首次安装或遇到 `AndroidManager / RawPropertyType` 启动错误的玩家 | [中文](distribution/README.Complete.md) · [English](distribution/README.Complete.en.md) |
+| `KingdomAdvisor-0.6.14-ModOnly.zip` | 仅本 Mod，适合已有正常工作前置的玩家；不含 BepInEx | [中文](distribution/README.ModOnly.md) · [English](distribution/README.ModOnly.en.md) |
+| `KingdomAdvisor-0.6.14-Complete.zip` | Mod＋完整 #788 前置＋解析器兼容补丁，适合首次安装或遇到 `AndroidManager / RawPropertyType` 启动错误的玩家 | [中文](distribution/README.Complete.md) · [English](distribution/README.Complete.en.md) |
 
 整合包是基于官方 BepInEx 6.0.0-be.788 的修订包，**并非未修改的官方包**。仅替换 `LibCpp2IL.dll` 与 `Cpp2IL.Core.dll`，包含对应源码、补丁脚本和许可证。纯官方 #738、#788 的首次生成错误已在本机复现；不要将整合包内的修复误认为官方原版已解决。[检测记录](docs/acceptance/bepinex-738-compatibility.md)。
 
@@ -23,7 +23,7 @@ Nexus 已通过 API 更新为 0.6.13 手动安装包（不含脚本、不需要 
 
 Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。Nexus 手动包不需要此步骤。
 
-1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-10-10 核对的稳定版。
+1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-11-13 核对的稳定版。
 2. 备用入口：[PowerShell 官方发布页](https://github.com/PowerShell/PowerShell/releases/latest) · [微软 Windows 安装指南](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows)。在官方 Assets 中选择稳定版 `PowerShell-7.x.x-win-x64.msi`；本 Mod 适用 Windows x64，不要选 ARM64、x86、Preview 或 Source code。
 3. 双击下载的 MSI，按安装向导完成安装，保留默认安装位置及“Add PowerShell to Path”选项。安装 PS7 不会替换系统 PS5.1。
 4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
@@ -125,4 +125,4 @@ Windows x64、游戏 2.4.2、Unity 6000.0.66f2、IL2CPP。修复后的 #788 完�
 
 联机兼容：沿用 0.6.10 的加入者场景实体读取；自动检查通过，双机真实联机尚未验证。
 
-单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换；单行信息栏已实机确认。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。
+单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。

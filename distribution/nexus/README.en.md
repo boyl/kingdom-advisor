@@ -1,6 +1,6 @@
-# Kingdom Advisor 0.6.13 — Nexus manual installation
+# Kingdom Advisor 0.6.14 — Nexus manual installation
 
-Script-free manual packages; PowerShell is not required. 0.6.13 fixes countdown jitter and keeps island, day, phase, game time and season on one line. Building omissions and misidentification: blind fixes. Day/night phases, in-game clock, real-time countdown and progress bar follow game pauses and speed changes. Clock digits are enabled by default and can be hidden under F6 → Movement & time.
+Script-free manual packages; PowerShell is not required. 0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible.
 
 ## Choose one package
 
@@ -74,7 +74,7 @@ Undo Complete: quit, move the current BepInEx/dotnet folders and four installed 
 
 Accepted on Windows x64, game 2.4.2, Unity 6000.0.66f2: fresh generation, restart and user gameplay. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; remaining runtime files come from official #788. Other game versions, all DLC, multiplayer and all other-plugin combinations are not fully verified.
 
-Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.13), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
+Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.14), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
 
 
-Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn; the single-line information row was checked in game. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
+Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.

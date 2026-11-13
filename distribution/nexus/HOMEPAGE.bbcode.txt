@@ -1,8 +1,8 @@
 [center][size=6][b]王国顾问 / Kingdom Advisor[/b][/size]
 [size=3]游戏内地图、图鉴、地点说明与资源辅助 / In-game map, catalog, locations and resource assistance[/size][/center]
 
-[b]当前 Nexus 下载：0.6.13 手动安装版[/b]
-游戏内插件版本为 0.6.13。0.6.13 修复倒计时跳动，岛屿、天数、阶段、游戏时间和季节保持单行显示。建筑遗漏与错误识别：盲修复。保留昼夜阶段、游戏内钟点、现实时间倒计时和进度条，跟随游戏暂停与变速；钟点默认显示，可在 F6 → 移动与时间中关闭。Nexus 包不含自动安装脚本，不需要 PowerShell 7。GitHub 另外保留一键安装版，请按照各自下载包内的说明操作。
+[b]当前 Nexus 下载：0.6.14 手动安装版[/b]
+游戏内插件版本为 0.6.14。0.6.14 修复英文与多行详情溢出、手柄提示遮挡及无限容量乘船金币截断，降低周期扫描引起的卡顿。新增长按连续购买／升级和隐藏原生钱袋开关（默认关闭）；长按功能支持单人、本地双人及房主本机角色，暂不支持联机加入者。顾问默认单列，可选两列，恢复行距与分组留白，提醒置于上方；透明度 0 时保留文字、图标和进度条。Nexus 包不含自动安装脚本，不需要 PowerShell 7。GitHub 另外保留一键安装版，请按照各自下载包内的说明操作。
 
 [size=4][b]功能[/b][/size]
 [list]
@@ -78,11 +78,11 @@ F4：显示/隐藏 HUD；F6：设置；F7：图鉴。
 启动异常请附游戏版本、来源、所用资源包名称和 BepInEx/LogOutput.log。不要复制别人的 interop、游戏程序集、配置或存档来解决启动问题。
 
 [size=4][b]源码与第三方许可[/b][/size]
-[url=https://github.com/boyl/kingdom-advisor]项目源码[/url] · [url=https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.13]GitHub 一键安装包与固定第三方源码[/url] · [url=https://github.com/boyl/kingdom-advisor/blob/v0.6.13/distribution/REPRODUCE.md]解析器补丁复现说明[/url]
+[url=https://github.com/boyl/kingdom-advisor]项目源码[/url] · [url=https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.14]GitHub 一键安装包与固定第三方源码[/url] · [url=https://github.com/boyl/kingdom-advisor/blob/v0.6.14/distribution/REPRODUCE.md]解析器补丁复现说明[/url]
 Complete 保留第三方许可证。Nexus 手动包不含脚本或嵌套压缩包，源码和补丁可从上述公开 GitHub Complete 资源获取。
 
 [size=5][b]English installation guide[/b][/size]
-[b]Nexus 0.6.13 packages use manual installation. No automatic installer or PowerShell 7 is required.[/b] The plugin reports 0.6.13. 0.6.13 fixes countdown jitter and keeps island, day, phase, game time and season on one line. Building omissions and misidentification: blind fixes. Day/night phases, in-game clock, real-time countdown and progress bar follow game pauses and speed changes. Clock digits are enabled by default and can be hidden under F6 → Movement & time. GitHub separately retains the one-click installation packages.
+[b]Nexus 0.6.14 packages use manual installation. No automatic installer or PowerShell 7 is required.[/b] The plugin reports 0.6.14. 0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible. GitHub separately retains the one-click installation packages.
 
 [b]Choose one:[/b]
 [list]
@@ -113,7 +113,7 @@ Do not create an extra enclosing folder or BepInEx/BepInEx, and do not place the
 
 [b]Sources:[/b] Public GitHub links above provide the project, pinned third-party sources and patch reproduction instructions. Nexus Complete retains licenses, without scripts or nested archives.
 
-单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换；单行信息栏已实机确认。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。
+单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。
 
 
-Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn; the single-line information row was checked in game. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
+Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.

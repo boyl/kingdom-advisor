@@ -1,8 +1,8 @@
-# Kingdom Advisor — Mod only (0.6.13)
+# Kingdom Advisor — Mod only (0.6.14)
 
-Mod-only package; requires an existing working BepInEx IL2CPP loader. 0.6.13 fixes countdown jitter and keeps island, day, phase, game time and season on one line. Building omissions and misidentification: blind fixes. Day/night phases, in-game clock, real-time countdown and progress bar follow game pauses and speed changes. Clock digits are enabled by default and can be hidden under F6 → Movement & time.
+Mod-only package; requires an existing working BepInEx IL2CPP loader. 0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible.
 
-Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.13-Complete.zip` and its installer.
+Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.14-Complete.zip` and its installer.
 
 ### Install PowerShell 7 for the GitHub one-click installer
 
@@ -48,4 +48,4 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 Rollback stops if installed files were modified later. Keep backups until satisfied. Report issues with `BepInEx/LogOutput.log`, game version/source and loader package name. Do not send keys, account data or saves. Compatibility with every other mod is not verified.
 
 
-Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn; the single-line information row was checked in game. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
+Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.

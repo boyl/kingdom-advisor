@@ -1,18 +1,18 @@
-# 王国顾问：仅 Mod 资源包（0.6.13）
+# 王国顾问：仅 Mod 资源包（0.6.14）
 
-此包仅含Mod，需要已有正常工作的BepInEx IL2CPP前置。0.6.13 修复倒计时跳动，岛屿、天数、阶段、游戏时间和季节保持单行显示。建筑遗漏与错误识别：盲修复。保留昼夜阶段、游戏内钟点、现实时间倒计时和进度条，跟随游戏暂停与变速；钟点默认显示，可在 F6 → 移动与时间中关闭。
+此包仅含Mod，需要已有正常工作的BepInEx IL2CPP前置。0.6.14 修复英文与多行详情溢出、手柄提示遮挡及无限容量乘船金币截断，降低周期扫描引起的卡顿。新增长按连续购买／升级和隐藏原生钱袋开关（默认关闭）；长按功能支持单人、本地双人及房主本机角色，暂不支持联机加入者。顾问默认单列，可选两列，恢复行距与分组留白，提醒置于上方；透明度 0 时保留文字、图标和进度条。
 
 ## 前置
 
 需要 BepInEx 6 Unity IL2CPP Windows x64。推荐配套整合包使用的 **#788 + 5b766a3 / Il2CppInterop 1.5.3 + Cpp2IL 属性解析修复**。这是修改过的兼容前置，不是官方原版 #788。官方 #738、#782、#785、#788 仍可能在首次生成时出现 `AndroidManager / RawPropertyType` 空引用；请勿认为直接下载官方 #788 即可解决。
 
-已经正常游玩的玩家可保留现有前置，仅更新此 Mod。新安装或遇到上述错误，请选择配套的 `KingdomAdvisor-0.6.13-Complete.zip`，按照整合包说明安装。Mod 包不会改变加载器。
+已经正常游玩的玩家可保留现有前置，仅更新此 Mod。新安装或遇到上述错误，请选择配套的 `KingdomAdvisor-0.6.14-Complete.zip`，按照整合包说明安装。Mod 包不会改变加载器。
 
 ### 安装 PowerShell 7（GitHub 一键安装版需要）
 
 Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。Nexus 手动包不需要此步骤。
 
-1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-10-10 核对的稳定版。
+1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-11-13 核对的稳定版。
 2. 备用入口：[PowerShell 官方发布页](https://github.com/PowerShell/PowerShell/releases/latest) · [微软 Windows 安装指南](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows)。在官方 Assets 中选择稳定版 `PowerShell-7.x.x-win-x64.msi`；本 Mod 适用 Windows x64，不要选 ARM64、x86、Preview 或 Source code。
 3. 双击下载的 MSI，按安装向导完成安装，保留默认安装位置及“Add PowerShell to Path”选项。安装 PS7 不会替换系统 PS5.1。
 4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
@@ -58,4 +58,4 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 故障反馈附 `BepInEx/LogOutput.log`，以及游戏版本、游戏来源、所用前置包。不要附 API Key、存档或账号信息。尚未单独核验所有其他 Mod 的组合兼容性。
 
 
-单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换；单行信息栏已实机确认。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。
+单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。

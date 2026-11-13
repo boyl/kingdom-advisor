@@ -26,6 +26,9 @@ function Inspect-Type($Type) {
         if(!$method.HasBody){continue}
         foreach($instruction in $method.Body.Instructions){
             $operand=$instruction.Operand
+            if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.FullName -eq 'UnityEngine.Renderer' -and $operand.Name -eq 'set_forceRenderingOff'){
+                if($Type.FullName -ne 'KingdomAdvisor.GameActions' -or ($method.Name -ne 'RestorePurseRenderer' -and $method.Name -notlike '<ApplyPurseVisibility>g__Hide|*')){throw "钱袋外壳显示写入越界：$method : $operand"}
+            }
             if($operand -is [Mono.Cecil.MethodReference] -and $operand.DeclaringType.FullName -eq 'Rewired.ActionElementMap' -and $operand.Name.StartsWith('set_')){
                 if($operand.Name -ne 'set_enabled' -or $Type.FullName -ne 'KingdomAdvisor.AdvisorController' -or $method.Name -notin @('ReservePointerAxes','RestorePadMappings')){throw "手柄映射写入越界：$method : $operand"}
             }
@@ -35,7 +38,15 @@ function Inspect-Type($Type) {
                 [void]$calls.Add($operand.FullName)
                 # 原生 GetDayPhase 仅按传入钟点和阶段边界返回阶段；只允许时钟适配器调用此精确签名。
                 $clockPhaseRead=$Type.FullName -eq 'KingdomAdvisor.NativeClockReader' -and $method.Name -eq 'Read' -and $operand.FullName -eq 'DayPhase TimesOfDay::GetDayPhase(System.Single)'
-                if(!$clockPhaseRead -and ($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$'))){
+                # 连续投币只读支付条件、订阅后继，并可取消尚未扣款的 Holding；禁止直接付款/升级/写状态。
+                $purchaseBoundary=$Type.FullName -eq 'KingdomAdvisor.ContinuousPurchaseRuntime' -and (
+                    ($method.Name -eq 'CancelPendingHold' -and $operand.FullName -eq 'System.Void Player::CancelTransaction()') -or
+                    ($method.Name -eq 'Filter' -and $operand.FullName -in @('System.Boolean Payable::CanPay(Player)','System.Boolean Payable::CanSelect(Player)')) -or
+                    ($method.Name -eq 'InRange' -and $operand.FullName -eq 'System.Single Payable::PlayerPayPoint()') -or
+                    ($method.Name -eq 'NativeSelectsTarget' -and $operand.FullName -in @('System.Boolean Payable::CanSelect(Player)','System.Single Payable::PlayerPayPoint()','Payable PayableManager::GetClosestPayable(System.Single,System.Single,Player)')) -or
+                    ($method.Name -eq 'Bind' -and $operand.FullName -in @('System.Void PayableUpgrade::add_OnPayableUpgraded(PayableUpgrade/PayableUpgradeEvent)','PayableUpgrade/PayableUpgradeEvent PayableUpgrade/PayableUpgradeEvent::op_Implicit(System.Action`1<UnityEngine.GameObject>)')) -or
+                    ($method.Name -eq 'Detach' -and $operand.FullName -eq 'System.Void PayableUpgrade::remove_OnPayableUpgraded(PayableUpgrade/PayableUpgradeEvent)'))
+                if(!$clockPhaseRead -and !$purchaseBoundary -and ($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$'))){
                     if($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin $approvedWrites){throw "超出动作边界或未审查的游戏调用：$operand"}
                 }
             }
@@ -48,4 +59,4 @@ function Inspect-Type($Type) {
     foreach($nested in $Type.NestedTypes){Inspect-Type $nested}
 }
 foreach($type in $assembly.MainModule.Types){Inspect-Type $type}
-"游戏 API 二进制审计通过：$($calls.Count) 个唯一调用，属性读取与已审查动作；玩法写入仅限 GameActions。"
+"游戏 API 二进制审计通过：$($calls.Count) 个唯一调用；属性读取、GameActions 已审查动作及连续投币的有限原生取消/事件边界。"

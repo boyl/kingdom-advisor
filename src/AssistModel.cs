@@ -22,13 +22,13 @@ namespace KingdomAdvisor
         public void Cancel(){if(Active)Latched=true;}
         public void Reset(){Target="";Active=Latched=CanTeleport=false;}
     }
-    public enum OptionId { Language, Map,Background,Position,FullMap,Trees,Buildings,Camps,Enemies,Mounts,Special,Kingdom,Player,AdvisorBackground,PlayerBackground,AlertBackground,InterfaceBackground,Population,Details,Alerts,Defense,Staff,MountInfo,Icons,Journal,Font,ResetLayout,InfiniteBag,Resources,Teleport,InfiniteStamina,Speed,PadCursor,PadSpeed,PadOpen,MapType,ShowAllTypes,ResetTypes,PanelOpacity,MapOpacity,AdvisorOpacity,PlayerOpacity,AlertOpacity,InterfaceOpacity,FilterCategory,ShowFiltered,HideFiltered,Clock }
+    public enum OptionId { Language, Map,Background,Position,FullMap,Trees,Buildings,Camps,Enemies,Mounts,Special,Kingdom,Player,AdvisorBackground,PlayerBackground,AlertBackground,InterfaceBackground,Population,Details,Alerts,Defense,Staff,MountInfo,Icons,Journal,Font,ResetLayout,InfiniteBag,Resources,Teleport,InfiniteStamina,Speed,PadCursor,PadSpeed,PadOpen,MapType,ShowAllTypes,ResetTypes,PanelOpacity,MapOpacity,AdvisorOpacity,PlayerOpacity,AlertOpacity,InterfaceOpacity,FilterCategory,ShowFiltered,HideFiltered,Clock,HideNativePurse,ContinuousPurchase,AdvisorColumns }
     public enum OptionKind { Choice,Action,Navigation,Slider,Toggle }
     public sealed class OptionItem
     {
         public OptionKind Kind=>Id switch {
             OptionId.ShowAllTypes or OptionId.ResetTypes or OptionId.ResetLayout or OptionId.ShowFiltered or OptionId.HideFiltered=>OptionKind.Action,
-            OptionId.Resources=>OptionKind.Navigation,OptionId.MapType or OptionId.Enemies=>OptionKind.Toggle,OptionId.PanelOpacity or OptionId.MapOpacity or OptionId.AdvisorOpacity or OptionId.PlayerOpacity or OptionId.AlertOpacity or OptionId.InterfaceOpacity=>OptionKind.Slider,_=>OptionKind.Choice};
+            OptionId.Resources=>OptionKind.Navigation,OptionId.MapType or OptionId.Enemies or OptionId.HideNativePurse or OptionId.ContinuousPurchase=>OptionKind.Toggle,OptionId.PanelOpacity or OptionId.MapOpacity or OptionId.AdvisorOpacity or OptionId.PlayerOpacity or OptionId.AlertOpacity or OptionId.InterfaceOpacity=>OptionKind.Slider,_=>OptionKind.Choice};
         public static bool HasSelection(int count)=>count>1;
         public string DisplayLabel(string value)=>Kind switch {
             OptionKind.Toggle=>(value=="开启"?"[✓] ":"[ ] ")+Name,OptionKind.Action=>Name,OptionKind.Navigation=>Name+" →",OptionKind.Slider=>Name+"    "+value+" →",_=>Name+"    "+value+"  ▾"};
@@ -40,9 +40,9 @@ namespace KingdomAdvisor
         public static readonly string[] Names={"地图","顾问与提醒","图鉴与进度","资源辅助","移动与时间","手柄","地图标记","显示与外观"};
         public static readonly OptionItem[][] Items={
             new[]{new OptionItem(OptionId.Map,"小地图"),new OptionItem(OptionId.Background,"地图背景","透明","面板"),new OptionItem(OptionId.Position,"默认位置","顶部","底部"),new OptionItem(OptionId.FullMap,"情报范围","本次探索","全岛"),new OptionItem(OptionId.Trees,"树木"),new OptionItem(OptionId.Buildings,"建筑"),new OptionItem(OptionId.Camps,"营地与人口"),new OptionItem(OptionId.Enemies,"敌人"),new OptionItem(OptionId.Mounts,"坐骑"),new OptionItem(OptionId.Special,"特殊地点")},
-            new[]{new OptionItem(OptionId.Kingdom,"王国顾问卡片"),new OptionItem(OptionId.Player,"附近建筑详情"),new OptionItem(OptionId.AdvisorBackground,"顾问背景","透明","面板"),new OptionItem(OptionId.PlayerBackground,"附近详情背景","透明","面板"),new OptionItem(OptionId.AlertBackground,"提醒背景","透明","面板"),new OptionItem(OptionId.Population,"人口与科技"),new OptionItem(OptionId.Details,"用途与升级建议"),new OptionItem(OptionId.Alerts,"情境提醒"),new OptionItem(OptionId.Defense,"防线风险提醒"),new OptionItem(OptionId.Staff,"建设与招募缺口"),new OptionItem(OptionId.MountInfo,"坐骑能力状态")},
+            new[]{new OptionItem(OptionId.Kingdom,"王国顾问卡片"),new OptionItem(OptionId.AdvisorColumns,"顾问条目布局","单列","两列"),new OptionItem(OptionId.Player,"附近建筑详情"),new OptionItem(OptionId.AdvisorBackground,"顾问背景","透明","面板"),new OptionItem(OptionId.PlayerBackground,"附近详情背景","透明","面板"),new OptionItem(OptionId.AlertBackground,"提醒背景","透明","面板"),new OptionItem(OptionId.Population,"人口与科技"),new OptionItem(OptionId.Details,"用途与升级建议"),new OptionItem(OptionId.Alerts,"情境提醒"),new OptionItem(OptionId.Defense,"防线风险提醒"),new OptionItem(OptionId.Staff,"建设与招募缺口"),new OptionItem(OptionId.MountInfo,"坐骑能力状态")},
             new[]{new OptionItem(OptionId.Language,"语言 / Language","自动","简体中文","English"),new OptionItem(OptionId.InterfaceBackground,"主界面背景","透明","面板"),new OptionItem(OptionId.PanelOpacity,"面板背景不透明度","调节"),new OptionItem(OptionId.Icons,"图鉴图标"),new OptionItem(OptionId.Journal,"岛屿进度记录"),new OptionItem(OptionId.Font,"字号","14","16","18","20","22","24","26","28"),new OptionItem(OptionId.ResetLayout,"恢复卡片默认位置","执行")},
-            new[]{new OptionItem(OptionId.InfiniteBag,"无限钱袋容量"),new OptionItem(OptionId.Resources,"手动添加资源","打开")},
+            new[]{new OptionItem(OptionId.InfiniteBag,"无限钱袋容量"),new OptionItem(OptionId.HideNativePurse,"无限容量时隐藏原生钱袋"),new OptionItem(OptionId.ContinuousPurchase,"长按连续购买／升级"),new OptionItem(OptionId.Resources,"手动添加资源","打开")},
             new[]{new OptionItem(OptionId.Teleport,"地图长按传送"),new OptionItem(OptionId.InfiniteStamina,"无限耐力"),new OptionItem(OptionId.Speed,"游戏速度","暂停","正常","2 倍","4 倍"),new OptionItem(OptionId.Clock,"显示游戏时钟")},
             new[]{new OptionItem(OptionId.PadCursor,"常驻手柄光标"),new OptionItem(OptionId.PadSpeed,"光标速度","慢","标准","快","很快"),new OptionItem(OptionId.PadOpen,"呼出按键","左摇杆按压 L3","右摇杆按压 R3","Back／Select")},
             new[]{new OptionItem(OptionId.ShowAllTypes,"全部显示","执行"),new OptionItem(OptionId.ResetTypes,"恢复显示默认","执行")}.Concat(Catalog.Entries.OrderBy(e=>e.Category,StringComparer.Ordinal).Select(e=>new OptionItem(OptionId.MapType,e.Category+" · "+e.Name){MapKey=e.Key})).ToArray()
@@ -63,7 +63,7 @@ namespace KingdomAdvisor
                 Find(OptionId.InterfaceBackground),new OptionItem(OptionId.InterfaceOpacity,"主界面不透明度","调节"),Find(OptionId.ResetLayout)}}).ToArray();
             Items[MapFilterSection]=new[]{new OptionItem(OptionId.FilterCategory,"标记分类",MapFilterMenu.Categories),new OptionItem(OptionId.ShowFiltered,"本类全选","执行"),new OptionItem(OptionId.HideFiltered,"本类全不选","执行"),Find(OptionId.ShowAllTypes),Find(OptionId.ResetTypes),Find(OptionId.Enemies)}.Concat(old.Where(item=>item.Id==OptionId.MapType).Select(item=>new OptionItem(OptionId.MapType,Catalog.Entries.First(e=>e.Key==item.MapKey).Name){MapKey=item.MapKey})).ToArray();
         }
-        public static bool IsGameplay(OptionId id)=>id==OptionId.InfiniteBag||id==OptionId.Teleport||id==OptionId.InfiniteStamina||id==OptionId.Speed||id==OptionId.Resources;
+        public static bool IsGameplay(OptionId id)=>id==OptionId.InfiniteBag||id==OptionId.Teleport||id==OptionId.InfiniteStamina||id==OptionId.Speed||id==OptionId.Resources||id==OptionId.ContinuousPurchase;
     }
     public static class MapFilterMenu
     {

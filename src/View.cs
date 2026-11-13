@@ -8,7 +8,7 @@ namespace KingdomAdvisor
     internal sealed class AdvisorView
     {
         private readonly Settings settings;private readonly AdvisorController controller;
-        private GUIStyle text,title,small,dayStyle,button,fillStyle;
+        private GUIStyle text,title,small,dayStyle,button,fillStyle,hudValue;
         private Font font;private int lastSize;private bool stylesReady;
         private bool opacityDragging;private int activePanelOpacity=-1;
         private string lastCatalogKey="",lastLocationKey="";
@@ -19,9 +19,20 @@ namespace KingdomAdvisor
         private Vector2 PointerPosition=>controller.Device=="手柄"?controller.PadPointer(guiPlayer)-guiOrigin:Event.current.mousePosition;
 
         private readonly System.Collections.Generic.Dictionary<int,System.Tuple<float,float>> enemyPositions=new System.Collections.Generic.Dictionary<int,System.Tuple<float,float>>();
-        private readonly System.Collections.Generic.Dictionary<int,int> hudPages=new System.Collections.Generic.Dictionary<int,int>();
-        private readonly System.Collections.Generic.Dictionary<int,string> hudTargets=new System.Collections.Generic.Dictionary<int,string>();
+        private readonly System.Collections.Generic.Dictionary<string,int> hudPages=new System.Collections.Generic.Dictionary<string,int>();
+        private readonly System.Collections.Generic.Dictionary<string,string> hudTargets=new System.Collections.Generic.Dictionary<string,string>();
         public string FontEvidence="not initialised";
+        internal TargetInfo PreviewTarget;
+        internal string PreviewHudDevice;
+        internal bool PreviewHudLastPage;
+        internal int? PreviewHudColumns;
+        internal int? PreviewHudOpacity;
+        private Rect hudAdvisor,hudDetail,hudAlert;
+        private float hudFooterTop,hudHintHeight,hudLegacyBottom;
+        private int hudRowCount,hudPageCount,hudDetailPages,hudColumns,hudOpacity;
+        private bool hudPad;
+        private string hudDay="";
+        internal string[] HudEvidence()=>new[]{"version="+Plugin.Version,"device="+(hudPad?"pad":"keyboard"),"font="+lastSize+" language="+(Localization.English?"en":"zh-CN"),"advisor="+hudAdvisor+" bottom="+hudAdvisor.yMax+" legacyDefaultBottom="+hudLegacyBottom,"detail="+hudDetail+" pages="+hudDetailPages,"alert="+hudAlert,"footerTop="+hudFooterTop+" hintHeight="+hudHintHeight,"rows="+hudRowCount+" pages="+hudPageCount+" columns="+hudColumns,"day="+hudDay.Replace("\n","\\n"),"opacity="+hudOpacity+" identityInHeader=True rowGap="+HudTextLayout.SingleRowGap};
         private readonly Color background=new Color(36/255f,35/255f,42/255f,.94f);
         private readonly Color gold=new Color(195/255f,166/255f,106/255f);
         private readonly Color muted=new Color(182/255f,176/255f,162/255f);
@@ -31,7 +42,7 @@ namespace KingdomAdvisor
         private readonly Color selectedFill=new Color(69/255f,65/255f,55/255f,.8f);
         private readonly Color green=new Color(.49f,.79f,.67f);
         public AdvisorView(Settings config,AdvisorController input){settings=config;controller=input;}
-        private Rect Place(string key,Rect rect,Rect viewport,float handleWidth=-1)
+        private void LoadPositions()
         {
             if(savedPositions!=settings.Layout.Value)
             {
@@ -40,11 +51,18 @@ namespace KingdomAdvisor
                 catch(FormatException ex){Plugin.Instance.Log.LogWarning("Invalid saved layout: "+ex.Message);positions=new LayoutPositions("");}
             }
             if(positions==null)positions=new LayoutPositions("");
+        }
+        private static HudRect Bounds(Rect rect)=>new HudRect(rect.x,rect.y,rect.width,rect.height);
+        private static Rect Rectangle(HudRect bounds)=>new Rect(bounds.X,bounds.Y,bounds.Width,bounds.Height);
+        private static Rect MainPanelRect(Rect viewport)=>Rectangle(HudTextLayout.MainPanel(viewport.width,viewport.height));
+        private Rect Place(string key,Rect rect,Rect viewport,float handleWidth=-1)
+        {
+            LoadPositions();
             float maxX=Math.Max(0,viewport.width-rect.width-8),maxY=Math.Max(0,viewport.height-rect.height-8);
             var saved=positions.Get(key);if(saved!=null){rect.x=saved.Item1*maxX;rect.y=saved.Item2*maxY;}
             rect.x=Math.Clamp(rect.x,8,Math.Max(8,maxX));rect.y=Math.Clamp(rect.y,8,Math.Max(8,maxY));
             var current=Event.current;
-            if(!controller.Open&&current.type==EventType.MouseDown&&current.button==0&&new Rect(rect.x,rect.y,handleWidth>0?handleWidth:rect.width,38).Contains(current.mousePosition))
+            if(!controller.Open&&current.type==EventType.MouseDown&&current.button==0&&new Rect(rect.x,rect.y,handleWidth>0?handleWidth:rect.width,Math.Min(38,rect.height)).Contains(current.mousePosition))
             {dragKey=key;dragOffset=current.mousePosition-new Vector2(rect.x,rect.y);current.Use();}
             if(dragKey==key&&(current.type==EventType.MouseDrag||current.type==EventType.MouseUp))
             {
@@ -69,6 +87,7 @@ namespace KingdomAdvisor
             title=new GUIStyle(text){fontSize=size+4};title.normal.textColor=gold;
             small=new GUIStyle(text){fontSize=Math.Max(14,size-2)};small.normal.textColor=muted;
             dayStyle=new GUIStyle(small){wordWrap=false};
+            hudValue=new GUIStyle(small){alignment=TextAnchor.UpperRight};hudValue.normal.textColor=bodyText;
             button=new GUIStyle(text){alignment=TextAnchor.MiddleLeft,padding=new RectOffset(12,12,4,4)};
             fillStyle=new GUIStyle();fillStyle.normal.background=Texture2D.whiteTexture;
             var measure=text.CalcSize(new GUIContent("王国顾问 · 升级条件"));
@@ -80,7 +99,7 @@ namespace KingdomAdvisor
         private void PanelFill(Rect rect,Color color){color.a=PanelAppearance.Alpha(color.a,activePanelOpacity);Fill(rect,color);}
         private void Card(Rect rect,bool transparent=false,bool decorated=false)
         {
-            if(transparent)return;
+            if(transparent||activePanelOpacity==0)return;
             // 底色保持单层；细边与外侧阴影不叠在内容下面。
             var fill=background;if(activePanelOpacity>=0)fill.a=activePanelOpacity/100f;
             Fill(new Rect(rect.x+1,rect.y+1,rect.width-2,rect.height-2),fill);
@@ -94,6 +113,12 @@ namespace KingdomAdvisor
                 var accent=gold;accent.a=.55f;
                 PanelFill(new Rect(rect.x+16,rect.y,Math.Min(40,rect.width-32),1),accent);
             }
+        }
+        private bool HudCard(Rect rect,OptionId opacity,bool transparent)
+        {
+            activePanelOpacity=PreviewHudOpacity??settings.PanelOpacities[opacity].Value;
+            bool hidden=PreviewHudOpacity.HasValue?activePanelOpacity==0:transparent||activePanelOpacity==0;
+            Card(rect,hidden,true);return !hidden;
         }
         private bool Button(Rect rect,string label,bool transparent=false,bool selectedOverride=false)
         {
@@ -111,11 +136,70 @@ namespace KingdomAdvisor
         private float Label(Rect area,string content,GUIStyle style)
         {content=Localization.Text(content);float h=style.CalcHeight(new GUIContent(content),area.width);var color=style.normal.textColor;style.normal.textColor=new Color(0,0,0,.85f);GUI.Label(new Rect(area.x+1,area.y+1,area.width,h),content,style);style.normal.textColor=color;GUI.Label(new Rect(area.x,area.y,area.width,h),content,style);return h;}
         private float Row(float x,float y,float width,string content,GUIStyle style)=>Label(new Rect(x,y,width,0),content,style)+4;
+        private float HudHeight(string content,float width,GUIStyle style)=>style.CalcHeight(new GUIContent(content),width);
+        // 仅用于字体行高测量，包含拉丁字母及 CJK 字形，不是界面文案。
+        private const string HudLineProbe="Ag\u738b";
+        private void HudLabel(Rect area,string content,GUIStyle style)
+        {
+            var color=style.normal.textColor;style.normal.textColor=new Color(0,0,0,.85f);
+            GUI.Label(new Rect(area.x+1,area.y+1,area.width,area.height),content,style);
+            style.normal.textColor=color;GUI.Label(area,content,style);
+        }
+        private HudTextPage[] HudPages(string key,string target,System.Collections.Generic.IEnumerable<HudTextRow> rows,float width,float height,float pagerHeight,System.Collections.Generic.IEnumerable<HudTextRow> secondColumn=null,float rowGap=HudTextLayout.RowGap)
+        {
+            if(!hudTargets.TryGetValue(key,out var previous)||previous!=target){hudTargets[key]=target;hudPages[key]=0;}
+            float Measure(string value)=>HudHeight(value,width,small);
+            var pages=secondColumn==null?HudTextLayout.Paged(rows,height,pagerHeight,HudHeight(HudLineProbe,width,small),Measure,rowGap):HudTextLayout.ColumnPages(rows,secondColumn,height,pagerHeight,HudHeight(HudLineProbe,width,small),Measure);
+            hudPages[key]=Math.Clamp(hudPages.TryGetValue(key,out int page)?page:0,0,Math.Max(0,pages.Length-1));
+            return pages;
+        }
+        private void DrawCompactHud(Rect viewport,Snapshot s,PlayerInfo player)
+        {
+            // 只有连一行正文及翻页都放不下时才降级；提示独立使用小字，不缩小实际正文。
+            var hintStyle=new GUIStyle(small){fontSize=14};
+            float width=viewport.width-24;
+            string hint=Localization.Text("显示区域过小，请增大窗口或减小界面字号。");
+            float hintH=HudHeight(hint,width,hintStyle);
+            if(hintH<=viewport.height-24)HudLabel(new Rect(12,12,width,hintH),hint,hintStyle);
+            string open=Localization.Text(controller.Device=="手柄"?controller.PadOpenLabel+" · 面板":"F7 图鉴");
+            var entryStyle=new GUIStyle(button){fontSize=14};
+            float entryH=Math.Max(30,HudHeight(open,width,entryStyle));
+            if(hintH+8+entryH<=viewport.height-24&&Button(new Rect(12,20+hintH,width,entryH),open,true))controller.Toggle(0,s,player.Id);
+        }
+        private void DrawHudMetric(Rect area,HudTextRow row)
+        {
+            HudLabel(new Rect(area.x,area.y,row.LabelWidth,row.LabelHeight),row.Label,small);
+            HudLabel(new Rect(area.xMax-row.ValueWidth,area.y+row.ValueTop,row.ValueWidth,row.ValueHeight),row.Value,hudValue);
+        }
+        private void DrawHudRows(Rect rect,float top,string key,HudTextPage[] pages,float pagerHeight,float bottomPadding=16,bool separators=false)
+        {
+            float leftY=top,rightY=top;
+            var page=pages[hudPages[key]];
+            foreach(var row in page.Rows)
+            {
+                float x=HudTextLayout.CellLeft(rect.x,rect.width,page.Columns,row.Column),y=row.Column==0?leftY:rightY;
+                if(row.Icon.Length>0)HudIcon(x+8,y+3,row.Icon);
+                var area=new Rect(x+28,y,HudTextLayout.CellWidth(rect.width,page.Columns)-28,row.TextHeight);
+                if(row.Label!=null)DrawHudMetric(area,row);else HudLabel(area,row.Text,small);
+                if(separators&&row.ExtraGap>0)PanelFill(new Rect(x,y+row.TextHeight+HudTextLayout.RowGap+row.ExtraGap/2,HudTextLayout.CellWidth(rect.width,page.Columns),1),border);
+                if(row.Column==0)leftY+=row.Height;else rightY+=row.Height;
+            }
+            if(pages.Length<=1)return;
+            float py=rect.yMax-bottomPadding-pagerHeight,bw=(rect.width-32)*.28f;
+            // 与既有设置按钮共用鼠标/手柄光标命中，只有超高内容才出现翻页。
+            bool enabled=GUI.enabled;GUI.enabled=enabled&&hudPages[key]>0;
+            if(Button(new Rect(rect.x+16,py,bw,pagerHeight),"←"))hudPages[key]--;
+            GUI.enabled=enabled&&hudPages[key]<pages.Length-1;
+            if(Button(new Rect(rect.xMax-16-bw,py,bw,pagerHeight),"→"))hudPages[key]++;
+            GUI.enabled=enabled;
+            string pageNumber=(hudPages[key]+1)+" / "+pages.Length;
+            HudLabel(new Rect(rect.x+20+bw,py+4,rect.width-40-bw*2,HudHeight(pageNumber,rect.width-40-bw*2,small)),pageNumber,small);
+        }
         public void Draw(Snapshot state)
         {
             if(Event.current.type==EventType.MouseMove||Event.current.type==EventType.MouseDrag)controller.Device="键鼠";
             if(!controller.OpacityEditing)opacityDragging=false;
-            if(!state.Playing){enemyPositions.Clear();stableExtent.Reset();extentIsland=-1;return;}if(!settings.Enabled.Value)return;
+            if(!state.Playing){enemyPositions.Clear();hudPages.Clear();hudTargets.Clear();stableExtent.Reset();extentIsland=-1;return;}if(!settings.Enabled.Value)return;
             Styles();int previousDepth=GUI.depth;GUI.depth=-200;
             try
             {
@@ -155,74 +239,167 @@ namespace KingdomAdvisor
         }
         private void DrawHud(Rect viewport,Snapshot s,PlayerInfo player)
         {
+            var mainPanel=Bounds(MainPanelRect(viewport));
+            bool panelOpen=controller.Open&&controller.Owner==player.Id;
+            bool ShowCard(Rect rect)=>HudTextLayout.CardVisible(Bounds(rect),mainPanel,panelOpen);
+            var occupied=new System.Collections.Generic.List<HudRect>(3);
             float pad=18,line=Math.Max(22,text.lineHeight),width=Math.Min(viewport.width-36,viewport.width>=900?390:viewport.width*.44f);
             bool stacked=viewport.width<620;
             if(stacked)width=viewport.width-36;
+            // 只为当前设备的实际页脚留位；键鼠不再占用隐藏的手柄说明行。
+            float footerWidth=viewport.width-pad*2,helpWidth=Math.Min(560,footerWidth);
+            string padHelp=Localization.Text("右摇杆 · 光标 / 呼出键长按 · 显隐");
+            string padOpen=Localization.Text(controller.PadOpenLabel+" · 面板");
+            string guide=Localization.Text("F7 图鉴"),options=Localization.Text("F6 设置"),hide=Localization.Text("F4 收起");
+            float guideW=Math.Max(94,button.CalcSize(new GUIContent(guide)).x+8),optionsW=Math.Max(94,button.CalcSize(new GUIContent(options)).x+8),hideW=Math.Max(94,button.CalcSize(new GUIContent(hide)).x+8);
+            float footerScale=Math.Min(1,(footerWidth-16)/(guideW+optionsW+hideW));guideW*=footerScale;optionsW*=footerScale;hideW*=footerScale;
+            bool padFooter=(PreviewHudDevice??controller.Device)=="手柄";
+            float padButtonW=Math.Min(helpWidth,Math.Max(94,button.CalcSize(new GUIContent(padOpen)).x+8)),hintNaturalWidth=(float)Math.Ceiling(small.CalcSize(new GUIContent(padHelp)).x);
+            bool inlinePadHelp=padFooter&&(PreviewHudColumns??settings.AdvisorColumns.Value)==1&&settings.FontSize.Value<=18&&padButtonW+16+hintNaturalWidth<=footerWidth;
+            float padHelpW=inlinePadHelp?hintNaturalWidth:helpWidth;
+            float footerButtonH=Math.Max(34,padFooter?HudHeight(padOpen,inlinePadHelp?padButtonW:helpWidth,button):Math.Max(HudHeight(guide,guideW,button),Math.Max(HudHeight(options,optionsW,button),HudHeight(hide,hideW,button))));
+            float helpH=padFooter?HudHeight(padHelp,padHelpW,small):0;
+            if(inlinePadHelp)footerButtonH=Math.Max(footerButtonH,helpH);
+            float footerTop=HudTextLayout.FooterTop(viewport.height,footerButtonH,inlinePadHelp?0:helpH);
+            var padButtonRect=new Rect(pad,viewport.height-16-footerButtonH,inlinePadHelp?padButtonW:helpWidth,footerButtonH);
+            var padHelpRect=new Rect(inlinePadHelp?pad+padButtonW+16:pad,inlinePadHelp?padButtonRect.y+(footerButtonH-helpH)/2:footerTop,padHelpW,helpH);
+            var hudViewport=new Rect(0,0,viewport.width,footerTop-8);
+            float pagerHeight=Math.Max(34,HudHeight("←",70,button)),maxCardHeight=hudViewport.height-16;
             float y=18;
-            string heading="王国顾问";
-            string clockHeader=ClockPresentation.Header(s.Clock,settings.ShowClock.Value);
-            string day="岛 "+s.Island+" / 第 "+s.Day+" 天 / "+clockHeader+" · "+Season(s.Season);
-            if(Localization.English)day="Island "+s.Island+" / Day "+s.Day+" / "+Localization.Text(clockHeader)+" · "+Season(s.Season);
-            // 单行页眉先测量再分配卡片宽度；附近详情沿用同一宽度与卡片边缘，避免覆盖。
-            float dayWidth=dayStyle.CalcSize(new GUIContent(Localization.Text(day))).x;
-            width=Math.Min(viewport.width-36,Math.Max(width,(float)Math.Ceiling(dayWidth)+34));
-            string countdown=ClockPresentation.Countdown(s.Clock);
-            var rows=new System.Collections.Generic.List<System.Tuple<string,string>>();
-            void Info(string icon,string value){rows.Add(System.Tuple.Create(icon,value));}
-            Info("person","P"+(player.Id+1));
-            Info("coin","金币 "+player.Coins);
-            Info("gem","宝石 "+player.Gems);
-            Info("bag",settings.InfiniteBag.Value?"无限容量 · 数字钱袋":"资源合计 "+player.BagTotal+" · 原生钱袋");
-            if(settings.Status.Value){rows.AddRange(PopulationPresentation.Rows(s));Info("tower","建设科技 · "+(s.Iron?"高阶已解锁":s.Stone?"中阶已解锁":"基础")+(s.Online?" · 联机":""));}
-            if(settings.MountInfo.Value&&player.Mount.Length>0&&viewport.height>=640){Info("horse","坐骑 "+player.Mount+" · "+player.MountState);Info("stamina","耐力 "+player.Stamina.ToString("F1")+(player.Fed>0?" · 饱食 "+player.Fed.ToString("F0")+" 秒":""));if(player.Ability.Length>0)Info("stamina",player.Ability);}
-            float headingH=title.CalcHeight(new GUIContent(Localization.Text(heading)),width-32);
-            float dayH=dayStyle.CalcHeight(new GUIContent(Localization.Text(day)),width-32);
-            float statusH=rows.Sum(r=>small.CalcHeight(new GUIContent(Localization.Text(r.Item2)),width-60)+5);
-            float clockH=small.CalcHeight(new GUIContent(Localization.Text(countdown)),width-32)+18;
-            float cardH=16+headingH+6+dayH+18+clockH+statusH+16;
-            y=Math.Max(18,viewport.height-cardH-66);
+            // 给两列保留独立图标与文字空间；固定语义探针不随金币数量变化抖动。
+            float preferredColumnsWidth=Math.Max(width,52+2*(28+small.CalcSize(new GUIContent(Localization.Text("建设科技")+" 99999")).x));
+            float maxColumnsWidth=settings.ShowPlayerPanel.Value?(viewport.width-48)/2:viewport.width-36;
+            bool twoColumnStatus=(PreviewHudColumns??settings.AdvisorColumns.Value)==2&&settings.Status.Value&&!stacked&&preferredColumnsWidth<=maxColumnsWidth;
+            if(twoColumnStatus)width=preferredColumnsWidth;
+            string heading=Localization.Text("王国顾问")+"  ⇄";
+            string identity="P"+(player.Id+1);
+            string clockHeader=Localization.Text(ClockPresentation.HudHeader(s.Clock,settings.ShowClock.Value));
+            string date=Localization.English?"Island "+s.Island+" · Day "+s.Day:"岛 "+s.Island+" · 第 "+s.Day+" 天";
+            string day=date+" · "+Localization.Text(Season(s.Season));
+            var hudDayStyle=small;
+            string countdown=Localization.Text(ClockPresentation.Countdown(s.Clock));
+            var rows=new System.Collections.Generic.List<System.Tuple<string,string,string>>();
+            void Info(string icon,string label,string value){rows.Add(System.Tuple.Create(icon,label,value));}
+            Info("coin","金币",player.Coins.ToString());
+            Info("gem","宝石",player.Gems.ToString());
+            Info("bag",settings.InfiniteBag.Value?"数字钱袋":"原生钱袋",settings.InfiniteBag.Value?"无限容量":"资源合计 "+player.BagTotal);
+            int populationStart=rows.Count;
+            if(settings.Status.Value){foreach(var field in PopulationPresentation.Fields(s))Info(field.Item1,field.Item2,field.Item3.ToString());Info("tower","建设科技",(s.Iron?"高阶已解锁":s.Stone?"中阶已解锁":"基础")+(s.Online?" · 联机":""));}
+            int populationCount=rows.Count-populationStart;
+            if(settings.MountInfo.Value&&player.Mount.Length>0&&viewport.height>=640){Info("horse","坐骑",player.Mount+" · "+player.MountState);Info("stamina","耐力",player.Stamina.ToString("F1")+(player.Fed>0?" · 饱食 "+player.Fed.ToString("F0")+" 秒":""));if(player.Ability.Length>0)Info("stamina","能力",player.Ability);}
+            float MeasureWidth(string value)=>small.CalcSize(new GUIContent(value)).x;
+            float MeasureHeight(string value,float available)=>HudHeight(value,available,small);
+            if(!twoColumnStatus)
+            {
+                // 固定语义探针决定列宽，不因余额、饱食倒计时或焦点目标变化而抖动。
+                float metricWidth=HudTextLayout.MetricWidth(Localization.Text("建设科技"),Localization.Text("高阶已解锁"),MeasureWidth)+60;
+                float clockWidth=HudTextLayout.MetricWidth(Localization.Text("黄昏 00:00"),Localization.Text("距入夜约 ")+string.Format(Localization.Text("{0}分{1}秒（现实时间）"),0,"00"),MeasureWidth)+32;
+                float maximum=settings.ShowPlayerPanel.Value&&!stacked?(viewport.width-48)/2:viewport.width-36;
+                width=Math.Min(maximum,Math.Max(width,(float)Math.Ceiling(Math.Max(metricWidth,clockWidth))));
+            }
+            var clockRow=HudTextLayout.Metric(clockHeader,countdown,"",width-32,MeasureWidth,MeasureHeight);
+            float identityWidth=MeasureWidth(identity)+20;
+            float statusTop=8,statusBottom=8,headingGap=6,dayGap=4,clockGap=8,progressStep=16;
+            float headingH=Math.Max(HudHeight(heading,width-32-identityWidth,title),HudHeight(identity,identityWidth,hudValue)),dayH=HudHeight(day,width-32,hudDayStyle),clockH=clockRow.TextHeight;
+            float statusHeaderH=statusTop+headingH+headingGap+dayH+dayGap+clockH+clockGap+progressStep;
+            bool compactStatusHeader=maxCardHeight-statusHeaderH-statusBottom<pagerHeight+8+small.lineHeight+HudTextLayout.RowGap;
+            if(compactStatusHeader)
+            {
+                // 窄分屏里页眉本身可能多行，时间文字随正文分页，避免占尽正文空间。
+                rows.Insert(0,System.Tuple.Create("",clockHeader,countdown));rows.Insert(0,System.Tuple.Create("",day,""));
+                statusHeaderH=statusTop+headingH+14;
+                twoColumnStatus=false;
+            }
+            string statusKey="p"+player.Id+".status";
+            float statusTextWidth=HudTextLayout.CellWidth(width,twoColumnStatus?2:1)-28;
+            HudTextRow LocalRow(System.Tuple<string,string,string> r)
+            {
+                return HudTextLayout.Metric(Localization.Text(r.Item2),Localization.Text(r.Item3),r.Item1,statusTextWidth,MeasureWidth,MeasureHeight);
+            }
+            var statusRows=twoColumnStatus?rows.Take(populationStart).Concat(rows.Skip(populationStart+populationCount)):rows;
+            var secondColumn=twoColumnStatus?rows.Skip(populationStart).Take(populationCount).Select(LocalRow).ToArray():null;
+            var measuredStatusRows=statusRows.Select(LocalRow).ToArray();
+            if(!compactStatusHeader)
+            {
+                // 完整保留每一条信息，在资源、人口及坐骑之间增加轻量分组留白。
+                if(measuredStatusRows.Length>populationStart)measuredStatusRows[populationStart-1].ExtraGap=HudTextLayout.StatusGroupGap;
+                if(!twoColumnStatus&&populationCount>0&&rows.Count>populationStart+populationCount)measuredStatusRows[populationStart+populationCount-1].ExtraGap=HudTextLayout.StatusGroupGap;
+            }
+            var statusPages=HudPages(statusKey,twoColumnStatus?"status-columns":"status",measuredStatusRows,statusTextWidth,maxCardHeight-statusHeaderH-statusBottom,pagerHeight,secondColumn);
+            if(statusPages.Length==0){DrawCompactHud(viewport,s,player);return;}
+            if(PreviewHudDevice!=null)hudPages[statusKey]=PreviewHudLastPage?statusPages.Length-1:0;
+            float cardH=statusHeaderH+statusPages.Max(p=>p.Height)+statusBottom+(statusPages.Length>1?pagerHeight+8:0);
+            y=Math.Max(18,hudViewport.height-cardH-8);
             var advisorRect=new Rect(pad,y,width,cardH);
+            if(settings.ShowKingdomAdvisor.Value)advisorRect=Place(statusKey,advisorRect,hudViewport);
+            // 整体缩短后，默认详情在共享顶部以下分页，不通过上移补足长正文空间。
+            bool detailBeside=!stacked&&advisorRect.xMax+12+width<=viewport.width-18;
+            float detailCardHeight=detailBeside?Math.Min(maxCardHeight,hudViewport.height-advisorRect.y-8):maxCardHeight;
+            string objectTitle="",objectKey="p"+player.Id+".object";
+            float headH=0,objectHeaderH=0,objectTop=statusTop;
+            HudTextPage[] objectPages=Array.Empty<HudTextPage>();
+            if(settings.ShowPlayerPanel.Value)
+            {
+                var t=PreviewTarget??player.Target;
+                string targetTitle=Localization.Text(t==null?"附近交互":t.Name+(t.Level>=0?" · 等级 "+t.Level:""));
+                objectTitle=targetTitle+"  ⇄";
+                string body=t==null?"靠近建筑、工具或坐骑，查看用途与升级条件。":t.Description+"\n\n"+(t.Cost>=0?"费用  "+t.Cost+" "+t.Currency+"\n"+(t.Locked?"暂不可用  ":"可交互  ")+t.Lock:"当前无升级交互");
+                if(t!=null&&t.Details.Length>0)body+="\n"+string.Join("\n",t.Details.Split('\n').Where(l=>!l.StartsWith("本岛同类交互点")));
+                if(t!=null&&settings.Details.Value&&t.Next.Length>0)body+="\n升级目标  "+t.Next;
+                headH=HudHeight(objectTitle,width-32,title);objectHeaderH=objectTop+headH+14;
+                var detailRows=body.Split('\n').Select(value=>new HudTextRow(Localization.Text(value),value.Length==0?"":value.StartsWith("费用")?"coin":value.StartsWith("耐久")?"shield":"tower")).ToList();
+                if(!HudTextLayout.CanPage(detailCardHeight-objectHeaderH-16,pagerHeight,HudHeight(HudLineProbe,width-60,small)))
+                {
+                    // 超长名称随正文分页，仍保留完整名称，不让标题挤掉所有说明。
+                    objectTitle=Localization.Text("附近交互")+"  ⇄";
+                    headH=HudHeight(objectTitle,width-32,title);objectHeaderH=objectTop+headH+14;
+                    detailRows.Insert(0,new HudTextRow(targetTitle));
+                }
+                string objectIdentity=t==null?"none":t.Raw+"|"+t.X+"|"+t.Level;
+                objectPages=HudPages(objectKey,objectIdentity,detailRows,width-60,detailCardHeight-objectHeaderH-16,pagerHeight);
+                if(objectPages.Length==0){DrawCompactHud(viewport,s,player);return;}
+                if(PreviewHudDevice!=null)hudPages[objectKey]=PreviewHudLastPage?objectPages.Length-1:0;
+            }
+            hudAdvisor=advisorRect;hudDetail=default;hudAlert=default;hudDetailPages=0;hudFooterTop=footerTop;hudHintHeight=helpH;hudLegacyBottom=viewport.height-66;hudRowCount=rows.Count+1;hudPageCount=statusPages.Length;hudColumns=statusPages[0].Columns;hudPad=padFooter;hudDay=day;hudOpacity=PreviewHudOpacity??(settings.AdvisorTransparent.Value?0:settings.PanelOpacities[OptionId.AdvisorOpacity].Value);
             if(settings.ShowKingdomAdvisor.Value){
-            var statusRect=Place("p"+player.Id+".status",new Rect(pad,y,width,cardH),viewport);advisorRect=statusRect;activePanelOpacity=settings.PanelOpacities[OptionId.AdvisorOpacity].Value;Card(statusRect,settings.AdvisorTransparent.Value);
-            float cy=statusRect.y+16;cy+=Row(statusRect.x+16,cy,width-32,heading+"  ⇄",title)+2;
-            cy+=Row(statusRect.x+16,cy,width-32,day,dayStyle)+4;
-            cy+=Row(statusRect.x+16,cy,width-32,countdown,small)+6;
-            DrawClockProgress(new Rect(statusRect.x+16,cy,width-32,6),s.Clock);cy+=14;
-            Fill(new Rect(statusRect.x+16,cy-5,width-32,1),border);
-            foreach(var row in rows){HudIcon(statusRect.x+24,cy+3,row.Item1);cy+=Row(statusRect.x+44,cy,width-60,row.Item2,small)+1;}
+            var statusRect=advisorRect;occupied.Add(Bounds(statusRect));
+            hudAdvisor=statusRect;
+            if(ShowCard(statusRect)){
+            bool statusDecoration=HudCard(statusRect,OptionId.AdvisorOpacity,settings.AdvisorTransparent.Value);
+            float cy=statusRect.y+statusTop;HudLabel(new Rect(statusRect.x+16,cy,width-32-identityWidth,headingH),heading,title);
+            HudLabel(new Rect(statusRect.xMax-16-identityWidth,cy+(headingH-small.lineHeight)/2,identityWidth,small.lineHeight),identity,hudValue);cy+=headingH+headingGap;
+            if(!compactStatusHeader){
+            HudLabel(new Rect(statusRect.x+16,cy,width-32,dayH),day,hudDayStyle);cy+=dayH+dayGap;
+            DrawHudMetric(new Rect(statusRect.x+16,cy,width-32,clockH),clockRow);cy+=clockH+clockGap;
+            DrawClockProgress(new Rect(statusRect.x+16,cy,width-32,6),s.Clock);cy+=progressStep;
+            }else cy=statusRect.y+statusHeaderH;
+            DrawHudRows(statusRect,cy,statusKey,statusPages,pagerHeight,statusBottom,statusDecoration);
+            }
             }
             y+=cardH+12;
             float mapW=settings.MapAtTop.Value||stacked?viewport.width-36:viewport.width-width-66;
             float mapX=settings.MapAtTop.Value||stacked?pad:viewport.width-pad-mapW;
             float mapH=Math.Max(350,small.lineHeight*7+196);
-            float mapY=settings.MapAtTop.Value?18:Math.Max(18,viewport.height-mapH-66);
-            if(settings.Map.Value)
+            float mapY=settings.MapAtTop.Value?18:Math.Max(18,hudViewport.height-mapH-8);
+            if(settings.Map.Value&&mapH<=maxCardHeight)
             {
-                var mapRect=Place("p"+player.Id+".map",new Rect(mapX,mapY,mapW,mapH),viewport,mapW-130);DrawMap(mapRect,s,player,settings.MapTransparent.Value,true);
+                var mapRect=Place("p"+player.Id+".map",new Rect(mapX,mapY,mapW,mapH),hudViewport,mapW-130);occupied.Add(Bounds(mapRect));DrawMap(mapRect,s,player,settings.MapTransparent.Value,true);
             }
-            else if(Button(new Rect(mapX,mapY,mapW,40),"开启小地图"))settings.Map.Value=true;
+            else if(!settings.Map.Value){var mapEntry=new Rect(mapX,mapY,mapW,40);occupied.Add(Bounds(mapEntry));if(Button(mapEntry,"开启小地图"))settings.Map.Value=true;}
             float objectX=advisorRect.xMax+12;
             float objectY=18;
-            float objectRoom=settings.MapAtTop.Value?viewport.height-mapH-100:mapY-30;
-            if(settings.ShowPlayerPanel.Value&&objectRoom>line*3)
+            HudRect detailBounds=default;
+            if(settings.ShowPlayerPanel.Value)
             {
-                var t=player.Target;
-                string objectTitle=t==null?"附近交互":t.Name+(t.Level>=0?" · 等级 "+t.Level:"");
-                string body=t==null?"靠近建筑、工具或坐骑，查看用途与升级条件。":t.Description+"\n\n"+(t.Cost>=0?"费用  "+t.Cost+" "+t.Currency+"\n"+(t.Locked?"暂不可用  ":"可交互  ")+t.Lock:"当前无升级交互");
-                if(t!=null&&t.Details.Length>0)body+="\n"+string.Join("\n",t.Details.Split('\n').Where(l=>!l.StartsWith("本岛同类交互点")));
-                if(t!=null&&settings.Details.Value&&t.Next.Length>0)body+="\n升级目标  "+t.Next;
-                float headH=title.CalcHeight(new GUIContent(Localization.Text(objectTitle)),width-32);
-                var detailRows=body.Split('\n');
-                float bodyH=detailRows.Sum(value=>small.CalcHeight(new GUIContent(Localization.Text(value)),width-60)+1);
-                float objectH=headH+bodyH+42;
+                float objectH=objectHeaderH+objectPages.Max(p=>p.Height)+16+(objectPages.Length>1?pagerHeight+8:0);
                 objectY=advisorRect.y;
                 if(objectX+width>viewport.width-18){objectX=advisorRect.x;objectY=Math.Max(18,advisorRect.y-objectH-12);}
-                var objectRect=Place("p"+player.Id+".object",new Rect(objectX,objectY,width,objectH),viewport);activePanelOpacity=settings.PanelOpacities[OptionId.PlayerOpacity].Value;Card(objectRect,settings.PlayerTransparent.Value);
-                float by=objectRect.y+16+Row(objectRect.x+16,objectRect.y+16,width-32,objectTitle+"  ⇄",title)+10;
-                foreach(var value in detailRows)
-                {
-                    if(value.Length>0)HudIcon(objectRect.x+24,by+3,value.StartsWith("费用")?"coin":value.StartsWith("耐久")?"shield":"tower");
-                    by+=Row(objectRect.x+44,by,width-60,value,small)+1;
+                var objectRect=Place(objectKey,new Rect(objectX,objectY,width,objectH),hudViewport);detailBounds=Bounds(objectRect);occupied.Add(detailBounds);
+                hudDetail=objectRect;hudDetailPages=objectPages.Length;
+                if(ShowCard(objectRect)){
+                HudCard(objectRect,OptionId.PlayerOpacity,settings.PlayerTransparent.Value);
+                HudLabel(new Rect(objectRect.x+16,objectRect.y+objectTop,width-32,headH),objectTitle,title);
+                DrawHudRows(objectRect,objectRect.y+objectHeaderH,objectKey,objectPages,pagerHeight);
                 }
             }
             if(settings.Alerts.Value)
@@ -231,22 +408,32 @@ namespace KingdomAdvisor
                 var defense=settings.DefenseAlerts.Value?AdvisorAlerts.Defense(s,player):"";
                 var staff=settings.StaffAlerts.Value?AdvisorAlerts.Staff(s,player.Id):"";
                 if(defense.Length>0)alert=defense;else if(staff.Length>0)alert=staff;
-                float ah=small.CalcHeight(new GUIContent(Localization.Text(alert)),width-32)+24;
-                if(alert.Length>0){var alertRect=Place("p"+player.Id+".alert",new Rect(pad,Math.Max(18,viewport.height-cardH-66-ah-12),width,ah),viewport);activePanelOpacity=settings.PanelOpacities[OptionId.AlertOpacity].Value;Card(alertRect,settings.AlertTransparent.Value);Label(new Rect(alertRect.x+16,alertRect.y+12,width-32,0),alert,small);}
+                string alertText=Localization.Text(alert);
+                const float alertPadding=4,alertGap=6;
+                float alertTextH=HudHeight(alertText,width-32,small),ah=alertTextH+alertPadding*2;
+                if(alert.Length>0&&ah<=maxCardHeight)
+                {
+                    string alertKey="p"+player.Id+".alert";
+                    var above=HudTextLayout.AboveAlert(Bounds(advisorRect),ah,alertGap);
+                    // 保留拖动偏好；字号或布局变化导致保存位置与正文相交时，优先恢复顾问上方。
+                    var desired=Bounds(Place(alertKey,Rectangle(above),hudViewport));
+                    if(HudTextLayout.TryPlaceAlert(desired,new HudRect(8,8,hudViewport.width-16,hudViewport.height-16),detailBounds,occupied,alertGap,out desired,above))
+                    {
+                        var alertRect=Rectangle(desired);
+                        hudAlert=alertRect;
+                        if(ShowCard(alertRect)){HudCard(alertRect,OptionId.AlertOpacity,settings.AlertTransparent.Value);HudLabel(new Rect(alertRect.x+16,alertRect.y+alertPadding,width-32,alertTextH),alertText,small);}
+                    }
+                }
             }
-            if(controller.Device=="手柄"){
-                float hw=Math.Min(560,viewport.width-pad*2);
-                if(Button(new Rect(pad,viewport.height-50,hw,34),controller.PadOpenLabel+" · 面板",true))controller.Toggle(0,s,player.Id);
-                Label(new Rect(pad,viewport.height-84,hw,0),"右摇杆 · 光标 / 呼出键长按 · 显隐",small);
+            if(padFooter){
+                if(Button(padButtonRect,padOpen,true))controller.Toggle(0,s,player.Id);
+                HudLabel(padHelpRect,padHelp,small);
             }else{
                 float footerX=pad;
-                string guide=Localization.Text("F7 图鉴"),options=Localization.Text("F6 设置"),hide=Localization.Text("F4 收起");
-                float guideW=Math.Max(94,button.CalcSize(new GUIContent(guide)).x+8);
-                float optionsW=Math.Max(94,button.CalcSize(new GUIContent(options)).x+8);
-                float hideW=Math.Max(94,button.CalcSize(new GUIContent(hide)).x+8);
-                if(Button(new Rect(footerX,viewport.height-50,guideW,34),guide,true))controller.Toggle(0,s,player.Id);footerX+=guideW+8;
-                if(Button(new Rect(footerX,viewport.height-50,optionsW,34),options,true))controller.Toggle(2,s,player.Id);footerX+=optionsW+8;
-                if(Button(new Rect(footerX,viewport.height-50,hideW,34),hide,true)){settings.Enabled.Value=false;controller.Close();}
+                float footerY=viewport.height-16-footerButtonH;
+                if(Button(new Rect(footerX,footerY,guideW,footerButtonH),guide,true))controller.Toggle(0,s,player.Id);footerX+=guideW+8;
+                if(Button(new Rect(footerX,footerY,optionsW,footerButtonH),options,true))controller.Toggle(2,s,player.Id);footerX+=optionsW+8;
+                if(Button(new Rect(footerX,footerY,hideW,footerButtonH),hide,true)){settings.Enabled.Value=false;controller.Close();}
             }
         }
         private void DrawMap(Rect area,Snapshot s,PlayerInfo player,bool transparent=false,bool hud=false)
@@ -401,7 +588,7 @@ namespace KingdomAdvisor
         {
             activePanelOpacity=settings.PanelOpacities[OptionId.InterfaceOpacity].Value;
             if(controller.Tab!=0)controller.SearchFocused=false;
-            float pw=Math.Min(1040,viewport.width-40),ph=Math.Min(720,viewport.height-40);var panel=new Rect(Mathf.Round((viewport.width-pw)/2),Mathf.Round((viewport.height-ph)/2),pw,ph);
+            var panel=MainPanelRect(viewport);
             if(!settings.InterfaceTransparent.Value&&activePanelOpacity<0)PanelFill(viewport,new Color(0,0,0,.38f));Card(panel,settings.InterfaceTransparent.Value,true);guiOrigin+=new Vector2(panel.x,panel.y);GUI.BeginGroup(panel);
             float w=panel.width,h=panel.height,line=Math.Max(24,text.lineHeight+7);
             var tabs=new[]{"图鉴","地点","设置","地图","岛屿记录","资源"};for(int i=0;i<tabs.Length;i++){var rect=new Rect(12+i*(w-115)/tabs.Length,10,(w-131)/tabs.Length,line+6);if(Button(rect,(controller.Tab==i?"● ":"")+tabs[i])){controller.ChangeTab(i-controller.Tab);}}
@@ -434,7 +621,7 @@ namespace KingdomAdvisor
             var items=controller.SettingsItems;float x=rail+14,rw=w-x-14;
             if(controller.OpacityEditing){GUI.enabled=priorEnabled;DrawOpacityEditor(new Rect(x,top,rw,bottom-top));return;}
             if(controller.Section==OptionGroups.MapFilterSection)rowH=Math.Max(34,text.lineHeight+10);
-            string note=controller.Section==OptionGroups.MapFilterSection?"单击勾选 · 按类别筛选 · 即时保存":"即时保存 · 玩法辅助默认关闭 · 单机与联机均开放";float noteH=small.CalcHeight(new GUIContent(Localization.Text(note)),rw),py=bottom-noteH-rowH-12;
+            string note=controller.Section==OptionGroups.MapFilterSection?"单击勾选 · 按类别筛选 · 即时保存":controller.Section==3?"即时保存 · 长按购买限单机或房主本机角色 · 松手结束":"即时保存 · 玩法辅助默认关闭 · 单机与联机均开放";float noteH=small.CalcHeight(new GUIContent(Localization.Text(note)),rw),py=bottom-noteH-rowH-12;
             bool appearance=controller.Section==OptionGroups.AppearanceSection,filters=controller.Section==OptionGroups.MapFilterSection;
             int visible=appearance?items.Length:Math.Max(1,(int)((py-top-8)/(rowH+5))),page=controller.Focus/visible,start=page*visible;controller.VisibleRows=visible;
             if(appearance)rowH=Math.Min(rowH,(py-top-8)/7-5);

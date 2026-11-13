@@ -525,9 +525,12 @@ namespace KingdomAdvisor
     public static class PopulationPresentation
     {
         public static List<System.Tuple<string,string>> Rows(Snapshot s)
+            =>Fields(s).Select(row=>System.Tuple.Create(row.Item1,row.Item2+" "+row.Item3)).ToList();
+        // 与文字报告共用同一人口来源；HUD 不拆解已翻译的句子来猜测名称与数量。
+        public static List<System.Tuple<string,string,int>> Fields(Snapshot s)
         {
-            var rows=new List<System.Tuple<string,string>>();
-            void Add(string icon,string name,int count,bool always=false){if(always||count>0)rows.Add(System.Tuple.Create(icon,name+" "+count));}
+            var rows=new List<System.Tuple<string,string,int>>();
+            void Add(string icon,string name,int count,bool always=false){if(always||count>0)rows.Add(System.Tuple.Create(icon,name,count));}
             Add("hammer","工匠",s.Workers,true);Add("bow","弓手",s.Archers,true);Add("shield","侍从",s.Squires,true);Add("shield","骑士",s.Knights,true);Add("shield","队长（未细分）",s.UnclassifiedLeaders);
             Add("wheat","农民",s.Farmers,true);Add("person","游民",s.Beggars,true);
             Add("spear","长枪兵",s.Pikemen);Add("axe","狂战士",s.Berserkers);Add("person","待业平民",s.Peasants);

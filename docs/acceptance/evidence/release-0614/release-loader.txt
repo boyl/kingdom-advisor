@@ -1,0 +1,3 @@
+[Info   :   BepInEx] Loading [王国顾问 Kingdom Advisor 0.6.14]
+[Info   :王国顾问 Kingdom Advisor] Kingdom Advisor 0.6.14 loaded; automatic in-game overlay; gameplay rule writes=0.
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24

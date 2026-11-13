@@ -21,6 +21,7 @@ namespace KingdomAdvisor
             typeof(PayableBorderBanner),typeof(Signpost),typeof(Snowman),typeof(BunnyTholos),typeof(ItemOfPowerReward),
             typeof(Shipyard),typeof(TrojanHorse),typeof(SerpentLevelTrojanHorse),typeof(Lighthouse)
         };
+        internal static readonly Type[] DiscoveryTypes=KnownTypes.Where(t=>!typeof(Payable).IsAssignableFrom(t)).ToArray();
         public static Entry Resolve(GameObject obj)
         {
             if(!obj)return null;
@@ -36,15 +37,21 @@ namespace KingdomAdvisor
         public static IEnumerable<Component> Discover()
         {
             var seen=new HashSet<int>();
-            foreach(var type in KnownTypes)
+            foreach(var type in DiscoveryTypes)
             {
                 // 所有Payable子类由游戏交互注册表覆盖；此处补非Payable专用设施。
-                if(typeof(Payable).IsAssignableFrom(type))continue;
-                foreach(var obj in UnityEngine.Object.FindObjectsOfType(Il2CppType.From(type)))
+                foreach(var component in DiscoverType(type))
                 {
-                    var component=obj.TryCast<Component>();
-                    if(component&&component.gameObject.activeInHierarchy&&seen.Add(component.gameObject.GetInstanceID()))yield return component;
+                    if(seen.Add(component.gameObject.GetInstanceID()))yield return component;
                 }
+            }
+        }
+        public static IEnumerable<Component> DiscoverType(Type type)
+        {
+            foreach(var obj in UnityEngine.Object.FindObjectsOfType(Il2CppType.From(type)))
+            {
+                var component=obj.TryCast<Component>();
+                if(component&&component.gameObject.activeInHierarchy)yield return component;
             }
         }
         public static string Evidence(GameObject obj)=>string.Join(",",obj.GetComponents(Il2CppType.Of<MonoBehaviour>()).Where(c=>c).Select(c=>c.GetIl2CppType().Name));

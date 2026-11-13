@@ -1,3 +1,34 @@
+# 王国顾问 0.6.14 / Kingdom Advisor 0.6.14
+
+- 修复英文和多行详情溢出、手柄提示遮挡；顾问默认单列，可切换两列，恢复行距与分组留白，可招募提醒放在上方。透明度 0 时只保留文字、图标与昼夜进度。
+- 新增“长按连续购买／升级”开关，默认关闭。持续按住投币键即可对同一目标连续购买、招募或升级，松手停止；覆盖市民之家和火焰桶，保留原生费用、库存与施工限制。支持单人、本地双人及房主本机角色，暂不支持联机加入者。
+- 新增无限容量时隐藏原生钱袋图形的开关，默认关闭，保留顾问中的余额数字；修复无限钱袋乘船后金币被截为 1000 的问题。
+- 分摊周期性建筑扫描，降低走动时的卡顿尖峰。
+
+不合并不同隐士，不扩展装备队列。本次不含逐条顾问筛选。保留配置与存档，不新增依赖。全部 DLC、分辨率及双机联机场景未完整复核。
+
+已有正常工作的 BepInEx 6 IL2CPP 前置请选择 **ModOnly**；首次安装请选择 **Complete**，内含既有修订版 BepInEx #788、两项 Cpp2IL 兼容补丁、许可证与对应源码。官方原版 #788 不含这些首次生成修复。
+
+GitHub：安装 [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)，保存并退出游戏，解压后双击 `INSTALL.cmd`，选择 Steam“浏览本地文件”打开的游戏根目录。Nexus：无需 PowerShell，按照随包说明手动复制。插件路径为 `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。升级保留配置与存档；回退前备份旧 DLL 和 `BepInEx/config/local.kingdom.advisor.cfg`。卸载仅移除 KingdomAdvisor 插件目录，保留共享前置与其他 Mod。
+
+[中文完整说明](https://github.com/boyl/kingdom-advisor/blob/v0.6.14/README.md) · [Nexus 手动安装与目录示意](https://github.com/boyl/kingdom-advisor/blob/v0.6.14/distribution/nexus/README.zh-CN.md)
+
+## English
+
+- Fixed English and multiline text overflow and overlapping controller hints. The advisor defaults to one column, with an optional two-column layout, more spacing, and recruitment alerts above it. At 0 opacity, text, icons and the day-progress bar remain visible.
+- Added **Hold to buy / upgrade**, off by default. Keep holding the native pay button to repeat purchases, recruitment or upgrades on the same target; release to stop. Includes citizen houses and fire barrels, while retaining native costs, stock limits and construction times. Supports solo play, local co-op and the host's local players; joining online clients are not yet supported.
+- Added an option to hide the native purse graphic while unlimited capacity is enabled, off by default, while keeping balance numbers in the advisor. Fixed the 1,000-coin sailing cap with unlimited capacity.
+- Spread periodic building scans across frames to reduce movement stutter spikes.
+
+Different hermits remain separate. Equipment queues are unchanged, and per-entry advisor filtering is not included. Settings and saves are retained; no new dependencies. All DLC, resolutions and two-machine multiplayer scenarios have not been fully retested.
+
+Choose **ModOnly** if you have a working BepInEx 6 IL2CPP installation, or **Complete** for a fresh installation. Complete retains the existing modified BepInEx #788 runtime, two Cpp2IL compatibility fixes, licenses and corresponding sources. Stock official #788 does not include these first-generation fixes.
+
+GitHub: install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6), save and quit, extract the ZIP, then run `INSTALL.cmd` and select the game root via Steam's Browse local files. Nexus: no PowerShell is required; follow the included manual installation guide. Plugin path: `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`. Upgrades retain settings and saves. Back up the old DLL and `BepInEx/config/local.kingdom.advisor.cfg` for rollback. Uninstall only the KingdomAdvisor plugin folder, retaining the shared loader and other mods.
+
+[Full English guide](https://github.com/boyl/kingdom-advisor/blob/v0.6.14/README.en.md) · [Nexus manual installation and directory layout](https://github.com/boyl/kingdom-advisor/blob/v0.6.14/distribution/nexus/README.en.md)
+
+
 # 王国顾问 0.6.13 / Kingdom Advisor 0.6.13
 
 - 修复倒计时跳动，继续跟随游戏暂停与变速。

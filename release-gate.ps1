@@ -7,7 +7,11 @@ $dll=Join-Path $root 'package/BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll'
 if((Get-FileHash -LiteralPath $dll).Hash -ne $approval.dllHash){throw '发布负载已改变，验收失效。'}
 foreach($item in $approval.sourceHashes.PSObject.Properties){if((Get-FileHash -LiteralPath (Join-Path $root $item.Name)).Hash -ne $item.Value){throw "源码已改变，验收失效：$($item.Name)"}}
 $pwsh=(Get-Command pwsh.exe -CommandType Application | Select-Object -First 1).Source
-foreach($script in @('test.ps1','test-day-clock.ps1','test-clock-reader.ps1','test-clock-stability.ps1','test-clock-trace.ps1','test-cross-theme.ps1','test-structure-reader.ps1','test-clock-settings.ps1','test-assist.ps1','test-client-scene.ps1','test-display-organization.ps1','test-display-preferences.ps1','test-setting-actions.ps1','test-input-layout.ps1','test-input-release.ps1','test-multiplayer-routing.ps1','test-multiplayer-recovery.ps1','test-map.ps1','test-map-layout.ps1','test-localization.ps1','test-population.ps1','test-population-role.ps1','test-target-proximity.ps1','test-catalog-native.ps1','test-statues.ps1','test-content-accuracy.ps1','test-mount-content.ps1','test-wall-conversion.ps1','test-catalog-location.ps1','audit.ps1')){
+foreach($script in @('test-hud-spacing.ps1','test-hud-metrics.ps1')){
+    & $pwsh -NoProfile -File (Join-Path $root $script)
+    if($LASTEXITCODE -ne 0){throw "HUD 自动门禁失败：$script"}
+}
+foreach($script in @('test.ps1','test-day-clock.ps1','test-clock-reader.ps1','test-clock-stability.ps1','test-clock-trace.ps1','test-cross-theme.ps1','test-structure-reader.ps1','test-clock-settings.ps1','test-assist.ps1','test-purse-visibility.ps1','test-wallet-travel.ps1','test-continuous-purchase.ps1','test-continuous-purchase-adapter.ps1','test-continuous-purchase-native-coverage.ps1','test-continuous-purchase-trace.ps1','test-hud-layout.ps1','test-hud-footer.ps1','test-hud-columns.ps1','test-performance.ps1','test-performance-scan.ps1','test-client-scene.ps1','test-display-organization.ps1','test-display-preferences.ps1','test-setting-actions.ps1','test-input-layout.ps1','test-input-release.ps1','test-multiplayer-routing.ps1','test-multiplayer-recovery.ps1','test-map.ps1','test-map-layout.ps1','test-localization.ps1','test-population.ps1','test-population-role.ps1','test-target-proximity.ps1','test-catalog-native.ps1','test-statues.ps1','test-content-accuracy.ps1','test-mount-content.ps1','test-wall-conversion.ps1','test-catalog-location.ps1','audit.ps1')){
     & $pwsh -NoProfile -File (Join-Path $root $script)
     if($LASTEXITCODE -ne 0){throw "自动门禁失败：$script"}
 }

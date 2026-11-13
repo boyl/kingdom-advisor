@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.13";
+        public const string Version="0.6.14";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -31,8 +31,9 @@ namespace KingdomAdvisor
     internal sealed class Settings
     {
         public ConfigEntry<bool> Enabled,Map,Status,Details,Alerts,FullMap,Trees,PreviewCapture,MapTransparent,AdvisorTransparent,PlayerTransparent,AlertTransparent,InterfaceTransparent,MapAtTop,ShowKingdomAdvisor,ShowPlayerPanel;
-        public ConfigEntry<int> FontSize,UiLanguage;
-        public ConfigEntry<bool> ShowClock;
+        public ConfigEntry<int> FontSize,UiLanguage,AdvisorColumns;
+        public ConfigEntry<bool> ShowClock,HideNativePurse,ContinuousPurchase;
+        public ConfigEntry<bool> HudPreviewCapture;
         public ConfigEntry<string> Layout,HiddenMapTypes;
         public ConfigEntry<int> PanelOpacity;
         public readonly System.Collections.Generic.Dictionary<OptionId,ConfigEntry<int>> PanelOpacities=new();
@@ -51,6 +52,7 @@ namespace KingdomAdvisor
             InterfaceTransparent=config.Bind("界面样式","主界面透明",false,"图鉴、设置与资源等主界面使用透明背景。");
             MapAtTop=config.Bind("地图","默认置顶",true,"开启默认放在顶部，关闭默认放在底部；F6 切换时仅复位地图的拖动位置。");
             ShowKingdomAdvisor=config.Bind("界面","显示王国顾问",true,"显示左下王国顾问整张概况卡片。");
+            AdvisorColumns=config.Bind("界面","顾问条目列数",1,new ConfigDescription("1 单列、2 两列；两列按资源与坐骑／人口与科技分别排列。窄视口空间不足时自动使用单列。",new AcceptableValueList<int>(1,2)));
             ShowPlayerPanel=config.Bind("界面","显示Player详情",true,"显示顾问旁的附近建筑／交互物详情，可拖动并记忆位置。");
             Status=config.Bind("界面","王国概况",true,"显示人口、科技与时间。");
             ShowClock=config.Bind("界面","显示游戏时钟",true,"显示游戏内几点几分。关闭后仍显示阶段、昼夜倒计时和进度条；倒计时按当前速度估计现实时间，不代表敌人到达或安全时间。");
@@ -61,8 +63,11 @@ namespace KingdomAdvisor
             FontSize=config.Bind("界面","字号",18,"字号范围 14–28。");
             Layout=config.Bind("布局","卡片位置","","按玩家分别保存拖动后的相对坐标；可在设置中复位。");
             PreviewCapture=config.Bind("Diagnostics","PreviewCapture",false,"开发验收：首次进入游戏后短暂展示设置和图鉴并截图，随后关闭。不写入存档。");
+            HudPreviewCapture=config.Bind("Diagnostics","HudPreviewCapture",false,"开发验收：暂停并预览中英、18/28字号及键鼠/手柄HUD，截图后恢复字号和速度并自动关闭；只切换显示，不模拟付款输入。");
             Teleport=config.Bind("操作便利","地图传送",false,"普通地图短按查看，长按 0.8 秒传送。单机与联机均可使用。");
             InfiniteBag=config.Bind("资源辅助","无限钱袋容量",false,"解除容量限制，并使用数字钱袋代替会溢出的物理钱袋。不自动增加金币。关闭后恢复原生钱袋、原容量及拾取溢出行为。单机与联机均可使用。");
+            HideNativePurse=config.Bind("资源辅助","无限容量时隐藏原生钱袋",false,"仅在无限钱袋容量开启时隐藏原生钱袋图形，保留顾问中的金币和宝石数字。关闭此项或无限容量后恢复原图形状态，不修改资源数量。");
+            ContinuousPurchase=config.Bind("资源辅助","长按连续购买升级",false,"按住原生投币键，对同一装备、弹药、市民之家或普通建筑连续购买／招募／升级，松手结束。含火焰桶、投石车工坊、盾牌、左侧盔甲锻造、火塔弹药、造船补料及船坞生产，沿用各自原生限制与施工时间；续投须付得起整次费用，条件不足时等待。不自动切换君主／神器、选择特殊改造或其他目标。当前支持单机及房主本机角色，联机加入者暂不支持。");
             InfiniteStamina=config.Bind("操作便利","无限耐力",false,"使用原生无限耐力标志，关闭恢复原值。单机与联机均可使用。");
             GameSpeed=config.Bind("操作便利","游戏速度",1f,new ConfigDescription("0 暂停、1 正常、2／4 加速；单机与联机均可使用。",new AcceptableValueList<float>(0,1,2,4)));
             PadCursor=config.Bind("手柄","常驻光标",true,"右摇杆移动常驻光标；左摇杆控制角色。");
@@ -111,14 +116,18 @@ namespace KingdomAdvisor
         private bool captureUnavailable;
         private int previewStage,previewLanguage=-1,previewFont=-1;
         private float previewAt=-1;
+        private int hudPreviewStage,hudPreviewFont=-1;
+        private float hudPreviewAt=-1,hudPreviewSpeed;
         public void Awake()
         {
+            PerformanceTrace.Active=new PerformanceTrace();
             Active=this;reader=new GameReader();Controller=new AdvisorController(Plugin.Instance.Settings);
             Actions=new GameActions(Plugin.Instance.Settings);Journal=new IslandJournal();Controller.Actions=Actions;Controller.Journal=Journal;
             view=new AdvisorView(Plugin.Instance.Settings,Controller); nextEvidence=0;
         }
         public void Update()
         {
+            PerformanceTrace.Active.BeginFrame(Time.frameCount,Time.realtimeSinceStartupAsDouble,reader?.State.Playing??false,reader?.State.Island??-1,Application.isFocused,System.GC.CollectionCount(0));
             if(faulted){
                 // 不自动循环重启；明确的呼出键允许用户在联机加载完成后重试。
                 if(!Input.GetKeyDown(KeyCode.F6)&&!Input.GetKeyDown(KeyCode.F7))return;
@@ -130,25 +139,29 @@ namespace KingdomAdvisor
                 var language=global::Language.current;
                 Localization.English=Localization.IsEnglish(previewLanguage<0?Plugin.Instance.Settings.UiLanguage.Value:previewLanguage,language?language.languageCode:null,Application.systemLanguage.ToString());
                 var now=Time.unscaledTime;
-                if(now>=nextSlow){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);nextSlow=now+1;nextFast=now;nextClock=0;}
-                if(now>=nextFast){reader.ReadPlayers();reader.ReadEnemies();nextFast=now+.1f;}
+                if(now>=nextSlow){using(PerformanceTrace.Active.Measure(PerformanceStage.World)){stopwatch.Restart();reader.ReadWorld();stopwatch.Stop();maxReadMs=Math.Max(maxReadMs,stopwatch.Elapsed.TotalMilliseconds);}nextSlow=now+1;nextFast=now;nextClock=0;}
+                if(now>=nextFast){using(PerformanceTrace.Active.Measure(PerformanceStage.FastRead)){reader.ReadPlayers();reader.ReadEnemies();}nextFast=now+.1f;}
                 if(Input.GetKeyDown(KeyCode.F6)||Input.GetKeyDown(KeyCode.F7))reader.ResetOptionalReads();
                 Controller.Update(reader.State);
+                ContinuousPurchaseRuntime.Tick();
+                if(!Plugin.Instance.Settings.PreviewCapture.Value&&!Plugin.Instance.Settings.HudPreviewCapture.Value)view.PreviewTarget=null;
                 try{Actions.Apply(reader.State);}catch(Exception ex){Plugin.Instance.Log.LogError("Assist update failed: "+ex);Actions.Notify("操作辅助出错，已关闭");Plugin.Instance.Settings.InfiniteBag.Value=false;Plugin.Instance.Settings.InfiniteStamina.Value=false;Plugin.Instance.Settings.GameSpeed.Value=1;Actions.Restore();}
-                if(Plugin.Instance.Settings.Journal.Value&&now>=nextJournal){Journal.Observe(reader.State);nextJournal=now+1;}
+                if(Plugin.Instance.Settings.Journal.Value&&now>=nextJournal){using(PerformanceTrace.Active.Measure(PerformanceStage.Journal))Journal.Observe(reader.State);nextJournal=now+1;}
                 if(reader.State.Playing&&!captured&&reader.State.Players.Count>0)
                 {
                     if(captureAt<0)captureAt=now+4;
                     if(now>=captureAt){Capture("first-gameplay.png");captured=true;}
                 }
                 if(Input.GetKeyDown(KeyCode.F9))Capture("manual-"+DateTime.Now.ToString("yyyyMMdd-HHmmss")+".png");
-                if(captured&&Plugin.Instance.Settings.PreviewCapture.Value&&reader.State.Playing)
+                UpdateHudPreview(now);
+                if(captured&&Plugin.Instance.Settings.PreviewCapture.Value&&!Plugin.Instance.Settings.HudPreviewCapture.Value&&reader.State.Playing)
                 {
                     if(previewAt<0)previewAt=now+2;
                     if(now>=previewAt)
                     {
                         if(previewFont<0)previewFont=Plugin.Instance.Settings.FontSize.Value;
                         int variant=previewStage/32,scenario=(previewStage%32)/2;
+                        if(previewStage%2==0)view.PreviewTarget=null;
                         if(previewStage>=232){previewLanguage=-1;Plugin.Instance.Settings.FontSize.Value=previewFont;Controller.Close();Controller.Tab=0;Controller.Section=0;Plugin.Instance.Settings.PreviewCapture.Value=false;}
                         else if(previewStage>=128)
                         {
@@ -160,7 +173,7 @@ namespace KingdomAdvisor
                         else if(previewStage%2==0){
                             previewLanguage=variant<2?2:1;Plugin.Instance.Settings.FontSize.Value=variant%2==0?18:28;
                             Controller.Close();Controller.SettingsDropdown=false;Controller.ResourceDropdown=false;Controller.Focus=0;Controller.Selected=0;Controller.DetailPage=0;
-                            if(scenario<8){Controller.Toggle(2,reader.State);Controller.Section=scenario<6?scenario:scenario==6?1:2;if(scenario==6)Controller.Focus=10;if(scenario==7){Controller.Focus=4;Controller.Choice=7;Controller.SettingsDropdown=true;}}
+                            if(scenario<8){Controller.Toggle(2,reader.State);Controller.Section=scenario<6?scenario:1;if(scenario==6)Controller.Focus=Controller.SettingsItems.Length-1;if(scenario==7){Controller.Section=Array.FindIndex(OptionGroups.Items,items=>items.Any(item=>item.Id==OptionId.Font));Controller.Focus=Array.FindIndex(Controller.SettingsItems,item=>item.Id==OptionId.Font);Controller.Choice=Controller.SettingsItems[Controller.Focus].Choices.Length-1;Controller.SettingsDropdown=true;}}
                             else if(scenario<10){Controller.Toggle(0,reader.State);if(scenario==9)Controller.Selected=12;}
                             else if(scenario==10)
                             {
@@ -178,6 +191,13 @@ namespace KingdomAdvisor
                             }
                             else if(scenario==12)Controller.Toggle(4,reader.State);
                             else if(scenario<15){Controller.Toggle(5,reader.State);if(scenario==14){Controller.Focus=5;Controller.Choice=2;Controller.ResourceDropdown=true;}}
+                            else
+                            {
+                                // 仅预览真实场景快照中的塔详情；不移动角色、不改变选中物或游戏对象。
+                                var owner=reader.State.Players.FirstOrDefault(p=>p.Local);
+                                if(owner!=null)view.PreviewTarget=reader.State.Points.Where(p=>p.Key=="tower"&&p.PlayerStates.ContainsKey(owner.Id)).Select(p=>p.PlayerStates[owner.Id]).Where(t=>t.Level>=0).OrderBy(t=>t.Level==4?0:1).ThenByDescending(t=>t.Description.Length+t.Details.Length).FirstOrDefault();
+                                Plugin.Instance.Log.LogInfo(view.PreviewTarget==null?"Preview HUD tower: skipped (no native tower snapshot)":"Preview HUD tower: "+view.PreviewTarget.Raw+" level="+view.PreviewTarget.Level+"; display only, player unchanged");
+                            }
                         }
                         else Capture((variant<2?"english":"chinese")+"-font"+(variant%2==0?18:28)+"-"+new[]{"settings-map","settings-advisor","settings-catalog","settings-resource","settings-time","settings-pad","settings-advisor-last","settings-font-dropdown","catalog-first","catalog-later","locations","map","journal","resources","resources-dropdown","gameplay"}[scenario]+".png");
                         previewStage++;previewAt=previewStage>232?float.PositiveInfinity:now+1;
@@ -188,29 +208,89 @@ namespace KingdomAdvisor
             catch(Exception ex)
             {
                 Plugin.Instance.Log.LogError("Read failure: "+ex);
-                if(++failures>=3){faulted=true;lastError=ex.ToString();Controller.Close();WriteEvidence();Plugin.Instance.Log.LogError("Overlay stopped after 3 consecutive failures. Gameplay left unchanged.");}
+                if(++failures>=3){faulted=true;lastError=ex.ToString();ContinuousPurchaseRuntime.CancelAll();Actions.RestorePurseVisibility();Controller.Close();WriteEvidence();Plugin.Instance.Log.LogError("Overlay stopped after 3 consecutive failures. Gameplay left unchanged.");}
             }
         }
         public void LateUpdate()
         {
             if(faulted||reader==null)return;
+            reader.AdvanceStructureScan();
             double now=Time.unscaledTimeAsDouble;
-            if(now>=nextClock){reader.ReadClock(now);nextClock=now+0.1;}
+            if(now>=nextClock){using(PerformanceTrace.Active.Measure(PerformanceStage.Clock))reader.ReadClock(now);nextClock=now+0.1;}
             if(now>=nextEvidence){
                 nextEvidence=Time.unscaledTime+10;
-                try{WriteEvidence();}catch(Exception ex){Plugin.Instance.Log.LogWarning("Evidence write failed: "+ex.Message);}
+                try{using(PerformanceTrace.Active.Measure(PerformanceStage.Diagnostics))WriteEvidence();}catch(Exception ex){Plugin.Instance.Log.LogWarning("Evidence write failed: "+ex.Message);}
             }
         }
         public void OnGUI()
         {
             if(faulted){GUI.Label(new Rect(20,20,650,30),"Kingdom Advisor stopped: see BepInEx/LogOutput.log");return;}
-            try{if(view!=null)view.Draw(reader.State);}
-            catch(Exception ex){faulted=true;lastError=ex.ToString();Controller?.Close();Plugin.Instance.Log.LogError("Rendering stopped: "+ex);WriteEvidence();}
+            try{using(PerformanceTrace.Active.Measure(PerformanceStage.Gui)){if(view!=null)view.Draw(reader.State);}}
+            catch(Exception ex){faulted=true;lastError=ex.ToString();ContinuousPurchaseRuntime.CancelAll();Actions?.RestorePurseVisibility();Controller?.Close();Plugin.Instance.Log.LogError("Rendering stopped: "+ex);WriteEvidence();}
         }
-        public void OnDestroy(){Controller?.Close();Controller?.RestorePadMappings();Actions?.Restore();Journal?.Flush();if(Active==this)Active=null;}
+        private void RestoreHudPreview()
+        {
+            if(hudPreviewFont<0)return;
+            var settings=Plugin.Instance.Settings;
+            settings.FontSize.Value=hudPreviewFont;settings.GameSpeed.Value=hudPreviewSpeed;
+            hudPreviewFont=-1;previewLanguage=-1;view.PreviewHudDevice=null;view.PreviewTarget=null;view.PreviewHudLastPage=false;view.PreviewHudColumns=null;view.PreviewHudOpacity=null;Controller.Close();
+        }
+        private void UpdateHudPreview(float now)
+        {
+            var settings=Plugin.Instance.Settings;
+            if(!settings.HudPreviewCapture.Value){RestoreHudPreview();return;}
+            if(!captured||!reader.State.Playing)return;
+            if(hudPreviewFont<0){hudPreviewFont=settings.FontSize.Value;hudPreviewSpeed=settings.GameSpeed.Value;settings.GameSpeed.Value=0;hudPreviewAt=now+.5f;}
+            if(now<hudPreviewAt)return;
+            if(hudPreviewStage>=84){RestoreHudPreview();settings.HudPreviewCapture.Value=false;Plugin.Instance.Log.LogInfo("HUD layout preview finished; font and speed restored; opacity override cleared.");return;}
+            if(hudPreviewStage>=68)
+            {
+                int example=(hudPreviewStage-68)/2,exampleColumns=example<4?1:2;
+                bool english=example%4>=2,pad=example%2==1;
+                if(hudPreviewStage%2==0)
+                {
+                    previewLanguage=english?2:1;settings.FontSize.Value=18;Controller.Close();
+                    view.PreviewHudDevice=pad?"手柄":"键鼠";view.PreviewHudColumns=exampleColumns;view.PreviewHudLastPage=false;view.PreviewHudOpacity=45;
+                }
+                else Capture("hud-"+(exampleColumns==1?"single":"double")+"-"+(english?"english":"chinese")+"-font18-"+(pad?"pad":"keyboard")+"-opacity45.png");
+                hudPreviewStage++;hudPreviewAt=now+1;return;
+            }
+            if(hudPreviewStage>=64)
+            {
+                bool english=hudPreviewStage>=66;
+                if(hudPreviewStage%2==0)
+                {
+                    previewLanguage=english?2:1;settings.FontSize.Value=english?28:18;Controller.Close();Controller.Toggle(2,reader.State);
+                    Controller.Section=Array.FindIndex(OptionGroups.Items,g=>g.Any(i=>i.Id==OptionId.AdvisorColumns));
+                    Controller.Focus=Array.FindIndex(Controller.SettingsItems,i=>i.Id==OptionId.AdvisorColumns);
+                    Controller.SettingsDropdown=true;Controller.Choice=settings.AdvisorColumns.Value-1;
+                }
+                else Capture("hud-layout-setting-"+(english?"english":"chinese")+".png");
+                hudPreviewStage++;hudPreviewAt=now+1;return;
+            }
+            int scenario=hudPreviewStage/4,variant=(scenario%8)/2,columns=scenario<8?1:2;
+            string language=variant<2?"chinese":"english",device=scenario%2==0?"keyboard":"pad";
+            int font=variant%2==0?18:28;
+            if(hudPreviewStage%4==0)
+            {
+                previewLanguage=variant<2?1:2;settings.FontSize.Value=font;Controller.Close();
+                view.PreviewHudDevice=scenario%2==0?"键鼠":"手柄";
+                view.PreviewHudColumns=columns;
+                view.PreviewHudOpacity=0;
+                view.PreviewHudLastPage=false;
+                var owner=reader.State.Players.FirstOrDefault(p=>p.Local);
+                if(owner!=null)view.PreviewTarget=reader.State.Points.Where(p=>p.Key=="tower"&&p.PlayerStates.ContainsKey(owner.Id)).Select(p=>p.PlayerStates[owner.Id]).Where(t=>t.Level>=0).OrderBy(t=>t.Level==4?0:1).ThenByDescending(t=>t.Description.Length+t.Details.Length).FirstOrDefault();
+                Plugin.Instance.Log.LogInfo("HUD layout preview "+language+" font="+font+" device="+device+" columns="+columns+" nativeTarget="+(view.PreviewTarget?.Raw??"none")+"; display only, gameplay paused.");
+            }
+            else if(hudPreviewStage%4==2)view.PreviewHudLastPage=true;
+            else Capture("hud-"+(columns==1?"single":"double")+"-"+language+"-font"+font+"-"+device+(hudPreviewStage%4==3?"-last":"")+".png");
+            hudPreviewStage++;hudPreviewAt=now+1;
+        }
+        public void OnDestroy(){RestoreHudPreview();ContinuousPurchaseRuntime.ResetAll();Controller?.Close();Controller?.RestorePadMappings();Actions?.Restore();Journal?.Flush();if(Active==this)Active=null;}
         private void Capture(string filename)
         {
             if(captureUnavailable)return;
+            using var captureMeasure=PerformanceTrace.Active.Measure(PerformanceStage.Capture);
             Texture2D texture=null;
             try
             {
@@ -220,6 +300,7 @@ namespace KingdomAdvisor
                 var native=ImageConversion.EncodeToPNG(texture);
                 var bytes=new byte[native.Length];for(int i=0;i<bytes.Length;i++)bytes[i]=native[i];
                 File.WriteAllBytes(Path.Combine(folder,filename),bytes);
+                File.WriteAllLines(Path.Combine(folder,filename+".layout.txt"),view.HudEvidence());
                 Plugin.Instance.Log.LogInfo("Screenshot saved: "+filename);
             }
             catch(Exception ex)
@@ -234,8 +315,13 @@ namespace KingdomAdvisor
             var s=reader.State;
             var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"overlayOpen="+(Controller?.Open??false),"mapFocus="+(Controller?.MapFocus??false),"holdActive="+(Controller?.Hold.Active??false),"releaseGuardCount="+(Controller?.ReleaseGuardCount??0),"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
             lines.Add("localPlayers="+s.Players.Count(p=>p.Local));
+            lines.Add("continuousPurchaseEnabled="+Plugin.Instance.Settings.ContinuousPurchase.Value+" active="+ContinuousPurchaseRuntime.ActiveCount+" restarts="+ContinuousPurchaseRuntime.Restarts);
+            lines.AddRange(ContinuousPurchaseRuntime.Evidence());
+            lines.AddRange(view.HudEvidence().Select(value=>"hud."+value));
+            lines.Add("previewCaptureEnabled="+Plugin.Instance.Settings.PreviewCapture.Value+" hudPreviewTarget="+(view.PreviewTarget?.Raw??"none"));
             lines.Add("clockState="+s.Clock.State+" clockPhase="+s.Clock.Phase+" clock="+(s.Clock.Available?s.Clock.ClockText:"unavailable")+" untilDawn="+s.Clock.UntilDawn+" remainingSeconds="+s.Clock.RemainingSeconds+" progress="+s.Clock.Progress+" client="+s.Clock.Client+" clockUnavailable="+s.Clock.UnavailableReason);
             lines.AddRange(reader.ReadEvidence());
+            lines.AddRange(PerformanceTrace.Active.Evidence());
             lines.Add("uiBlockedReason="+(!s.Playing?"not-playing":!s.Players.Any(p=>p.Local)?"no-local-authority":!Plugin.Instance.Settings.Enabled.Value?"disabled":"none"));
             var managers=Managers._Inst;
             if(managers&&managers.kingdom){
@@ -252,6 +338,8 @@ namespace KingdomAdvisor
             Directory.CreateDirectory(Path.Combine(Paths.ConfigPath,"KingdomAdvisor"));
             File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","runtime.txt"),lines);
             reader.WriteClockTrace(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","clock-samples.tsv"));
+            File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","performance-samples.tsv"),PerformanceTrace.Active.Tsv());
+            File.WriteAllLines(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","continuous-purchase-trace.tsv"),ContinuousPurchaseRuntime.TraceLines());
             // 诊断文件失败不应中止游戏覆盖界面。
             if(s.Playing)reader.WriteCensus(Path.Combine(Paths.ConfigPath,"KingdomAdvisor","object-census.tsv"));
         }
@@ -299,19 +387,45 @@ namespace KingdomAdvisor
         }
         private int lastIsland=-1,lastSeed=int.MinValue;
         private Component[] detailBuildings=Array.Empty<Component>(),specialBuildings=Array.Empty<Component>();private float nextBuildingScan;
+        private readonly PerformanceScanCycle<Component> buildingScan=new PerformanceScanCycle<Component>(NativeStructureReader.DiscoveryTypes.Length+3,2);
+        private string buildingScanContext="";
         private void RefreshBuildings()
         {
-            if(Time.unscaledTime<nextBuildingScan)return;
+            if(buildingScan.Initialized&&buildingScanContext==readContext&&nextBuildingScan>0)return;
+            if(optionalReads.TryGetValue("structures",out var circuit)&&circuit.Blocked)return;
+            using var scanMeasure=PerformanceTrace.Active.Measure(PerformanceStage.StructureScan);
+            buildingScan.Reset();buildingScanContext=readContext;
             specialBuildings=detailBuildings=Array.Empty<Component>();
             ReadOptional("structures",()=>{
-                specialBuildings=NativeStructureReader.Discover().ToArray();
-                var buildings=new List<Component>(specialBuildings);
-                buildings.AddRange(NativeObjects<WorkableBuilding>().Select(b=>(Component)b));
-                buildings.AddRange(NativeObjects<Ballista>().Select(b=>b.tower?(Component)b.tower:(Component)b));
-                buildings.AddRange(NativeObjects<Baker>().Select(b=>(Component)b));
-                detailBuildings=buildings.Where(b=>b).GroupBy(b=>b.gameObject.GetInstanceID()).Select(g=>g.First()).ToArray();
+                buildingScan.Initialize(Time.frameCount,Time.unscaledTimeAsDouble,ReadStructureSource);
+                PublishStructures();
             });
             nextBuildingScan=Time.unscaledTime+2;
+        }
+        // 保留每类两秒刷新周期，分散到帧；低帧率时宁可延后，也不在一帧追赶全场景扫描。
+        public void AdvanceStructureScan()
+        {
+            if(!State.Playing||Level.isGenerating)return;
+            RefreshBuildings();
+            if(!buildingScan.Initialized||Time.unscaledTimeAsDouble<buildingScan.NextDue)return;
+            if(optionalReads.TryGetValue("structures",out var circuit)&&circuit.Blocked)return;
+            using var scanMeasure=PerformanceTrace.Active.Measure(PerformanceStage.StructureScan);
+            ReadOptional("structures",()=>{if(buildingScan.Step(Time.frameCount,Time.unscaledTimeAsDouble,ReadStructureSource))PublishStructures();});
+        }
+        private Component[] ReadStructureSource(int source)
+        {
+            int count=NativeStructureReader.DiscoveryTypes.Length;
+            if(source<count)return NativeStructureReader.DiscoverType(NativeStructureReader.DiscoveryTypes[source]).ToArray();
+            if(source==count)return NativeObjects<WorkableBuilding>().Select(b=>(Component)b).ToArray();
+            if(source==count+1)return NativeObjects<Ballista>().Select(b=>b.tower?(Component)b.tower:(Component)b).ToArray();
+            if(source==count+2)return NativeObjects<Baker>().Select(b=>(Component)b).ToArray();
+            throw new ArgumentOutOfRangeException(nameof(source));
+        }
+        private void PublishStructures()
+        {
+            int count=NativeStructureReader.DiscoveryTypes.Length;
+            specialBuildings=buildingScan.Items(0,count).Where(b=>b&&b.gameObject.activeInHierarchy).GroupBy(b=>b.gameObject.GetInstanceID()).Select(g=>g.First()).ToArray();
+            detailBuildings=specialBuildings.Concat(buildingScan.Items(count,3)).Where(b=>b).GroupBy(b=>b.gameObject.GetInstanceID()).Select(g=>g.First()).ToArray();
         }
         internal readonly Dictionary<int,System.Tuple<float,float>> Explored=new Dictionary<int,System.Tuple<float,float>>();
                 private Managers GetManagers()=>Managers._Inst;
@@ -399,12 +513,17 @@ namespace KingdomAdvisor
             State=s;
             ReadOptional("world",()=>ReadWorldDetails(m,s));
         }
-        public void WriteCensus(string path)=>ReadOptional("census",()=>File.WriteAllLines(path,Census()));
+        public void WriteCensus(string path)=>ReadOptional("census",()=>{
+            string[] lines;
+            using(PerformanceTrace.Active.Measure(PerformanceStage.CensusCollect))lines=Census().ToArray();
+            using(PerformanceTrace.Active.Measure(PerformanceStage.CensusWrite))File.WriteAllLines(path,lines);
+        });
         private void ReadWorldDetails(Managers m,Snapshot s)
         {
             var k=m.kingdom;
             var campaign=CampaignSaveData.current;if(campaign!=null)s.CampaignKey=campaign.realStartDateTime+"-"+campaign.biomeIndex;
             var currencies=CurrencyManager.AllCurrencyTypes;if(currencies!=null)for(int ci=0;ci<currencies.Length;ci++)if(ResourceRules.Supported((int)currencies[ci]))s.ResourceTypes.Add((int)currencies[ci]);
+            using(PerformanceTrace.Active.Measure(PerformanceStage.Population)){
             if(s.State==Game.State.NetworkClientPlaying.ToString())
             {
                 ReadClientPopulation(s);
@@ -431,12 +550,14 @@ namespace KingdomAdvisor
                 {case "ninja":s.Ninjas++;break;case "fisher":s.Fishers++;break;case "stable":s.StableKeepers++;break;case "peasant":s.Peasants++;break;}
             }
             }
+            }
             s.Stone=k.StoneBuildingUnlocked;s.Iron=k.IronBuildingUnlocked;
             if(m.director){s.Day=m.director.TotalDaysInReign;s.Season=m.director.CurrentSeason.ToString();s.Phase=m.director.IsDaytime?"白昼":"夜晚";}
             if(m.world&&World.GroundCollider){var b=World.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
             else if(m.level&&m.level.GroundCollider){var b=m.level.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
             var all=m.payables?.AllPayables;
             var mappedObjects=new HashSet<int>();
+            using(PerformanceTrace.Active.Measure(PerformanceStage.Payables)){
             if(all!=null)
             {
                 for(int i=0;i<all.Length;i++)
@@ -457,7 +578,9 @@ namespace KingdomAdvisor
                     s.Points.Add(point);
                 }
             }
+            }
             RefreshBuildings();
+            using(PerformanceTrace.Active.Measure(PerformanceStage.Structures)){
             foreach(var building in specialBuildings)
             {
                 if(!building||!building.gameObject.activeInHierarchy||!mappedObjects.Add(building.gameObject.GetInstanceID()))continue;
@@ -469,6 +592,7 @@ namespace KingdomAdvisor
                 if(k.playerOne&&k.playerOne.hasLocalAuthority)point.PlayerStates[k.playerOne.playerId]=ReadBuildingTarget(building.gameObject,k.playerOne);
                 if(k.playerTwo&&k.playerTwo.gameObject.activeInHierarchy&&k.playerTwo.hasLocalAuthority)point.PlayerStates[k.playerTwo.playerId]=ReadBuildingTarget(building.gameObject,k.playerTwo);
                 s.Points.Add(point);
+            }
             }
             var camps=ReadCamps(k,s.State==Game.State.NetworkClientPlaying.ToString());
             if(camps!=null)

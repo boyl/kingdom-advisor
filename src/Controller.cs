@@ -166,7 +166,7 @@ namespace KingdomAdvisor
             case OptionId.Buildings:return settings.MapBuildings;case OptionId.Camps:return settings.MapCamps;case OptionId.Enemies:return settings.MapEnemies;case OptionId.Mounts:return settings.MapMounts;case OptionId.Special:return settings.MapSpecial;
             case OptionId.AdvisorBackground:return settings.AdvisorTransparent;case OptionId.PlayerBackground:return settings.PlayerTransparent;case OptionId.AlertBackground:return settings.AlertTransparent;case OptionId.InterfaceBackground:return settings.InterfaceTransparent;case OptionId.Kingdom:return settings.ShowKingdomAdvisor;case OptionId.Player:return settings.ShowPlayerPanel;case OptionId.Population:return settings.Status;case OptionId.Details:return settings.Details;case OptionId.Alerts:return settings.Alerts;
             case OptionId.Defense:return settings.DefenseAlerts;case OptionId.Staff:return settings.StaffAlerts;case OptionId.MountInfo:return settings.MountInfo;case OptionId.Icons:return settings.Icons;case OptionId.Journal:return settings.Journal;case OptionId.Clock:return settings.ShowClock;
-            case OptionId.PadCursor:return settings.PadCursor;case OptionId.InfiniteBag:return settings.InfiniteBag;case OptionId.Teleport:return settings.Teleport;case OptionId.InfiniteStamina:return settings.InfiniteStamina;default:return null;}
+            case OptionId.PadCursor:return settings.PadCursor;case OptionId.InfiniteBag:return settings.InfiniteBag;case OptionId.HideNativePurse:return settings.HideNativePurse;case OptionId.ContinuousPurchase:return settings.ContinuousPurchase;case OptionId.Teleport:return settings.Teleport;case OptionId.InfiniteStamina:return settings.InfiniteStamina;default:return null;}
         }
         public bool OpacityEditing=>Open&&Tab==2&&SettingsDropdown&&SettingsItems[Focus].Kind==OptionKind.Slider;
         public string OpacityName=>SettingsItems[Focus].Name;
@@ -179,9 +179,10 @@ namespace KingdomAdvisor
         public void SetOption(OptionItem item,int value)
         {if(item.Id==OptionId.MapType){if(item.MapKey=="tree")settings.Trees.Value=value==1;DisplayPreferences.Set(item.MapKey,value==1);settings.HiddenMapTypes.Value=DisplayPreferences.Encode();Hold.Cancel();return;}SetOption(item.Id,value);}
         public int OptionValue(OptionId id)
-        {if(id==OptionId.FilterCategory)return filterCategory;if(id==OptionId.PanelOpacity||settings.PanelOpacities.ContainsKey(id))return 0;if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
+        {if(id==OptionId.FilterCategory)return filterCategory;if(id==OptionId.PanelOpacity||settings.PanelOpacities.ContainsKey(id))return 0;if(id==OptionId.Language)return settings.UiLanguage.Value;if(id==OptionId.AdvisorColumns)return settings.AdvisorColumns.Value-1;if(id==OptionId.PadOpen)return settings.PadOpenButton.Value;if(id==OptionId.PadSpeed)return Math.Max(0,Array.IndexOf(new[]{300f,700f,1000f,1400f},settings.PadSpeed.Value));if(id==OptionId.Font)return Math.Clamp((settings.FontSize.Value-14)/2,0,7);if(id==OptionId.Speed)return Array.IndexOf(new[]{0f,1f,2f,4f},settings.GameSpeed.Value);var item=Boolean(id);if(item==null)return 0;bool invert=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position;return item.Value?(invert?0:1):(invert?1:0);}
         public void SetOption(OptionId id,int value)
         {
+            if(id==OptionId.ContinuousPurchase&&value==1&&current.State==Game.State.NetworkClientPlaying.ToString()){Actions.Notify("长按连续购买暂不支持联机加入者。");return;}
             if(id==OptionId.FilterCategory){filterCategory=value;filterItems=null;Focus=0;return;}
             if(id==OptionId.ShowFiltered||id==OptionId.HideFiltered){foreach(var entry in SettingsItems.Where(i=>i.Kind==OptionKind.Toggle))SetOption(entry,id==OptionId.ShowFiltered?1:0);return;}
             if(id==OptionId.PanelOpacity||settings.PanelOpacities.ContainsKey(id)){SetOpacity(value);return;}
@@ -190,6 +191,7 @@ namespace KingdomAdvisor
             if(id==OptionId.PadOpen){settings.PadOpenButton.Value=value;return;}
             if(id==OptionId.PadSpeed){settings.PadSpeed.Value=new[]{300f,700f,1000f,1400f}[value];return;}
             if(id==OptionId.Font){settings.FontSize.Value=14+value*2;return;}
+            if(id==OptionId.AdvisorColumns){settings.AdvisorColumns.Value=Math.Clamp(value+1,1,2);return;}
             if(id==OptionId.Speed){settings.GameSpeed.Value=new[]{0f,1f,2f,4f}[value];return;}
             var item=Boolean(id);if(item==null)return;item.Value=id==OptionId.Background||id==OptionId.AdvisorBackground||id==OptionId.PlayerBackground||id==OptionId.AlertBackground||id==OptionId.InterfaceBackground||id==OptionId.Position?value==0:value==1;
             if(id==OptionId.Position)settings.Layout.Value=string.Join(";",settings.Layout.Value.Split(';').Where(x=>!x.Split('=')[0].EndsWith(".map",StringComparison.Ordinal)));

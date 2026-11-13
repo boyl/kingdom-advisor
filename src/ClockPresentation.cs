@@ -8,6 +8,8 @@ namespace KingdomAdvisor
             _=>throw new ArgumentOutOfRangeException(nameof(phase))};
         public static string Header(DayClockSnapshot clock,bool showClock)=>clock.Available
             ?PhaseName(clock.Phase)+(showClock?" · 游戏时间 "+clock.ClockText:""):"时间暂不可用";
+        public static string HudHeader(DayClockSnapshot clock,bool showClock)=>clock.Available
+            ?PhaseName(clock.Phase)+(showClock?" "+clock.ClockText:""):"时间暂不可用";
         public static string Countdown(DayClockSnapshot clock)
         {
             if(!clock.Available)return "F6 / F7 重试时间读取";

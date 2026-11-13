@@ -14,6 +14,8 @@ namespace KingdomAdvisor
         private sealed class CapacityState {public Wallet Wallet;public int Original;public bool ShowBag;public CurrencyBag Bag;}
         private readonly Dictionary<int,CapacityState> capacities=new Dictionary<int,CapacityState>();
         private readonly HashSet<int> numericBags=new HashSet<int>();
+        private readonly Dictionary<int,System.Tuple<Renderer,bool>> hiddenPurseRenderers=new();
+        private readonly HashSet<int> currentPurseRenderers=new();
         public bool UsesNumericBag(CurrencyBag bag)=>bag&&numericBags.Contains(bag.GetInstanceID());
         public void ClearResources(Snapshot s,int id,int[] currencies)
         {
@@ -37,8 +39,67 @@ namespace KingdomAdvisor
             p=null;if(!s.Playing){Notify("请先进入存档");return false;}
             p=Player(id);if(!p||!p.hasLocalAuthority){Notify("目标玩家不在本机控制范围");return false;}return true;
         }
+        // 原生跨岛继承通过 SetCurrency 按 TotalCapacity 截断。只在该调用期间放宽本机钱包容量。
+        internal void PrepareCarryForward(Player first,Player second,out List<System.Tuple<Wallet,int>> originals)
+        {
+            originals=new List<System.Tuple<Wallet,int>>();
+            if(!settings.InfiniteBag.Value)return;
+            // 主机新建 P2 时本地权属字段可能尚未被网络回调清零；原生明确将在线客机绑定到 kingdom.playerTwo。
+            var managers=Managers._Inst;
+            var remote=NetworkBigBoss.IsClientPresent&&managers&&managers.kingdom?managers.kingdom.playerTwo:null;
+            foreach(var player in new[]{first,second})
+            {
+                if(!player||player==remote||!player.hasLocalAuthority||!player.wallet)continue;
+                var wallet=player.wallet;
+                if(originals.Any(item=>item.Item1==wallet))continue;
+                originals.Add(System.Tuple.Create(wallet,wallet.TotalCapacity));
+                wallet.TotalCapacity=int.MaxValue;
+            }
+        }
+        internal static void RestoreCarryForward(List<System.Tuple<Wallet,int>> originals)
+        {
+            if(originals==null)return;
+            foreach(var saved in originals)
+                if(saved.Item1&&saved.Item1.TotalCapacity==int.MaxValue)saved.Item1.TotalCapacity=saved.Item2;
+        }
+        // 只抑制钱袋外壳渲染，不停用物件、动画或钱包逻辑。保留原值以便换袋和退出时恢复。
+        private void ApplyPurseVisibility(Snapshot state)
+        {
+            currentPurseRenderers.Clear();
+            if(state.Playing&&settings.InfiniteBag.Value&&settings.HideNativePurse.Value)
+            {
+                foreach(var info in state.Players.Where(p=>p.Local))
+                {
+                    var player=Player(info.Id);var wallet=player?player.wallet:null;var bag=wallet?wallet._currencyBag:null;
+                    if(!bag)continue;
+                    Hide(bag._front);Hide(bag._back);Hide(bag._closed);
+                }
+            }
+            foreach(int id in hiddenPurseRenderers.Keys.ToArray())
+                if(!currentPurseRenderers.Contains(id))RestorePurseRenderer(id);
+
+            void Hide(Renderer renderer)
+            {
+                if(!renderer)return;
+                int id=renderer.GetInstanceID();currentPurseRenderers.Add(id);
+                if(!hiddenPurseRenderers.ContainsKey(id))hiddenPurseRenderers[id]=System.Tuple.Create(renderer,renderer.forceRenderingOff);
+                renderer.forceRenderingOff=true;
+            }
+        }
+        private void RestorePurseRenderer(int id)
+        {
+            var saved=hiddenPurseRenderers[id];
+            if(saved.Item1)saved.Item1.forceRenderingOff=saved.Item2;
+            hiddenPurseRenderers.Remove(id);
+        }
+        internal void RestorePurseVisibility()
+        {
+            foreach(int id in hiddenPurseRenderers.Keys.ToArray())RestorePurseRenderer(id);
+            currentPurseRenderers.Clear();
+        }
         public void Apply(Snapshot state)
         {
+            ApplyPurseVisibility(state);
             bool active=state.Playing;
             foreach(var info in state.Players.Where(p=>p.Local))
             {
@@ -84,6 +145,7 @@ namespace KingdomAdvisor
         }
         public void Restore()
         {
+            RestorePurseVisibility();
             foreach(var item in capacities.Values)if(item.Wallet){item.Wallet.TotalCapacity=item.Original;item.Wallet.showCurrencyBag=item.ShowBag;Writes++;}
             capacities.Clear();numericBags.Clear();if(staminaOwned){global::Player.DebugInfiniteStamina=oldStamina;staminaOwned=false;Writes++;}
             if(timeOwned){var world=Managers._Inst?.world;if(world)SetSpeed(oldTime);else {Time.timeScale=oldTime;Writes++;}timeOwned=false;}
@@ -138,5 +200,17 @@ namespace KingdomAdvisor
             foreach(string method in new[]{"Refresh","ShowCurrency","AddCurrency","RemoveCurrency"})yield return AccessTools.Method(typeof(CurrencyBag),method);
         }
         private static bool Prefix(CurrencyBag __instance)=>!(AdvisorBehaviour.Active?.Actions?.UsesNumericBag(__instance)??false);
+    }
+    [HarmonyPatch(typeof(CampaignSaveData),"ApplyCarryForwardCurrency")]
+    internal static class CarryForwardCapacityPatch
+    {
+        private static void Prefix(Player __0,Player __1,out List<System.Tuple<Wallet,int>> __state)
+        {
+            __state=null;
+            var actions=AdvisorBehaviour.Active?.Actions;
+            if(actions!=null)actions.PrepareCarryForward(__0,__1,out __state);
+        }
+        // Finalizer 在原生成功与异常路径均恢复临时容量，不接管原生余额／资源过滤逻辑。
+        private static void Finalizer(List<System.Tuple<Wallet,int>> __state)=>GameActions.RestoreCarryForward(__state);
     }
 }

@@ -51,6 +51,9 @@ Near $c.Progress (1.0/24) '跨午夜四阶段条'
 $s=Sample 10.25 3;$s.Phase=[KingdomAdvisor.ClockPhase]::Day;$t.Reset();$c=$t.Observe($s)
 Check ([KingdomAdvisor.ClockPresentation]::Header($c,$true) -eq '白昼 · 游戏时间 10:15') '时钟明确显示游戏时间'
 Check ([KingdomAdvisor.ClockPresentation]::Header($c,$false) -eq '白昼') '关时钟保留阶段'
+Check ([KingdomAdvisor.ClockPresentation]::HudHeader($c,$true) -eq '白昼 10:15') 'HUD短时钟保留阶段和真实钟点'
+Check ([KingdomAdvisor.ClockPresentation]::HudHeader($c,$false) -eq '白昼') 'HUD关闭钟点仍保留阶段'
+Check ([KingdomAdvisor.ClockPresentation]::HudHeader([KingdomAdvisor.DayClockSnapshot]::new(),$true) -eq '时间暂不可用') 'HUD无数据不伪造时间'
 Check ([KingdomAdvisor.ClockPresentation]::Countdown($c) -eq '距入夜 · 正在同步') '关闭钟点不隐藏倒计时'
 foreach($state in @('Synchronizing','Running','Paused','Stalled','Unavailable')){
  $c.State=[KingdomAdvisor.ClockState]::$state;$c.Client=$true;$c.RemainingSeconds=90

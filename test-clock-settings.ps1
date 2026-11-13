@@ -22,6 +22,11 @@ try {
  Check (Entry 'ShowClock').Value '旧配置首次升级默认显示钟点'
  Check ((Entry 'UiLanguage').Value -eq 2 -and (Entry 'FontSize').Value -eq 24) '不得重置旧语言/字号'
  Check ((Entry 'HiddenMapTypes').Value -eq 'wall,tower') '不得重置旧筛选'
+ Check ((Entry 'AdvisorColumns').Value -eq 1) '旧配置升级后顾问默认单列'
+ (Entry 'AdvisorColumns').Value=2;$config.Save();ReadSettings
+ Check ((Entry 'AdvisorColumns').Value -eq 2) '两列设置落盘重载后保留'
+ (Entry 'AdvisorColumns').Value=1;$config.Save();ReadSettings
+ Check ((Entry 'AdvisorColumns').Value -eq 1) '可切回单列并保存'
  (Entry 'ShowClock').Value=$false;$config.Save();ReadSettings
  Check (!(Entry 'ShowClock').Value) '重载后保持关闭'
  Check ((Entry 'UiLanguage').Value -eq 2 -and (Entry 'HiddenMapTypes').Value -eq 'wall,tower') '新设置不得覆盖旧偏好'
@@ -30,5 +35,7 @@ try {
  $groups=$assembly.GetType('KingdomAdvisor.OptionGroups',$true).GetField('Items').GetValue($null)
  $items=@($groups[4] | Where-Object {$_.Id.ToString() -eq 'Clock'})
  Check ($items.Count -eq 1 -and $items[0].Choices.Count -eq 2) '移动与时间中时钟开关可达且唯一'
+ $columns=@($groups[1] | Where-Object {$_.Id.ToString() -eq 'AdvisorColumns'})
+ Check ($columns.Count -eq 1 -and ($columns[0].Choices -join ',') -eq '单列,两列') '顾问布局选择入口唯一且单列在前'
  '通过：实际候选DLL + BepInEx ConfigFile，旧配置升级默认开启、关闭/开启落盘重载、既有偏好保留和设置入口。'
 } finally { if(Test-Path -LiteralPath $path){Remove-Item -LiteralPath $path} }
