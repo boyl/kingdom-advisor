@@ -24,7 +24,7 @@ foreach($font in @(18,28)){
 $measure=[Func[string,single,single]]{param($text,$width)22}
 $map=[KingdomAdvisor.HudRect]::new(18,18,2524,350)
 $r=[KingdomAdvisor.HudTextLayout]::MapFooter($map,'地图 · 名称密集','王国 · 可招募 4 人',390,22,$measure,290,220)
-Check ([Math]::Abs($r.Item1.Y-234) -lt .01) '没有敌群时应紧跟最后一个实际地图标记，不能保留空敌群行和固定面板高度'
+Check ([Math]::Abs($r.Item1.Y-252) -lt .01) '没有敌群时应在实际地图标记下方保留 32 像素适中间距'
 $r=[KingdomAdvisor.HudTextLayout]::MapFooter($map,'地图 · 名称密集','王国 · 可招募 4 人',390,22,$measure,290,286)
-Check ([Math]::Abs($r.Item1.Y-300) -lt .01) '有敌群时应位于实际敌群数量下方 14 像素'
+Check ([Math]::Abs($r.Item1.Y-318) -lt .01) '有敌群时应位于实际敌群数量下方 32 像素'
 '通过：地图／王国默认同行，窄屏两行，中英文 18/28 字号完整测量、无重叠及水平越界。'

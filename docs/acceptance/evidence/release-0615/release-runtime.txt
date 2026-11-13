@@ -1,5 +1,5 @@
 version=0.6.15
-utc=2026-11-13T08:41:09.0214075Z
+utc=2026-11-13T08:46:00.5019646Z
 gameState=Playing
 overlayOpen=False
 mapFocus=False
@@ -10,7 +10,7 @@ online=False
 island=3
 day=177
 points=117
-worldReadMaxMs=312.331
+worldReadMaxMs=324.055
 font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
 faulted=False
 disabledMovementMaps=0
@@ -26,28 +26,28 @@ resourceAdds=0
 error=
 localPlayers=1
 continuousPurchaseEnabled=True active=0 restarts=0
-continuousPurchaseCalls=5135 held=0 down=0 touch=0 nativeAfter=5135 traceCount=2 recorded=2
+continuousPurchaseCalls=5447 held=0 down=0 touch=0 nativeAfter=5447 traceCount=2 recorded=2
 continuousPurchaseTraceReadErrors=0
 hud.version=0.6.15
 hud.device=keyboard
 hud.font=18 language=zh-CN
 hud.advisor=(x:18.00, y:777.92, width:390.00, height:533.08) bottom=1311 legacyDefaultBottom=1311
 hud.detail=(x:420.00, y:777.92, width:390.00, height:114.28) pages=1
-hud.alert=(x:324.00, y:228.00, width:390.00, height:29.12)
+hud.alert=(x:324.00, y:246.00, width:390.00, height:29.12)
 hud.footerTop=1327 hintHeight=0
 hud.rows=16 pages=1 columns=1
 hud.day=岛 3 · 第 177 天 · 冬季
 hud.opacity=0 identityInHeader=True rowGap=5
 previewCaptureEnabled=False hudPreviewTarget=none
-clockState=Running clockPhase=Dawn clock=07:23 untilDawn=False remainingSeconds=141.15545539326288 progress=0.12018559376398723 client=False clockUnavailable=
+clockState=Running clockPhase=Dawn clock=08:18 untilDawn=False remainingSeconds=131.84714120854227 progress=0.15897023677825928 client=False clockUnavailable=
 performanceFrames=2400
-performanceStableFrames=2400
-performanceStableFrameP95Ms=28.029
-performanceStableFrameMaxMs=238.153
-performanceStableWorldMaxMs=23.713
-performanceStableGuiMaxMs=159.358
-performanceStableDiagnosticsMaxMs=17.002
-performanceManagedGc0=171
+performanceStableFrames=0
+performanceStableFrameP95Ms=0.000
+performanceStableFrameMaxMs=0.000
+performanceStableWorldMaxMs=0.000
+performanceStableGuiMaxMs=0.000
+performanceStableDiagnosticsMaxMs=0.000
+performanceManagedGc0=0
 performanceWarmupSeconds=5.000
 uiBlockedReason=none
 nativeP2Playing=False

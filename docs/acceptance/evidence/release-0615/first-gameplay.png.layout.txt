@@ -3,7 +3,7 @@ device=keyboard
 font=18 language=zh-CN
 advisor=(x:18.00, y:777.92, width:390.00, height:533.08) bottom=1311 legacyDefaultBottom=1311
 detail=(x:420.00, y:777.92, width:390.00, height:114.28) pages=1
-alert=(x:324.00, y:228.00, width:390.00, height:29.12)
+alert=(x:324.00, y:246.00, width:390.00, height:29.12)
 footerTop=1327 hintHeight=0
 rows=16 pages=1 columns=1
 day=岛 3 · 第 177 天 · 冬季
