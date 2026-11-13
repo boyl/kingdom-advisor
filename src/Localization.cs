@@ -10,6 +10,7 @@ namespace KingdomAdvisor
         public static bool English {get;set;}=true;
         private static readonly Dictionary<string,string> translations=new Dictionary<string,string>(StringComparer.Ordinal)
         {
+            { "王国 · ", "Kingdom · " },
             { "显示区域过小，请增大窗口或减小界面字号。", "Display area too small. Enlarge the window or reduce the UI text size." },
             { "长按连续购买暂不支持联机加入者。", "Hold to buy is not yet supported for joining players." },
             { "即时保存 · 长按购买限单机或房主本机角色 · 松手结束", "Auto-saved · Hold to buy: solo or host's local players · Release to stop" },

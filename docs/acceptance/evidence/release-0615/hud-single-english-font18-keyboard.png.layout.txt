@@ -1,0 +1,10 @@
+version=0.6.15
+device=keyboard
+font=18 language=en
+advisor=(x:18.00, y:777.92, width:466.00, height:533.08) bottom=1311 legacyDefaultBottom=1311
+detail=(x:496.00, y:777.92, width:466.00, height:444.71) pages=1
+alert=(x:387.00, y:228.00, width:466.00, height:50.24)
+footerTop=1327 hintHeight=0
+rows=16 pages=1 columns=1
+day=Island 3 · Day 177 · Winter
+opacity=0 identityInHeader=True rowGap=5

@@ -7,7 +7,7 @@ $dll=Join-Path $root 'package/BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll'
 if((Get-FileHash -LiteralPath $dll).Hash -ne $approval.dllHash){throw '发布负载已改变，验收失效。'}
 foreach($item in $approval.sourceHashes.PSObject.Properties){if((Get-FileHash -LiteralPath (Join-Path $root $item.Name)).Hash -ne $item.Value){throw "源码已改变，验收失效：$($item.Name)"}}
 $pwsh=(Get-Command pwsh.exe -CommandType Application | Select-Object -First 1).Source
-foreach($script in @('test-hud-spacing.ps1','test-hud-metrics.ps1')){
+foreach($script in @('test-hud-map-footer.ps1','test-hud-drag.ps1','test-hud-spacing.ps1','test-hud-metrics.ps1')){
     & $pwsh -NoProfile -File (Join-Path $root $script)
     if($LASTEXITCODE -ne 0){throw "HUD 自动门禁失败：$script"}
 }

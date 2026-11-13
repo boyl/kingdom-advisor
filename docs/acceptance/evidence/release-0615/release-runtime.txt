@@ -1,0 +1,67 @@
+version=0.6.15
+utc=2026-11-13T08:41:09.0214075Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+releaseGuardCount=0
+playing=True
+online=False
+island=3
+day=177
+points=117
+worldReadMaxMs=312.331
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=1
+actualTimeScale=1
+gameplayRuleWrites=5
+teleports=0
+resourceAdds=0
+error=
+localPlayers=1
+continuousPurchaseEnabled=True active=0 restarts=0
+continuousPurchaseCalls=5135 held=0 down=0 touch=0 nativeAfter=5135 traceCount=2 recorded=2
+continuousPurchaseTraceReadErrors=0
+hud.version=0.6.15
+hud.device=keyboard
+hud.font=18 language=zh-CN
+hud.advisor=(x:18.00, y:777.92, width:390.00, height:533.08) bottom=1311 legacyDefaultBottom=1311
+hud.detail=(x:420.00, y:777.92, width:390.00, height:114.28) pages=1
+hud.alert=(x:324.00, y:228.00, width:390.00, height:29.12)
+hud.footerTop=1327 hintHeight=0
+hud.rows=16 pages=1 columns=1
+hud.day=岛 3 · 第 177 天 · 冬季
+hud.opacity=0 identityInHeader=True rowGap=5
+previewCaptureEnabled=False hudPreviewTarget=none
+clockState=Running clockPhase=Dawn clock=07:23 untilDawn=False remainingSeconds=141.15545539326288 progress=0.12018559376398723 client=False clockUnavailable=
+performanceFrames=2400
+performanceStableFrames=2400
+performanceStableFrameP95Ms=28.029
+performanceStableFrameMaxMs=238.153
+performanceStableWorldMaxMs=23.713
+performanceStableGuiMaxMs=159.358
+performanceStableDiagnosticsMaxMs=17.002
+performanceManagedGc0=171
+performanceWarmupSeconds=5.000
+uiBlockedReason=none
+nativeP2Playing=False
+nativePlayer=0 active=True local=True
+nativePlayer=1 active=False local=True
+player=0 local=True coins=2105 target=none targetName=none description= rect=0,0,1,1 original=1000 capacity=2147483647 total=2107 gems=1 numeric=True
+population=工匠 45
+population=弓手 81
+population=侍从 0
+population=骑士 10
+population=农民 43
+population=游民 4
+population=长枪兵 66
+population=隐士 4
+populationTotal=249
+entityReadSource=manager
+enemiesAvailable=True enemies=0 camps=2

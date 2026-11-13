@@ -29,6 +29,19 @@ namespace KingdomAdvisor
     }
     public static class HudTextLayout
     {
+        public static (HudRect Tip,HudRect Alert) MapFooter(HudRect area,string tip,string alert,float alertWidth,float lineHeight,Func<string,float,float> height,float tipPreferredWidth=390,float contentBottom=float.NaN)
+        {
+            const float gap=24,padding=4;
+            float innerWidth=area.Width-36;
+            bool beside=innerWidth>=Math.Max(260,12*lineHeight)+gap+alertWidth;
+            float tipWidth=beside?Math.Min(innerWidth-alertWidth-gap,Math.Max(260,tipPreferredWidth)):innerWidth;
+            float tipHeight=height(tip,tipWidth),alertHeight=alert.Length==0?0:height(alert,Math.Min(alertWidth,innerWidth)-32)+padding*2;
+            // 以实际绘制内容为锚点，不为空敌群行预留整块高度；测量替身未提供时使用最小内容基线。
+            float top=(float.IsNaN(contentBottom)?area.Y+78+2*(lineHeight+5)+18:contentBottom)+14;
+            var tipRect=new HudRect(area.X+18,top,tipWidth,tipHeight);
+            var alertRect=new HudRect(beside?tipRect.Right+gap-16:area.X+2,beside?top-padding:tipRect.Bottom+8,Math.Min(alertWidth,innerWidth),alertHeight);
+            return (tipRect,alertRect);
+        }
         public const float RowGap=5;
         public const float SingleRowGap=RowGap;
         public const float StatusGroupGap=10;

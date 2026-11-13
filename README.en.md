@@ -1,19 +1,19 @@
-# Kingdom Advisor 0.6.14
+# Kingdom Advisor 0.6.15
 
-In-game advisor for Kingdom Two Crowns. 0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible.
+In-game advisor for Kingdom Two Crowns. 0.6.15 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and independently draggable alerts alongside the map footer; Map/Kingdom labels and colors distinguish them, with wrapping on narrow screens. At 0 opacity, text, icons and the progress bar remain visible. 0.6.15 also fixes independent dragging of recruitment alerts: grab the visible alert and move it to an empty area; its saved position stays independent of the advisor.
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.14) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.15) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus now hosts 0.6.14 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.14 assets only.
+Nexus now hosts 0.6.15 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.15 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.14-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.14-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.15-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.15-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
@@ -99,7 +99,7 @@ Multiplayer compatibility retains the 0.6.10 joiner scene-entity reading. Automa
 
 ## Day/night clock
 
-0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible.
+0.6.15 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and independently draggable alerts alongside the map footer; Map/Kingdom labels and colors distinguish them, with wrapping on narrow screens. At 0 opacity, text, icons and the progress bar remain visible. 0.6.15 also fixes independent dragging of recruitment alerts: grab the visible alert and move it to an empty area; its saved position stays independent of the advisor.
 
 Back up the configuration before upgrading. Old category filters migrate to per-type visibility. Hidden locations can still be queried and temporarily highlighted.
 

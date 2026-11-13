@@ -1,6 +1,6 @@
-# Kingdom Advisor 0.6.14 — Nexus manual installation
+# Kingdom Advisor 0.6.15 — Nexus manual installation
 
-Script-free manual packages; PowerShell is not required. 0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible.
+Script-free manual packages; PowerShell is not required. 0.6.15 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and independently draggable alerts alongside the map footer; Map/Kingdom labels and colors distinguish them, with wrapping on narrow screens. At 0 opacity, text, icons and the progress bar remain visible. 0.6.15 also fixes independent dragging of recruitment alerts: grab the visible alert and move it to an empty area; its saved position stays independent of the advisor.
 
 ## Choose one package
 
@@ -74,7 +74,7 @@ Undo Complete: quit, move the current BepInEx/dotnet folders and four installed 
 
 Accepted on Windows x64, game 2.4.2, Unity 6000.0.66f2: fresh generation, restart and user gameplay. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; remaining runtime files come from official #788. Other game versions, all DLC, multiplayer and all other-plugin combinations are not fully verified.
 
-Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.14), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
+Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.15), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
 
 
 Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.

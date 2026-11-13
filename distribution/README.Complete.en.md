@@ -1,6 +1,6 @@
-# Kingdom Advisor — Complete loader + mod (0.6.14)
+# Kingdom Advisor — Complete loader + mod (0.6.15)
 
-Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.14**. The in-game mod version is 0.6.14. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
+Contains **BepInEx 6.0.0-be.788 + 5b766a3, Il2CppInterop 1.5.3, two patched Cpp2IL assemblies, and Kingdom Advisor 0.6.15**. The in-game mod version is 0.6.15. This is a modified compatibility distribution, not stock official #788. Changes are identified in `THIRD-PARTY-NOTICES.md`.
 
 Tested on Windows x64, game 2.4.2 / Unity 6000.0.66f2: fresh interop generation, restart, mod loading, catalog and notification removal. Other versions, operating systems, multiplayer and all other-plugin combinations are not fully verified.
 
@@ -77,4 +77,4 @@ For issues, provide `BepInEx/LogOutput.log`, game version/source and archive nam
 Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.
 
 
-0.6.14 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and alerts above it. At 0 opacity, text, icons and the progress bar remain visible.
+0.6.15 fixes English and multiline text overflow, overlapping controller hints and the unlimited-purse sailing cap, and reduces periodic scan stutter. Optional hold-to-buy/upgrade and native-purse hiding are off by default. Hold-to-buy supports solo play, local co-op and the host's local players; joining online clients are not supported yet. The advisor defaults to one column, with optional two columns, more spacing and independently draggable alerts alongside the map footer; Map/Kingdom labels and colors distinguish them, with wrapping on narrow screens. At 0 opacity, text, icons and the progress bar remain visible. 0.6.15 also fixes independent dragging of recruitment alerts: grab the visible alert and move it to an empty area; its saved position stays independent of the advisor.

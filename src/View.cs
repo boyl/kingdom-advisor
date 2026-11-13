@@ -27,7 +27,7 @@ namespace KingdomAdvisor
         internal bool PreviewHudLastPage;
         internal int? PreviewHudColumns;
         internal int? PreviewHudOpacity;
-        private Rect hudAdvisor,hudDetail,hudAlert;
+        private Rect hudAdvisor,hudDetail,hudAlert,hudMapTip,hudMapAlertDefault,hudMapContent;
         private float hudFooterTop,hudHintHeight,hudLegacyBottom;
         private int hudRowCount,hudPageCount,hudDetailPages,hudColumns,hudOpacity;
         private bool hudPad;
@@ -55,12 +55,15 @@ namespace KingdomAdvisor
         private static HudRect Bounds(Rect rect)=>new HudRect(rect.x,rect.y,rect.width,rect.height);
         private static Rect Rectangle(HudRect bounds)=>new Rect(bounds.X,bounds.Y,bounds.Width,bounds.Height);
         private static Rect MainPanelRect(Rect viewport)=>Rectangle(HudTextLayout.MainPanel(viewport.width,viewport.height));
-        private Rect Place(string key,Rect rect,Rect viewport,float handleWidth=-1)
+        private Rect Place(string key,Rect rect,Rect viewport,float handleWidth=-1,Func<Rect,Rect> beforeInput=null)
         {
             LoadPositions();
             float maxX=Math.Max(0,viewport.width-rect.width-8),maxY=Math.Max(0,viewport.height-rect.height-8);
             var saved=positions.Get(key);if(saved!=null){rect.x=saved.Item1*maxX;rect.y=saved.Item2*maxY;}
             rect.x=Math.Clamp(rect.x,8,Math.Max(8,maxX));rect.y=Math.Clamp(rect.y,8,Math.Max(8,maxY));
+            // 自动避让必须先于命中测试，绘制与拖动使用同一矩形；正在拖动时不吸附回默认位置。
+            if(beforeInput!=null&&dragKey!=key)rect=beforeInput(rect);
+            if(rect.width<=0||rect.height<=0)return rect;
             var current=Event.current;
             if(!controller.Open&&current.type==EventType.MouseDown&&current.button==0&&new Rect(rect.x,rect.y,handleWidth>0?handleWidth:rect.width,Math.Min(38,rect.height)).Contains(current.mousePosition))
             {dragKey=key;dragOffset=current.mousePosition-new Vector2(rect.x,rect.y);current.Use();}
@@ -381,9 +384,11 @@ namespace KingdomAdvisor
             float mapX=settings.MapAtTop.Value||stacked?pad:viewport.width-pad-mapW;
             float mapH=Math.Max(350,small.lineHeight*7+196);
             float mapY=settings.MapAtTop.Value?18:Math.Max(18,hudViewport.height-mapH-8);
+            hudMapTip=hudMapAlertDefault=hudMapContent=default;
             if(settings.Map.Value&&mapH<=maxCardHeight)
             {
-                var mapRect=Place("p"+player.Id+".map",new Rect(mapX,mapY,mapW,mapH),hudViewport,mapW-130);occupied.Add(Bounds(mapRect));DrawMap(mapRect,s,player,settings.MapTransparent.Value,true);
+                var mapRect=Place("p"+player.Id+".map",new Rect(mapX,mapY,mapW,mapH),hudViewport,mapW-130);DrawMap(mapRect,s,player,settings.MapTransparent.Value,true,width);
+                occupied.Add(Bounds(hudMapContent.width>0?hudMapContent:mapRect));if(hudMapTip.width>0)occupied.Add(Bounds(hudMapTip));
             }
             else if(!settings.Map.Value){var mapEntry=new Rect(mapX,mapY,mapW,40);occupied.Add(Bounds(mapEntry));if(Button(mapEntry,"开启小地图"))settings.Map.Value=true;}
             float objectX=advisorRect.xMax+12;
@@ -404,24 +409,20 @@ namespace KingdomAdvisor
             }
             if(settings.Alerts.Value)
             {
-                string alert=player.Coins==0?"钱袋为空 · 留意收入与返程安全":s.Workers==0?"缺少工匠 · 建设和维修可能停滞":s.Phase=="夜晚"&&player.Target?.Category=="建设"?"夜间施工 · 先确认防线安全":"";
-                var defense=settings.DefenseAlerts.Value?AdvisorAlerts.Defense(s,player):"";
-                var staff=settings.StaffAlerts.Value?AdvisorAlerts.Staff(s,player.Id):"";
-                if(defense.Length>0)alert=defense;else if(staff.Length>0)alert=staff;
-                string alertText=Localization.Text(alert);
+                string alert=AlertText(s,player),alertText=alert;
                 const float alertPadding=4,alertGap=6;
                 float alertTextH=HudHeight(alertText,width-32,small),ah=alertTextH+alertPadding*2;
                 if(alert.Length>0&&ah<=maxCardHeight)
                 {
                     string alertKey="p"+player.Id+".alert";
-                    var above=HudTextLayout.AboveAlert(Bounds(advisorRect),ah,alertGap);
-                    // 保留拖动偏好；字号或布局变化导致保存位置与正文相交时，优先恢复顾问上方。
-                    var desired=Bounds(Place(alertKey,Rectangle(above),hudViewport));
-                    if(HudTextLayout.TryPlaceAlert(desired,new HudRect(8,8,hudViewport.width-16,hudViewport.height-16),detailBounds,occupied,alertGap,out desired,above))
+                    var above=hudMapAlertDefault.width>0?new HudRect(hudMapAlertDefault.x,hudMapAlertDefault.y,width,ah):HudTextLayout.AboveAlert(Bounds(advisorRect),ah,alertGap);
+                    // 保留独立拖动偏好；先解析自动避让，再用可见位置接收输入。
+                    var alertRect=Place(alertKey,Rectangle(above),hudViewport,beforeInput:rect=>
+                        HudTextLayout.TryPlaceAlert(Bounds(rect),new HudRect(8,8,hudViewport.width-16,hudViewport.height-16),detailBounds,occupied,alertGap,out var placed,above)?Rectangle(placed):default);
+                    if(alertRect.width>0&&alertRect.height>0)
                     {
-                        var alertRect=Rectangle(desired);
                         hudAlert=alertRect;
-                        if(ShowCard(alertRect)){HudCard(alertRect,OptionId.AlertOpacity,settings.AlertTransparent.Value);HudLabel(new Rect(alertRect.x+16,alertRect.y+alertPadding,width-32,alertTextH),alertText,small);}
+                        if(ShowCard(alertRect)){HudCard(alertRect,OptionId.AlertOpacity,settings.AlertTransparent.Value);var color=small.normal.textColor;small.normal.textColor=gold;HudLabel(new Rect(alertRect.x+16,alertRect.y+alertPadding,width-32,alertTextH),alertText,small);small.normal.textColor=color;}
                     }
                 }
             }
@@ -436,7 +437,15 @@ namespace KingdomAdvisor
                 if(Button(new Rect(footerX,footerY,hideW,footerButtonH),hide,true)){settings.Enabled.Value=false;controller.Close();}
             }
         }
-        private void DrawMap(Rect area,Snapshot s,PlayerInfo player,bool transparent=false,bool hud=false)
+        private string AlertText(Snapshot s,PlayerInfo player)
+        {
+            string alert=player.Coins==0?"钱袋为空 · 留意收入与返程安全":s.Workers==0?"缺少工匠 · 建设和维修可能停滞":s.Phase=="夜晚"&&player.Target?.Category=="建设"?"夜间施工 · 先确认防线安全":"";
+            var defense=settings.DefenseAlerts.Value?AdvisorAlerts.Defense(s,player):"";
+            var staff=settings.StaffAlerts.Value?AdvisorAlerts.Staff(s,player.Id):"";
+            if(defense.Length>0)alert=defense;else if(staff.Length>0)alert=staff;
+            return alert.Length>0?Localization.Text("王国 · ")+Localization.Text(alert):"";
+        }
+        private void DrawMap(Rect area,Snapshot s,PlayerInfo player,bool transparent=false,bool hud=false,float alertWidth=390)
         {
             activePanelOpacity=settings.PanelOpacities[OptionId.MapOpacity].Value;
             bool interactive=controller.Open?!hud&&controller.Tab==3:hud;
@@ -471,6 +480,7 @@ namespace KingdomAdvisor
                     Priority=MapGrouping.Priority(point)});
             }
             var placements=MapLabelLayout.Arrange(requests,width,4);
+            float mapContentBottom=axisY+8;
             string tip=focused!=null?PointSummary(focused,player):"";
             foreach(var item in placements)
             {
@@ -479,6 +489,7 @@ namespace KingdomAdvisor
                 float px=Mathf.Round(x0+(point.X-left)/length*width);
                 float ly=item.Row==0?axisY-rowH-10:item.Row==1?axisY+13:item.Row==2?axisY-rowH*2-10:axisY+rowH+13;
                 var rect=new Rect(Mathf.Round(x0+item.Left),Mathf.Round(ly),item.Width,rowH);
+                mapContentBottom=Math.Max(mapContentBottom,rect.y+small.lineHeight);
                 float anchor=Math.Clamp(px,rect.x+2,rect.xMax-2),connector=item.Row%2==0?rect.yMax-4:rect.y-2;
                 Fill(new Rect(px-1,Math.Min(connector,axisY),2,Math.Abs(axisY-connector)),border);
                 Fill(new Rect(Math.Min(px,anchor),connector,Math.Max(2,Math.Abs(px-anchor)),1),border);
@@ -518,6 +529,7 @@ namespace KingdomAdvisor
                 float actual=Mathf.Round(Math.Clamp(x0+(wx-left)/length*width,x0+18,x0+width-18));
                 float px=Math.Max(actual,occupied+38);px=Math.Min(x0+width-18,px);occupied=px;
                 float ey=axisY+rowH*2+38;
+                mapContentBottom=Math.Max(mapContentBottom,ey+24+small.lineHeight);
                 EnemyIcon(px,ey,group.Kind);var alignment=small.alignment;small.alignment=TextAnchor.UpperCenter;MapLabel(new Rect(px-18,ey+24,36,0),group.Count.ToString(),small);small.alignment=alignment;
                 if(px!=actual){Fill(new Rect(actual,ey-5,1,3),muted);Fill(new Rect(Math.Min(actual,px),ey-3,Math.Abs(px-actual),1),border);}
                 if(new Rect(px-18,ey-3,36,52).Contains(Event.current.mousePosition))tip=group.Kind+" · "+group.Count+" 只";
@@ -529,10 +541,20 @@ namespace KingdomAdvisor
                 Fill(new Rect(px-8,axisY-13,16,4),p.Id==player.Id?gold:green);
             }
             if(tip.Length==0&&placements.Count<points.Length)tip=(points.Length-placements.Count)+" 处名称密集 · 切换附近查看";
+            string statusText=(Localization.English?"Map · ":"地图 · ")+Localization.Text(tip);
+            if(hud&&settings.Alerts.Value)
+            {
+                string probe=Localization.English?"Map · 999 labels overlap · Switch to Nearby":"地图 · 999 处名称密集 · 切换附近查看";
+                float tipWidth=(float)Math.Ceiling(small.CalcSize(new GUIContent(probe)).x)+12;
+                var footer=HudTextLayout.MapFooter(Bounds(area),statusText,AlertText(s,player),alertWidth,small.lineHeight,(value,w)=>HudHeight(value,w,small),tipWidth,mapContentBottom);
+                hudMapTip=Rectangle(footer.Tip);hudMapAlertDefault=Rectangle(footer.Alert);
+                hudMapContent=new Rect(area.x,area.y,area.width,Math.Max(0,Math.Min(hudMapTip.y,hudMapAlertDefault.y)-area.y-6));
+            }
             if(tip.Length>0)
             {
                 float tipY=area.y+area.height-small.lineHeight-12;
-                MapLabel(new Rect(x0,tipY,width,small.lineHeight),tip,small);
+                var tipRect=hudMapTip.width>0?hudMapTip:new Rect(x0,tipY,width,small.lineHeight);
+                var color=small.normal.textColor;small.normal.textColor=muted;MapLabel(tipRect,hud?statusText:tip,small);small.normal.textColor=color;
             }
         }
         private void MapLabel(Rect area,string content,GUIStyle style)

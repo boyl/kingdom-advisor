@@ -1,0 +1,13 @@
+[Info   :   BepInEx] Loading [王国顾问 Kingdom Advisor 0.6.15]
+[Info   :王国顾问 Kingdom Advisor] Kingdom Advisor 0.6.15 loaded; automatic in-game overlay; gameplay rule writes=0.
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=247.31 lineHeight=37
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=247.31 lineHeight=37
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=247.31 lineHeight=37
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=247.31 lineHeight=37
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=247.31 lineHeight=37
+[Info   :王国顾问 Kingdom Advisor] Overlay font: Microsoft YaHei sampleWidth=158.99 lineHeight=24
