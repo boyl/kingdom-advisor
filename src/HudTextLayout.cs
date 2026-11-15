@@ -29,6 +29,20 @@ namespace KingdomAdvisor
     }
     public static class HudTextLayout
     {
+        public static float BelowRoad(float viewportHeight,float roadFraction)
+            =>(float)Math.Ceiling(viewportHeight*(float.IsFinite(roadFraction)&&roadFraction>=0&&roadFraction<=1?roadFraction:.6f))+12;
+        public static HudTextPage FlowColumns(IEnumerable<HudTextRow> rows,float availableHeight,int columns,Func<string,float> measure)
+        {
+            if(availableHeight<=RowGap)return null;
+            var strips=Pages(rows,availableHeight,measure);
+            if(strips.Length>columns)return null;
+            var result=new HudTextPage{Columns=columns};
+            for(int i=0;i<strips.Length;i++){
+                result.Height=Math.Max(result.Height,strips[i].Height);
+                foreach(var row in strips[i].Rows){row.Column=i;result.Rows.Add(row);}
+            }
+            return result;
+        }
         public static (HudRect Tip,HudRect Alert) MapFooter(HudRect area,string tip,string alert,float alertWidth,float lineHeight,Func<string,float,float> height,float tipPreferredWidth=390,float contentBottom=float.NaN)
         {
             const float gap=24,padding=4;

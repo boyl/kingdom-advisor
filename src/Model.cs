@@ -486,6 +486,7 @@ namespace KingdomAdvisor
         public int Id,Coins,Gems,Capacity; public bool Local; public float X;
         public readonly Dictionary<int,int> Resources=new Dictionary<int,int>();
         public float ViewX,ViewY,ViewW=1,ViewH=1;
+        public float RoadFraction=float.NaN;
         public string Mount="",Ability="",MountState="";
         public int BagTotal,BagCapacity;public float Stamina,Fed; public TargetInfo Target;
     }
@@ -634,6 +635,7 @@ namespace KingdomAdvisor
         public bool Playing,Online; public int Island,Day,Workers,Archers,Knights,Farmers,Beggars;
         public int Squires,UnclassifiedLeaders;public int Pikemen,Berserkers,Peasants,Ninjas,Fishers,StableKeepers,Hermits;
         public bool Stone,Iron;public string Season="",Phase="",State="";
+        public string NextSeason="";public int SeasonDaysRemaining=-1,SeasonDay=-1;
         public DayClockSnapshot Clock=new DayClockSnapshot();
         public float Left=-1,Right=1;
         public int Camps;public bool EnemiesAvailable;

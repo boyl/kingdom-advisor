@@ -1,9 +1,9 @@
 {
-  "version": "0.6.15",
-  "releaseAuthorization": "2026-11-13 用户明确授权发布 Mod 到 Nexus，并补充 GitHub 也发布；不发布评论。",
-  "userAcceptance": "本轮此前 1–6 项用户确认验收，市民之家与火焰桶连续购买及松手停止由用户明确确认。0.6.15 独立拖动及位置保留由用户实操确认；随后用户确认默认与地图提示同行、仍可独立拖动的布局方案，最终布局经过自动与代理实机矩阵验证。",
-  "acceptedCandidateHash": "A6E9CB70C3C859ECECE865D1D1310CD18F4F5E6F48EF6F3A9373425C6677B527",
-  "dllHash": "A6E9CB70C3C859ECECE865D1D1310CD18F4F5E6F48EF6F3A9373425C6677B527",
+  "version": "0.6.16",
+  "releaseAuthorization": "2026-11-15 用户明确授权将本次季节提示和布局调整一起发布到 Nexus Mods 和 GitHub。",
+  "userAcceptance": "用户对 rc.4 布局回复“可以”，并授权发布。rc.4 季节、默认单列、路面避让与多列展示已有自动检查和实机预览证据；正式版仅去掉版本后缀并修正文内注释，重新构建与运行显示核验。",
+  "acceptedCandidateHash": "23B4280A5B882659E50CCFF38C4E76F795E29073436412B839F12A48E19C031E",
+  "dllHash": "C2E6CAC8BA0BF217CB44B1DB8EFFF27AFE432F14D25D7688FFB71AC8A65F19DE",
   "sourceHashes": {
     "src/AssistModel.cs": "A3B8E29D0C946AD3DBE414E89E21CADD287C3D23D7C6AFE2D01B2FA561292150",
     "src/CatalogPresentation.cs": "D388E4DA1448335AF70C53CB151DD83E40E3EC67B3E5C24B658D8C1F32779AD9",
@@ -14,36 +14,39 @@
     "src/ContinuousPurchaseTrace.cs": "ADD4AD9659DA73391FC9E476BADED45495F384D0F87F319907CC6C1A82AACBF3",
     "src/Controller.cs": "17E9FFC9E94F8793416451B16B3D358890FDBE86BE22A15DD80EFC3EE3460036",
     "src/GameActions.cs": "58F55F20E456DCC3AE3CA6C75BB6F4A4716F66058FDD2C6AF139CCC2FBC8D15A",
-    "src/HudTextLayout.cs": "DF7CE09A4E0D280D238ECEDE991552ED3FF214216AE2067E4EC2C2C57AE1235B",
+    "src/HudTextLayout.cs": "19DB01DD654BE31E59AE77CACE65D453A6D189D53DA04BFD001F1A082273A607",
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
-    "src/Localization.cs": "8EB26212FD9CAA7076C33E06840BC3CDB0151FA3EB61238A7779CDB5121EAE35",
+    "src/Localization.cs": "7EBC694D1D3CA7869844CD47EE25936A2BE56AE8054DF3CB980C8D0424E7F52C",
     "src/MapPresentation.cs": "70928F693E007E0D01C16973314FBFB01903F7AA2CCAACB896A4489C8EA9B9DD",
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
-    "src/Model.cs": "6010168D583A8E1B7513218B9C7045682402224F81EA2B9E8D970D18DCE0512F",
+    "src/Model.cs": "BAAB4826944B165AAE887ED939F36ABD3F9748F18246F5DCE0F667AEBC60B521",
     "src/NativeClockReader.cs": "190D7D6255572E4C94490703B76FB72D6D0B8DD9B412DD1C2236C45DB34C5AB7",
+    "src/NativeSeasonReader.cs": "1B7DCBF7E5A67FC09E4084A30E517401349094816AAC12E1933D19CFEC887472",
     "src/NativeStructureReader.cs": "E49C7CCB3CE805041725A1E71663FB5807E23C7CDC408D65B3D18AE68CE1E27C",
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
     "src/PerformanceScanCycle.cs": "39D54D0BE3B52886D5CBECBFF177E4A126060842187FC338FF75DF38299EFA45",
     "src/PerformanceTrace.cs": "43D482E7637E1207452115BE4B44CBAD9B5D9B29837941D0F4DD46FA01B0B091",
-    "src/Plugin.cs": "F7698B8A1F44712B3C93106D94DDBA48CF812761C3EB79B78F1A36AA1152A7A3",
-    "src/View.cs": "629FD872EDF51575B927CEBAC0A100B777AF7C64737689024772C8F73110348B"
+    "src/Plugin.cs": "6A763B8FEB81919179DD410B959905601AE007F157BE4721AA6869CA17D7176D",
+    "src/SeasonPresentation.cs": "3901FCD049610556E285A9175533DA7F8506D66446F98FF489A74481B564AD5B",
+    "src/View.cs": "076BEA5421F6ADE2D922F5A784F9D83E1368E6C074F702707C7D644C4D36278C"
   },
   "channels": [
     "GitHub",
     "Nexus Mods"
   ],
   "runtime": {
-    "formalDifference": "相对 0.6.14 修复提醒的显示／命中矩形顺序与拖动吸附，默认与地图提示同行；标签颜色区分，窄屏换行，保留独立位置",
-    "status": "Fresh 0.6.15 single-player Playing observed; faulted=False; movementLeakFrames=0; speed=1; preview disabled",
-    "evidence": "docs/acceptance/evidence/release-0615/release-runtime.txt",
+    "formalDifference": "相对已接受 rc.4 仅版本号及注释调整，无行为变化",
+    "status": "Fresh 0.6.16 Playing; faulted=False; movementLeakFrames=0; speed=1; previews disabled",
+    "evidence": "docs/acceptance/evidence/release-0616/release-runtime.txt",
+    "displayCases": 32,
+    "opacityPairs": 8,
     "preservedConfigValues": 54,
     "updatedConfigValues": []
   },
   "unverified": [
-    "rc.11 最终布局的新增用户观感验收；已有自动及代理实机显示验证",
-    "完整 DLC、所有分辨率、全部语言／字号组合和双机联机回归",
-    "乘船前后所有资源精确守恒与多人旅行实机矩阵；单人旅行后超过 1000 金币已观测",
-    "长按连续购买明确不支持联机加入者"
+    "全部 DLC、低分辨率、全部语言／字号组合及双机联机矩阵未完整实测",
+    "季节边界为原生读取与自动测试证据；未推进存档日期实测全部换季",
+    "键鼠／手柄显示预览不替代全部真实输入回归；长按连续购买仍不支持联机加入者"
   ],
   "manual": {
     "releaseAuthorization": "passed",

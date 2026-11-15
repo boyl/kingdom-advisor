@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.15";
+        public const string Version="0.6.16";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -300,7 +300,7 @@ namespace KingdomAdvisor
                 var native=ImageConversion.EncodeToPNG(texture);
                 var bytes=new byte[native.Length];for(int i=0;i<bytes.Length;i++)bytes[i]=native[i];
                 File.WriteAllBytes(Path.Combine(folder,filename),bytes);
-                File.WriteAllLines(Path.Combine(folder,filename+".layout.txt"),view.HudEvidence());
+                File.WriteAllLines(Path.Combine(folder,filename+".layout.txt"),view.HudEvidence().Concat(new[]{view.RoadEvidence}));
                 Plugin.Instance.Log.LogInfo("Screenshot saved: "+filename);
             }
             catch(Exception ex)
@@ -315,9 +315,11 @@ namespace KingdomAdvisor
             var s=reader.State;
             var lines=new List<string>{"version="+Plugin.Version,"utc="+DateTime.UtcNow.ToString("O"),"gameState="+s.State,"overlayOpen="+(Controller?.Open??false),"mapFocus="+(Controller?.MapFocus??false),"holdActive="+(Controller?.Hold.Active??false),"releaseGuardCount="+(Controller?.ReleaseGuardCount??0),"playing="+s.Playing,"online="+s.Online,"island="+s.Island,"day="+s.Day,"points="+s.Points.Count,"worldReadMaxMs="+maxReadMs.ToString("F3"),"font="+view.FontEvidence,"faulted="+faulted,"disabledMovementMaps="+(Controller?.DisabledMovementMaps??0),"movementLeakFrames="+(Controller?.MovementLeakFrames??0),"languagePreference="+Plugin.Instance.Settings.UiLanguage.Value,"languageCode="+(global::Language.current?global::Language.current.languageCode:""),"displayLanguage="+(Localization.English?"en":"zh-CN"),"configuredSpeed="+Plugin.Instance.Settings.GameSpeed.Value,"actualTimeScale="+Time.timeScale,"gameplayRuleWrites="+(Actions?.Writes??0),"teleports="+(Actions?.Teleports??0),"resourceAdds="+(Actions?.ResourceAdds??0),"error="+lastError};
             lines.Add("localPlayers="+s.Players.Count(p=>p.Local));
+            lines.Add("season="+s.Season+" seasonDay="+s.SeasonDay+" nextSeason="+s.NextSeason+" remainingDays="+s.SeasonDaysRemaining);
             lines.Add("continuousPurchaseEnabled="+Plugin.Instance.Settings.ContinuousPurchase.Value+" active="+ContinuousPurchaseRuntime.ActiveCount+" restarts="+ContinuousPurchaseRuntime.Restarts);
             lines.AddRange(ContinuousPurchaseRuntime.Evidence());
             lines.AddRange(view.HudEvidence().Select(value=>"hud."+value));
+            lines.Add("hud."+view.RoadEvidence);
             lines.Add("previewCaptureEnabled="+Plugin.Instance.Settings.PreviewCapture.Value+" hudPreviewTarget="+(view.PreviewTarget?.Raw??"none"));
             lines.Add("clockState="+s.Clock.State+" clockPhase="+s.Clock.Phase+" clock="+(s.Clock.Available?s.Clock.ClockText:"unavailable")+" untilDawn="+s.Clock.UntilDawn+" remainingSeconds="+s.Clock.RemainingSeconds+" progress="+s.Clock.Progress+" client="+s.Clock.Client+" clockUnavailable="+s.Clock.UnavailableReason);
             lines.AddRange(reader.ReadEvidence());
@@ -368,6 +370,7 @@ namespace KingdomAdvisor
         private readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
         private string readContext="";
         private readonly NativeClockReader clockReader=new NativeClockReader();
+        private readonly NativeSeasonReader seasonReader=new NativeSeasonReader();
         private readonly ClockTrace clockTrace=new ClockTrace();
         public void WriteClockTrace(string path)=>ReadOptional("clock-evidence",()=>File.WriteAllLines(path,clockTrace.Lines()));
         public void ReadClock(double realTime)
@@ -553,6 +556,7 @@ namespace KingdomAdvisor
             }
             s.Stone=k.StoneBuildingUnlocked;s.Iron=k.IronBuildingUnlocked;
             if(m.director){s.Day=m.director.TotalDaysInReign;s.Season=m.director.CurrentSeason.ToString();s.Phase=m.director.IsDaytime?"白昼":"夜晚";}
+            if(m.director)ReadOptional("season",()=>{s.SeasonDay=m.director.CurrentSeasonDay;var forecast=seasonReader.Read(m.director,readContext);s.NextSeason=forecast.Next;s.SeasonDaysRemaining=forecast.Days;});
             if(m.world&&World.GroundCollider){var b=World.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
             else if(m.level&&m.level.GroundCollider){var b=m.level.GroundCollider.bounds;s.Left=b.min.x;s.Right=b.max.x;}
             var all=m.payables?.AllPayables;
@@ -705,6 +709,10 @@ namespace KingdomAdvisor
             State.Players.Add(info);
             // 远端只提供地图位置，不查询其本机输入、钱袋或附近交互条件。
             if(!info.Local)return;
+            if(cam&&cam.isActiveAndEnabled)ReadOptional("road-"+info.Id,()=>{
+                var m=GetManagers();var ground=World.GroundCollider?World.GroundCollider:(m&&m.level?m.level.GroundCollider:null);
+                if(ground){var point=p.transform.position;point.y=ground.bounds.max.y;info.RoadFraction=1-cam.WorldToViewportPoint(point).y;}
+            });
             if(Explored.TryGetValue(info.Id,out var range))Explored[info.Id]=System.Tuple.Create(Math.Min(range.Item1,info.X-15),Math.Max(range.Item2,info.X+15));
             else Explored[info.Id]=System.Tuple.Create(info.X-15,info.X+15);
             ReadOptional("player-details-"+info.Id,()=>ReadPlayerDetails(p,info));

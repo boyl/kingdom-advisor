@@ -18,16 +18,19 @@ $inputMethod=$inputMethod.Substring(0,$inputMethod.LastIndexOf('}')).Trim()
 $model=[IO.File]::ReadAllText((Join-Path $PSScriptRoot 'src/Model.cs'))
 Add-Type -TypeDefinition ($model + @"
 namespace Test { using System; using System.Collections.Generic; using KingdomAdvisor;
-public class Position {public float x;public Position position=>this;}
+public class Position {public float x,y;public Position position=>this;}
+public class Bounds {public Position max=new Position();}
+public class Collider {public Bounds bounds=new Bounds();public static implicit operator bool(Collider c)=>c!=null;}
+public class World {public static Collider GroundCollider;}
 public class ObjectState {public bool activeInHierarchy=true;}
 public class Player {public int playerId;public bool hasLocalAuthority;public Position transform=new Position();public ObjectState gameObject=new ObjectState();public static implicit operator bool(Player p)=>p!=null;}
 public class Rect {public float x,y,width=1,height=1;}
-public class Camera {public bool isActiveAndEnabled=true;public Rect rect=new Rect();public static implicit operator bool(Camera c)=>c!=null;}
+public class Camera {public bool isActiveAndEnabled=true;public Rect rect=new Rect();public Position WorldToViewportPoint(Position p)=>new Position{x=p.x,y=p.y};public static implicit operator bool(Camera c)=>c!=null;}
 public class TestLog {public int warnings;public void LogWarning(string message){warnings++;}}
 public class Plugin {public static Plugin Instance=new Plugin();public TestLog Log=new TestLog();}
 public class Component {} public class Enemy {}
 public class Kingdom {public int GetInstanceID()=>1;public static implicit operator bool(Kingdom k)=>k!=null;}
-public class Level {public static bool isGenerating;public int cachedCurrentLevelSeed;public static implicit operator bool(Level l)=>l!=null;}
+public class Level {public static bool isGenerating;public int cachedCurrentLevelSeed;public Collider GroundCollider;public static implicit operator bool(Level l)=>l!=null;}
 public class Game {public enum State{Playing,NetworkClientPlaying,Menu};public State state=State.NetworkClientPlaying;public int currentLand;public static implicit operator bool(Game g)=>g!=null;}
 public class Managers {public Game game=new Game();public Kingdom kingdom=new Kingdom();public Level level;public static implicit operator bool(Managers m)=>m!=null;}
 public class NetworkBigBoss {public static bool IsOnline=true;}
@@ -40,6 +43,7 @@ public class InputProbe {
 }
 public class RecoveryProbe {
  public Snapshot State=new Snapshot();public bool FailDetails=true;public int DetailCalls;
+ public Managers managers;Managers GetManagers()=>managers;
  readonly Dictionary<string,OptionalReadCircuit> optionalReads=new Dictionary<string,OptionalReadCircuit>();
  readonly Dictionary<int,Tuple<float,float>> Explored=new Dictionary<int,Tuple<float,float>>();
  $optionalMethod
@@ -69,6 +73,11 @@ $remote=[Test.Player]@{playerId=1;hasLocalAuthority=$false};$before=$probe.Detai
 if($probe.DetailCalls -ne $before -or $probe.State.Players[0].Local){throw '查询远端详情或伪造本机控制权'}
 $camera=[Test.Camera]::new();$camera.rect.width=0;$probe.Read($local,$camera);if($probe.State.Players[0].ViewW -ne 1){throw '零宽摄像机导致界面隐藏'}
 $camera.rect.width=.5;$probe.Read($local,$camera);if($probe.State.Players[0].ViewW -ne .5){throw '有效分屏视口未保留'}
+if(![float]::IsNaN($probe.State.Players[0].RoadFraction)){throw '没有地面碰撞体时不能伪造路面坐标'}
+[Test.World]::GroundCollider=[Test.Collider]::new();[Test.World]::GroundCollider.bounds.max.y=.4
+$probe.Read($local,$camera);if([math]::Abs($probe.State.Players[0].RoadFraction-.6) -gt .001){throw '原生路面投影未转换为顶部起算坐标'}
+[Test.World]::GroundCollider=$null;$probe.managers=[Test.Managers]::new();$probe.managers.level=[Test.Level]::new();$probe.managers.level.GroundCollider=[Test.Collider]::new();$probe.managers.level.GroundCollider.bounds.max.y=.3
+$probe.Read($local,$camera);if([math]::Abs($probe.State.Players[0].RoadFraction-.7) -gt .001){throw '世界碰撞体缺失时未使用关卡碰撞体'}
 $camera.isActiveAndEnabled=$false;$probe.Read($local,$camera);if($probe.State.Players[0].ViewW -ne 1){throw '停用摄像机导致界面隐藏'}
 $local.gameObject.activeInHierarchy=$false;$probe.Read($local,$camera);if($probe.State.Players.Count){throw '非活动角色进入界面'}
 '通过：生产玩家读取与异常隔离、三次停用、显式恢复、远端隔离、缺失/零宽/停用摄像机、有效分屏及角色消失。'

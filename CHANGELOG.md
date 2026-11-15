@@ -1,3 +1,33 @@
+# 王国顾问 0.6.16 / Kingdom Advisor 0.6.16
+
+- 新增距下一季的天数与当前季节简短提示，按游戏原生季节日历计算；无法预测时明确显示未知。
+- 顾问保持在路面下方。默认字号完整单列；大字号或高度不足时横向分栏，不使用顾问分页。
+- 优化时间与季节分区、文字对齐和名称／数值间距，保留正常行距与分组留白；修复多列纵向错位。
+- 保留单／双列选项、可招募提醒独立拖动、手柄提示与英文溢出修复。透明度 0 仍只显示文字、图标与进度条。
+
+配置与存档保留，不新增依赖。此前长按购买等开关保持原设置。已检查中英文、18／28 字号与键鼠／手柄显示；全部 DLC、低分辨率及双机联机场景未完整复测。
+
+已有正常工作的 BepInEx 6 IL2CPP 前置请选择 **ModOnly**；首次安装请选择 **Complete**，内含既有修订版 BepInEx #788、两项 Cpp2IL 兼容补丁、许可证与对应源码。官方原版 #788 不含这些首次生成修复。
+
+GitHub：安装 [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)，保存并退出游戏，解压后双击 `INSTALL.cmd`，选择 Steam“浏览本地文件”打开的游戏根目录。Nexus：无需 PowerShell，按随包说明手动复制。插件路径：`BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。升级保留配置与存档；回退前备份旧 DLL 和 `BepInEx/config/local.kingdom.advisor.cfg`。卸载仅移除 KingdomAdvisor 插件目录，保留共享前置与其他 Mod。
+
+[中文完整说明](https://github.com/boyl/kingdom-advisor/blob/v0.6.16/README.md) · [Nexus 手动安装与目录示意](https://github.com/boyl/kingdom-advisor/blob/v0.6.16/distribution/nexus/README.zh-CN.md)
+
+## English
+
+- Added days until the next season and short seasonal advice, using the native game calendar. Unavailable forecasts are explicitly marked unknown.
+- Kept the advisor below the road. The default font displays all entries in one column; larger fonts or limited height expand horizontally without advisor pagination.
+- Refined time/season sections, text alignment and label/value spacing, preserving comfortable row and group gaps. Fixed vertical positioning in layouts with more than two columns.
+- Retained one/two-column preferences, independently draggable recruitment alerts, controller hints and English overflow fixes. At 0 opacity, only text, icons and the progress bar remain visible.
+
+Settings and saves are retained; no new dependencies. Existing options such as hold-to-buy keep their settings. Chinese/English, 18/28 font sizes and keyboard/controller display variants were checked. All DLC, low resolutions and two-machine multiplayer scenarios have not been fully retested.
+
+Choose **ModOnly** for an existing working BepInEx 6 IL2CPP installation, or **Complete** for a fresh installation. Complete retains the modified BepInEx #788 runtime, two Cpp2IL compatibility fixes, licenses and corresponding sources. Stock official #788 does not include these first-generation fixes.
+
+GitHub: install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6), save and quit, extract the ZIP, run `INSTALL.cmd`, and select the game root through Steam's Browse local files. Nexus: no PowerShell is required; follow the included manual guide. Plugin path: `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`. Upgrades retain settings and saves. Back up the old DLL and `BepInEx/config/local.kingdom.advisor.cfg` for rollback. Uninstall only the KingdomAdvisor plugin folder, retaining the shared loader and other mods.
+
+[Full English guide](https://github.com/boyl/kingdom-advisor/blob/v0.6.16/README.en.md) · [Nexus manual installation and directory layout](https://github.com/boyl/kingdom-advisor/blob/v0.6.16/distribution/nexus/README.en.md)
+
 # 王国顾问 0.6.15 / Kingdom Advisor 0.6.15
 
 - 修复可招募提醒点击区域与显示位置不一致：可独立拖动，拖动期间不吸回顾问，松手后保存位置。

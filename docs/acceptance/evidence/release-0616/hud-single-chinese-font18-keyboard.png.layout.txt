@@ -1,0 +1,11 @@
+version=0.6.16
+device=keyboard
+font=18 language=zh-CN
+advisor=(x:18.00, y:797.92, width:492.77, height:513.08) bottom=1311 legacyDefaultBottom=1311
+detail=(x:522.77, y:797.92, width:492.77, height:339.12) pages=1
+alert=(x:324.00, y:246.00, width:492.77, height:29.12)
+footerTop=1327 hintHeight=0
+rows=16 pages=1 columns=1
+day=岛 3 · 第 187 天\n冬季 · 距春季 5 天\n农田停产，改采浆果。
+opacity=0 identityInHeader=True rowGap=5
+roadTop=797

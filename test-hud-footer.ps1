@@ -17,8 +17,7 @@ namespace HudFooterTests {
  public struct Size {public float x;public Size(float width){x=width;} }
  public sealed class Style {public bool Button;public Size CalcSize(GUIContent content)=>new Size(content.Text.Length*9+24);}
  public struct Rect {public float x,y,width,height;public Rect(float a,float b,float w,float h){x=a;y=b;width=w;height=h;} }
- public static class Localization {public static bool English;public static string Text(string value)=>English?value.Replace("春季","Spring"):value;}
- public sealed class Snapshot {public int Island=3,Day=131;public string Season="春季";}
+ public sealed class Snapshot {public int Island=3,Day=131,SeasonDaysRemaining=14;public string Season="Spring",NextSeason="Summer";}
  public sealed class Controller {public string Device,PadOpenLabel="手柄键";}
  public sealed class Number {public int Value;}
  public sealed class Settings {public Number AdvisorColumns=new Number(),FontSize=new Number();}
@@ -44,6 +43,7 @@ namespace HudFooterTests {
  }
  public static class Cases {
   public static string Run(){
+   Localization.English=false;
    var failures=new System.Collections.Generic.List<string>();int cases=0;
    void Check(bool ok,string name){cases++;if(!ok)failures.Add(name);}
    foreach(float height in new[]{360f,725f,1080f,1377f}){
@@ -70,12 +70,13 @@ namespace HudFooterTests {
    Check(doublePad[5]==0&&doublePad[0]+22+8+34+16==1377,"两列模式保持既有两行手柄页脚");
    string english=Probe.DayText(1291);
    Check(!english.Contains("春季")&&english.Contains("Spring"),"实际标题的季节须先本地化再测量和绘制");
-   Check(Probe.DayText(400).Contains("Island 3 · Day 131 · Spring"),"日期与季节完整保留；时钟独立测量，不再与日期拼接挤满一行");
+   Check(Probe.DayText(400).Contains("Island 3 · Day 131\nSpring · 14 days until Summer\nGrass returns; farming resumes."),"日期、换季倒计时和当季提示完整保留；时钟独立测量");
    if(failures.Count>0)throw new Exception("HUD页脚回归失败: "+string.Join("; ",failures));
    return "通过："+cases+" 项实际生产页脚测量回归，键鼠旧版默认底边、手柄两行提示、隐藏设备不占位及窄视口。";
   }
  }
 }
 "@
-Add-Type -TypeDefinition ("using System;using System.Collections.Generic;using KingdomAdvisor;`n"+[regex]::Replace($layout,'(?m)^using [^;]+;\r?\n','')+$probe)
+$seasonSources=(@('Localization.cs','SeasonPresentation.cs') | ForEach-Object {[regex]::Replace((Get-Content (Join-Path $PSScriptRoot "src/$_") -Raw),'(?m)^using [^;]+;\r?\n','')}) -join "`n"
+Add-Type -TypeDefinition ("using System;using System.Linq;using System.Text.RegularExpressions;using System.Collections.Generic;using KingdomAdvisor;`n"+[regex]::Replace($layout,'(?m)^using [^;]+;\r?\n','')+$seasonSources+$probe)
 [HudFooterTests.Cases]::Run()

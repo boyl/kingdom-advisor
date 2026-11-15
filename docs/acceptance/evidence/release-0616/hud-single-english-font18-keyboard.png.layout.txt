@@ -1,0 +1,11 @@
+version=0.6.16
+device=keyboard
+font=18 language=en
+advisor=(x:18.00, y:797.92, width:562.53, height:513.08) bottom=1311 legacyDefaultBottom=1311
+detail=(x:592.53, y:797.92, width:562.53, height:402.48) pages=1
+alert=(x:387.00, y:246.00, width:562.53, height:29.12)
+footerTop=1327 hintHeight=0
+rows=16 pages=1 columns=1
+day=Island 3 · Day 187\nWinter · 5 days until Spring\nFarms stop; gather berries.
+opacity=0 identityInHeader=True rowGap=5
+roadTop=797

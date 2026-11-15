@@ -46,7 +46,8 @@ function Inspect-Type($Type) {
                     ($method.Name -eq 'NativeSelectsTarget' -and $operand.FullName -in @('System.Boolean Payable::CanSelect(Player)','System.Single Payable::PlayerPayPoint()','Payable PayableManager::GetClosestPayable(System.Single,System.Single,Player)')) -or
                     ($method.Name -eq 'Bind' -and $operand.FullName -in @('System.Void PayableUpgrade::add_OnPayableUpgraded(PayableUpgrade/PayableUpgradeEvent)','PayableUpgrade/PayableUpgradeEvent PayableUpgrade/PayableUpgradeEvent::op_Implicit(System.Action`1<UnityEngine.GameObject>)')) -or
                     ($method.Name -eq 'Detach' -and $operand.FullName -eq 'System.Void PayableUpgrade::remove_OnPayableUpgraded(PayableUpgrade/PayableUpgradeEvent)'))
-                if(!$clockPhaseRead -and !$purchaseBoundary -and ($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$'))){
+                $seasonRead=$Type.FullName -like 'KingdomAdvisor.NativeSeasonReader*' -and $operand.FullName -in @('Season Director::GetSeasonFromDay(System.Int32)','Season Director::GetNextDaySeason()')
+                if(!$clockPhaseRead -and !$seasonRead -and !$purchaseBoundary -and ($operand.Name.StartsWith('set_') -or ($operand.Name -notmatch '^get_|^IsLocked$|^ReleaseInput$|^GetCurrency$'))){
                     if($Type.FullName -ne 'KingdomAdvisor.GameActions' -or $operand.FullName -notin $approvedWrites){throw "超出动作边界或未审查的游戏调用：$operand"}
                 }
             }

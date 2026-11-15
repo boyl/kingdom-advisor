@@ -8,7 +8,7 @@ namespace KingdomAdvisor
     internal sealed class AdvisorView
     {
         private readonly Settings settings;private readonly AdvisorController controller;
-        private GUIStyle text,title,small,dayStyle,button,fillStyle,hudValue;
+        private GUIStyle text,title,small,dayStyle,button,fillStyle,hudValue,seasonStyle;
         private Font font;private int lastSize;private bool stylesReady;
         private bool opacityDragging;private int activePanelOpacity=-1;
         private string lastCatalogKey="",lastLocationKey="";
@@ -29,6 +29,8 @@ namespace KingdomAdvisor
         internal int? PreviewHudOpacity;
         private Rect hudAdvisor,hudDetail,hudAlert,hudMapTip,hudMapAlertDefault,hudMapContent;
         private float hudFooterTop,hudHintHeight,hudLegacyBottom;
+        private float hudRoadTop;
+        internal string RoadEvidence=>"roadTop="+hudRoadTop;
         private int hudRowCount,hudPageCount,hudDetailPages,hudColumns,hudOpacity;
         private bool hudPad;
         private string hudDay="";
@@ -89,6 +91,7 @@ namespace KingdomAdvisor
             text=new GUIStyle(GUI.skin.label){font=font,fontSize=size,wordWrap=true,richText=false,padding=new RectOffset(0,0,0,0)};text.normal.textColor=bodyText;
             title=new GUIStyle(text){fontSize=size+4};title.normal.textColor=gold;
             small=new GUIStyle(text){fontSize=Math.Max(14,size-2)};small.normal.textColor=muted;
+            seasonStyle=new GUIStyle(small);seasonStyle.normal.textColor=gold;
             dayStyle=new GUIStyle(small){wordWrap=false};
             hudValue=new GUIStyle(small){alignment=TextAnchor.UpperRight};hudValue.normal.textColor=bodyText;
             button=new GUIStyle(text){alignment=TextAnchor.MiddleLeft,padding=new RectOffset(12,12,4,4)};
@@ -174,18 +177,19 @@ namespace KingdomAdvisor
             HudLabel(new Rect(area.x,area.y,row.LabelWidth,row.LabelHeight),row.Label,small);
             HudLabel(new Rect(area.xMax-row.ValueWidth,area.y+row.ValueTop,row.ValueWidth,row.ValueHeight),row.Value,hudValue);
         }
-        private void DrawHudRows(Rect rect,float top,string key,HudTextPage[] pages,float pagerHeight,float bottomPadding=16,bool separators=false)
+        private void DrawHudRows(Rect rect,float top,string key,HudTextPage[] pages,float pagerHeight,float bottomPadding=16,bool separators=false,float contentWidth=float.PositiveInfinity)
         {
-            float leftY=top,rightY=top;
             var page=pages[hudPages[key]];
+            var columnY=Enumerable.Repeat(top,page.Columns).ToArray();
             foreach(var row in page.Rows)
             {
-                float x=HudTextLayout.CellLeft(rect.x,rect.width,page.Columns,row.Column),y=row.Column==0?leftY:rightY;
+                float x=HudTextLayout.CellLeft(rect.x,rect.width,page.Columns,row.Column),y=columnY[row.Column];
                 if(row.Icon.Length>0)HudIcon(x+8,y+3,row.Icon);
-                var area=new Rect(x+28,y,HudTextLayout.CellWidth(rect.width,page.Columns)-28,row.TextHeight);
+                float cellWidth=Math.Min(contentWidth,HudTextLayout.CellWidth(rect.width,page.Columns));
+                var area=new Rect(x+28,y,cellWidth-28,row.TextHeight);
                 if(row.Label!=null)DrawHudMetric(area,row);else HudLabel(area,row.Text,small);
-                if(separators&&row.ExtraGap>0)PanelFill(new Rect(x,y+row.TextHeight+HudTextLayout.RowGap+row.ExtraGap/2,HudTextLayout.CellWidth(rect.width,page.Columns),1),border);
-                if(row.Column==0)leftY+=row.Height;else rightY+=row.Height;
+                if(separators&&row.ExtraGap>0)PanelFill(new Rect(x,y+row.TextHeight+HudTextLayout.RowGap+row.ExtraGap/2,cellWidth,1),border);
+                columnY[row.Column]+=row.Height;
             }
             if(pages.Length<=1)return;
             float py=rect.yMax-bottomPadding-pagerHeight,bw=(rect.width-32)*.28f;
@@ -269,6 +273,11 @@ namespace KingdomAdvisor
             var hudViewport=new Rect(0,0,viewport.width,footerTop-8);
             float pagerHeight=Math.Max(34,HudHeight("←",70,button)),maxCardHeight=hudViewport.height-16;
             float y=18;
+            // 顾问只能使用路面到页脚之间的高度，正文增多时横向分栏，不能向上侵入路面。
+            float roadTop=HudTextLayout.BelowRoad(viewport.height,player.RoadFraction);
+            hudRoadTop=roadTop;
+            float maxStatusHeight=Math.Max(0,hudViewport.height-roadTop-8);
+            void CompactBelowRoad(){var region=new Rect(0,roadTop,viewport.width,Math.Max(0,hudViewport.height-roadTop));GUI.BeginGroup(region);DrawCompactHud(new Rect(0,0,region.width,region.height),s,player);GUI.EndGroup();}
             // 给两列保留独立图标与文字空间；固定语义探针不随金币数量变化抖动。
             float preferredColumnsWidth=Math.Max(width,52+2*(28+small.CalcSize(new GUIContent(Localization.Text("建设科技")+" 99999")).x));
             float maxColumnsWidth=settings.ShowPlayerPanel.Value?(viewport.width-48)/2:viewport.width-36;
@@ -278,7 +287,9 @@ namespace KingdomAdvisor
             string identity="P"+(player.Id+1);
             string clockHeader=Localization.Text(ClockPresentation.HudHeader(s.Clock,settings.ShowClock.Value));
             string date=Localization.English?"Island "+s.Island+" · Day "+s.Day:"岛 "+s.Island+" · 第 "+s.Day+" 天";
-            string day=date+" · "+Localization.Text(Season(s.Season));
+            string day=date+"\n"+SeasonPresentation.Header(s.Season,s.NextSeason,s.SeasonDaysRemaining);
+            string seasonHint=Localization.Text(SeasonPresentation.Hint(s.Season));
+            if(seasonHint.Length>0)day+="\n"+seasonHint;
             var hudDayStyle=small;
             string countdown=Localization.Text(ClockPresentation.Countdown(s.Clock));
             var rows=new System.Collections.Generic.List<System.Tuple<string,string,string>>();
@@ -300,12 +311,23 @@ namespace KingdomAdvisor
                 float maximum=settings.ShowPlayerPanel.Value&&!stacked?(viewport.width-48)/2:viewport.width-36;
                 width=Math.Min(maximum,Math.Max(width,(float)Math.Ceiling(Math.Max(metricWidth,clockWidth))));
             }
+            // 时间与季节横向并列；进度条和现实倒计时共用一行，避免新增纵向行。
+            string seasonHeader=SeasonPresentation.Header(s.Season,s.NextSeason,s.SeasonDaysRemaining);
+            string dateLine=date+" · "+clockHeader;
+            float leftProbe=MeasureWidth(Localization.English?"Island 99 · Day 999 · Evening 00:00":"岛 99 · 第 999 天 · 黄昏 00:00");
+            float rightProbe=new[]{"Spring","Summer","Autumn","Winter"}.Max(value=>MeasureWidth(Localization.Text(SeasonPresentation.Hint(value))));
+            rightProbe=Math.Max(rightProbe,MeasureWidth(Localization.Text("距入夜约 ")+string.Format(Localization.Text("{0}分{1}秒（现实时间）"),9,"59"))+2);
+            rightProbe=Math.Max(rightProbe,new[]{"Spring","Summer","Autumn","Winter"}.Max(value=>MeasureWidth(SeasonPresentation.Header(value,"Summer",99))));
+            float headerMaximum=settings.ShowPlayerPanel.Value&&!stacked?(viewport.width-48)/2:viewport.width-36;
+            width=Math.Min(headerMaximum,Math.Max(width,leftProbe+rightProbe+52));
+            float headerLeft=Math.Min(leftProbe,(width-52)*leftProbe/(leftProbe+rightProbe)),headerRight=Math.Min(rightProbe,width-52-headerLeft);
             var clockRow=HudTextLayout.Metric(clockHeader,countdown,"",width-32,MeasureWidth,MeasureHeight);
             float identityWidth=MeasureWidth(identity)+20;
-            float statusTop=8,statusBottom=8,headingGap=6,dayGap=4,clockGap=8,progressStep=16;
-            float headingH=Math.Max(HudHeight(heading,width-32-identityWidth,title),HudHeight(identity,identityWidth,hudValue)),dayH=HudHeight(day,width-32,hudDayStyle),clockH=clockRow.TextHeight;
-            float statusHeaderH=statusTop+headingH+headingGap+dayH+dayGap+clockH+clockGap+progressStep;
-            bool compactStatusHeader=maxCardHeight-statusHeaderH-statusBottom<pagerHeight+8+small.lineHeight+HudTextLayout.RowGap;
+            float statusTop=8,statusBottom=8,headingGap=6,dayGap=4,clockGap=4;
+            float headingH=Math.Max(Math.Max(HudHeight(heading,headerLeft-identityWidth,title),HudHeight(identity,identityWidth,hudValue)),HudHeight(seasonHeader,headerRight,small));
+            float dayH=Math.Max(HudHeight(dateLine,headerLeft,hudDayStyle),HudHeight(seasonHint,headerRight,small)),clockH=Math.Max(12,HudHeight(countdown,headerRight,small));
+            float statusHeaderH=statusTop+headingH+headingGap+dayH+dayGap+clockH+clockGap;
+            bool compactStatusHeader=maxStatusHeight-statusHeaderH-statusBottom<pagerHeight+8+small.lineHeight+HudTextLayout.RowGap;
             if(compactStatusHeader)
             {
                 // 窄分屏里页眉本身可能多行，时间文字随正文分页，避免占尽正文空间。
@@ -319,24 +341,39 @@ namespace KingdomAdvisor
             {
                 return HudTextLayout.Metric(Localization.Text(r.Item2),Localization.Text(r.Item3),r.Item1,statusTextWidth,MeasureWidth,MeasureHeight);
             }
-            var statusRows=twoColumnStatus?rows.Take(populationStart).Concat(rows.Skip(populationStart+populationCount)):rows;
-            var secondColumn=twoColumnStatus?rows.Skip(populationStart).Take(populationCount).Select(LocalRow).ToArray():null;
-            var measuredStatusRows=statusRows.Select(LocalRow).ToArray();
-            if(!compactStatusHeader)
+            float preferredDetailWidth=width;
+            HudTextPage statusPage=null;
+            int initialColumns=twoColumnStatus?2:1;
+            float baseWidth=width,expandedLimit=settings.ShowPlayerPanel.Value?viewport.width-426:viewport.width-36;
+            for(int columns=initialColumns;columns<=4&&statusPage==null;columns++)
             {
-                // 完整保留每一条信息，在资源、人口及坐骑之间增加轻量分组留白。
-                if(measuredStatusRows.Length>populationStart)measuredStatusRows[populationStart-1].ExtraGap=HudTextLayout.StatusGroupGap;
-                if(!twoColumnStatus&&populationCount>0&&rows.Count>populationStart+populationCount)measuredStatusRows[populationStart+populationCount-1].ExtraGap=HudTextLayout.StatusGroupGap;
+                if(columns>initialColumns){
+                    float preferredCell=rows.Max(r=>HudTextLayout.MetricWidth(Localization.Text(r.Item2),Localization.Text(r.Item3),MeasureWidth))+60;
+                    width=Math.Max(baseWidth,Math.Min(expandedLimit,columns*preferredCell+20*(columns-1)+32));
+                    headerLeft=Math.Min(leftProbe,(width-52)*leftProbe/(leftProbe+rightProbe));headerRight=Math.Min(rightProbe,width-52-headerLeft);
+                    headingH=Math.Max(Math.Max(HudHeight(heading,headerLeft-identityWidth,title),HudHeight(identity,identityWidth,hudValue)),HudHeight(seasonHeader,headerRight,small));
+                    dayH=Math.Max(HudHeight(dateLine,headerLeft,hudDayStyle),HudHeight(seasonHint,headerRight,small));clockH=Math.Max(12,HudHeight(countdown,headerRight,small));
+                    statusHeaderH=compactStatusHeader?statusTop+headingH+14:statusTop+headingH+headingGap+dayH+dayGap+clockH+clockGap;
+                }
+                statusTextWidth=Math.Min(HudTextLayout.CellWidth(width,columns)-28,Math.Max(330,rows.Max(r=>HudTextLayout.MetricWidth(Localization.Text(r.Item2),Localization.Text(r.Item3),MeasureWidth))));
+                if(statusTextWidth<40||maxStatusHeight-statusHeaderH-statusBottom<small.lineHeight+HudTextLayout.RowGap)continue;
+                var flowRows=rows.Select(LocalRow).ToArray();
+                if(!compactStatusHeader){
+                    if(flowRows.Length>populationStart)flowRows[populationStart-1].ExtraGap=HudTextLayout.StatusGroupGap;
+                    if(populationCount>0&&flowRows.Length>populationStart+populationCount)flowRows[populationStart+populationCount-1].ExtraGap=HudTextLayout.StatusGroupGap;
+                }
+                statusPage=HudTextLayout.FlowColumns(flowRows,maxStatusHeight-statusHeaderH-statusBottom,columns,value=>MeasureHeight(value,statusTextWidth));
             }
-            var statusPages=HudPages(statusKey,twoColumnStatus?"status-columns":"status",measuredStatusRows,statusTextWidth,maxCardHeight-statusHeaderH-statusBottom,pagerHeight,secondColumn);
-            if(statusPages.Length==0){DrawCompactHud(viewport,s,player);return;}
-            if(PreviewHudDevice!=null)hudPages[statusKey]=PreviewHudLastPage?statusPages.Length-1:0;
+            if(statusPage==null){CompactBelowRoad();return;}
+            var statusPages=new[]{statusPage};hudPages[statusKey]=0;
             float cardH=statusHeaderH+statusPages.Max(p=>p.Height)+statusBottom+(statusPages.Length>1?pagerHeight+8:0);
-            y=Math.Max(18,hudViewport.height-cardH-8);
+            y=Math.Max(roadTop,hudViewport.height-cardH-8);
             var advisorRect=new Rect(pad,y,width,cardH);
-            if(settings.ShowKingdomAdvisor.Value)advisorRect=Place(statusKey,advisorRect,hudViewport);
+            if(settings.ShowKingdomAdvisor.Value)advisorRect=Place(statusKey,advisorRect,hudViewport,beforeInput:rect=>{rect.y=Math.Max(roadTop,rect.y);return rect;});
             // 整体缩短后，默认详情在共享顶部以下分页，不通过上移补足长正文空间。
             bool detailBeside=!stacked&&advisorRect.xMax+12+width<=viewport.width-18;
+            float objectWidth=Math.Min(preferredDetailWidth,Math.Max(240,viewport.width-advisorRect.xMax-30));
+            detailBeside=!stacked&&advisorRect.xMax+12+objectWidth<=viewport.width-18;
             float detailCardHeight=detailBeside?Math.Min(maxCardHeight,hudViewport.height-advisorRect.y-8):maxCardHeight;
             string objectTitle="",objectKey="p"+player.Id+".object";
             float headH=0,objectHeaderH=0,objectTop=statusTop;
@@ -349,17 +386,17 @@ namespace KingdomAdvisor
                 string body=t==null?"靠近建筑、工具或坐骑，查看用途与升级条件。":t.Description+"\n\n"+(t.Cost>=0?"费用  "+t.Cost+" "+t.Currency+"\n"+(t.Locked?"暂不可用  ":"可交互  ")+t.Lock:"当前无升级交互");
                 if(t!=null&&t.Details.Length>0)body+="\n"+string.Join("\n",t.Details.Split('\n').Where(l=>!l.StartsWith("本岛同类交互点")));
                 if(t!=null&&settings.Details.Value&&t.Next.Length>0)body+="\n升级目标  "+t.Next;
-                headH=HudHeight(objectTitle,width-32,title);objectHeaderH=objectTop+headH+14;
+                headH=HudHeight(objectTitle,objectWidth-32,title);objectHeaderH=objectTop+headH+14;
                 var detailRows=body.Split('\n').Select(value=>new HudTextRow(Localization.Text(value),value.Length==0?"":value.StartsWith("费用")?"coin":value.StartsWith("耐久")?"shield":"tower")).ToList();
-                if(!HudTextLayout.CanPage(detailCardHeight-objectHeaderH-16,pagerHeight,HudHeight(HudLineProbe,width-60,small)))
+                if(!HudTextLayout.CanPage(detailCardHeight-objectHeaderH-16,pagerHeight,HudHeight(HudLineProbe,objectWidth-60,small)))
                 {
                     // 超长名称随正文分页，仍保留完整名称，不让标题挤掉所有说明。
                     objectTitle=Localization.Text("附近交互")+"  ⇄";
-                    headH=HudHeight(objectTitle,width-32,title);objectHeaderH=objectTop+headH+14;
+                    headH=HudHeight(objectTitle,objectWidth-32,title);objectHeaderH=objectTop+headH+14;
                     detailRows.Insert(0,new HudTextRow(targetTitle));
                 }
                 string objectIdentity=t==null?"none":t.Raw+"|"+t.X+"|"+t.Level;
-                objectPages=HudPages(objectKey,objectIdentity,detailRows,width-60,detailCardHeight-objectHeaderH-16,pagerHeight);
+                objectPages=HudPages(objectKey,objectIdentity,detailRows,objectWidth-60,detailCardHeight-objectHeaderH-16,pagerHeight);
                 if(objectPages.Length==0){DrawCompactHud(viewport,s,player);return;}
                 if(PreviewHudDevice!=null)hudPages[objectKey]=PreviewHudLastPage?objectPages.Length-1:0;
             }
@@ -369,14 +406,19 @@ namespace KingdomAdvisor
             hudAdvisor=statusRect;
             if(ShowCard(statusRect)){
             bool statusDecoration=HudCard(statusRect,OptionId.AdvisorOpacity,settings.AdvisorTransparent.Value);
-            float cy=statusRect.y+statusTop;HudLabel(new Rect(statusRect.x+16,cy,width-32-identityWidth,headingH),heading,title);
-            HudLabel(new Rect(statusRect.xMax-16-identityWidth,cy+(headingH-small.lineHeight)/2,identityWidth,small.lineHeight),identity,hudValue);cy+=headingH+headingGap;
+            float cy=statusRect.y+statusTop;HudLabel(new Rect(statusRect.x+16,cy,headerLeft-identityWidth,headingH),heading,title);
+            float identityX=statusRect.x+16+Math.Min(headerLeft-identityWidth,title.CalcSize(new GUIContent(heading)).x+12);
+            HudLabel(new Rect(identityX,cy+(headingH-small.lineHeight)/2,identityWidth,small.lineHeight),identity,small);
+            float seasonX=statusRect.x+16+headerLeft+20;
+            if(!compactStatusHeader)HudLabel(new Rect(seasonX,cy,headerRight,headingH),seasonHeader,seasonStyle);
+            cy+=headingH+headingGap;
             if(!compactStatusHeader){
-            HudLabel(new Rect(statusRect.x+16,cy,width-32,dayH),day,hudDayStyle);cy+=dayH+dayGap;
-            DrawHudMetric(new Rect(statusRect.x+16,cy,width-32,clockH),clockRow);cy+=clockH+clockGap;
-            DrawClockProgress(new Rect(statusRect.x+16,cy,width-32,6),s.Clock);cy+=progressStep;
+            HudLabel(new Rect(statusRect.x+16,cy,headerLeft,dayH),dateLine,hudDayStyle);
+            HudLabel(new Rect(seasonX,cy,headerRight,dayH),seasonHint,small);cy+=dayH+dayGap;
+            DrawClockProgress(new Rect(statusRect.x+16,cy+(clockH-6)/2,headerLeft,6),s.Clock);
+            HudLabel(new Rect(seasonX,cy,headerRight,clockH),countdown,small);cy+=clockH+clockGap;
             }else cy=statusRect.y+statusHeaderH;
-            DrawHudRows(statusRect,cy,statusKey,statusPages,pagerHeight,statusBottom,statusDecoration);
+            DrawHudRows(statusRect,cy,statusKey,statusPages,pagerHeight,statusBottom,statusDecoration,statusTextWidth+28);
             }
             }
             y+=cardH+12;
@@ -398,12 +440,12 @@ namespace KingdomAdvisor
             {
                 float objectH=objectHeaderH+objectPages.Max(p=>p.Height)+16+(objectPages.Length>1?pagerHeight+8:0);
                 objectY=advisorRect.y;
-                if(objectX+width>viewport.width-18){objectX=advisorRect.x;objectY=Math.Max(18,advisorRect.y-objectH-12);}
-                var objectRect=Place(objectKey,new Rect(objectX,objectY,width,objectH),hudViewport);detailBounds=Bounds(objectRect);occupied.Add(detailBounds);
+                if(objectX+objectWidth>viewport.width-18){objectX=advisorRect.x;objectY=Math.Max(18,advisorRect.y-objectH-12);}
+                var objectRect=Place(objectKey,new Rect(objectX,objectY,objectWidth,objectH),hudViewport);detailBounds=Bounds(objectRect);occupied.Add(detailBounds);
                 hudDetail=objectRect;hudDetailPages=objectPages.Length;
                 if(ShowCard(objectRect)){
                 HudCard(objectRect,OptionId.PlayerOpacity,settings.PlayerTransparent.Value);
-                HudLabel(new Rect(objectRect.x+16,objectRect.y+objectTop,width-32,headH),objectTitle,title);
+                HudLabel(new Rect(objectRect.x+16,objectRect.y+objectTop,objectWidth-32,headH),objectTitle,title);
                 DrawHudRows(objectRect,objectRect.y+objectHeaderH,objectKey,objectPages,pagerHeight);
                 }
             }
