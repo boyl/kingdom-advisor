@@ -13,12 +13,28 @@ namespace KingdomAdvisor
         private bool opacityDragging;private int activePanelOpacity=-1;
         private string lastCatalogKey="",lastLocationKey="";
         private readonly StableMapExtent stableExtent=new StableMapExtent();private int extentIsland=-1;
+        private string extentCampaign="";
+        private sealed class MapCacheSlot
+        {
+            public int Player;public bool Hud,Used;
+            public readonly MapProjectionCache<PreparedMapLayout> Layout=new();
+            public readonly MapProjectionCache<System.Collections.Generic.List<EnemyGroup>> Enemies=new();
+            public readonly System.Collections.Generic.Dictionary<int,System.Tuple<float,float>> EnemyPositions=new();
+        }
+        private readonly MapCacheSlot[] mapCaches={new(),new(),new(),new()};
+        private MapCacheSlot MapCache(int player,bool hud)
+        {
+            foreach(var slot in mapCaches)if(slot.Used&&slot.Player==player&&slot.Hud==hud)return slot;
+            var available=mapCaches.FirstOrDefault(slot=>!slot.Used)??mapCaches[0];
+            available.Layout.Clear();available.Enemies.Clear();available.EnemyPositions.Clear();available.Player=player;available.Hud=hud;available.Used=true;return available;
+        }
+        private void ClearMapCaches(){foreach(var slot in mapCaches){slot.Layout.Clear();slot.Enemies.Clear();slot.EnemyPositions.Clear();slot.Used=false;}}
+        internal string[] MapEvidence()=>new[]{"mapLayoutBuilds="+mapCaches.Sum(slot=>slot.Layout.Builds),"mapLayoutHits="+mapCaches.Sum(slot=>slot.Layout.Hits),"mapEnemyBuilds="+mapCaches.Sum(slot=>slot.Enemies.Builds),"mapEnemyHits="+mapCaches.Sum(slot=>slot.Enemies.Hits)};
         private LayoutPositions positions;
         private string savedPositions,dragKey="";
         private Vector2 dragOffset,guiOrigin;private int guiPlayer;
         private Vector2 PointerPosition=>controller.Device=="手柄"?controller.PadPointer(guiPlayer)-guiOrigin:Event.current.mousePosition;
 
-        private readonly System.Collections.Generic.Dictionary<int,System.Tuple<float,float>> enemyPositions=new System.Collections.Generic.Dictionary<int,System.Tuple<float,float>>();
         private readonly System.Collections.Generic.Dictionary<string,int> hudPages=new System.Collections.Generic.Dictionary<string,int>();
         private readonly System.Collections.Generic.Dictionary<string,string> hudTargets=new System.Collections.Generic.Dictionary<string,string>();
         public string FontEvidence="not initialised";
@@ -206,7 +222,7 @@ namespace KingdomAdvisor
         {
             if(Event.current.type==EventType.MouseMove||Event.current.type==EventType.MouseDrag)controller.Device="键鼠";
             if(!controller.OpacityEditing)opacityDragging=false;
-            if(!state.Playing){enemyPositions.Clear();hudPages.Clear();hudTargets.Clear();stableExtent.Reset();extentIsland=-1;return;}if(!settings.Enabled.Value)return;
+            if(!state.Playing){ClearMapCaches();hudPages.Clear();hudTargets.Clear();stableExtent.Reset();extentIsland=-1;return;}if(!settings.Enabled.Value)return;
             Styles();int previousDepth=GUI.depth;GUI.depth=-200;
             try
             {
@@ -497,7 +513,7 @@ namespace KingdomAdvisor
             string scope=Localization.Text(controller.MapNearby?"附近 →":"全岛 →");float scopeWidth=Math.Max(98,button.CalcSize(new GUIContent(scope)).x+8);
             if(Button(new Rect(area.x+area.width-scopeWidth-18,area.y+12,scopeWidth,34),scope,transparent))controller.MapNearby=!controller.MapNearby;
             MapLabel(new Rect(x0,area.y+50,width,0),"可招募 "+s.Beggars+" · 营地 "+s.Camps+(s.EnemiesAvailable?"":" · 敌情未知"),small);
-            if(extentIsland!=s.Island){stableExtent.Reset();extentIsland=s.Island;}
+            if(extentIsland!=s.Island||extentCampaign!=s.CampaignKey){ClearMapCaches();stableExtent.Reset();extentIsland=s.Island;extentCampaign=s.CampaignKey;}
             // 岛屿固定地点决定比例；移动对象与显示筛选不改变坐标系。
             var extent=stableExtent.Update(s.Points.Select(p=>p.X),s.Left,s.Right,Time.unscaledTime);
             if(extent==null){MapLabel(new Rect(x0,area.y+100,width,0),"地图加载中…",small);return;}
@@ -507,21 +523,16 @@ namespace KingdomAdvisor
             if(controller.MapNearby&&right-left>260){left=Math.Max(extent.Item1,Math.Min(focusX-130,extent.Item2-260));right=Math.Min(extent.Item2,left+260);}
             float length=Math.Max(1,right-left),axisY=area.y+78+rowH*2+10;
             Fill(new Rect(x0,axisY,width,2),border);
-            var points=s.Points.Where(p=>controller.MapPointVisible(p,!hud)&&p.X>=left&&p.X<=right&&(settings.FullMap.Value||s.ExploredRanges.Any(r=>p.X>=r.Item1&&p.X<=r.Item2)))
-                .GroupBy(p=>p.Name+"|"+Math.Round(p.X)).Select(g=>g.First()).OrderBy(p=>p.X).ToArray();
-            var pointGroups=points.GroupBy(p=>p.Name+"|"+MapGrouping.Cell(p.X,extent.Item1,length*24/width)).ToArray();
-            var counts=pointGroups.Select(g=>g.Count()).ToArray();
-            points=pointGroups.Select(g=>g.First()).ToArray();
-            var requests=new System.Collections.Generic.List<MapLabelRequest>();
-            var labels=new string[points.Length];
-            for(int i=0;i<points.Length;i++)
+            var cache=MapCache(player.Id,hud);
+            var projection=new MapProjectionKey{Snapshot=s,Player=player.Id,Left=left,Right=right,IslandLeft=extent.Item1,Width=width,
+                FontSize=lastSize,English=Localization.English,FullMap=settings.FullMap.Value,Trees=settings.Trees.Value,
+                Hidden=settings.HiddenMapTypes.Value,Temporary=controller.MapTemporaryPoint(!hud),Nearby=controller.MapNearby};
+            if(!cache.Layout.TryGet(projection,s.ExploredRanges,out var layout))
             {
-                var point=points[i];labels[i]=MapText.Label(point,player.Id,counts[i],pointGroups[i].Sum(p=>Math.Max(0,p.CampPeople)));
-                float measured=small.CalcSize(new GUIContent(Localization.Text(labels[i]))).x;
-                requests.Add(new MapLabelRequest{Index=i,Anchor=(point.X-left)/length*width,Width=measured+4,
-                    Priority=MapGrouping.Priority(point)});
+                layout=PreparedMapLayout.Build(s,projection,p=>controller.MapPointVisible(p,!hud),label=>small.CalcSize(new GUIContent(Localization.Text(label))).x);
+                cache.Layout.Store(projection,s.ExploredRanges,layout);
             }
-            var placements=MapLabelLayout.Arrange(requests,width,4);
+            var points=layout.Points;var pointGroups=layout.Groups;var labels=layout.Labels;var placements=layout.Placements;
             float mapContentBottom=axisY+8;
             string tip=focused!=null?PointSummary(focused,player):"";
             foreach(var item in placements)
@@ -538,7 +549,7 @@ namespace KingdomAdvisor
                 var oldColor=small.normal.textColor;small.normal.textColor=color;MapLabel(rect,labels[item.Index],small);small.normal.textColor=oldColor;
                 Fill(new Rect(px-2,axisY-4,4,9),color);
                 bool hovered=(controller.Device=="键鼠"||controller.PadPointerHover(player.Id))&&(rect.Contains(PointerPosition)||new Rect(px-5,axisY-5,10,14).Contains(PointerPosition));
-                bool selected=focused!=null&&pointGroups[item.Index].Any(p=>p==focused);
+                bool selected=focused!=null&&Array.IndexOf(pointGroups[item.Index],focused)>=0;
                 if(hovered||selected)
                 {
                     Fill(new Rect(rect.x,rect.yMax-2,rect.width,1),gold);
@@ -551,17 +562,22 @@ namespace KingdomAdvisor
                 }
                 if(controller.Hold.Active&&controller.Hold.Owner==player.Id&&controller.Hold.Target==AdvisorController.PointKey(point)&&controller.Hold.CanTeleport&&!controller.Hold.Latched){ProgressRing(new Vector2(px,axisY-24),controller.Hold.Progress(Time.unscaledTime));tip="传送 · "+Math.Max(0,.8f-(Time.unscaledTime-controller.Hold.Started)).ToString("F1")+" 秒 · 松开取消";}
             }
-            var placed=new System.Collections.Generic.HashSet<int>(placements.Select(p=>p.Index));
             for(int i=0;i<points.Length;i++)
             {
-                if(placed.Contains(i))continue;
+                if(layout.Placed[i])continue;
                 var point=points[i];float px=Mathf.Round(x0+(point.X-left)/length*width);
                 Fill(new Rect(px,axisY-3,1,6),muted);
                 if((controller.Device=="键鼠"||controller.PadPointerHover(player.Id))&&new Rect(px-3,axisY-5,6,12).Contains(PointerPosition)){tip=PointSummary(point,player);if(interactive){if(controller.Device=="手柄")controller.PadMapHit(point,player.Id,new Rect(px-3,axisY-5,6,12),new Rect(px-3,axisY-5,6,12),guiOrigin);else controller.MapHit(point,player.Id);}}
             }
-            var groups=EnemyClusters.Group(s.Enemies.Where(e=>settings.MapEnemies.Value&&(!controller.MapNearby||e.X>=left&&e.X<=right)&&(settings.FullMap.Value||s.ExploredRanges.Any(r=>e.X>=r.Item1&&e.X<=r.Item2))),length*34/width);
-            var ids=new System.Collections.Generic.HashSet<int>(groups.Select(g=>g.Id));
-            foreach(var old in enemyPositions.Keys.Where(id=>!ids.Contains(id)).ToArray())enemyPositions.Remove(old);
+            projection.Revision=s.EnemiesRevision;projection.Enemies=settings.MapEnemies.Value;
+            var enemyPositions=cache.EnemyPositions;
+            if(!cache.Enemies.TryGet(projection,s.ExploredRanges,out var groups))
+            {
+                groups=EnemyClusters.Group(s.Enemies.Where(e=>settings.MapEnemies.Value&&(!controller.MapNearby||e.X>=left&&e.X<=right)&&(settings.FullMap.Value||PreparedMapLayout.Explored(s,e.X))),length*34/width);
+                cache.Enemies.Store(projection,s.ExploredRanges,groups);
+                var ids=new System.Collections.Generic.HashSet<int>(groups.Select(g=>g.Id));
+                foreach(var old in enemyPositions.Keys.Where(id=>!ids.Contains(id)).ToArray())enemyPositions.Remove(old);
+            }
             float occupied=float.NegativeInfinity;
             foreach(var group in groups)
             {

@@ -17,7 +17,7 @@ namespace KingdomAdvisor
     [BepInPlugin("local.kingdom.advisor","王国顾问 Kingdom Advisor",Version)]
     public sealed class Plugin : BasePlugin
     {
-        public const string Version="0.6.16";
+        public const string Version="0.6.17";
         internal static Plugin Instance;
         internal Settings Settings;
         public override void Load()
@@ -319,6 +319,7 @@ namespace KingdomAdvisor
             lines.Add("continuousPurchaseEnabled="+Plugin.Instance.Settings.ContinuousPurchase.Value+" active="+ContinuousPurchaseRuntime.ActiveCount+" restarts="+ContinuousPurchaseRuntime.Restarts);
             lines.AddRange(ContinuousPurchaseRuntime.Evidence());
             lines.AddRange(view.HudEvidence().Select(value=>"hud."+value));
+            lines.AddRange(view.MapEvidence());
             lines.Add("hud."+view.RoadEvidence);
             lines.Add("previewCaptureEnabled="+Plugin.Instance.Settings.PreviewCapture.Value+" hudPreviewTarget="+(view.PreviewTarget?.Raw??"none"));
             lines.Add("clockState="+s.Clock.State+" clockPhase="+s.Clock.Phase+" clock="+(s.Clock.Available?s.Clock.ClockText:"unavailable")+" untilDawn="+s.Clock.UntilDawn+" remainingSeconds="+s.Clock.RemainingSeconds+" progress="+s.Clock.Progress+" client="+s.Clock.Client+" clockUnavailable="+s.Clock.UnavailableReason);
@@ -587,8 +588,8 @@ namespace KingdomAdvisor
             using(PerformanceTrace.Active.Measure(PerformanceStage.Structures)){
             foreach(var building in specialBuildings)
             {
-                if(!building||!building.gameObject.activeInHierarchy||!mappedObjects.Add(building.gameObject.GetInstanceID()))continue;
-                var entry=ResolveBuilding(building.gameObject);if(entry.Key=="unknown")continue;
+                if(!NativeStructureReader.IsWorldStructure(building)||!mappedObjects.Add(building.gameObject.GetInstanceID()))continue;
+                var entry=ResolveBuilding(building.gameObject);if(entry.Key=="unknown"||entry.Key=="monument")continue;
                 float x=building.transform.position.x;
                 s.Left=Math.Min(s.Left,x);s.Right=Math.Max(s.Right,x);
                 s.Counts[entry.Key]=s.Counts.TryGetValue(entry.Key,out var count)?count+1:1;
@@ -648,7 +649,7 @@ namespace KingdomAdvisor
         }
         public void ReadEnemies()
         {
-            State.Enemies.Clear();State.EnemiesAvailable=false;if(!State.Playing)return;
+            State.EnemiesRevision++;State.Enemies.Clear();State.EnemiesAvailable=false;if(!State.Playing)return;
             ReadOptional("enemies",ReadEnemyDetails);
         }
         private void ReadEnemyDetails()
@@ -743,6 +744,7 @@ namespace KingdomAdvisor
             void Consider(Component building)
             {
                 if(!building||!building.gameObject.activeInHierarchy||!TargetProximity.Contains(info.X,building.transform.position.x))return;
+                if(!NativeStructureReader.IsWorldStructure(building))return;
                 float distance=Math.Abs(building.transform.position.x-info.X);
                 if(distance<buildingDistance){buildingDistance=distance;nearest=building.gameObject;}
             }

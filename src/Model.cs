@@ -638,7 +638,7 @@ namespace KingdomAdvisor
         public string NextSeason="";public int SeasonDaysRemaining=-1,SeasonDay=-1;
         public DayClockSnapshot Clock=new DayClockSnapshot();
         public float Left=-1,Right=1;
-        public int Camps;public bool EnemiesAvailable;
+        public int Camps;public bool EnemiesAvailable;public int EnemiesRevision;
         public string CampaignKey="";
         public readonly List<int> ResourceTypes=new List<int>();
         public readonly List<EnemyPoint> Enemies=new List<EnemyPoint>();

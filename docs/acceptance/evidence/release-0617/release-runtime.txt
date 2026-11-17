@@ -1,0 +1,73 @@
+version=0.6.17
+utc=2026-11-17T01:37:03.4730060Z
+gameState=Playing
+overlayOpen=False
+mapFocus=False
+holdActive=False
+releaseGuardCount=0
+playing=True
+online=False
+island=3
+day=199
+points=116
+worldReadMaxMs=282.724
+font=Microsoft YaHei sampleWidth=158.99 lineHeight=24
+faulted=False
+disabledMovementMaps=0
+movementLeakFrames=0
+languagePreference=0
+languageCode=zh
+displayLanguage=zh-CN
+configuredSpeed=2
+actualTimeScale=2
+gameplayRuleWrites=5
+teleports=1
+resourceAdds=0
+error=
+localPlayers=1
+season=Spring seasonDay=199 nextSeason=Summer remainingDays=9
+continuousPurchaseEnabled=True active=0 restarts=0
+continuousPurchaseCalls=1988 held=0 down=0 touch=0 nativeAfter=1988 traceCount=38 recorded=38
+continuousPurchaseTraceReadErrors=0
+hud.version=0.6.17
+hud.device=keyboard
+hud.font=18 language=zh-CN
+hud.advisor=(x:18.00, y:860.92, width:492.77, height:513.08) bottom=1374 legacyDefaultBottom=1374
+hud.detail=(x:522.77, y:860.92, width:492.77, height:270.88) pages=1
+hud.alert=(x:324.00, y:246.00, width:492.77, height:29.12)
+hud.footerTop=1390 hintHeight=0
+hud.rows=16 pages=1 columns=1
+hud.day=岛 3 · 第 199 天\n春季 · 距夏季 9 天\n草地复苏，恢复农耕。
+hud.opacity=0 identityInHeader=True rowGap=5
+mapLayoutBuilds=38
+mapLayoutHits=6352
+mapEnemyBuilds=364
+mapEnemyHits=6026
+hud.roadTop=828
+previewCaptureEnabled=False hudPreviewTarget=none
+clockState=Running clockPhase=Evening clock=16:07 untilDawn=False remainingSeconds=26.85767133746041 progress=0.48451940218607586 client=False clockUnavailable=
+performanceFrames=2400
+performanceStableFrames=1792
+performanceStableFrameP95Ms=33.674
+performanceStableFrameMaxMs=108.976
+performanceStableWorldMaxMs=30.052
+performanceStableGuiMaxMs=96.548
+performanceStableDiagnosticsMaxMs=24.812
+performanceManagedGc0=26
+performanceWarmupSeconds=5.000
+uiBlockedReason=none
+nativeP2Playing=False
+nativePlayer=0 active=True local=True
+nativePlayer=1 active=False local=True
+player=0 local=True coins=3189 target=Wall5(Clone) targetName=城墙 description=阻挡地面敌人，保护城内人员；飞行敌人可越过城墙。 rect=0,0,1,1 original=1000 capacity=2147483647 total=3191 gems=1 numeric=True
+population=工匠 45
+population=弓手 81
+population=侍从 0
+population=骑士 10
+population=农民 43
+population=游民 4
+population=长枪兵 66
+population=隐士 4
+populationTotal=249
+entityReadSource=manager
+enemiesAvailable=True enemies=0 camps=2

@@ -215,6 +215,7 @@ namespace KingdomAdvisor
         public void AddResources()
         {if(ResourceEditing)CommitAmount();if(ResourceEditing)return;Actions.Add(current,ResourcePlayer,ResourceType,settings.ResourceAmount.Value);}
         public bool MapPointVisible(MapPoint p,bool allowTemporary)=>PointVisible(p)||(allowTemporary&&Open&&Tab==3&&temporaryMapPoint==PointKey(p));
+        public string MapTemporaryPoint(bool allowTemporary)=>allowTemporary&&Open&&Tab==3?temporaryMapPoint:"";
         public bool PointVisible(MapPoint p)
         {return DisplayPreferences.Visible(p.Key)&&(p.Key!="tree"||settings.Trees.Value);}
         public void Activate()

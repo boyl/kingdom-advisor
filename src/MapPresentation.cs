@@ -14,6 +14,8 @@ namespace KingdomAdvisor
         public static List<MapLabelPlacement> Arrange(IEnumerable<MapLabelRequest> requests,float width,int rows)
         {
             var result=new List<MapLabelPlacement>();
+            var occupied=new List<MapLabelPlacement>[rows];
+            for(int row=0;row<rows;row++)occupied[row]=new List<MapLabelPlacement>();
             foreach(var request in requests.OrderByDescending(r=>r.Priority).ThenBy(r=>r.Anchor))
             {
                 if(request.Width>width)continue;
@@ -21,13 +23,15 @@ namespace KingdomAdvisor
                 for(int row=0;row<rows;row++)
                 {
                     float left=desired;
-                    foreach(var other in result.Where(p=>p.Row==row).OrderBy(p=>p.Left))
+                    foreach(var other in occupied[row])
                     {
                         if(left+request.Width+6<=other.Left)break;
                         if(left<other.Left+other.Width+6)left=other.Left+other.Width+6;
                     }
                     if(left+request.Width>width||Math.Abs(left-desired)>28)continue;
-                    result.Add(new MapLabelPlacement{Index=request.Index,Row=row,Left=left,Width=request.Width});break;
+                    var placed=new MapLabelPlacement{Index=request.Index,Row=row,Left=left,Width=request.Width};
+                    int insert=0;while(insert<occupied[row].Count&&occupied[row][insert].Left<=left)insert++;
+                    occupied[row].Insert(insert,placed);result.Add(placed);break;
                 }
             }
             return result;

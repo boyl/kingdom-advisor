@@ -1,6 +1,6 @@
-# 王国顾问：前置与 Mod 整合包（0.6.16）
+# 王国顾问：前置与 Mod 整合包（0.6.17）
 
-包含 **BepInEx 6.0.0-be.788 + 5b766a3、Il2CppInterop 1.5.3、Cpp2IL 属性解析修复、王国顾问 0.6.16**。游戏内 Mod 版本为 0.6.16。修改过的两个解析器 DLL 已在 `THIRD-PARTY-NOTICES.md` 标明，不能称为官方原版。
+包含 **BepInEx 6.0.0-be.788 + 5b766a3、Il2CppInterop 1.5.3、Cpp2IL 属性解析修复、王国顾问 0.6.17**。游戏内 Mod 版本为 0.6.17。修改过的两个解析器 DLL 已在 `THIRD-PARTY-NOTICES.md` 标明，不能称为官方原版。
 
 历史前置验收：Windows x64、游戏 2.4.2、Unity 6000.0.66f2；空缓存首次生成、重启、Mod 加载、图鉴及操作提示移除。其他游戏版本、系统、联机与所有插件组合尚未完整验证。
 
@@ -8,7 +8,7 @@
 
 Windows 10/11 自带的 Windows PowerShell 5.1 不能运行本安装脚本；Windows Terminal 也不代表已安装 PS7。Nexus 手动包不需要此步骤。
 
-1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。这是 2026-11-13 核对的稳定版。
+1. **直接下载微软官方 Windows x64 安装包：** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi)。此下载入口已于 2026-11-17 核对。
 2. 备用入口：[PowerShell 官方发布页](https://github.com/PowerShell/PowerShell/releases/latest) · [微软 Windows 安装指南](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows)。在官方 Assets 中选择稳定版 `PowerShell-7.x.x-win-x64.msi`；本 Mod 适用 Windows x64，不要选 ARM64、x86、Preview 或 Source code。
 3. 双击下载的 MSI，按安装向导完成安装，保留默认安装位置及“Add PowerShell to Path”选项。安装 PS7 不会替换系统 PS5.1。
 4. 安装完成后关闭之前提示缺少 PS7 的窗口，回到已解压的 Mod 文件夹，重新双击 **INSTALL.cmd**。不要直接双击 `install.ps1`，也不要在 ZIP 内运行。
@@ -89,4 +89,4 @@ pwsh -NoProfile -File .\install.ps1 -GamePath 'D:\SteamLibrary\steamapps\common\
 单人已实测正常速度、2倍、短时4倍、持续暂停与恢复、入夜／黎明切换。双机联机及全部语言／字号／分辨率组合尚未完整复核。倒计时不代表敌人到达或安全返程时间，不含返程估算。
 
 
-0.6.16 新增当前季节简短提示和距下一季的天数，按游戏原生季节日历计算。顾问保持在路面下方；默认字号完整单列，大字号或高度不足时横向展开，不使用顾问分页。时间与季节分区对齐，保留行距与分组留白，收紧名称与数值之间的过大空隙。保留单／双列选项、独立拖动提醒、手柄提示与英文溢出修复；透明度 0 时仍只显示文字、图标与进度条。配置、存档和前置不变。
+0.6.17 修复背景纪念碑被误标为“纪念碑／特殊设施”并随镜头移动的问题；北欧之地及其他 DLC 部分为盲修复，未经实机验证。优化地图地点分组、文字测量和标签排版缓存，减少重复计算与临时内存分配；保留玩家和敌人的原有更新频率，切换全岛／附近、字号、语言及筛选时及时刷新。配置、存档、快捷键和前置不变。

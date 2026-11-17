@@ -1,6 +1,6 @@
-# Kingdom Advisor 0.6.16 — Nexus manual installation
+# Kingdom Advisor 0.6.17 — Nexus manual installation
 
-Script-free manual packages; PowerShell is not required. 0.6.16 adds short seasonal advice and a countdown to the next season, using the native game calendar. The advisor stays below the road: the default font shows all entries in one column, while larger fonts or limited height expand horizontally without advisor pagination. Time and season sections align clearly, with comfortable row and group spacing and closer label/value alignment. One/two-column preferences, independently draggable alerts, controller hints and English overflow fixes are retained. At 0 opacity, only text, icons and the progress bar remain visible. Settings, saves and loader are unchanged.
+Script-free manual packages; PowerShell is not required. 0.6.17 fixes background monuments being marked as monuments/special facilities and moving with the camera. Norse Lands and other DLC fixes are blind fixes, without in-game verification. Cached map grouping, text measurement and label layout reduce repeated work and temporary allocations. Player and enemy update rates are retained; scope, font, language and filter changes refresh the layout. Settings, saves, shortcuts and loader are unchanged.
 
 ## Choose one package
 
@@ -74,7 +74,7 @@ Undo Complete: quit, move the current BepInEx/dotnet folders and four installed 
 
 Accepted on Windows x64, game 2.4.2, Unity 6000.0.66f2: fresh generation, restart and user gameplay. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; remaining runtime files come from official #788. Other game versions, all DLC, multiplayer and all other-plugin combinations are not fully verified.
 
-Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.16), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
+Corresponding source archives, patch script and reproduction instructions are available in the [public GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.17), whose Complete archive includes pinned third-party sources. Sources are not installed into the game. Nexus Complete retains license texts and component provenance.
 
 
 Single-player tests covered normal speed, 2x, a short 4x run, sustained pause/resume and nightfall/dawn. Two-machine multiplayer and all language/font/resolution combinations remain incompletely verified. The countdown is not an enemy-arrival or safe-return estimate; return travel is not estimated.

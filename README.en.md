@@ -1,19 +1,19 @@
-# Kingdom Advisor 0.6.16
+# Kingdom Advisor 0.6.17
 
-In-game advisor for Kingdom Two Crowns. 0.6.16 adds short seasonal advice and a countdown to the next season, using the native game calendar. The advisor stays below the road: the default font shows all entries in one column, while larger fonts or limited height expand horizontally without advisor pagination. Time and season sections align clearly, with comfortable row and group spacing and closer label/value alignment. One/two-column preferences, independently draggable alerts, controller hints and English overflow fixes are retained. At 0 opacity, only text, icons and the progress bar remain visible. Settings, saves and loader are unchanged.
+In-game advisor for Kingdom Two Crowns. 0.6.17 fixes background monuments being marked as monuments/special facilities and moving with the camera. Norse Lands and other DLC fixes are blind fixes, without in-game verification. Cached map grouping, text measurement and label layout reduce repeated work and temporary allocations. Player and enemy update rates are retained; scope, font, language and filter changes refresh the layout. Settings, saves, shortcuts and loader are unchanged.
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.16) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.17) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus now hosts 0.6.16 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.16 assets only.
+Nexus now hosts 0.6.17 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.17 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.16-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.16-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.17-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.17-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
@@ -21,7 +21,7 @@ The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution
 
 Windows 10/11's built-in Windows PowerShell 5.1 cannot run this installer. Windows Terminal does not imply PS7 is installed. Nexus manual packages do not need this step.
 
-1. **Microsoft's official Windows x64 download:** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi), the stable release verified on October 10, 2026.
+1. **Microsoft's official Windows x64 download:** [PowerShell-7.6.6-win-x64.msi](https://github.com/PowerShell/PowerShell/releases/download/v7.6.6/PowerShell-7.6.6-win-x64.msi), download link verified on November 17, 2026.
 2. Alternative: [official release page](https://github.com/PowerShell/PowerShell/releases/latest) and [Microsoft Windows installation guide](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows). Choose a stable `PowerShell-7.x.x-win-x64.msi` asset, not ARM64, x86, Preview or Source code.
 3. Run the MSI and complete the wizard, retaining the default installation directory and “Add PowerShell to Path” option. PS7 installs alongside Windows PowerShell 5.1.
 4. Close the previous missing-PS7 window, return to the extracted mod folder and double-click **INSTALL.cmd** again. Do not double-click install.ps1 or run inside the ZIP.
@@ -99,7 +99,7 @@ Multiplayer compatibility retains the 0.6.10 joiner scene-entity reading. Automa
 
 ## Day/night clock
 
-0.6.16 adds short seasonal advice and a countdown to the next season, using the native game calendar. The advisor stays below the road: the default font shows all entries in one column, while larger fonts or limited height expand horizontally without advisor pagination. Time and season sections align clearly, with comfortable row and group spacing and closer label/value alignment. One/two-column preferences, independently draggable alerts, controller hints and English overflow fixes are retained. At 0 opacity, only text, icons and the progress bar remain visible. Settings, saves and loader are unchanged.
+0.6.17 fixes background monuments being marked as monuments/special facilities and moving with the camera. Norse Lands and other DLC fixes are blind fixes, without in-game verification. Cached map grouping, text measurement and label layout reduce repeated work and temporary allocations. Player and enemy update rates are retained; scope, font, language and filter changes refresh the layout. Settings, saves, shortcuts and loader are unchanged.
 
 Back up the configuration before upgrading. Old category filters migrate to per-type visibility. Hidden locations can still be queried and temporarily highlighted.
 
