@@ -529,7 +529,7 @@ namespace KingdomAdvisor
                 Hidden=settings.HiddenMapTypes.Value,Temporary=controller.MapTemporaryPoint(!hud),Nearby=controller.MapNearby};
             if(!cache.Layout.TryGet(projection,s.ExploredRanges,out var layout))
             {
-                layout=PreparedMapLayout.Build(s,projection,p=>controller.MapPointVisible(p,!hud),label=>small.CalcSize(new GUIContent(Localization.Text(label))).x);
+                layout=PreparedMapLayout.Build(s,projection,p=>controller.MapPointVisible(p,!hud),MeasureMapPointLabel);
                 cache.Layout.Store(projection,s.ExploredRanges,layout);
             }
             var points=layout.Points;var pointGroups=layout.Groups;var labels=layout.Labels;var placements=layout.Placements;
@@ -546,7 +546,13 @@ namespace KingdomAdvisor
                 float anchor=Math.Clamp(px,rect.x+2,rect.xMax-2),connector=item.Row%2==0?rect.yMax-4:rect.y-2;
                 Fill(new Rect(px-1,Math.Min(connector,axisY),2,Math.Abs(axisY-connector)),border);
                 Fill(new Rect(Math.Min(px,anchor),connector,Math.Max(2,Math.Abs(px-anchor)),1),border);
-                var oldColor=small.normal.textColor;small.normal.textColor=color;MapLabel(rect,labels[item.Index],small);small.normal.textColor=oldColor;
+                var label = labels[item.Index];
+                var textRect = rect;
+                textRect.height = label.Height;
+                var oldColor = small.normal.textColor;
+                small.normal.textColor = color;
+                HudLabel(textRect, label.Text, small);
+                small.normal.textColor = oldColor;
                 Fill(new Rect(px-2,axisY-4,4,9),color);
                 bool hovered=(controller.Device=="键鼠"||controller.PadPointerHover(player.Id))&&(rect.Contains(PointerPosition)||new Rect(px-5,axisY-5,10,14).Contains(PointerPosition));
                 bool selected=focused!=null&&Array.IndexOf(pointGroups[item.Index],focused)>=0;
@@ -615,13 +621,19 @@ namespace KingdomAdvisor
                 var color=small.normal.textColor;small.normal.textColor=muted;MapLabel(tipRect,hud?statusText:tip,small);small.normal.textColor=color;
             }
         }
-        private void MapLabel(Rect area,string content,GUIStyle style)
+        private MapLabelMetrics MeasureMapPointLabel(string raw)
         {
-            var original=style.normal.textColor;
-            style.normal.textColor=new Color(0,0,0,.95f);
-            Label(new Rect(area.x+1,area.y+1,area.width,area.height),content,style);
-            style.normal.textColor=original;
-            Label(area,content,style);
+            string text = Localization.Text(raw);
+            var content = new GUIContent(text);
+            float width = small.CalcSize(content).x;
+            return new MapLabelMetrics(text, width, small.CalcHeight(content, width + 4));
+        }
+
+        private void MapLabel(Rect area, string raw, GUIStyle style)
+        {
+            string text = Localization.Text(raw);
+            area.height = style.CalcHeight(new GUIContent(text), area.width);
+            HudLabel(area, text, style);
         }
         private void Landmark(float x,float y,string category,Color color)
         {

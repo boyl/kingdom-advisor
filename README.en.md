@@ -1,19 +1,19 @@
-# Kingdom Advisor 0.6.17
+# Kingdom Advisor 0.6.18
 
-In-game advisor for Kingdom Two Crowns. 0.6.17 fixes background monuments being marked as monuments/special facilities and moving with the camera. Norse Lands and other DLC fixes are blind fixes, without in-game verification. Cached map grouping, text measurement and label layout reduce repeated work and temporary allocations. Player and enemy update rates are retained; scope, font, language and filter changes refresh the layout. Settings, saves, shortcuts and loader are unchanged.
+In-game advisor for Kingdom Two Crowns. 0.6.18 optimizes map text rendering in both Full Island and Nearby views. Each place label reuses the translated text and dimensions saved during layout. Its shadow and foreground text are each drawn once. Nearby retains its existing camera tracking and label placement.
 
 ## Download and install
 
-[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.17) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
+[GitHub release](https://github.com/boyl/kingdom-advisor/releases/tag/v0.6.18) · [Existing Nexus Mods page](https://www.nexusmods.com/kingdomtwocrowns/mods/43?tab=files)
 
-Nexus now hosts 0.6.17 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.17 assets only.
+Nexus now hosts 0.6.18 manual packages uploaded through the API without scripts or a PowerShell requirement: [manual guide](distribution/nexus/README.en.md) and [placement diagram](distribution/nexus/INSTALLATION.png). The table and one-click steps below apply to GitHub 0.6.18 assets only.
 
 Choose one archive, not GitHub's automatically generated Source code archives:
 
 | Archive | Contents and intended use | Guide |
 |---|---|---|
-| `KingdomAdvisor-0.6.17-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
-| `KingdomAdvisor-0.6.17-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
+| `KingdomAdvisor-0.6.18-ModOnly.zip` | Mod only; requires an existing working BepInEx 6 Unity IL2CPP Windows x64 installation | [English](distribution/README.ModOnly.en.md) · [中文](distribution/README.ModOnly.md) |
+| `KingdomAdvisor-0.6.18-Complete.zip` | Mod, complete #788 runtime and parser patch; for fresh installs or the AndroidManager / RawPropertyType startup error | [English](distribution/README.Complete.en.md) · [中文](distribution/README.Complete.md) |
 
 The Complete bundle is a **modified** official BepInEx 6.0.0-be.788 distribution. Only LibCpp2IL.dll and Cpp2IL.Core.dll are patched; corresponding sources, patch script and licenses are included. Stock #738 and #788 failed fresh interop generation locally. See the [compatibility record](docs/acceptance/bepinex-738-compatibility.md).
 
@@ -99,7 +99,7 @@ Multiplayer compatibility retains the 0.6.10 joiner scene-entity reading. Automa
 
 ## Day/night clock
 
-0.6.17 fixes background monuments being marked as monuments/special facilities and moving with the camera. Norse Lands and other DLC fixes are blind fixes, without in-game verification. Cached map grouping, text measurement and label layout reduce repeated work and temporary allocations. Player and enemy update rates are retained; scope, font, language and filter changes refresh the layout. Settings, saves, shortcuts and loader are unchanged.
+0.6.18 optimizes map text rendering in both Full Island and Nearby views. Each place label reuses the translated text and dimensions saved during layout. Its shadow and foreground text are each drawn once. Nearby retains its existing camera tracking and label placement.
 
 Back up the configuration before upgrading. Old category filters migrate to per-type visibility. Hidden locations can still be queried and temporarily highlighted.
 

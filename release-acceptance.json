@@ -1,9 +1,9 @@
 {
-  "version": "0.6.17",
-  "releaseAuthorization": "2026-11-17 用户明确要求发布，DLC 部分按盲修复说明，并授权由助手正常保存退出、安装正式版和重启核验。",
-  "userAcceptance": "用户接受本轮地图修复与优化的发布范围。普通主题单人候选实机移动和全岛/附近切换已核验；DLC 按用户指定标注盲修复，不能视为实机通过。",
-  "acceptedCandidateHash": "9895CD8D30D826BF671502E06B14B3861AC2F567E493DCF50DCEB14EEBBFE2E6",
-  "dllHash": "C1DDBF24F97D2BDB9F5FB494CEEB4791585FE2BA03A40C440300595348B94FC4",
+  "version": "0.6.18",
+  "releaseAuthorization": "2026-11-20 用户要求发布 0.6.18，附近模式保持现状，更新说明明确地图文字绘制优化。",
+  "userAcceptance": "用户已接受 0.6.18-rc.1 的同档六场景对照结果并授权发布。",
+  "acceptedCandidateHash": "1F8FCECC39959F5467BAFA26D164C70E7A34E6477A6921589B870BA63623FD9B",
+  "dllHash": "3494ED7EDAB701A9BA59E22990C5595AE6AF0EA91DC9A2E87FCD744DD8876DAC",
   "sourceHashes": {
     "src/AssistModel.cs": "A3B8E29D0C946AD3DBE414E89E21CADD287C3D23D7C6AFE2D01B2FA561292150",
     "src/CatalogPresentation.cs": "D388E4DA1448335AF70C53CB151DD83E40E3EC67B3E5C24B658D8C1F32779AD9",
@@ -18,7 +18,7 @@
     "src/IslandJournal.cs": "2B729DF7F9B4AE8BF19BE1D2A74F27443DDEBC22E04C9F399B39EC9A113CC21E",
     "src/Localization.cs": "7EBC694D1D3CA7869844CD47EE25936A2BE56AE8054DF3CB980C8D0424E7F52C",
     "src/MapPresentation.cs": "98F2A13117ECEA451490644DDDCD54A51EEB1B79CE5D8C829A4E4445CFD6C2DC",
-    "src/MapRenderCache.cs": "64AE3F65808C0988BDABADD209326F401302917EA8C70E646F4730F41BF28BD6",
+    "src/MapRenderCache.cs": "C26EE73DE6CC0934D86889D746AF7B0C1A85499688A3362D64C2C07A2F1753E4",
     "src/MenuState.cs": "05C5A0136AA61B6A23CC59F51DB3041211120BFE5705C0C6ED30811710B099D7",
     "src/Model.cs": "0036736364A8FF2CB7A7230E8F69C81EC1E15AA3F5B4B307DFC4C5C7066F0C08",
     "src/NativeClockReader.cs": "190D7D6255572E4C94490703B76FB72D6D0B8DD9B412DD1C2236C45DB34C5AB7",
@@ -27,27 +27,24 @@
     "src/PadInput.cs": "84C798E6A72DE3F67D96EFA3DEBD7E3C0494553F395154343CE7BDD13AE20351",
     "src/PerformanceScanCycle.cs": "39D54D0BE3B52886D5CBECBFF177E4A126060842187FC338FF75DF38299EFA45",
     "src/PerformanceTrace.cs": "43D482E7637E1207452115BE4B44CBAD9B5D9B29837941D0F4DD46FA01B0B091",
-    "src/Plugin.cs": "C60ECD41B5E728988DF9248CC7B15CE5F2355581009BDAAD38C1F66786FB1A86",
+    "src/Plugin.cs": "509B454F07C6DA4435DDAD4719B81B066AF7D17E7D894B7EE4703F19297A7C34",
     "src/SeasonPresentation.cs": "3901FCD049610556E285A9175533DA7F8506D66446F98FF489A74481B564AD5B",
-    "src/View.cs": "B8B9B91B171223DD681733DF82E74ED95CD7AFDC8495C2C210D82ED30BA6DF28"
+    "src/View.cs": "5BE70B8770B3ECC769917D14994B34A1697656D808C20D1E8BD2E64726B1332C"
   },
   "channels": [
     "GitHub",
     "Nexus Mods"
   ],
   "runtime": {
-    "evidence": "docs/acceptance/evidence/release-0617/release-runtime.txt",
-    "formalDifference": "相对 0.6.17-rc.1 仅版本号变化",
-    "updatedConfigValues": [],
-    "candidateLayoutHitPercent": 99.11,
+    "evidence": "docs/acceptance/evidence/release-0618/release-runtime.txt",
+    "formalDifference": "相对 0.6.18-rc.1 仅版本号变化",
+    "candidateBenchmark": "docs/specs/map-text-performance.md",
+    "status": "Fresh 0.6.18 Playing; faulted=False; movementLeakFrames=0; configuredSpeed=2; actualTimeScale=2",
     "preservedConfigValues": 54,
-    "status": "Fresh 0.6.17 Playing; faulted=False; movementLeakFrames=0; configuredSpeed=2; actualTimeScale=2"
+    "updatedConfigValues": []
   },
   "unverified": [
-    "北欧之地及其他 DLC：盲修复，未经实机验证",
-    "真实双机联机、全部字体/筛选/分辨率组合未完整实测",
-    "缓存命中率及合成基准不等于实际 FPS 提升；无同场景新旧版 FPS 对照",
-    "先前测试期间发生 Windows 异常重启，原因未确定；正式版正常保存退出、安装和启动已核验"
+    "性能对照限于本机普通主题单人同档路段；DLC、真实双机及不同硬件未作帧时对照。"
   ],
   "manual": {
     "releaseAuthorization": "passed",

@@ -41,7 +41,7 @@ public static class MapCacheTests {
  public static string Benchmark(){
   var s=new Snapshot();for(int i=0;i<600;i++)s.Points.Add(new MapPoint{Key="wall",Name="地点"+(i%13),Category="防御",X=i});
   var key=new MapProjectionKey{Snapshot=s,Left=0,Right=600,Width=900,FullMap=true};
-  var cache=new MapProjectionCache<PreparedMapLayout>();Func<string,float> measure=t=>t.Length*18;
+  var cache=new MapProjectionCache<PreparedMapLayout>();Func<string,MapLabelMetrics> measure=t=>new MapLabelMetrics(t,t.Length*18,24);
   for(int i=0;i<30;i++){LegacyBuild(s,key);PreparedMapLayout.Build(s,key,p=>true,measure);}
   long bytes=GC.GetAllocatedBytesForCurrentThread();var timer=System.Diagnostics.Stopwatch.StartNew();
   for(int i=0;i<1200;i++)LegacyBuild(s,key);
@@ -60,7 +60,7 @@ public static class MapCacheTests {
   var s=new Snapshot();s.ExploredRanges.Add(Tuple.Create(-100f,100f));
   for(int i=0;i<300;i++)s.Points.Add(new MapPoint{Key=i%3==0?"tree":"wall",Name=i%3==0?"树木":"城墙",Category="防御",X=-100+i,CampPeople=i%27==0?2:-1});
   var key=new MapProjectionKey{Snapshot=s,Left=-100,Right=200,IslandLeft=-100,Width=900,FontSize=18,Hidden="",Temporary="",FullMap=true};
-  int measured=0;Func<string,float> measure=text=>{measured++;return text.Length*18;};
+  int measured=0;Func<string,MapLabelMetrics> measure=text=>{measured++;return new MapLabelMetrics("display:"+text,text.Length*18,24);};
   var cache=new MapProjectionCache<PreparedMapLayout>();
   Check(!cache.TryGet(key,s.ExploredRanges,out _),"首次读取不能命中");
   var layout=PreparedMapLayout.Build(s,key,p=>true,measure);
@@ -73,7 +73,7 @@ public static class MapCacheTests {
   for(int i=0;i<expected.Length;i++){
    Check(ReferenceEquals(layout.Points[i],expected[i].First()),"代表地点变化");
    Check(layout.Groups[i].SequenceEqual(expected[i]),"合并成员变化");
-   Check(layout.Labels[i]==MapText.Label(expected[i].First(),0,expected[i].Count(),expected[i].Sum(p=>Math.Max(0,p.CampPeople))),"标签/营地人数变化");
+   Check(layout.Labels[i].Height==24 && layout.Labels[i].Text=="display:"+MapText.Label(expected[i].First(),0,expected[i].Count(),expected[i].Sum(p=>Math.Max(0,p.CampPeople))),"标签/营地人数变化");
   }
   foreach(var field in typeof(MapProjectionKey).GetFields()){
    object boxed=key;

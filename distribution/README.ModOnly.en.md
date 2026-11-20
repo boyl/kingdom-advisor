@@ -1,8 +1,8 @@
-# Kingdom Advisor — Mod only (0.6.17)
+# Kingdom Advisor — Mod only (0.6.18)
 
-Mod-only package; requires an existing working BepInEx IL2CPP loader. 0.6.17 fixes background monuments being marked as monuments/special facilities and moving with the camera. Norse Lands and other DLC fixes are blind fixes, without in-game verification. Cached map grouping, text measurement and label layout reduce repeated work and temporary allocations. Player and enemy update rates are retained; scope, font, language and filter changes refresh the layout. Settings, saves, shortcuts and loader are unchanged.
+Mod-only package; requires an existing working BepInEx IL2CPP loader. 0.6.18 optimizes map text rendering in both Full Island and Nearby views. Each place label reuses the translated text and dimensions saved during layout. Its shadow and foreground text are each drawn once. Nearby retains its existing camera tracking and label placement.
 
-Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.17-Complete.zip` and its installer.
+Requires BepInEx 6 Unity IL2CPP Windows x64. The tested compatible loader is **#788 + 5b766a3 / Il2CppInterop 1.5.3 with two patched Cpp2IL assemblies**. It is not stock official #788. Stock #738, #782, #785 and #788 can still fail first generation with `AndroidManager / RawPropertyType` null references. If your loader already works, keep it and update only the mod. For a fresh installation or that error, use the companion `KingdomAdvisor-0.6.18-Complete.zip` and its installer.
 
 ### Install PowerShell 7 for the GitHub one-click installer
 

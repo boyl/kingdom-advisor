@@ -39,27 +39,40 @@ namespace KingdomAdvisor
         {key=current;value=result;explored=current.FullMap?Array.Empty<System.Tuple<float,float>>():ranges.ToArray();Builds++;}
         public void Clear(){key=default;value=null;explored=Array.Empty<System.Tuple<float,float>>();}
     }
+    public readonly struct MapLabelMetrics
+    {
+        public readonly string Text;
+        public readonly float Width, Height;
+        public MapLabelMetrics(string text, float width, float height)
+        {
+            Text = text;
+            Width = width;
+            Height = height;
+        }
+    }
+
     public sealed class PreparedMapLayout
     {
         public MapPoint[] Points;
         public MapPoint[][] Groups;
-        public string[] Labels;
+        public MapLabelMetrics[] Labels;
         public List<MapLabelPlacement> Placements;
         public bool[] Placed;
         public static bool Explored(Snapshot s,float x)=>s.ExploredRanges.Any(r=>x>=r.Item1&&x<=r.Item2);
-        public static PreparedMapLayout Build(Snapshot s,MapProjectionKey key,Func<MapPoint,bool> visible,Func<string,float> measure)
+        public static PreparedMapLayout Build(Snapshot s,MapProjectionKey key,Func<MapPoint,bool> visible,Func<string,MapLabelMetrics> measure)
         {
             float length=Math.Max(1,key.Right-key.Left);
             var points=s.Points.Where(p=>visible(p)&&p.X>=key.Left&&p.X<=key.Right&&(key.FullMap||Explored(s,p.X)))
                 .GroupBy(p=>(p.Name,Math.Round(p.X))).Select(g=>g.First()).OrderBy(p=>p.X);
             var groups=points.GroupBy(p=>(p.Name,MapGrouping.Cell(p.X,key.IslandLeft,length*24/key.Width))).Select(g=>g.ToArray()).ToArray();
-            var layout=new PreparedMapLayout{Groups=groups,Points=new MapPoint[groups.Length],Labels=new string[groups.Length],Placed=new bool[groups.Length]};
+            var layout=new PreparedMapLayout{Groups=groups,Points=new MapPoint[groups.Length],Labels=new MapLabelMetrics[groups.Length],Placed=new bool[groups.Length]};
             var requests=new List<MapLabelRequest>(groups.Length);
             for(int i=0;i<groups.Length;i++){
                 var point=groups[i][0];layout.Points[i]=point;
                 string label=MapText.Label(point,key.Player,groups[i].Length,groups[i].Sum(p=>Math.Max(0,p.CampPeople)));
-                layout.Labels[i]=label;
-                requests.Add(new MapLabelRequest{Index=i,Anchor=(point.X-key.Left)/length*key.Width,Width=measure(label)+4,Priority=MapGrouping.Priority(point)});
+                var metrics = measure(label);
+                layout.Labels[i] = metrics;
+                requests.Add(new MapLabelRequest{Index=i,Anchor=(point.X-key.Left)/length*key.Width,Width=metrics.Width+4,Priority=MapGrouping.Priority(point)});
             }
             layout.Placements=MapLabelLayout.Arrange(requests,key.Width,4);
             foreach(var item in layout.Placements)layout.Placed[item.Index]=true;

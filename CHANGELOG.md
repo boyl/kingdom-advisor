@@ -1,3 +1,27 @@
+# 王国顾问 0.6.18 / Kingdom Advisor 0.6.18
+
+0.6.18 优化全岛和附近地图的文字绘制。地名排版时保存翻译结果和文字尺寸，绘制时复用，每个地名的阴影和正文各画一次。附近模式继续沿用现有的视野跟随和标签排版方式。
+
+同一普通主题存档、同一路段和 2 倍速下，骑行时地图绘制耗时 P95（95% 的采样帧不超过的耗时）相比上一版，全岛从 3.73 降到 2.05 毫秒，附近从 3.12 降到 1.77 毫秒。
+
+已有正常工作的 BepInEx 6 IL2CPP 前置请选择 **ModOnly**；首次安装请选择 **Complete**，内含既有修订版 BepInEx #788、两项 Cpp2IL 兼容补丁、许可证与对应源码。官方原版 #788 不含这些首次生成修复。
+
+GitHub：安装 [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6)，保存并退出游戏，解压后双击 `INSTALL.cmd`，选择 Steam“浏览本地文件”打开的游戏根目录。Nexus：无需 PowerShell，按随包说明手动复制。插件路径：`BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`。升级保留配置与存档；回退前备份旧 DLL 和 `BepInEx/config/local.kingdom.advisor.cfg`。卸载仅移除 KingdomAdvisor 插件目录，保留共享前置与其他 Mod。
+
+[中文完整说明](https://github.com/boyl/kingdom-advisor/blob/v0.6.18/README.md) · [Nexus 手动安装与目录示意](https://github.com/boyl/kingdom-advisor/blob/v0.6.18/distribution/nexus/README.zh-CN.md)
+
+## English
+
+0.6.18 optimizes map text rendering in both Full Island and Nearby views. Each place label reuses the translated text and dimensions saved during layout. Its shadow and foreground text are each drawn once. Nearby retains its existing camera tracking and label placement.
+
+On the same standard-theme save and route at 2× game speed, the 95th percentile of map rendering time while riding fell from 3.73 to 2.05 ms in Full Island and from 3.12 to 1.77 ms in Nearby.
+
+Choose **ModOnly** for an existing working BepInEx 6 IL2CPP installation, or **Complete** for a fresh installation. Complete retains the modified BepInEx #788 runtime, two Cpp2IL compatibility fixes, licenses and corresponding sources. Stock official #788 does not include these first-generation fixes.
+
+GitHub: install [PowerShell 7](https://github.com/PowerShell/PowerShell/releases/tag/v7.6.6), save and quit, extract the ZIP, run `INSTALL.cmd`, and select the game root through Steam's Browse local files. Nexus: no PowerShell is required; follow the included manual guide. Plugin path: `BepInEx/plugins/KingdomAdvisor/KingdomAdvisor.dll`. Upgrades retain settings and saves. Back up the old DLL and `BepInEx/config/local.kingdom.advisor.cfg` for rollback. Uninstall only the KingdomAdvisor plugin folder, retaining the shared loader and other mods.
+
+[Full English guide](https://github.com/boyl/kingdom-advisor/blob/v0.6.18/README.en.md) · [Nexus manual installation and directory layout](https://github.com/boyl/kingdom-advisor/blob/v0.6.18/distribution/nexus/README.en.md)
+
 # 王国顾问 0.6.17 / Kingdom Advisor 0.6.17
 
 - 修复背景纪念碑误标为“纪念碑／特殊设施”、标记随镜头移动的问题，排除玩家及坐骑附着对象。
